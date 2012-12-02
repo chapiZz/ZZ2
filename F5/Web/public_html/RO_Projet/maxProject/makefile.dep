@@ -1,0 +1,2 @@
+main.o: main.cpp vc.hpp
+vc.o: vc.cpp

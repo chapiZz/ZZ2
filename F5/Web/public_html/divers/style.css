@@ -1,0 +1,253 @@
+body
+{
+	width: 100%;
+	padding: 0;
+	margin:0;
+	background-color: #e3ede2;
+	font: .8em Arial, Verdana, Tahoma, Sans-Serif;
+}
+
+/* ==================   Design de l'entête ==================== */
+
+header
+{
+	background-color: #e3ede2;
+	display: block;
+	height: 150px;
+	padding: 0;
+	width: 900px;
+	margin: auto;
+	margin-bottom: -16px; 
+	background-image: url(images/entete.png);
+}
+
+.enteteLink
+{
+	height: 150px;
+	padding: 0;
+	width: 900px;
+	margin: auto;
+	margin-bottom: -16px; 
+	display: inline-block;  
+}
+
+/* ====================   Design du menu ====================== */
+#menu
+{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	min-width: 900px;
+	height: 60px;
+	line-height: 58px;
+	text-align: center;	
+	background-image: url(images/menu.png);
+
+}
+
+#listMenu { 
+	width: 100%;
+	padding: 0;
+
+	text-align: center;
+
+
+}
+
+#listMenu li {
+	padding: 0;  
+	width: 145.4px;
+
+	display: inline-block;  
+	margin-right: -2.5px;
+	margin-left: -2.5px;
+    list-style: none; 	
+	border-left: 1px solid #507645;
+	border-right: 1px solid #507645; 
+}
+
+#listMenu li a{
+	display:inline;  
+	vertical-align: middle;
+    margin: 0 10px 0 10px; 
+	color: #507645;
+	font-style: italic;
+	text-decoration: none;
+	font-weight: bold ;
+}
+
+#listMenu li a:hover{
+	display:inline;  
+	vertical-align: middle;
+    margin: 0 10px 0 10px; 
+	color: black;
+	font-style: italic;
+	text-decoration: none;
+	font-weight: bold ;
+}
+
+
+
+#logoMenu
+{
+	height: 70px;
+	float: right;
+	margin: 20px;
+}
+.logoSoc
+{
+	width: 50px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+	height: 50px;
+}
+
+.logoSoc:hover
+{
+	width: 60px;
+	margin-top: 0;
+	margin-bottom: 10px;
+	margin-right: 5px;
+	margin-left: 5px;
+	height: 60px;
+
+}
+
+.twitter 
+{
+	text-align: center;
+
+}
+
+img
+{
+	border: 0;
+
+}
+
+/* Design du corps */
+
+#teteCorps
+{
+	background-image: url(images/tetecorps.png);
+	background-color: #e3ede2;
+	width: 900px;
+	height: 120px;
+	padding: 0;
+	margin: auto;	
+}
+
+#corps
+{
+	background-image: url(images/corps.png);
+	background-repeat: repeat-y;
+	background-color: #e3ede2;
+	max-width: 900px;
+	min-width: 750px;
+	min-height: 400px;
+	padding: 0;
+	margin: auto;	
+
+}
+
+#corps p
+{
+	padding: 0;
+	margin: 0 40px 0 40px;
+	
+}
+
+.g-plusone
+{
+
+	padding:0;	
+	margin-top: 300px;
+}
+
+.twitter-share-button
+{
+	padding: 0; 
+	vertical-align: middle;
+
+}
+
+.fb-like
+{
+	padding: 0;
+	display:inline-block;  
+	margin: 0;
+	vertical-align: middle;
+
+}
+
+#corps h3 
+{
+	padding: 0;
+	margin: 0 40px 0 40px;
+}
+
+#corps table
+{
+	padding: 10px;
+	margin: auto;
+	text-align: center;
+}
+
+#corps td
+{
+	padding: 20px;
+}
+
+
+
+/* Design du pied de page */
+footer
+{
+	display: block;
+	background-color: #e3ede2;
+	height: 150px;
+	padding: 0;
+	font-size: 0.7em;
+	color: #395f2d;
+	max-width: 900px;
+	margin: auto; 
+	background-image: url(images/pied.png);
+}
+
+footer .condition
+{
+	text-align: center;
+	margin: 0;
+	padding: 110px 0 0 0 ;
+}
+footer p
+{	
+	margin: 0;
+	text-align: center;
+	padding: 30px 0 0 0 ;
+}
+
+.miniaAtmel
+{
+	height: 142px;
+	width: 200px;
+}
+
+.miniaYap
+{
+	width: 87px;
+	height: 180px;
+}
+
+.miniaZzchat
+{
+	width: 132px;
+	height: 106px;
+}
+
+.description
+{
+	font-weight: bold ;
+}

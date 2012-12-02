@@ -1,0 +1,187 @@
+body
+{
+	 margin: 0;
+	 padding: 0;
+	 background-color: #e3ede2;
+	 font-family: arial;
+}
+
+
+
+#entete
+{
+	 background-image: url(images/menu.png);
+	 width: 99%;
+	 height: 60px;
+	 margin: 0;
+	 padding: 0 0 0 1%;
+}
+
+#entete p
+{
+	display: inline-block; 
+	
+}
+#entete form
+{
+
+	display: inline-block; 
+	
+}
+
+
+#entete a
+{
+	color: #507645;
+	font-style: italic;
+	text-decoration: none;
+	margin-left: 30px;	
+}
+
+#entete a:hover
+{
+	color: black;
+	font-style: italic;
+	text-decoration: none;
+	margin-left: 30px;
+	
+}
+
+
+#login
+{
+	margin: 0;
+	padding: 10px;
+	background-color: #e3ede2;
+	float: right;
+	margin-right: 50px;
+	margin-bottom: 30px;
+	border: 1px solid #507645;
+	
+}
+
+#corps
+{
+	background-image: url(images/corps.png);
+	background-repeat: repeat-y;
+	background-color: #e3ede2;
+	width: 900px;
+	min-height: 400px;
+	padding: 20px;
+	margin: auto;	
+
+}
+
+#longinform label
+{
+	width: 110px;
+	display: block;
+	float: left;
+}
+
+
+.infoPseudo
+{
+	background-color: red;
+	width: 110px;
+	display: block;
+	float: right;
+}
+
+.correct {
+  	background-color: #e3ede2;
+}
+
+.incorrect {
+  	background-color: #F3A7A7;
+}
+
+
+/* Design du pied de page */
+#footer
+{
+	background-color: #e3ede2;
+	background-repeat: no-repeat;
+	font-size: 0.8em;
+	width: 900px;
+	padding: 20px;
+	margin: auto;	
+	background-image: url(images/pied.png);
+}
+
+#footer .condition
+{
+	text-align: center;
+	margin: 0;
+	padding: 100px 0 0 0 ;
+}
+
+#footer p
+{	
+	margin: 0;
+	text-align: center;
+	padding: 30px 0 0 0 ;
+}
+
+#listUser
+{
+	
+	float: right;
+	width: 150px;
+	height: 300px;
+	overflow:auto;
+	padding: 0 0 0 10px;
+	margin: 0;
+	margin-right: 50px;
+	
+	border: 1px solid #507645;
+}
+
+#listMess
+{
+
+	float: left;
+	width: 650px;
+	height: 300px;
+	overflow:auto;
+	padding: 0 0 0 10px;
+	border: 1px solid #507645;
+}
+
+
+#chat
+{
+	width: 850px;
+	height: 200px;
+	overflow:auto;
+
+}
+
+#writeMess
+{
+	float: left;
+	width: 650px;
+	max-width: 650px;
+	height: 50px;
+	max-height: 50px;
+	overflow:auto;
+	padding: 0 0 0 10px;
+	border: 1px solid #507645;
+}
+
+
+
+.validMess
+{
+	text-align: right;
+	width: 160px;
+	height: 50px;
+	margin-left: 25px;
+}
+
+
+.titleUser
+{
+	text-align: right;
+	margin-right: 50px;
+}

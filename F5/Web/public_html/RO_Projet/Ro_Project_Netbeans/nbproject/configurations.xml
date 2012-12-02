@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="51">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <itemPath>main.cpp</itemPath>
+    <itemPath>mat.cpp</itemPath>
+    <itemPath>mat.h</itemPath>
+    <itemPath>../../RO_Projet/data/tsp10.csv</itemPath>
+    <itemPath>../../RO_Projet/data/tsp15.csv</itemPath>
+    <itemPath>../../RO_Projet/data/tsp20.csv</itemPath>
+    <itemPath>../../RO_Projet/data/tsp25.csv</itemPath>
+    <itemPath>../../RO_Projet/data/tsp5.csv</itemPath>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../../RO_Projet/data/tsp10.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../../RO_Projet/data/tsp15.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../../RO_Projet/data/tsp20.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../../RO_Projet/data/tsp25.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../../RO_Projet/data/tsp5.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="main.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="mat.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="mat.h">
+        <itemTool>3</itemTool>
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <cCompilerTool>
+          <developmentMode>5</developmentMode>
+        </cCompilerTool>
+        <ccCompilerTool>
+          <developmentMode>5</developmentMode>
+        </ccCompilerTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../../RO_Projet/data/tsp10.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../../RO_Projet/data/tsp15.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../../RO_Projet/data/tsp20.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../../RO_Projet/data/tsp25.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../../RO_Projet/data/tsp5.csv">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="main.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="mat.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="mat.h">
+        <itemTool>3</itemTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

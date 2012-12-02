@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+	<project name="Zzchat">
+		<target name="sample">
+			<echo message="text" />
+		</target>
+	</project>
+
