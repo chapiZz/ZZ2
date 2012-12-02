@@ -1,0 +1,470 @@
+<html><head><title>SCSSI : SCSSI : ITSEC v1.2 Claims language</title></head>
+<body bgcolor=#ffffff>
+
+<TABLE >
+<TR><TD WIDTH=161><A HREF="/index.html"><IMG SRC="/images/sigle2.gif" ALT="Retour Page de Garde" ALIGN="TOP" BORDER="0"></A>
+</TD><TD WIDTH=100%><CENTER>PREMIER MINISTRE</CENTER>
+<P>
+<CENTER><B><FONT SIZE=5>Service Central</FONT></B> <B><FONT SIZE=5>de la S&eacute;curit&eacute; des Syst&egrave;mes d'Information</FONT></B></CENTER>
+</TD>
+</TR>
+
+</TABLE><HR>
+<!                      >
+<!                      >
+<!                      >
+
+<TABLE>
+<TR><TD BGCOLOR="#96c7f8" WIDTH=161 VALIGN="TOP">
+<BR>
+<TABLE WIDTH=161>
+<TR><TD BGCOLOR="#ffffff" WIDTH=161 ALIGN="center"><B>DOCUMENTATION</B></TD></TR>
+<TR><TD ALIGN="left"><SMALL>
+<A HREF="/document/index.html">Index</A> de la documentation<BR><BR>
+EVALUATION
+</SMALL>
+
+<UL=COMPACT type="square">
+<SMALL>
+<LI><A HREF="/document/certif.html">Critères d'évaluation</A>
+<LI><A HREF="/document/certif.html">Schéma de certification</A>
+<LI><A HREF="/document/docs/GARDE/garde.html">Guides GARDE</A>
+<LI><A HREF="/document/certif.html">Certificats et PP</A>
+</SMALL>
+</UL>
+
+<SMALL>REGLEMENTATION</SMALL>
+<UL=COMPACT type="square">
+<SMALL>
+<LI><A HREF="/document/chiffre.html">Cryptologie</A>
+<LI><A HREF="/document/tempest.html">Domaine tempest</A>
+<LI><A HREF="/document/ssi.html">Systèmes d'information</A>
+</SMALL>
+</UL>
+
+<SMALL>
+<A HREF="/document/methodes.html">METHODES</A><BR><BR>
+<A HREF="/document/fiches/index.html">FICHES DE SYNTHESE</A>
+</SMALL>
+
+</TD></TR></TABLE>
+<HR>
+
+<TABLE WIDTH=161>
+<TR><TD BGCOLOR="#ffffff" WIDTH=161 ALIGN="center"><B>AILLEURS SUR LE SITE</B></TD></TR>
+<TR><TD ALIGN="left"><UL=COMPACT type="square"><SMALL>
+<LI><A HREF="/index.html">Retour à la page d'accueil</A>
+<LI><A HREF="/present/index.html">Présentation du SCSSI</A>
+<LI><A HREF="/pratiq/index.html">Informations pratiques</A>
+<LI><A HREF="/rubriq/index.html">Rubriques</A>
+<LI><A HREF="/courrier.html">Courrier des lecteurs</A>
+</SMALL></TD></TR></TABLE>
+
+<BR>
+</TD>
+<!                    >
+<!                    >
+<!                    >
+
+<TD WIDTH=31></TD>
+<TD WIDTH=100% VALIGN=TOP>
+<TABLE WIDTH=100%><TR>
+<TD BGCOLOR="#FF9933" VALIGN=MIDDLE>
+<BR>
+<H2><CENTER>SCSSI : ITSEC v1.2 Claims language</H2>
+<A HREF="/document/criteres.html">Index de la documentation sur les critères</A> | 
+<A HREF="/document/index.html">Index général de la documentation</A>
+<BR>
+<A HREF="/document/docs/ITSEC/itsec.html">Sommaire</A> |
+<A HREF="/document/docs/ITSEC/itsec-0.html">Introduction</A> |
+<A HREF="/document/docs/ITSEC/itsec-1.html">Champ d'application</A> |
+<A HREF="/document/docs/ITSEC/itsec-2.html">Fonctionnalité</A> 
+<A HREF="/document/docs/ITSEC/itsec-3.html">Efficacité</A> |
+<A HREF="/document/docs/ITSEC/itsec-4.html">Conformité</A> |
+<A HREF="/document/docs/ITSEC/itsec-E1.html">Conformité E1</A> |
+<A HREF="/document/docs/ITSEC/itsec-E2.html">Conformité E2</A> |
+<A HREF="/document/docs/ITSEC/itsec-E3.html">Conformité E3</A> |
+<A HREF="/document/docs/ITSEC/itsec-E4.html">Conformité E4</A> |
+<A HREF="/document/docs/ITSEC/itsec-E5.html">Conformité E5</A> |
+<A HREF="/document/docs/ITSEC/itsec-E6.html">Conformité E6</A>
+<A HREF="/document/docs/ITSEC/itsec-5.html">Résultats de l'évaluation</A> |
+<A HREF="/document/docs/ITSEC/itsec-6.html">Glossaire</A> |
+<A HREF="/document/docs/ITSEC/itsec-A.html">Exemples de classes de Fonctionnalité</A> |
+<A HREF="/document/docs/ITSEC/itsec-B.html">"Claims language"</A> |
+
+<BR><BR>
+<a href="itsec.html"><img alt="[Début]" border=0 src="/images/top.gif"></a> <a href="itsec-A.html"><img alt="[Précédente]" border=0 src="/images/prev.gif"></a> <img alt="[Suivante]" border=0 src="/images/nextg.gif"> <img alt="[Fin]" border=0 src="/images/bottomg.gif">
+<BR><BR>
+</TD></TR></TABLE>
+<a name="736889">
+<center><h3> ANNEXE B - Le "Claims Language"</h3></center>
+</a><a name="736647">
+<h4> Introduction</h4>
+</a>Dans le contexte des crit&egrave;res d'&eacute;valuation de la s&eacute;curit&eacute; des TI, il est commode de disposer d'un moyen pour d&eacute;crire en style semi-formel les fonctions de s&eacute;curit&eacute; annonc&eacute;es par un produit de s&eacute;curit&eacute; TI, mais encore exprim&eacute;es en langage naturel. Le Claims Language d&eacute;fini dans la pr&eacute;sente annexe a &eacute;t&eacute; d&eacute;velopp&eacute; pour satisfaire ce besoin.<p>
+
+Les avantages de l'utilisation de ce langage pour sp&eacute;cifier la fonctionnalit&eacute; de s&eacute;curit&eacute; sont les suivants &#32;:<p>
+
+<ul>
+<li>il fournit un style semi-formel de sp&eacute;cification, mais qui, comme il est bas&eacute; sur le langage naturel, peut &ecirc;tre lu et compris sans connaissance particuli&egrave;re d'une notation ou d'un ensemble de r&egrave;gles &#32;;
+
+<li>il indique les liaisons et les regroupements n&eacute;cessaires entre les annonces &#32;;
+
+<li>il r&eacute;duit les risques d'ambigu&iuml;t&eacute; dans l'interpr&eacute;tation des annonces &#32;;
+
+<li>il permet d'exprimer les annonces concernant une TOE d'une mani&egrave;re adapt&eacute;e au processus d'&eacute;valuation.
+</ul><p>
+
+Le Claims Language facilite une extension contr&ocirc;l&eacute;e de la notation pr&eacute;d&eacute;finie dans le maniement de concepts pour lesquels il n'existe pas d'&eacute;l&eacute;ment adapt&eacute;. Dans un Claims Document, le langage naturel normal peut &ecirc;tre utilis&eacute; pour d&eacute;crire des m&eacute;canismes et des hypoth&egrave;ses lorsqu'une approche plus formelle n'est pas n&eacute;cessaire. Le Claims Language est assez souple pour permettre de d&eacute;finir tout ensemble d'annonces propre &agrave; une TOE sp&eacute;cialis&eacute;e sans s'&eacute;carter aucunement des r&egrave;gles du langage &#32;: ainsi les commanditaires d'une &eacute;valuation ne sont nullement astreints &agrave; adapter leurs annonces au langage.<p>
+
+<a name="736655">
+<h4> Vue d'ensemble</h4>
+</a>Dans l'utilisation du Claims Language, les fonctions de s&eacute;curit&eacute; sont exprim&eacute;es au moyen d'un ensemble de r&egrave;gles pour produire des Mod&egrave;les d'Expression d'Action dont chacun fournit l'ossature d'un type particulier d'annonce. Chaque Mod&egrave;le d'Expression d'Action est alors combin&eacute; avec un &eacute;l&eacute;ment d'un ensemble d'Expressions de Cible pour cr&eacute;er l'&eacute;bauche d'une annonce. Des noms et des expressions sp&eacute;cifiques au produit, &agrave; la fonction ou au fournisseur sont alors substitu&eacute;s dans cette &eacute;bauche pour cr&eacute;er une annonce r&eacute;elle. Un exemple de g&eacute;n&eacute;ration d'une annonce figure dans les paragraphes B.30 &agrave; B.34 de la pr&eacute;sente annexe.<p>
+
+Il est possible d'inclure dans la d&eacute;claration d'une annonce une r&eacute;f&eacute;rence au m&eacute;canisme qui l'impl&eacute;mente.<p>
+
+Il est permis d'omettre ou de modifier les mots de liaison utilis&eacute;s dans les &eacute;bauches d'annonces afin d'en faciliter la lecture ou d'en am&eacute;liorer la justesse grammaticale.<p>
+
+Voici des exemples de modifications autoris&eacute;es &#32;:<p>
+
+<ul>
+<li>remplacer le pluriel par le singulier et vice versa &#32;;
+
+<li>ins&eacute;rer ou retirer les articles d&eacute;finis et ind&eacute;finis &#32;;
+
+<li>modifier les pr&eacute;positions.
+</ul><p>
+
+Il est permis d'introduire de nouvelles expressions d'action ou de cible lorsqu'il n'existe pas d'expression appropri&eacute;e, &agrave; condition qu'elles aient &eacute;t&eacute; discut&eacute;es avec l'organisme de certification et approuv&eacute;es par lui.<p>
+
+Une pr&eacute;sentation normalis&eacute;e doit &ecirc;tre utilis&eacute;e pour les Claims Documents contenant des annonces en Claims Language, comme il est indiqu&eacute; dans les paragraphes B.38 &agrave; B.44 de la pr&eacute;sente annexe. Les annonces doivent &ecirc;tre regroup&eacute;es sous une rubrique normalis&eacute;e bas&eacute;e sur les rubriques g&eacute;n&eacute;riques pour la fonctionnalit&eacute;. Cela facilite la compr&eacute;hension et la comparaison avec d'autres TOE.<p>
+
+<a name="736665">
+<h4> Avertissements</h4>
+</a>Il faudra prendre des pr&eacute;cautions pour formuler les annonces qui d&eacute;pendent de la configuration. Il est peut-&ecirc;tre possible de configurer une TOE d'une mani&egrave;re non s&ucirc;re (c'est-&agrave;-dire que certaines annonces sont invalid&eacute;es). Si c'est le cas, des restrictions propres &agrave; exclure de telles options ou combinaisons d'options non s&ucirc;res devraient &ecirc;tre pr&eacute;sent&eacute;es comme des contraintes d'environnement (voir le paragraphe B.41 plus loin dans cette annexe).<p>
+
+Il faudra aussi prendre des pr&eacute;cautions pour que les annonces soient formul&eacute;es au niveau voulu de granularit&eacute;. Si une des annonces propos&eacute;es semble englober plusieurs rubriques g&eacute;n&eacute;riques ou si elle exige plus de substitutions que ne le permet l'emploi du mod&egrave;le appropri&eacute;, c'est que l'annonce est d'un niveau trop &eacute;lev&eacute; et qu'elle a besoin d'&ecirc;tre fragment&eacute;e en une s&eacute;rie d'annonces plus simples.<p>
+
+<a name="736668">
+<h4> Mod&egrave;les d'Expression d'Action</h4>
+</a>Les Mod&egrave;les d'Expression d'Action doivent &ecirc;tre r&eacute;alis&eacute;s &agrave; partir de l'ossature ci-dessous, dans laquelle les caract&egrave;res italiques indiquent des mots ou des expressions, dans le mod&egrave;le, qui doivent &ecirc;tre remplac&eacute;s, dans l'annonce r&eacute;elle, par des substitutions sp&eacute;cifiques en rapport avec l'annonce, [] d&eacute;signant les parties facultatives et &lt;&gt; un choix parmi les options pertinentes de la liste qui suit.<p>
+
+<pre><a name="736670">
+This <I>TOE</I> [&lt;qualifier&gt;] &lt;verb&gt; &lt;action&gt; ... [time] [using the mechanism defined in paragraph <I>n</I>].
+</a>
+<a name="736671">
+O&ugrave; &lt;qualifier&gt; peut &ecirc;tre &#32;:
+</a>
+<a name="736672">
+	contains a <I>function</I> that<br>ou	must be used in an environment that
+</a>
+<a name="736673">
+et &lt;verb&gt; peut &ecirc;tre &#32;:
+</a>
+<a name="736674">
+	will<br>ou	will not<br>ou	can be configured to<br>ou	can be configured to not<br>ou	cannot be configured to
+</a>
+<a name="736675">
+et &lt;action&gt; peut &ecirc;tre &#32;:
+</a>
+<a name="736676">
+	establish<br>ou	detect<br>ou	control<br>ou	permit<br>ou	prevent<br>ou	ensure<br>ou	record in <I>object</I> 
+</a>
+<a name="736677">
+et &lt;time&gt; peut &ecirc;tre &#32;:
+</a>
+<a name="736678">
+	before <I>security-relevant-event<br></I>ou	after <I>security relevant-event</I>
+</a>
+</pre><p>
+
+L'option "environment" de &lt;qualifier&gt; n'est utilis&eacute;e que pour d&eacute;finir les contraintes d'environnement lorsqu'une grande pr&eacute;cision est exig&eacute;e.<p>
+
+Lorsque les d&eacute;tails de m&eacute;canismes sp&eacute;cifiques font partie de la cible de s&eacute;curit&eacute;, ils doivent &ecirc;tre d&eacute;finis comme faisant partie du Claims Document &agrave; l'aide d'un paragraphe associ&eacute; de sp&eacute;cification du m&eacute;canisme. Si une telle association n'est pas incluse, c'est que les d&eacute;tails du m&eacute;canisme ne font pas partie de la cible de s&eacute;curit&eacute; et seront trait&eacute;s comme une information interne. L'option "function" du &lt;qualifier&gt; est facultative. Elle sert &agrave; nommer le m&eacute;canisme particulier d'un produit qui impl&eacute;mente une annonce particuli&egrave;re. Ce nom n'est inclus que dans un but explicatif.<p>
+
+Voici quelques exemples de Mod&egrave;les d'Expression d'Action &#32;:<p>
+
+<pre><a name="736682">
+This product will ensure ....
+</a>
+<a name="736683">
+This product contains an audit utility that will establish ...
+</a>
+<a name="736684">
+This product can be configured to permit ...
+</a>
+<a name="736685">
+-
+</a>
+<a name="736686">
+This add-in board will record in its audit trail ...
+</a>
+<a name="736687">
+This product will prevent ... before completion of secure startup.
+</a>
+</pre><a name="736688">
+<h4> Expressions de Cible</h4>
+</a>L'ensemble autoris&eacute; d'Expressions de Cible est le suivant, [] d&eacute;signant les parties facultatives de l'expression &#32;:<p>
+
+<ol>
+<a name="736690">
+<li>	... <I>audit-information</I> concerning <I>security-relevant-events</I>
+</a><a name="736691">
+<li>	... the identity of a <I>process</I> requested
+</a><a name="736692">
+<li>	... the identity of the <I>{user,process}</I> requesting a <I>process</I>
+</a><a name="736693">
+<li>	... the identity of the <I>{user,process}</I> requesting <I>access-type</I> to an <I>object</I>
+</a><a name="736694">
+<li>	... the identity of a <I>process</I> executed
+</a><a name="736695">
+<li>	... the rejection of a <I>process</I> request
+</a><a name="736696">
+<li>	... the identity of an <I>object</I> to which <I>access-type</I> was requested
+</a><a name="736697">
+<li>	... the identity of an <I>object</I> to which <I>access-type</I> was granted
+</a><a name="736698">
+<li>	... the identity of an <I>object</I> to which <I>access-type</I> was refused
+</a><a name="736699">
+<li>	... the <I>access-set</I> of a <I>user</I>
+</a><a name="736700">
+<li>	... the <I>access-set</I> of a <I>process</I>
+</a><a name="736701">
+<li>	... the <I>access-set</I> of a <I>{user,process}</I>
+</a><a name="736702">
+<li>	... the <I>access-set</I> of an <I>object</I>
+</a><a name="736703">
+<li>	... the <I>access-type</I> granted to a <I>{user,process}</I> in respect of an <I>object</I>
+</a><a name="736704">
+<li>	... <I>access-type</I> by <I>{user,process}</I> in respect of an <I>object</I>
+</a><a name="736705">
+<li>	... the action performed by a <I>{user,process}</I> in respect of an <I>object</I>
+</a><a name="736706">
+<li>	... the <I>factors</I> affecting the <I>access-set</I> of a <I>user</I>
+</a><a name="736707">
+<li>	... the <I>factors</I> affecting the <I>access-set</I> of a <I>process</I>
+</a><a name="736708">
+<li>	... the <I>factors</I> affecting the <I>access-set</I> of a <I>{user,process}</I>
+</a><a name="736709">
+<li>	... the <I>factors</I> affecting the <I>access-set</I> of an <I>object</I>
+</a><a name="736710">
+<li>	... clearing of information from an <I>object</I>
+</a><a name="736711">
+<li>	... the <I>security-attributes</I> of an <I>object</I>
+</a><a name="736712">
+<li>	... the correctness of the <I>security-attributes</I> of an <I>object</I>
+</a><a name="736713">
+<li>	... the <I>security-attributes</I> of an <I>object</I> formed by combining a number of <I>objects</I>
+</a><a name="736714">
+<li>	... the <I>security-attributes</I> of a set of <I>objects</I> formed by partitioning a single <I>object</I>
+</a><a name="736715">
+<li>	... the granting of <I>access-type</I> to an <I>object</I> cannot cause deadlock through <I>{user,process}es</I> using <I>access-type</I> to <I>objects</I>
+</a><a name="736716">
+<li>	... the <I>{user,process}es</I> using <I>access-type</I> to an <I>object</I> which has caused deadlock 
+</a><a name="736717">
+<li>	... the granting of <I>access-type</I> to an <I>object</I> cannot cause livelock through <I>{user,process}es</I> using <I>access-type</I> to <I>objects</I>
+</a><a name="736718">
+<li>	... the <I>{user,process}es</I> using <I>access-type</I> to an <I>object</I> which has caused livelock 
+</a><a name="736719">
+<li>	... <I>security-attribute</I> of <I>object</I> is identical to that of <I>object</I>
+</a><a name="736720">
+<li>	... <I>claim</I> [not] to become time-critical
+</a><a name="736721">
+<li>	... <I>claim</I> [not] to become accelerated or delayed
+</a><a name="736722">
+<li>	... <I>claim</I> [not] to become time-dependant
+</a><a name="736723">
+<li>	... <I>claim</I> [not] to be by-passed
+</a><a name="736724">
+<li>	... <I>claim</I> [not] to be deactivated
+</a><a name="736725">
+<li>	... <I>claim</I> [not] to be corrupted
+</a></ol>
+<a name="736726">
+<h4> Substitutions</h4>
+</a>Des substitutions doivent &ecirc;tre faites pour les noms et expressions ci-apr&egrave;s <I>(mis en italique dans les Mod&egrave;les d'Expression d'Action et les Expressions de Cible ci-dessus) &#32;:</I><p>
+
+access-set &#32;; access-type &#32;; audit-information &#32;; claim &#32;; factors &#32;; function &#32;; n &#32;; object &#32;; product &#32;; process &#32;; security-attribute &#32;; security-relevant-event &#32;; use &#32;; {user,process}<p>
+
+Toutes les substitutions doivent &ecirc;tre expliqu&eacute;es en utilisant le langage naturel, soit dans une section s&eacute;par&eacute;e du Claims Document (voir le paragraphe B.39 de la pr&eacute;sente annexe), soit aussit&ocirc;t apr&egrave;s l'annonce o&ugrave; la substitution est employ&eacute;e.<p>
+
+Voici quelques exemples de possibilit&eacute;s de substitution &#32;:<p>
+
+<pre><a name="736731">
+access-set	remplac&eacute; par	read/write access to IO ports<br>access-type	remplac&eacute; par	read permission<br>access-type	remplac&eacute; par	read/write/delete permission<br>audit-information	remplac&eacute; par	date and time<br>audit-information	remplac&eacute; par	terminal number<br>claim	remplac&eacute; par	(a cross-reference to another claim)<br>factors	remplac&eacute; par	number of incorrect responses<br>function	remplac&eacute; par	password system<br>n	remplac&eacute; par	(a paragraphe number)<br>object	remplac&eacute; par	file<br>object	remplac&eacute; par	resource control block<br>object	remplac&eacute; par	hard disc storage (i.e. a type of object)<br>TOE	remplac&eacute; par	operating system<br>TOE	remplac&eacute; par	PC security board<br>process	remplac&eacute; par	unprivileged task<br>security-attribute	remplac&eacute; par	integrity of data<br>security-attribute	remplac&eacute; par	actual destination<br>security-attribute	remplac&eacute; par	apparent source<br>security-relevant-event	remplac&eacute; par	attempted privilege violation<br>security-relevant-event	remplac&eacute; par	user logoff<br>security-relevant-event	remplac&eacute; par	change of security level<br>user	remplac&eacute; par	data entry clerk<br>user	remplac&eacute; par	security administrator<br>{user,process}	remplac&eacute; par	job (i.e. implying any user)
+</a>
+</pre><p>
+
+Certaines parties des Expressions d'Action et des Expressions de Cible sont mises entre crochets [] &#32;; ce sont des expressions ou des mots facultatifs qui peuvent &ecirc;tre inclus ou omis suivant les besoins dans l'annonce du fournisseur.<p>
+
+La plupart des substitutions de noms et d'expressions s'expliquent d'elles-m&ecirc;mes. Toutefois il existe quelques conventions particuli&egrave;res qui sont expliqu&eacute;es ci-apr&egrave;s.<p>
+
+La d&eacute;finition d'un domaine d'acc&egrave;s (access-set) varie suivant qu'il est en rapport avec &#32;:<p>
+
+<ul>
+<li>un objet &#32;; dans ce cas il repr&eacute;sente la liste des utilisateurs (user), des processus (process) et des groupes {user,process} &agrave; chacun desquels est associ&eacute; un type d'acc&egrave;s (access-type) et qui sont capables d'utiliser un objet (object) &#32;;
+
+<li>un processus, un utilisateur ou un groupe {user, process} &#32;; auquel cas il repr&eacute;sente la liste des objets &agrave; chacun desquels est associ&eacute; un type d'acc&egrave;s et qui sont &agrave; la disposition d'un utilisateur, d'un processus ou d'un groupe {user, process}.
+</ul><p>
+
+Ainsi un domaine d'acc&egrave;s est une liste (conceptuelle) de tous les objets auxquels un utilisateur peut avoir acc&egrave;s, ainsi que de ce que cet utilisateur peut faire &agrave; chacun de ces objets et &agrave; travers quels processus, <I>ou</I> une liste (conceptuelle) de tous les utilisateurs qui peuvent acc&eacute;der &agrave; un objet, &agrave; travers quels processus et ce qu'ils peuvent faire &agrave; cet objet.<p>
+
+Le type d'acc&egrave;s (access-type) est la s&eacute;rie des modes d'utilisation d'un objet et il est d&eacute;fini par le fournisseur. Les expressions <I>create</I>, <I>read</I>, <I>write</I>, <I>delete</I>, <I>execute</I> ou une combinaison de ces mots, ou encore <I>none</I>, en sont des exemples repr&eacute;sentatifs.<p>
+
+Un exemple sp&eacute;cifique pourrait &ecirc;tre donn&eacute; par l'ensemble suivant &#32;:<p>
+
+<ul>
+<li>"Amend" permet de mettre &agrave; jour un enregistrement, mais pas d'en ajouter un nouveau dans le fichier,
+
+<li>"Create" permet d'ajouter de nouveaux enregistrements au fichier, mais pas de modifier ceux qui existent,
+
+<li>"Delete" permet de retirer des enregistrements du fichier,
+
+<li>"Execute" permet de charger le fichier en m&eacute;moire, puis de le mettre en attente d'ex&eacute;cution en tant que programme,
+
+<li>"Read" permet de recopier dans la m&eacute;moire de travail des donn&eacute;es contenues dans des enregistrements.
+</ul><p>
+
+Beaucoup d'objets poss&egrave;deront des attributs de s&eacute;curit&eacute; identiques. Aussi lorsqu'une annonce s'appliquera &agrave; tous les objets d'un type particulier, c'est g&eacute;n&eacute;ralement en termes de type d'objet que la substitution sera le mieux exprim&eacute;e plut&ocirc;t qu'en &eacute;num&eacute;rant tous les objets possibles de ce type.<p>
+
+<a name="736746">
+<h4> M&eacute;canismes</h4>
+</a>Il est possible d'inclure dans une annonce la description du m&eacute;canisme utilis&eacute; pour impl&eacute;menter cette annonce. Cela se fait &agrave; l'aide de l'option "using" du Mod&egrave;le d'Expression d'Action de l'annonce, en donnant une r&eacute;f&eacute;rence &agrave; un paragraphe du Claims Document qui sp&eacute;cifie ou explique le m&eacute;canisme employ&eacute;. L'&eacute;valuation comportera alors la confirmation du fait que le m&eacute;canisme d&eacute;clar&eacute; est bien le m&eacute;canisme utilis&eacute;.<p>
+
+Toute m&eacute;thode appropri&eacute;e pourra &ecirc;tre utilis&eacute;e pour d&eacute;finir ou d&eacute;crire le m&eacute;canisme pourvu que les explications soient suffisantes pour que l'&eacute;valuation d&eacute;termine, &agrave; un niveau de confiance correspondant au niveau d'&eacute;valuation vis&eacute;, que &#32;:<p>
+
+<ul>
+<li>le m&eacute;canisme annonc&eacute; est bien pr&eacute;sent dans le produit,
+
+<li>son fonctionnement correspond &agrave; la sp&eacute;cification annonc&eacute;e,
+
+<li>c'est le m&eacute;canisme r&eacute;ellement utilis&eacute; pour impl&eacute;menter l'annonce.
+</ul><p>
+
+Dans beaucoup de cas, il peut &ecirc;tre plus facile et plus clair de d&eacute;finir un m&eacute;canisme en se r&eacute;f&eacute;rant &agrave; une norme publi&eacute;e, ou de pr&eacute;senter un tableau des types d'entr&eacute;e et des r&eacute;sultats correspondants, plut&ocirc;t que de fournir des d&eacute;tails de l'algorithme utilis&eacute; en se servant soit du langage naturel, soit d'un langage de sp&eacute;cification ou de programmation.<p>
+
+<a name="736753">
+<h4> Exemple</h4>
+</a>A titre d'exemple, le mod&egrave;le d'Expression d'Action suivant peut &ecirc;tre g&eacute;n&eacute;r&eacute; en se servant des r&egrave;gles sp&eacute;cifi&eacute;es &#32;:<p>
+
+This <I>TOE</I> will establish ....<p>
+
+o&ugrave; le mot en italique peut &ecirc;tre remplac&eacute; par un terme sp&eacute;cifique.<p>
+
+De m&ecirc;me, une Expression de Cible peut &ecirc;tre choisie, comme par exemple &#32;:<p>
+
+... the identity of an <I>object</I> to which <I>access-type</I> was requested.<p>
+
+La r&eacute;union des deux donne le texte &#32;:<p>
+
+<pre><a name="736760">
+This <I>TOE</I> will establish the identity of an <I>object</I> to which <I>access-type</I> was requested.
+</a>
+<a name="736761">
+dans lequel des substitutions possibles sont :
+</a>
+<a name="736762">
+add-in security board					pour	<I>	TOE<br></I>any file					pour		<I>object<br></I>write or delete permission					pour		<I>access-type</I>
+</a>
+</pre><p>
+
+Ainsi une annonce compl&egrave;te pourra &ecirc;tre &#32;:<p>
+
+This add-in security board will determine the identity of any file to which write or delete permission was requested.<p>
+
+Evidemment cet exemple est tout &agrave; fait artificiel. En pratique, pour les TOE r&eacute;elles, on fait des annonces extr&ecirc;mement sp&eacute;cifiques, souvent li&eacute;es &agrave; un environnement particulier, r&eacute;el ou suppos&eacute;.<p>
+
+<a name="736766">
+<h4> Structure du Claims Document</h4>
+</a>Utilisation des rubriques g&eacute;n&eacute;riques relatives &agrave; la fonctionnalit&eacute;<p>
+
+Les annonces doivent &ecirc;tre regroup&eacute;es sous les rubriques g&eacute;n&eacute;riques expos&eacute;es au chapitre 2 des pr&eacute;sents crit&egrave;res. Toutes les TOE ne feront pas des annonces entrant dans toutes les rubriques &#32;; lorsque cela se pr&eacute;sente, le fait qu'il n'y a pas d'annonce dans telle rubrique particuli&egrave;re doit &ecirc;tre d&eacute;clar&eacute;. Des annonces doivent &ecirc;tre incluses pour tous les &eacute;v&eacute;nements ou actions qui doivent &ecirc;tre emp&ecirc;ch&eacute;es.<p>
+
+Le tableau B.1 identifie les Expressions de Cible qui appara&icirc;tront souvent dans certaines rubriques g&eacute;n&eacute;riques particuli&egrave;res. Il est destin&eacute; seulement &agrave; servir de guide g&eacute;n&eacute;ral &#32;; la souplesse du Claims Language signifie que souvent d'autres Expressions de Cible seront &eacute;galement appropri&eacute;es.<p>
+
+Le tableau B.2 fait correspondre les Expressions de Cible et les possibilit&eacute;s de substitution qu'elles comportent.<p>
+
+Plan du Claims Document<p>
+
+Une cible de s&eacute;curit&eacute; utilisant le Claims Language doit &ecirc;tre pr&eacute;sent&eacute;e suivant la structure suivante &#32;:<p>
+
+<ul>
+<li>les objectifs de s&eacute;curit&eacute; de la cible, y compris toute contrainte ou hypoth&egrave;se concernant l'environnement r&eacute;el ou pr&eacute;sum&eacute; de la TOE, sous forme d'un argumentaire du produit (ou une politique de s&eacute;curit&eacute; du syst&egrave;me dans le cas d'un syst&egrave;me) &#32;;
+
+<li>une sp&eacute;cification informelle des annonces en langage naturel, ou une r&eacute;f&eacute;rence &agrave; un autre document contenant cette sp&eacute;cification informelle (ce peut &ecirc;tre la r&eacute;f&eacute;rence &agrave; une classe de fonctionnalit&eacute; d&eacute;finie en style informel), et une correspondance entre ces annonces informelles et les objectifs de s&eacute;curit&eacute; &#32;;
+
+<li>les substitutions globales &#32;;
+
+<li>les annonces entrant successivement sous chaque rubrique g&eacute;n&eacute;rique &#32;;
+
+<li>le d&eacute;tail des m&eacute;canismes de s&eacute;curit&eacute; &#32;;
+
+<li>la cotation annonc&eacute;e de la r&eacute;sistance minimum des m&eacute;canismes &#32;;
+
+<li>le niveau d'&eacute;valuation vis&eacute;.
+</ul><p>
+
+Dans la rubrique "Substitutions Globales", toutes les substitutions g&eacute;n&eacute;rales utilis&eacute;es dans les Expressions d'Action ou de Cible d'une ou de plusieurs annonces doivent &ecirc;tre d&eacute;finies et expliqu&eacute;es.<p>
+
+On ne doit pas tenir compte de ces substitutions lorsque des substitutions diff&eacute;rentes (g&eacute;n&eacute;ralement plus sp&eacute;cifiques) sont donn&eacute;es comme faisant partie d'annonces particuli&egrave;res.<p>
+
+Si une TOE compte sur certaines propri&eacute;t&eacute;s de son environnement r&eacute;el ou suppos&eacute; pour fonctionner correctement, ces propri&eacute;t&eacute;s doivent &ecirc;tre sp&eacute;cifi&eacute;es dans la section argumentaire ou politique du Claims Document. Le processus d'&eacute;valuation supposera que ces contraintes ou ces hypoth&egrave;ses existeront dans l'environnement r&eacute;el.<p>
+
+Chacune de ces contraintes ou de ces hypoth&egrave;ses devront &ecirc;tre exprim&eacute;es soit en langage naturel soit en Claims Language (en utilisant le qualificatif d'environnement de l'Expression d'Action). Lorsqu'il existe une ambigu&iuml;t&eacute; (parce que le langage naturel a &eacute;t&eacute; utilis&eacute;) les &eacute;valuateurs interpr&eacute;teront de telles contraintes ou hypoth&egrave;ses de fa&ccedil;on coh&eacute;rente avec les autres hypoth&egrave;ses ou annonces.<p>
+
+Certaines annonces peuvent rester valides m&ecirc;me si une assertion particuli&egrave;re est inexacte. Lorsque tel est le cas, le langage naturel doit &ecirc;tre utilis&eacute; pour indiquer quelles sont les annonces qui restent exactes quand cette affirmation est erron&eacute;e.<p>
+
+Voici un exemple d'affirmation (exprim&eacute;e en langue naturelle) &#32;:<p>
+
+Il ne faut pas retirer la batterie de secours de la m&eacute;moire vive de la carte de s&eacute;curit&eacute; ni la laisser se d&eacute;charger au-dessous de sa tension minimale de fonctionnement.<p>
+
+Format des annonces individuelles<p>
+
+Chaque substitution, dans les Expressions d'Action ou de Cible, utilis&eacute;e pour construire une annonce qui n'est pas identifi&eacute;e et d&eacute;finie dans la section des substitutions globales du Claims Document doit &ecirc;tre d&eacute;finie et exprim&eacute;e en langage naturel imm&eacute;diatement apr&egrave;s l'annonce o&ugrave; elle appara&icirc;t.<p>
+
+<a name="736789">
+<h4> Tableau B.1 - Expressions de Cible des annonces et rubriques g&eacute;n&eacute;riques</h4>
+</a><pre><a name="736790">
+<I>		</I>Identification et authentification	<br>		|	Contr&ocirc;le d'acc&egrave;s	<br>		|	|	Imputabilit&eacute;	<br>		|	|	|	Audit<br>		|	|	|	|	R&eacute;utilisation d'objet	<br>		|	|	|	|	|	Fid&eacute;lit&eacute;<br>		|	|	|	|	|	|	Fiabilit&eacute; de service	<br>		|	|	|	|	|	|	|	Echange de donn&eacute;es	<br>		|	|	|	|	|	|	|	|<br>1	Audit information	X	X	X	X	X	X	X	X<br>2	Identity of process requested	X	X	X	X			X	X<br>3	Identity of {u,p} requesting a process	X	X	X	X			X	X<br>4	Identity of {u,p} requesting an object	X	X	X	X			X	X<br>5	Identity of process executed	X	X	X	X			X	X<br>6	Rejection of process request	X	X	X	X			X	X<br>7	Identity of object requested	X	X	X	X			X	X<br>8	Identity of object granted	X	X	X	X		X	X	X<br>9	Identity of object refused	X	X	X	X			X	X<br>10	Access-set of user		X						X<br>11	Access-set of process		X						X<br>12	Access-set of {u,p}		X						X<br>13	Access-set of object		X						X<br>14	Object access granted to {u,p}	X	X	X	X				X<br>15	Object access by {u,p}	X	X	X	X				X<br>16	Object actions performed by {u,p}		X	X	X				X<br>17	Factors affecting user access-set		X						X<br>18	Factors affecting process access-set		X						X<br>19	Factors affecting {u,p} access-set		X						X<br>20	Factors affecting object access-set		X						X<br>21	Clearing information from object					X			X<br>22	Security-attributes of object	X	X	X	X	X	X	X	X<br>23	Correctness of security-attributes of object						X		X<br>24	Security-attributes of combinaison object		X				X		X<br>25	Security-attributes of partitioned object		X				X		X<br>26	Granting access causes no deadlock							X	X<br>27	Deadlock can be detected							X	X<br>28	Granting access causes no livelock							X	X<br>29	Livelock can be detected							X	X	<br>30	Objects have identical security-attributes		X				X		X<br>31	Time-critical claim							X		<br>32	Accelerated or delayed claim							X		<br>33	Time-dependant claim							X		<br>34	By-pass claim	X	X	X	X	X	X	X	X<br>35	Deactivate claim	X	X	X	X	X	X	X	X<br>36	Corrupt claim	X	X	X	X	X	X	X	X
+</a>
+</pre><a name="736791">
+<h4> Tableau B.2 - Expressions de Cible des annonces et substitutions autoris&eacute;es</h4>
+</a><pre><a name="736792">
+<strong>	</strong>	access-set	<br>		|	access-type	<br>		|	|	audit-information	<br>		|	|	|	claim<br>		|	|	|	|	object<br>		|	|	|	|	|	process<br>		|	|	|	|	|	|	security-attribute	<br>		|	|	|	|	|	|	|	security-relevant-event	<br>		|	|	|	|	|	|	|	|	user<br>		|	|	|	|	|	|	|	|	|	{user,process}<br>		|	|	|	|	|	|	|	|	|	|<br>1	Audit information			X					X		<br>2	Identity of process requested						X				<br>3	Identity of {u,p} requesting a process						X				X<br>4	Identity of {u,p} requesting an object		X			X					X<br>5	Identity of process executed						X				<br>6	Rejection of process request						X				<br>7	Identity of object requested		X			X					<br>8	Identity of object granted		X			X					<br>9	Identity of object refused		X			X					<br>10	Access-set of user	X								X	<br>11	Access-set of process	X					X				<br>12	Access-set of {u,p}	X									X<br>13	Access-set of object	X				X					<br>14	Object access granted to {u,p}		X			X					X<br>15	Object access by {u,p}		X			X					X<br>16	Object actions performed by {u,p}					X					X<br>17	Factors affecting user access-set	X								X	<br>18	Factors affecting process access-set	X					X				<br>19	Factors affecting {u,p} access-set	X									X<br>20	Factors affecting object access-set	X				X					<br>21	Clearing information from object					X					<br>22	Security-attributes of object					X		X			<br>23	Correctness of security-attributes of object					X		X			<br>24	Security-attributes of combinaison object					X		X			<br>25	Security-attributes of partitionned object					X		X			<br>26	Granting access causes no deadlock		X			X					X<br>27	Deadlock can be detected		X			X					X<br>28	Granting access causes no livelock		X			X					X<br>29	Livelock can be detected		X			X					X<br>30	Objects have identical decurity-attributes					X		X			<br>31	Time-critical claim				X						<br>32	Accelerated or delayed claim				X					<br>33	Time-dependant claim				X						<br>34	By-pass claim				X					<br>35	Deactivate claim				X						<br>36	Corrupt claim				X						
+</a>
+</pre>
+<TABLE BGCOLOR="#FF9933"><TR><TD WIDTH=100%>
+<CENTER>
+<BR><A HREF="/document/criteres.html">Index de la documentation sur les critères</A> | 
+<A HREF="/document/index.html">Index général de la documentation</A>
+<BR>
+<A HREF="/document/docs/ITSEC/itsec.html">Sommaire</A> |
+<A HREF="/document/docs/ITSEC/itsec-0.html">Introduction</A> |
+<A HREF="/document/docs/ITSEC/itsec-1.html">Champ d'application</A> |
+<A HREF="/document/docs/ITSEC/itsec-2.html">Fonctionnalité</A> 
+<A HREF="/document/docs/ITSEC/itsec-3.html">Efficacité</A> |
+<A HREF="/document/docs/ITSEC/itsec-4.html">Conformité</A> |
+<A HREF="/document/docs/ITSEC/itsec-E1.html">Conformité E1</A> |
+<A HREF="/document/docs/ITSEC/itsec-E2.html">Conformité E2</A> |
+<A HREF="/document/docs/ITSEC/itsec-E3.html">Conformité E3</A> |
+<A HREF="/document/docs/ITSEC/itsec-E4.html">Conformité E4</A> |
+<A HREF="/document/docs/ITSEC/itsec-E5.html">Conformité E5</A> |
+<A HREF="/document/docs/ITSEC/itsec-E6.html">Conformité E6</A>
+<A HREF="/document/docs/ITSEC/itsec-5.html">Résultats de l'évaluation</A> |
+<A HREF="/document/docs/ITSEC/itsec-6.html">Glossaire</A> |
+<A HREF="/document/docs/ITSEC/itsec-A.html">Exemples de classes de Fonctionnalité</A> |
+<A HREF="/document/docs/ITSEC/itsec-B.html">"Claims language"</A> |
+
+<BR><BR><a href="itsec.html"><img alt="[Début]" border=0 src="/images/top.gif"></a> <a href="itsec-A.html"><img alt="[Précédente]" border=0 src="/images/prev.gif"></a> <img alt="[Suivante]" border=0 src="/images/nextg.gif"> <img alt="[Fin]" border=0 src="/images/bottomg.gif">
+<BR><BR>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+<HR>
+
+<SMALL><A HREF="/courrier.html">
+webmaster@scssi.gouv.fr</A>
+
+- Copyright &copy 1999 Service Central de la Sécurité des Systèmes d'Information
+<BR>Dernière mise à jour le 17/06/99 à 17:04:30
+</SMALL>
+</body>
+</html>

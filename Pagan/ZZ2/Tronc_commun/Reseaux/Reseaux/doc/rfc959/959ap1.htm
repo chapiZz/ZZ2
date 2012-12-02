@@ -1,0 +1,88 @@
+<html><head><title>Structure Paginée</title></head>
+<body bgcolor="#dddddd">
+
+<p>RFC: 959<br>
+Statut : Standard<br>
+</p><p>Remplace RFC: 765 (IEN 149) 
+</p><h1 align="center">File Transfer Protocol (FTP)</h1>
+<h2 align="center">Spécification</h2>
+<p></p><hr>
+<p>Crédits : J. Postel, J. Reynolds / ISI<br>
+Traduction : <a href="mailto:Valery.Fremaux@eisti.fr">Valéry G. FREMAUX</a> Ingénieur Professeur / <a href="http://www.eisti.fr/">EISTI</a><br>
+Edition originale : Octobre 1985 / Version FR: Février 1997 
+</p><p align="center"><a href="959-8.htm">Précédent</a> - <a href="959ap2.htm">Suite</a> - <a href="959tm.htm">Retour au sommaire</a>
+</p><p></p><hr>
+<font color="#000080"></font><h2><font color="#000080">APPENDICE I -  STRUCTURE PAGINEE</font></h2>
+
+<p>Le besoin de FTP de supporter la structure en pages de certains fichiers
+est motivée par le besoin de transferts de fichiers fiables entre des systèmes
+TOPS-20, et en particulier les fichiers utilisés par NLS. </p><p>Le système de fichiers d'un TOPS-20 est basé sur le concept de pages.
+Le système d'exploitation de cette plate-forme est bien plus performant lorsqu'il
+manipule les fichiers sous cette forme. Le système d'exploitation fournit
+en général une interface vers le système de fichiers afin que des applicatifs
+puissent voir les fichiers comme des flux continus d'octets conformément
+à l'usage le plus répandu. Cependant, certaines applications utilisent directement
+la structure sous-jacente en pages.  </p><p>Un fichier disque d'un TOPS-20 est composé de quatre éléments: un
+chemin d'accès, un table de pages, un ensemble de pages (peut être vide),
+et un ensemble d'attributs.  </p><p>Le chemin d'accès est celui spécifié dans les commandes RETR ou STOR.
+Il inclut le nom du répertoire, le nom du fichier, l'extension de fichier,
+et un numéro de génération. </p><p>La table de pages peut contenir jusqu'à 2**18 entrées. Chaque entrée
+peut être marquée EMPTY (vide), ou peut "pointer" sur une page. Si elle est
+non vide, elle contiendra de plus quelques bits de marquage propres à la
+page; les protections d'accès sur les fichiers et sur chacune des pages peuvent
+être gérées indépendamment.  </p><p>Une page est un ensemble de 512 mots de 36 bits chacun contigus.
+
+</p><p>Les attributs du fichier, dans le descripteur de fichier (File Descriptor
+Block, ou FDB), contiennent des informations telles que la date de création,
+la date de dernière écriture, la date de dernière lecture, la taille d'octets
+logique de l'auteur, le pointeur de fin de fichier, un décompte des accès
+en lecture et en écriture, numérotation de sauvegarde, etc.  </p><p>Notez qu'il n'est pas obligatoire que les entrées soient contiguës
+dans la table. On pourra trouver des pointeurs de page vides entre deux pointeurs
+de pages réelles. De plus, la fin de fichier est simplement marquée comme
+un nombre. Il n'est pas obligatoire que cette fin de fichier pointe sur la
+dernière donnée du fichier. Des appels d'I/O séquentiels basiques sur un
+TOPS-20 laissera le pointeur de fin de fichier effectivement positionné après
+la dernière donnée inscrite, mais d'autres opérations peuvent très bien ne
+pas laisser le pointeur à cet endroit, si un programme particulier le souhaite. 
+ </p><p>En fait, les deux cas particuliers d'un fichier discontinu (pages
+vides insérées entre des pages non vides) et d'un pointeur de fin-de-fichier
+n'indiquant pas la dernière page du fichier, peuvent survenir dans un système
+géré sous NLS. </p><p>Les fichiers paginés d'un TOPS-20 peuvent être émis sous FTP en marquant
+les paramètres de transfert ainsi : TYPE L 36, STRU P, et MODE S (en fait,
+tout mode peut être utilisé).  </p><p>Chaque page d'information dispose d'une en-tête. Chaque champ d'en-tête,
+constitué d'un mot logique, est un mot du système TOPS-20, dans la mesure
+où le TYPE est L 36. </p><p>Ces champs d'en-tête sont :
+
+</p><p><code><b><font color="#800000">Mot 0: Header Length</font></b><br>
+Longueur d'en-tête</code>
+ 
+</p><p>La longueur d'en-tête vaut 5.
+
+</p><p><code><b><font color="#800000">Mot 1: Page Index.</font></b><br>
+Index de page</code>
+
+</p><p>Si les données représentent une page d'un fichier sur disque, il s'agit
+du numéro de la page reportée dans la table de pages. Les pages vides (trous)
+d'un fichier ne sont tout simplement pas transférées. Notez qu'un trou n'est
+pas la même chose qu'une page pleine de zéros.  </p><p><code><b><font color="#800000">Mot 2: Data Length.</font></b><br>
+Longueur des données</code>
+
+</p><p>La longueur des données situées dans la page et après l'en-tête, exprimée
+en mots logiques. De ce fait, la longueur totale transmise est la somme de
+la longueur d'en-tête et de la longueur des données.  </p><p><code><b><font color="#800000">Mot 3: Page Type.</font></b><br>
+Type de page</code>
+
+</p><p>Un code pour indiquer de quel type est le segment de données. Une page de données a pour type 3, la page FDB a pour type 2.
+
+</p><p><code><b><font color="#800000">Mot 4: Page Access Control.</font></b><br>
+Contrôle d'accès de page</code>
+
+</p><p>Les bits de contrôle d'accès associés à cette page de la table de
+pages. (Le mot complet est mis dans l'AC2 d'un SPACS par le programme lisant
+depuis le réseau vers le disque).  </p><p>Juste après l'en-tête, on trouvera Data Length mots de données. Cette
+longueur est couramment de 512 pour une page de données, et de 31 pour la
+FDB. Les zéros de bourrage d'une page peuvent être omis, donnant ainsi une
+longueur de données inférieure à 512 si tel est le cas.   </p><p></p><hr>
+<p align="center"><a href="959-8.htm">Précédent</a> - <a href="959-ap2.htm">Suivant</a> - <a href="959tm.htm">Retour au sommaire</a>
+
+</p></body></html>

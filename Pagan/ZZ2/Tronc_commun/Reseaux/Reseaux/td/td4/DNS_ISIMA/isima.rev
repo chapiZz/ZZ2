@@ -1,0 +1,116 @@
+;
+; Reverse address data file of hostnames in this zone.
+;
+@    IN    SOA    sp.isima.fr. postmaster.isima.fr. (
+	 	   2006060844	; Serial
+			21600	; Refresh - 6 heures
+			3600	; Retry - 1 heure
+			604800	; Expire - 1 semaine
+			86400 )	; Minimum - 24 hours
+;
+    IN    NS    sp.isima.fr.
+    IN    NS    ns2.nic.fr.
+;
+;
+$ORIGIN 95.55.193.in-addr.arpa.
+1		IN	PTR	sp.isima.fr.
+4		IN	PTR	iris.isima.fr.
+5		IN	PTR	mad3.isima.fr.
+7		IN	PTR	cosi2005.isima.fr.
+8		IN	PTR	guiers.isima.fr.
+9		IN      PTR	bermudes.isima.fr.
+10		IN	PTR	visio.isima.fr.
+11		IN      PTR	liszt.isima.fr.
+12		IN	PTR	aurora.isima.fr.
+13		IN	PTR	kiux.isima.fr.
+14		IN      PTR	vert.isima.fr.
+15		IN	PTR	ziad.isima.fr.
+20		IN	PTR	tims.isima.fr.
+21		IN	PTR	servicemosaic.isima.fr.
+22		IN	PTR	testmail.isima.fr.
+23		IN	PTR	acappella.isima.fr.
+25		IN      PTR	aures.isima.fr.
+26		IN	PTR	david.isima.fr.
+29		IN	PTR	ibimy.isima.fr.
+30		IN      PTR	keyfox.isima.fr.
+31		IN      PTR	gargamel.isima.fr.
+32		IN      PTR	garp.isima.fr.
+34		IN	PTR	mowgli.isima.fr.
+35		IN	PTR	d104.isima.fr.
+36		IN	PTR	biolpc03.isima.fr.
+37		IN	PTR	debian.isima.fr.
+38		IN      PTR	aurelie.isima.fr.
+41		IN	PTR	erdos.isima.fr.
+42		IN	PTR	asti2005.isima.fr.
+47		IN	PTR	mathieu.isima.fr.
+53		IN      PTR	kmh3.isima.fr.
+56		IN	PTR	nostradamus.isima.fr.
+57		IN	PTR	lefuneste.isima.fr.
+58		IN	PTR	biostudent.isima.fr.
+59		IN	PTR	elo.isima.fr.
+60		IN      PTR	fc.isima.fr.
+62		IN      PTR	arbuste.isima.fr.
+64		IN	PTR	base.isima.fr.
+65		IN      PTR	txhpcg.isima.fr.
+66		IN	PTR	tchernev.isima.fr.
+68		IN      PTR	Mesnard.isima.fr.
+69		IN      PTR	smir.isima.fr.
+73		IN	PTR	asusy.isima.fr.
+78		IN      PTR	hyperp.isima.fr.
+79		IN      PTR	www.isima.fr.
+83		IN	PTR	chris.isima.fr.
+86		IN      PTR	pchazal.isima.fr.
+87		IN      PTR	daniel.isima.fr.
+88		IN      PTR	veneon.isima.fr.
+89		IN      PTR	eyrieux.isima.fr.
+90		IN      PTR	claude.isima.fr.
+94		IN      PTR	rose.isima.fr.
+95		IN	PTR	perrot.isima.fr.
+98		IN      PTR	romanche.isima.fr.
+104		IN      PTR	pcbiblio.isima.fr.
+105		IN	PTR	guil.isima.fr.
+106		IN	PTR	quilliot.isima.fr.
+108		IN	PTR	lpcziad.isima.fr.
+111		IN      PTR	frog.isima.fr.
+112		IN	PTR	anelis.isima.fr.
+117		IN      PTR	isa.isima.fr.
+118		IN	PTR	profcirc.isima.fr.
+119		IN	PTR	libd1.isima.fr.
+120		IN      PTR	ChristF.isima.fr.
+122		IN	PTR	myriam.isima.fr.
+125		IN	PTR	libd2.isima.fr.
+131		IN	PTR	poste.isima.fr.
+141             IN      PTR     nst141.isima.fr.
+142             IN      PTR     nst142.isima.fr.
+143             IN      PTR     nst143.isima.fr.
+144             IN      PTR     nst144.isima.fr.
+145             IN      PTR     nst145.isima.fr.
+146             IN      PTR     nst146.isima.fr.
+147             IN      PTR     nst147.isima.fr.
+148		IN	PTR	nst148.isima.fr.
+150		IN	PTR	bdlimos.isima.fr.
+157		IN	PTR	pc157.isima.fr.
+158		IN	PTR	pc158.isima.fr.
+160		IN	PTR	pc160.isima.fr.
+161		IN	PTR	pc161.isima.fr.
+173		IN	PTR	lagrange.isima.fr.
+174		IN	PTR	penarbed.isima.fr.
+175		IN	PTR	hilbert.isima.fr.
+176		IN	PTR	pascal.isima.fr.
+178		IN	PTR	fourier.isima.fr.
+179   IN PTR wolfe.isima.fr.
+181		IN	PTR	lorinquer.isima.fr.
+182		IN	PTR	margaux.isima.fr.
+183		IN	PTR	solu1.isima.fr.
+186		IN	PTR	solu4.isima.fr.
+187		IN	PTR	berry.isima.fr.
+188		IN	PTR	lachesis.isima.fr.
+189		IN	PTR	infopc2.isima.fr.
+190		IN	PTR	fulkerson.isima.fr.
+191		IN	PTR	turing.isima.fr.
+192		IN	PTR	dantzig.isima.fr.
+195		IN	PTR	epoc.isima.fr.
+210		IN	PTR	artalis0.isima.fr.
+211             IN      PTR     artalis1.isima.fr.
+212             IN      PTR     artalis2.isima.fr.
+242		IN      PTR	chef2.isima.fr.

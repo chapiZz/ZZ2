@@ -1,0 +1,649 @@
+<HTML>
+<HEAD>
+<TITLE>Orange Book Security Class Requirements</TITLE>
+</HEAD>
+
+<BODY>
+<HR NOSHADE>
+
+<basefont size = 4>
+
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#security_testing">Security Testing</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "31">
+		31 - C1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	mechanisms of the 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	shall be tested and found to work as claimed in the 
+		<A HREF = "ob_glossary_pz.html#system_documentation">system documentation</A>. 
+	Testing shall be done to assure that there are no obvious ways for an 
+		<A HREF = "ob_glossary_pz.html#unauthorized">unauthorized</A> 
+		<A HREF = "ob_glossary_pz.html#user">user</A> 
+	to bypass or otherwise defeat the security protection mechanisms of the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>. 
+	(See the Security Testing guidelines.)
+<P>
+
+<DT>
+		<A NAME = "32">
+		32 - C2</A>
+<DD>
+	Testing shall also include a search for obvious 
+		<A HREF = "ob_glossary_eo.html#flaw">flaws</A> 
+	that would allow violation of resource isolation, or that would permit 
+		<A HREF = "ob_glossary_pz.html#unauthorized">unauthorized</A> 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	to the 
+		<A HREF = "ob_glossary_ad.html#audit">audit</A> 
+	or 
+		<A HREF = "ob_glossary_ad.html#authentication">authentication</A> 
+	data. (See the Security Testing guidelines.)
+<P>
+
+<DT>
+		<A NAME = "33">
+		33 - B1</A>
+<DD>
+	Modified.<BR>
+	A team of individuals who thoroughly understand the specific implementation of the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall subject its 
+		<A HREF = "ob_glossary_ad.html#design_documentation">design documentation</A>, 
+	source code, and object code to thorough analysis and testing. Their objectives shall 
+	be: to uncover all design and implementation 
+		<A HREF = "ob_glossary_eo.html#flaw">flaws</A> 
+	that would permit a 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A> 
+	external to the TCB to 
+		<A HREF = "ob_glossary_pz.html#read">read</A>, 
+	change, or delete data normally denied under the mandatory or discretionary 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A> 
+	enforced by the TCB; as well as to assure that no subject (without 
+		<A HREF = "ob_glossary_ad.html#authorization">authorization</A> 
+	to do so) is able to cause the TCB to enter a state such that it is unable to respond 
+	to communications initiated by other 
+		<A HREF = "ob_glossary_pz.html#user">users</A>. 
+	All discovered flaws shall be removed or neutralized and the TCB retested to demonstrate 
+	that they have been eliminated and that new flaws have not been introduced. (See the 
+	Security Testing Guidelines.)
+<P>
+
+<DT>
+		<A NAME = "34">
+		34 - B2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be found relatively resistant to 
+		<A HREF = "ob_glossary_pz.html#penetration">penetration</A>.
+<P>
+<DD>
+	Modified.<BR>
+	All discovered 
+		<A HREF = "ob_glossary_eo.html#flaw">flaws</A> 
+	shall be corrected and the TCB retested to demonstrate that they have been 
+	eliminated and that new flaws have not been introduced.
+<P>
+<DD>
+	Testing shall demonstrate that the TCB implementation is consistent with the 
+		<A HREF = "ob_glossary_ad.html#DTLS">descriptive top-level specification</A>. 
+	(See the Security Testing Guidelines.)
+<P>
+
+<DT>
+		<A NAME = "35">
+		35 - B3</A>
+<DD>
+	Modified.<BR>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be found resistant to 
+		<A HREF = "ob_glossary_pz.html#penetration">penetration</A>.
+<P>
+<DD>
+	No design 
+		<A HREF = "ob_glossary_eo.html#flaw">flaws</A> 
+	and no more than a few correctable implementation flaws may be found during 
+	testing and there shall be reasonable confidence that few remain.
+<P>
+
+<DT>
+		<A NAME = "36">
+		36 - A1</A>
+<DD>
+	Manual or other mapping of the 
+		<A HREF = "ob_glossary_eo.html#FTLS">FTLS</A> 
+	to the source code may form a basis for 
+		<A HREF = "ob_glossary_pz.html#penetration_testing">penetration testing</A>.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_ad.html#design_specification_and_verification">
+		Design Specification and Verification</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "37">
+		37 B1</A>
+<DD>
+	An informal or 
+		<A HREF = "ob_glossary_eo.html#formal_model">formal model</A> 
+	of the 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A> 
+	supported by the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be maintained over the life cycle of the 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	and demonstrated to be consistent with its axioms.
+<P>
+
+<DT>
+		<A NAME = "38">
+		38 B2</A>
+<DD>
+	Modified.<BR>
+	A 
+		<A HREF = "ob_glossary_eo.html#formal_model">formal model</A> 
+	of the 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A> 
+	supported by the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be maintained over the life cycle of the 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	that is proven consistent with its axioms. A 
+		<A HREF = "ob_glossary_ad.html#DTLS">descriptive top-level specification (DTLS)</A> 
+	of the TCB shall be maintained that completely and accurately describes the TCB in terms 
+	of exceptions, error messages, and effects. It shall be shown to be an accurate description 
+	of the TCB interface.
+<P>
+
+<DT>
+		<A NAME = "39">
+		39 B3</A>
+<DD>
+	A convincing argument shall be given that the 
+		<A HREF = "ob_glossary_ad.html#DTLS">DTLS</A> 
+	is consistent with the 
+		<A HREF = "ob_glossary_eo.html#model">model</A>.
+<P>
+
+<DT>
+		<A NAME = "40">
+		40 A1</A>
+<DD>
+	Modified.<BR>
+	A 
+		<A HREF = "ob_glossary_eo.html#FTLS">formal top-level specification (FTLS)</A> 
+	of the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be maintained that accurately describes the TCB in terms of exceptions, error messages, 
+	and effects. The 
+		<A HREF = "ob_glossary_ad.html#DTLS">DTLS</A> 
+	and FTLS shall include those components of the TCB that are implemented as hardware and/or 
+	firmware if their properties are visible at the TCB interface. The FTLS shall be shown to be 
+	an accurate description of the TCB interface. A convincing argument shall be given that the 
+	DTLS is consistent with the 
+		<A HREF = "ob_glossary_eo.html#model">model</A> 
+	and a combination of formal and informal techniques shall be used to show that FTLS is 
+	consistent with the model. This 
+		<A HREF = "ob_glossary_pz.html#verification">verification</A> 
+	evidence shall be consistent with that provided within the state-of-the-art of the particular 
+	National Computer Security Center-endorsed formal specification and verification system used. 
+	Manual or other mapping of the FTLS to the TCB source code shall be performed to provide 
+	evidence of correct implementation.
+</DL>
+<P>
+
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_ad.html#covert_channel_analysis">Covert Channel Analysis</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "41">
+		41 B2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	developer shall conduct a thorough search for 
+		<A HREF = "ob_glossary_ad.html#covert_storage_channel">covert storage channels</A> 
+	and make a determination (either by actual 
+		<A HREF = "ob_glossary_eo.html#measurement">measurement</A> 
+	or by engineering estimation) of the maximum 
+		<A HREF = "ob_glossary_ad.html#bandwidth">bandwidth</A> 
+	of each identified <A HREF = "ob_glossary_ad.html#channel">channel</A>. 
+	(See the Covert Channels Guideline section.)
+<P>
+
+<DT>
+		<A NAME = "42">
+		42 B3</A>
+<DD>
+	Modified.<BR>
+	The 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	developer shall conduct a thorough search for 
+		<A HREF = "ob_glossary_ad.html#covert_channel">covert channels</A> 
+	and make a determination (either by actual 
+		<A HREF = "ob_glossary_eo.html#measurement">measurement</A> 
+	or by engineering estimation) of the maximum 
+		<A HREF = "ob_glossary_ad.html#bandwidth">bandwidth</A> 
+	of each identified 
+		<A HREF = "ob_glossary_ad.html#channel">channel</A>. 
+	(See the Covert Channels Guideline section.)
+<P>
+
+<DT>
+		<A NAME = "43">
+		43 A1</A>
+<DD>
+	Formal methods shall be used in the analysis.
+</DL>
+<P>
+
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#trusted_facility_management">Trusted Facility Management</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "44">
+		44 B2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall support separate operator and administrator functions.
+<P>
+
+<DT>
+		<A NAME = "45">
+		45 B3, A1</A>
+<DD>
+	The functions performed in the role of a 
+		<A HREF = "ob_glossary_pz.html#security_administrator">security administrator</A> 
+	shall be identified. The 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system_administrator">system administrative</A> 
+	personnel shall only be able to perform security administrator functions after taking 
+	a distinct 
+		<A HREF = "ob_glossary_ad.html#audit">auditable</A> 
+	action to assume the security administrator role on the ADP 
+		<A HREF = "ob_glossary_pz.html#system">system</A>. 
+	Non-security functions that can be performed in the security administration role shall 
+	be limited strictly to those essential to performing the 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	role effectively.
+</DL>
+<P>
+
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_ad.html#configuration_management">Configuration Management</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "46">
+		46 B2, B3</A>
+<DD>
+	During development and maintenance of the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>, 
+	a 
+		<A HREF = "ob_glossary_ad.html#configuration_management">configuration management</A> 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	shall be in place that maintains control of changes to the 
+		<A HREF = "ob_glossary_ad.html#DTLS">descriptive top-level specification</A>, 
+	other design data, implementation documentation, source code, the running version of the 
+	object code, and test fixtures and documentation. The configuration management system shall 
+	assure a consistent mapping among all documentation and code associated with the current 
+	version of the TCB. Tools shall be provided for generation of a new version of the TCB from 
+	source code. Also available shall be tools for comparing a newly generated version with the 
+	previous TCB version in order to ascertain that only the intended changes have been made in 
+	the code that will actually be used as the new version of the TCB.
+<P>
+
+<DT>
+		<A NAME = "47">
+		47 A1</A>
+<DD>
+	Modified.<BR>
+	During the entire life-cycle, i.e., during the design, development, and maintenance of the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>, 
+	a 
+		<A HREF = "ob_glossary_ad.html#configuration_management">configuration management</A> 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	shall be in place for all 
+		<A HREF = "ob_glossary_pz.html#security">security-relevant</A> 
+	hardware, firmware, and software that maintains control of changes to the 
+		<A HREF = "ob_glossary_eo.html#formal_model">formal model</A>, 
+	the descriptive and formal 
+		<A HREF = "ob_glossary_pz.html#top-level_specification">top-level specifications</A>, 
+	other design data, implementation documentation, source code, the running version of the object 
+	code, and test fixtures and documentation.
+<P>
+<DD>
+	Modified.<BR>
+	Also available shall be tools, maintained under strict configuration control, for comparing 
+	a newly generated version with the previous TCB version in order to ascertain that only the 
+	intended changes have been made in the code that will actually be used as the new version of 
+	the TCB.
+<P>
+<DD>
+	A combination of technical, physical, and procedural safeguards shall be used to protect from 
+		<A HREF = "ob_glossary_pz.html#unauthorized">unauthorized</A> 
+	modification or destruction the master copy or copies of all material used to generate the TCB.
+</DL>
+<P>
+
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#trusted_recovery">Trusted Recovery</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "48">
+		48 B3, A1</A>
+<DD>
+	Procedures and/or mechanisms shall be provided to assure that, after an 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	failure or other discontinuity, 
+		<A HREF = "ob_glossary_pz.html#recovery">recovery</A> 
+	without a protection 
+		<A HREF = "ob_glossary_ad.html#compromise">compromise</A> 
+	is obtained.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#trusted_distribution">Trusted Distribution</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "49">
+		49 A1</A>
+<DD>
+	A 
+		<A HREF = "ob_glossary_pz.html#trust">trusted</A> 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	control and distribution facility shall be provided for maintaining the 
+		<A HREF = "ob_glossary_eo.html#integrity">integrity</A> 
+	of the mapping between the master data describing the current version of the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	and the on-site master copy of the code for the current version. Procedures (e.g., site 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	acceptance testing) shall exist for assuring that the TCB software, firmware, and hardware 
+	updates distributed to a customer are exactly as specified by the master copies.
+</DL>
+<P>
+
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#security_features_user's_guide">
+		Security Features User's Guide</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "50">
+		50 C1, C2, B1, B2, B3, A1</A>
+<DD>
+	A single summary, chapter, or manual in 
+		<A HREF = "ob_glossary_pz.html#user">user</A> 
+	documentation shall describe the protection mechanisms provided by the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>, 
+	guidelines on their use, and how they interact with one another.
+</DL>
+<P>
+
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#trusted_facility_manual">Trusted Facility Manual</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "51">
+		51 C1</A>
+<DD>
+	A manual addressed to the 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system_administrator">system administrator</A> 
+	shall present cautions about functions and 
+		<A HREF = "ob_glossary_pz.html#privilege">privileges</A> 
+	that should be controlled when running a secure facility.
+<P>
+
+<DT>
+		<A NAME = "52">
+		52 C2</A>
+<DD>
+	The procedures for examining and maintaining the 
+		<A HREF = "ob_glossary_ad.html#audit">audit</A> 
+	files as well as the detailed audit record structure for each type of audit 
+		<A HREF = "ob_glossary_eo.html#event">event</A> 
+	shall be given.
+<P>
+
+<DT>
+		<A NAME = "53">
+		53 B1</A>
+<DD>
+	The manual shall describe the operator and administrator functions related to 
+		<A HREF = "ob_glossary_pz.html#security">security</A>, 
+	to include changing the security characteristics of a 
+		<A HREF = "ob_glossary_pz.html#user">user</A>. 
+	It shall provide guidelines on the consistent and effective use of the protection features 
+	of the 
+		<A HREF = "ob_glossary_pz.html#system">system</A>, 
+	how they interact, how to securely generate a new 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>, 
+	and facility procedures, warnings, and 
+		<A HREF = "ob_glossary_pz.html#privilege">privileges</A> 
+	that need to be controlled in order to operate the facility in a secure manner.
+<P>
+
+<DT>
+		<A NAME = "54">
+		54 B2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	modules that contain the reference 
+		<A HREF = "ob_glossary_pz.html#validation">validation</A> 
+	mechanism shall be identified. The procedures for secure generation of a new TCB from 
+	source after modification of any modules in the TCB shall be described.
+<P>
+
+<DT>
+		<A NAME = "55">
+		55 B3, A1</A>
+<DD>
+	It shall include the procedures to ensure that the 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	is initially started in a secure manner. Procedures shall also be included to resume secure 
+	system operation after any lapse in system operation.
+</DL>
+<P>
+
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#test_documentation">Test Documentation</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "56">
+		56 C1, C2, B1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	developer shall provide to the evaluators a document that describes the 
+	test plan, test procedures that show how the 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	mechanisms were tested, and results of the security mechanisms' functional testing.
+<P>
+
+<DT>
+		<A NAME = "57">
+		57 B2, B3</A>
+<DD>
+	It shall include results of testing the effectiveness of the methods used to reduce 
+		<A HREF = "ob_glossary_ad.html#covert_channel">covert channel</A> 
+		<A HREF = "ob_glossary_ad.html#bandwidth">bandwidths</A>.
+<P>
+
+<DT>
+		<A NAME = "58">
+		58 A1</A>
+<DD>
+	The results of the mapping between the 
+		<A HREF = "ob_glossary_eo.html#FTLS">formal top-level specification</A> 
+	and the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	source code shall be given.
+</DL>
+<P>
+
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_ad.html#design_documentation">Design Documentation</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "59">
+		59 C1, C2</A>
+<DD>
+	Documentation shall be available that provides a description of the manufacturer's 
+	philosophy of protection and an explanation of how this philosophy is translated 
+	into the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>. 
+	If the TCB is composed of distinct modules, the interfaces between these modules shall 
+	be described.
+<P>
+
+<DT>
+		<A NAME = "60">
+		60 B1</A>
+<DD>
+	An informal or formal description of the 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A> 
+		<A HREF = "ob_glossary_eo.html#model">model</A> 
+	enforced by the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be available and an explanation provided to show that it is sufficient to enforce 
+	the security policy. The specific TCB protection mechanisms shall be identified and an 
+	explanation given to show that they satisfy the model.
+<P>
+
+<DT>
+		<A NAME = "61">
+		61 B2</A>
+<DD>
+	Modified.<BR>
+	The interfaces between the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	modules shall be described. A formal description of the 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A> 
+		<A HREF = "ob_glossary_eo.html#model">model</A> 
+	enforced by the TCB shall be available and proven that it is sufficient to enforce 
+	the security policy. 
+<P>
+<DD>
+	The 
+		<A HREF = "ob_glossary_ad.html#DTLS">descriptive top-level specification (DTLS)</A> 
+	shall be shown to be an accurate description of the TCB interface. Documentation shall 
+	describe how the TCB implements the 
+		<A HREF = "ob_glossary_pz.html#reference_monitor">reference monitor</A> 
+	concept and give an explanation why it is tamper resistant, cannot be bypassed, and is 
+	correctly implemented. Documentation shall describe how the TCB is structured to facilitate 
+	testing and to enforce 
+		<A HREF = "ob_glossary_eo.html#least_privilege">least privilege</A>. 
+	This documentation shall also present the results of the 	
+		<A HREF = "ob_glossary_ad.html#covert_channel_analysis">covert channel analysis</A> 
+	and the tradeoffs involved in restricting the 
+		<A HREF = "ob_glossary_ad.html#channel">channels</A>. 
+	All 
+		<A HREF = "ob_glossary_ad.html#audit">auditable</A> 
+	events that may be used in the exploitation of known 
+		<A HREF = "ob_glossary_ad.html#covert_storage_channel">covert storage channels</A> 
+	shall be identified. The 
+		<A HREF = "ob_glossary_ad.html#bandwidth">bandwidths</A> 
+	of known covert storage channels, the use of which is not detectable by the auditing mechanisms, 
+	shall be provided. (See the Covert Channel Guideline section.)
+<P>
+
+<DT>
+		<A NAME = "62">
+		62 B3</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	implementation (i.e., in hardware, firmware, and software) shall be informally shown to 
+	be consistent with the 
+		<A HREF = "ob_glossary_ad.html#DTLS">DTLS</A>. 
+	The elements of the DTLS shall be shown, using informal techniques, to correspond to the 
+	elements of the TCB.
+<P>
+
+<DT>
+		<A NAME = "63">
+		63 A1</A>
+<DD>
+	Modified.<BR>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	implementation (i.e., in hardware, firmware, and  software) shall be informally shown to 
+	be consistent with the 
+		<A HREF = "ob_glossary_eo.html#FTLS">formal top-level specification (FTLS)</A>. 
+	The elements of the FTLS shall be shown, using informal techniques, to correspond to the elements 
+	of the TCB.
+<P>
+<DD>
+	Hardware, firmware, and software mechanisms not dealt with in the FTLS but strictly internal 
+	to the TCB (e.g., mapping registers, direct memory access I/O) shall be clearly described.
+</DL>
+<P>
+
+</BODY>
+</HTML>
+

@@ -1,0 +1,633 @@
+<html><head><title>FTP</title></head>
+<body bgcolor="#dddddd">
+
+<p>RFC: 959<br>
+Statut : Standard<br>
+</p><p>Remplace RFC: 765 (IEN 149) 
+
+</p><h1 align="center">File Transfer Protocol (FTP)</h1>
+<h2 align="center">Spécification</h2>
+
+<p></p><hr>
+<p>Crédits : J. Postel, J. Reynolds / ISI<br>
+Traduction : <a href="mailto:Valery.Fremaux@eisti.fr">Valéry G. FREMAUX</a> Ingénieur Professeur / <a href="http://www.eisti.fr/">EISTI</a><br>
+Edition originale : Octobre 1985 / Version FR: Février 1997 
+</p><p align="center"><a href="959-2.htm">Précédent</a> - <a href="959-4.htm">Suite</a> - <a href="959tm.htm">Retour au sommaire</a> 
+</p><p></p><hr>
+
+<font color="#000080"></font><h2><font color="#000080">3. FONCTIONS DE TRANSFERT DE DONNEES</font></h2>
+
+<p>Seul le canal de données permet le transfert effectif des fichiers. La
+canal de contrôle n'est utilisé que pour le contrôle des commandes, qui indiquent
+les fonctions qui doivent être exécutées, ainsi que les réponses à ces commandes
+(voir la Section traitant des Réponses FTP). Plusieurs commandes concernent
+le transfert de données entre hôtes. Ces commandes de transfert incluent
+la commande MODE qui spécifie comment les bits de données doivent être transmis,
+ainsi que les commandes STRUcture et TYPE, qui sont utilisées pour définir
+la manière avec laquelle sont représentées les données. La transmission et
+la représentation sont des notions indépendantes. Cependant le mode de transmission
+"Stream" reste dépendant des attributs de structure des fichiers et si le
+mode de transmission "Compressed" est utilisé, la nature des octets de remplissage
+dépendra de la représentation des données utilisée.   </p><h3>3.1. REPRESENTATION DES DONNEES ET STOCKAGE</h3>
+
+<p>Les données sont transférées à partir d'un espace de stockage dans l'hôte
+émetteur vers l'espace de stockage de l'hôte récepteur. Il est souvent nécessaire
+d'effectuer certaines transformations sur les données du fait de la différence
+de la représentation de ces dernières dans deux systèmes de nature différente.
+par exemple, le format NVT-ASCII est stocké sous diverses représentations
+selon le système. Les DEC TOPS-20 enregistrent généralement le format NVT-ASCII
+sous la forme de cinq caractères ASCII codées sur 7 bits, dans un mot de
+36-bit calé sur la gauche. Les mainframes IBM enregistre ce même format sous
+forme de codes EBCDIC sur 8 bits. Le système Multics stocke le format NVT-ASCII
+sous la forme de quatre caractères sur 9-bits dans un mot de 36-bits. Il
+est souhaitable de convertir les caractères entre les diverses représentation
+du format NVT-ASCII lorsque des transmissions sont effectuées entre systèmes
+distincts, en passant par une représentation standard. Les sites émetteurs
+et récepteurs devront effectuer les transformations nécessaires entre la
+représentation standard commune et leur propre représentation interne.   </p><p>Un autre problème de représentation apparaît lors du transfert de
+données binaires (codes non assimilables à du texte) entre deux systèmes
+travaillant avec des largeurs de mots distinctes. La façon dont l'émetteur
+envoie les données n'est pas toujours exprimée explicitement, pas plus que
+la façon dont le récepteur les stocke. Par exemple, lors de la transmission
+de "mots" de 32-bits à partir d'un système 32-bits vers un systèmes fonctionnant
+en 36-bits, il peut être souhaitable (pour des raisons de performance) de
+stocker les mots de 32-bits calés à droite du mot de 36-bits du système récepteur.
+Dans tous les cas, l'utilisateur doit avoir accès à l'option qui lui permettra
+de spécifier la représentation des données, et les transformations nécessaires.
+Il doit être noté que FTP n'admet qu'un nombre limité de formats de données.
+Les transformations en dehors du contexte limité proposé par FTP devront
+être prises en charge par l'utilisateur.   </p><h4><a name="3.1.1">3.1.1. TYPES DE DONNEES</a></h4>
+
+<p>Les représentations de données sont gérées dans FTP par la spécification
+par l'utilisateur d'un type. Ce type peut être implicite (comme pour l'ASCII
+ou l'EBCDIC) ou explicite (comme le type Local), et définit une taille de
+mot dont l'interprétation correspond à celle de la "taille de mot logique".
+Notez que ceci n'a rien à voir avec la taille du mot utilisé dans la transmission
+dans le canal de données, appelée la "taille de transfert", la confusion
+entre les deux notions devant être soigneusement évitée. Par exemple, le
+format NVT-ASCII a une taille logique de 8 bits. Si le type est le type Local,
+alors la commande TYPE aura un deuxième paramètre obligatoire spécifiant
+cette taille logique. La taille de transfert est toujours égale à 8 bits.
+ </p><h5><a name="3.1.1.1">3.1.1.1. TYPE ASCII</a></h5>
+
+<p>C'est le type par défaut et doit être reconnu par toutes les implémentations
+FTP. Il est à l'origine mis en place pour le transfert de fichiers texte,
+sauf lorsque les deux hôtes considéreront que le type EBCDIC convient mieux.
+  </p><p>L'émetteur convertit les données depuis la représentation interne
+des caractères vers le format 8-bit NVT-ASCII standardisé (voir les spécifications
+Telnet). Le récepteur convertira cette représentation standard en sa propre
+représentation interne.   </p><p>Conformément au standard NVT, la séquence &lt;CRLF&gt; doit être
+utilisée à chaque fois que nécessaire pour marquer une fin de ligne de texte.
+(Voir la discussion à propos des structures de fichiers à la fin de la Section
+traitant des Représentations de données et stockage). Le fait d'utiliser
+la représentation standard NVT-ASCII en 8 bits signifie que les données doivent
+être interprétées selon des "mots" de 8-bits. Les valeurs du paramètre Format
+pour les types ASCII et EBCDIC sont détaillées ci-après.   </p><h5><a name="3.1.1.2">3.1.1.2. TYPE EBCDIC</a></h5>
+
+<p>Ce type est destiné à des transferts plus efficaces entre deux hôtes qui
+admettent l'EBCDIC comme standard de représentation interne des caractères
+de texte.  </p><p>Pour la transmission, les données sont représentées comme des codes
+EBCDIC sous 8-bits. Le codage des caractères est la seule différence qui
+distingue les spécifications des types EBCDIC et de l'ASCII.   </p><p>La fin de ligne (EOL équivalent à la séquence CRLF) (par opposition
+à la fin d'enregistrement (EOR)-voir la discussion sur les structures) sera
+rarement utilisée avec le type EBCDIC pour des raisons de reconnaissances
+de structure, mais lorsqu'une telle information est nécessaire, le caractère
+&lt;NL&gt; pourra être utilisé.   </p><h5><a name="3.1.1.3">3.1.1.3. TYPE IMAGE</a></h5>
+
+<p>Les données sont transmises comme un champ de bits continu qui, pour le
+transfert, sont "empaquetés" dans des structures de transfert de 8-bits.
+Le site récepteur doit quant à lui enregistrer les données comme un champ
+continu de bits. La structure du système de stockage nécessite parfois l'utilisation
+de bits de "bourrage" pour le fichier (ou pour chaque enregistrement, dans
+le cas d'un fichier structuré sur une base d'enregistrements logiques) établissant
+ainsi un "calage" des données sur une frontière conventionnelle (octet, mot
+ou bloc). Ce bourrage doit toujours être fait par des bits nuls, peut intervenir
+à la fin d'un fichier (ou à la fin de chaque enregistrement) et il doit exister
+un moyen de les identifier afin qu'ils puissent être éliminés lorsque le
+fichier est récupéré. La transformation de bourrage devra faire l'objet d'une
+large et claire documentation pour permettre à tout utilisateur d'implémenter
+les traitements nécessaires à la reconstitution du fichier original dans
+le site récepteur.   </p><p>Le type image est destiné à un transfert et un enregistrement optimal
+de fichiers binaires. Il est recommandé que ce type soit reconnu par toutes
+les implémentations FTP.   </p><h5><a name="3.1.1.4">3.1.1.4. TYPE LOCAL</a></h5>
+
+<p>Les données sont transférées par mots logiques dont la taille est nécessairement
+spécifiée par un second paramètre obligatoire, "Byte size". La valeur du
+paramètre "Byte size" doit être un entier décimal; il n'existe pas de valeur
+par défaut. La taille de mot logique n'est pas nécessairement la même que
+celle du mot de transfert. Si les deux tailles sont différentes, alors les
+mots logiques devront être empaquetés selon une trame continue de bits, indépendamment
+des limites formées par le mot de transfert et avec le bourrage nécessaire
+ajouté à la fin.   </p><p>Lorsque les données sont reçues sur l'hôte récepteur, elles seront
+transformées selon la taille des mots logiques du fichier transféré et la
+taille de la représentation interne du récepteur. Cette transformation doit
+être réversible (c-à-d, un fichier identique doit pouvoir être récupéré dans
+l'autre sens avec les mêmes paramètres) et devra faire l'objet d'une documentation
+précise et complète de la part des implémenteurs FTP.   </p><p>Par exemple, un utilisateur envoyant des nombres à virgule flottante
+en 36-bits vers un hôte travaillant en 32-bits pourrait envoyer ces données
+sous le type Local selon une taille Locale de 36. L'hôte récepteur pourrait
+par exemple récupérer ces mots logiques et les enregistrer d'une façon à
+ce qu'ils puissent être manipulés facilement; dans notre exemple, une solution
+consiste à stocker les mots de 36-bits dans un double mot de 64-bits.   </p><p>Autre exemple : le cas d'une paire d'hôtes travaillant sous 36-bits
+pourraient se communiquer des données en utilisant le TYPE L 36. Les données
+seraient alors transmises empaquetées dans le format 8-bits de la transmission,
+9 octets transmis étant nécessaires pour transférer deux "mots" entre deux
+tels systèmes.   </p><h5><a name="3.1.1.5">3.1.1.5. CONTROLE DE FORMAT</a></h5>
+
+<p>Les types ASCII et EBCDIC prennent un second paramètre (optionnel); il
+indique quel type de contrôle de format vertical , s'il existe, est associé
+à un fichier. Les types de représentation de données suivantes sont définis
+dans FTP:   </p><p>Un fichier caractères peut être transféré vers un  hôte dans l'un
+des trois buts suivants : pour impression, pour stockage et récupération
+ultérieure, ou pour traitement. Si un fichier est envoyé pour impression,
+l'hôte récepteur doit connaître comment le contrôle de format vertical format
+est représenté. Dans le second cas, il doit être possible d'enregistrer un
+fichier pour usage ultérieur dans sa forme originale. Enfin, il doit être
+possible de déplacer un fichier d'un hôte vers un autre, et de traiter ce
+fichier sur l'hôte récepteur sans ennui. Un format ASCII ou EBCDIC élémentaire
+ne satisfait pas à ces conditions. De ce fait, un second paramètre a été
+adjoint au paramètre de type, pour coder trois situations possibles :   </p><p><b><i><a name="3.1.1.5.1">3.1.1.5.1. NON PRINT</a></i></b> 
+
+</p><p>C'est le format par défaut à utiliser si le second paramètre (format)
+est omis. Le format NON-PRINT doit être accepté par toutes les implémentations
+de FTP.   </p><p>Le fichier ne contient pas nécessairement des informations de contrôle
+vertical. Si un tel fichier est passé à un processus d'impression, ce dernier
+devra prendre des valeurs standard pour les espaces et les marges. Ce format
+sera usuellement utilisé pour des fichiers destinés à du traitement de données
+ou à être juste stockés.   </p><p><b><i><a name="3.1.1.5.2">3.1.1.5.2. TELNET FORMAT CONTROLS</a></i></b> 
+
+</p><p>Le fichier contient des codes ASCII/EBCDIC de contrôle de format vertical
+(c-à-d., &lt;CR&gt;, &lt;LF&gt;, &lt;NL&gt;, &lt;VT&gt;, &lt;FF&gt;) qu'un
+processus d'impression peut immédiatement interpréter. &lt;CRLF&gt;, dans
+cet ordre précis, signale une fin de ligne.   </p><p><b><i><a name="3.1.1.5.3">3.1.1.5.3. CARRIAGE CONTROL (ASA)</a></i></b> 
+
+</p><p>Le fichier contient des caractères de contrôle de format vertical
+conformes à l'ASA (FORTRAN). (Voir RFC 740 Appendice C; et "Communications
+of the ACM, Vol. 7, No. 10, p. 606, October 1964".) Dans une ligne, ou un
+enregistrement au format conforme au standard ASA, le premier caractère ne
+doit pas être imprimé. Au lieu de cela, il doit être utilisé pour déterminer
+le mouvement vertical du papier à effectuer avant que l'impression du reste
+de l'enregistrement ne soit effectué.   </p><p>Le standard ASA spécifie les caractères de contrôle suivants : 
+
+</p><p align="center"></p><center><table border="1" cellspacing="1" cellpadding="4" width="374">
+<tbody><tr><td width="27%" valign="top" bgcolor="#ffffff">
+<p><b><i>Caractère</i></b></p></td>
+<td width="73%" valign="top" bgcolor="#ffffff">
+<b><i></i></b><p><b><i>Espacement vertical</i></b></p></td>
+</tr>
+<tr><td width="27%" valign="top">
+<b></b><p><b>Espace</b></p></td>
+<td width="73%" valign="top">
+<p>Avance le papier d'une ligne</p></td>
+</tr>
+<tr><td width="27%" valign="top">
+<b></b><p><b>0</b></p></td>
+<td width="73%" valign="top">
+<font size="2"></font><p><font size="2">Avance le papier de deux lignes</font></p></td>
+</tr>
+<tr><td width="27%" valign="top">
+<b></b><p><b>1</b></p></td>
+<td width="73%" valign="top">
+<font size="2"></font><p><font size="2">Avance le papier en début de la page suivante</font></p></td>
+</tr>
+<tr><td width="27%" valign="top">
+<b></b><p><b>+</b></p></td>
+<td width="73%" valign="top">
+<font size="2"></font><p><font size="2">Pas de mouvement (surimpression)</font></p></td>
+</tr>
+</tbody></table>
+</center>
+
+<p align="center">Il doit exister un moyen simple pour un processus d'impression
+de détecter la fin d'une entité structurale. Si un fichier est enregistré
+selon une structure d'enregistrement (voir ci-dessous), il n'y a aucun problème;
+les enregistrements seront explicitement marqués pendant le transfert et
+l'enregistrement. Si le fichier n'a aucune structure d'enregistrement sous-jacente,
+la séquence de fin de ligne &lt;CRLF&gt; est utilisée pour séparer les lignes
+d'impression, bien que l'effet produit par ces deux caractères soit masqué
+par la signification des contrôles ASA.   </p><h5><a name="3.1.2">3.1.2. STRUCTURES DE DONNEES</a></h5>
+
+<p>En plus des différents types de représentation de données, FTP permet
+que la structure d'un fichier soit explicitée. Trois structures de fichiers
+sont connues de FTP:   <i></i></p><p><i>Structure fichier,</i> dans laquelle le fichier est considéré comme une séquence continue d'octets contigus, sans structure sous-jacente induite. 
+
+<i></i></p><p><i>Structure-enregistrement, </i>dans laquelle un fichier peut être vu comme une séquence d'enregistrements, 
+
+<i></i></p><p><i>Structure-paginée, </i>dans laquelle le fichier peut être considéré comme une suite de pages indépendantes indexées. 
+
+</p><p>La "structure-fichier" est la structure par défaut et doit être considérée
+si la commande STRUcture n'a pas été utilisée, bien que les deux structures
+"fichier" et "enregistrement" dussent être acceptées pour les fichiers "texte"
+(c-à-d., fichiers affichant un TYPE ASCII ou EBCDIC) par toutes les implémentations
+FTP. La structure d'un fichier affectera à la fois la façon de transmettre
+le fichier (voir la Section traitant du Mode de Transmission) et l'interprétation
+de l'enregistrement sur le support de stockage.   </p><p>La structure "naturelle" d'un fichier dépend de l'hôte qui l'enregistre.
+Du code source sera généralement enregistré sur un mainframe IBM comme une
+suite d'enregistrements de longueur fixe, et au contraire comme un flux de
+caractères séparé en lignes par une séquence &lt;CRLF&gt; par exemple, sur
+un DEC TOPS-20. Si le transfert de fichiers entre des sites aussi différents
+s'avère utile, il doit exister un moyen de différencier les stratégies de
+codage de chaque côté de la transaction.   </p><p>Entre des sites naturellement orientés vers une structure "fichier"
+et d'autres utilisant naturellement une structure "enregistrements", on pourra
+rencontrer des problèmes à transférer un fichier basé sur une des deux structures
+vers un système s'appuyant sur l'autre. Si un fichier texte organisé en "enregistrements"
+est envoyé vers un hôte naturellement orienté "fichier", alors ce dernier
+devra appliquer une transformation interne pour l'enregistrer. Cette transformation
+est évidemment utile, mais doit être de plus totalement réversible pour assurer
+une récupération "à l'identique".   </p><p>Dans le cas inverse de fichiers de type "fichier", vers un hôte travaillant
+en structures "enregistrement", se pose le problème de savoir quel sera le
+critère utilisé pour recomposer le fichier selon une structure d'enregistrements.
+Si cette division est nécessaire, l'implémentation FTP devrait utiliser la
+séquence fin-de-ligne, &lt;CRLF&gt; pour l'ASCII, ou &lt;NL&gt; pour les
+fichiers texte EBCDIC, comme délimiteur d'enregistrement. Si une implémentation
+FTP adopte cette technique, elle doit être prête à pouvoir procéder à la
+transformation inverse au cas où le fichier devrait être rapatrié vers son
+support original de type "fichier".  </p><h5><a name="3.1.2.1">3.1.2.1. STRUCTURE FICHIER</a></h5>
+
+<p>La structure "fichier" est à considérer par défaut si la commande STRUcture n'est pas employée. 
+</p><p>Dans une structure-fichier, il n'y a en fait aucune structure sous-jacente
+et le fichier doit être considéré comme une suite continue de caractères.
+  </p><h5><a name="3.1.2.2">3.1.2.2. STRUCTURE ENREGISTREMENT</a></h5>
+
+<p>La structure-enregistrement doit être acceptée pour tout fichier "texte"
+(c-à-d., fichiers affichant un TYPE ASCII ou EBCDIC) par toutes les implémentations
+FTP.   </p><p>Le fichier est alors reconnu comme une suite ordonnée d'enregistrements successifs. 
+
+</p><h5><a name="3.1.2.3">3.1.2.3. STRUCTURE PAGINEE</a></h5>
+
+<p>Pour transmettre des fichiers discontinus, FTP définit une structure en
+pages. Les fichiers de ce type sont aussi connus comme des "fichiers à accès
+aléatoire" par opposition aux "fichiers à accès séquentiel". Dans ces fichiers,
+il existe souvent un certain nombre d'informations annexes, associées au
+fichier lui même (ex., un descripteur du fichier), ou à l'une de ses parties
+(ex., des contrôles d'accès aux différentes pages), ou les deux. Pour FTP,
+chaque section séquentielle d'un tel fichier est appelée page.   </p><p>Afin d'exploiter des tailles et des attributs de page différents,
+chaque page est envoyée avec une en-tête. L'en-tête contient une sélection
+des paramètres suivants:   </p><p></p><center>
+<table border="0">
+<tbody><tr>
+<td valign="top">
+Header Length<br>
+<i><font size="-1">(Longueur d'en-tête)</font></i>
+</td>
+<td valign="top">
+Le nombre d'octets logiques dans l'en-tête y compris lui-même. La longueur minimale d'en-tête est de 4.
+</td>
+</tr>
+<tr>
+<td valign="top">
+Page Index<br>
+<i><font size="-1">(Index de page)</font></i>
+</td>
+<td valign="top"> L'index de cette section du fichier (numéro de page logique).
+Ceci n'est pas le numéro de page transmise, mais plutôt l'index qui permet
+d'identifier cette page. </td>
+</tr>
+<tr>
+<td valign="top">
+Data Length<br>
+<i><font size="-1"></font></i><p><i><font size="-1">(Longueur des données)</font></i>
+</p></td>
+<td valign="top">
+Le nombre d'octets logiques dans la page. La longueur de page peut être nulle.
+</td>
+</tr>
+<tr>
+<td valign="top">
+Page Type<br>
+<i><font size="-1"></font></i><p><i><font size="-1">(Type de page)</font></i>
+</p></td>
+<td valign="top">
+Le type de page dont il s'agit. Sont définis les types qui suivent :
+</td>
+</tr>
+<tr>
+<td valign="top">
+	0 = Last Page<br>
+	<i><font size="-1">(Dernière page)</font></i>
+</td>
+<td valign="top"> Utilisé pour indiquer la fin d'une transmission structurée
+en pages. La longueur d'en-tête de cette page est 4, et la longueur de page
+nécessairement 0.</td>
+</tr>
+<tr>
+<td valign="top">
+	1 = Simple Page<br> 
+	<i><font size="-1">(Page simple)</font></i>
+</td>
+<td valign="top"> Type d'une page normale du fichier ne disposant pas d'information
+de contrôle hiérarchique. La longueur d'en-tête doit être de 4. </td>
+</tr>
+<tr>
+<td valign="top">
+	2 = Descriptor Page<br> 
+	<i><font size="-1">(Descripteur)</font></i>
+</td>
+<td valign="top">
+Type utilisé pour transmettre en un bloc toute la description externe du fichier.
+</td>
+</tr>
+<tr>
+<td valign="top">
+	3 = Access Controlled Page<br>
+	<i><font size="-1">(Page à accès contrôle)</font></i>
+</td>
+<td valign="top"> Ce type inclut un paramètre supplémentaire destiné à l'accès
+à des pages organisées selon une structure hiérarchique à plusieurs niveaux.
+L'en-tête est de longueur 5. </td>
+</tr>
+<tr>
+<td valign="top">
+Champs optionnels
+</td>
+<td valign="top"> Des champs optionnels peuvent être ajoutés pour fournir
+une information spécifique sur la page elle-même, par exemple un contrôle
+d'accès individuel. </td>
+</tr>
+</tbody></table></center>
+
+<p align="left">Tous les champs sont de longueur égale à un octet logique.
+La taille de l'octet logique est défini par le paramétrage de la commande
+TYPE. Voir l'Appendice I pour plus de détails.   </p><p><i>Note d'avertissement concernant les paramètres :</i> un fichier
+doit être téléchargé, enregistré et récupéré avec les mêmes paramètres si
+l'on souhaite récupérer une version identique à l'original. A l'inverse,
+les implémentations de FTP doivent renvoyer un fichier identique à l'original
+si les paramètres utilisés pour l'enregistrement et la récupération du fichier
+sont identiques.   </p><h3><a name="3.2">3.2. ETABLISSEMENT DU CANAL DE DONNEES</a></h3>
+
+<p>Le mécanisme de transfert de données consiste en l'établissement d'un
+canal de données entre les ports appropriés et de ce fait en le choix des
+paramètres de transfert. Le USER et SERVER-DTP disposent tous deux d'un port
+de données par défaut. Le port "données" par défaut du processus utilisateur
+est identique à celui utilisé pour le contrôle de la connexion (c-à-d., U).
+Le port "données" par défaut du processus serveur est le port adjacent à
+celui utilisé pour le contrôle de la connexion (c-à-d., L-1).   </p><p>La taille de l'octet transféré est toujours de 8-bits. Cette taille
+n'a de signification que pendant le processus effectif de transfert des données;
+elle ne présume en rien de la taille des unités logiques nécessaires pour
+représenter les données à l'intérieur du système.   </p><p>Le processus de transfert de données à l'état passif (ceci peut être
+un USER-DTP ou un deuxième SERVER-DTP) devra "écouter" son port de données
+avant de pouvoir émettre une commande de requête de transfert. La commande
+FTP de requête de transfert détermine le sens du transfert de données. Le
+serveur, sur réception de la requête, établira la connexion au port "données".
+Lorsque cette dernière est établie, le transfert de données débute entre
+les deux DTP, et le SERVEUR-PI émet une confirmation à destination du USER-PI.
+  </p><p>Toute implémentation FTP doit accepter l'utilisation des ports par
+défaut, et seul le USER-PI peut invoquer une migration de la connexion vers
+des ports non standards.   </p><p>Le processus utilisateur peut demander l'usage d'un autre port "données"
+par l'intermédiaire de la commande PORT. Par exemple, un utilisateur demande
+l'impression d'un fichier sur une imprimante en ligne TAC lequel fichier
+doit être récupéré depuis un troisième hôte. Dans le dernier cas, le USER-PI
+établit un canal de contrôle avec les deux SERVER-PI. Il est alors demandé
+à un serveur (par une commande FTP) "d'écouter" une connexion qu'une troisième
+entité va initier. Le USER-PI émet à destination d'un des SERVER-PI une commande
+PORT indiquant le port "données" de l'autre connexion. Enfin, il est envoyé
+aux deux serveurs les commandes de transfert appropriées. La séquence exacte
+de commandes et de réponses envoyées entre le contrôleur de l'utilisateur
+et les serveurs est définie dans la Section traitant des Réponses FTP.   </p><p>En général, il est de la responsabilité des serveurs de maintenir
+le canal de données actif-de l'initialiser et de le clore. L'exception à
+cette règle est lorsque le USER-DTP envoie des données dans un mode qui implique
+que la fin de fichier (EOF) correspond à la fermeture de la transmission.
+Le serveur DOIT fermer le canal de données sous les conditions suivantes
+:   </p><ol>
+<li>Le serveur à terminé la transmission de données dans un mode ou la fin de fichier est signalée par une fermeture du canal. </li>
+<li>Le serveur reçoit une commande ABORT de l'utilisateur. </li>
+<li>La spécification du port "données" est changée par une commande de l'utilisateur. </li>
+<li>Le canal de contrôle est fermé par une procédure normale ou pour toute autre raison. </li>
+<li>Une condition d'erreur irrécupérable est apparue. </li></ol>
+
+<p>Dans tous les autres cas la fermeture est une prérogative du serveur,
+l'exercice de la quelle doit être signalée au processus utilisateur par un
+code de réponse 250 ou 226 seulement.   </p><h3><a name="3.3">3.3. GESTION DU CANAL DE DONNEES</a></h3>
+
+<p>Ports de données standard : Toute implémentation FTP doit accepter l'usage
+des ports de données standard, seul un USER-PI pouvant initialiser un canal
+sur un port autre que standard.   </p><p>Négociation des ports autres que par défaut : Le USER-PI peut spécifier
+un port de données non standard à "viser" par le serveur via la commande
+PORT. Le USER-PI peut demander au serveur de s'identifier au serveur "cible"
+exprimé par ce port non standard via la commande PASV. La connexion étant
+définie comme une paire d'adresse, ces deux actions sont suffisantes pour
+obtenir à chaque fois un canal de données différent, bien qu'il soit admis
+de pouvoir déclencher deux fois ces commandes pour raccorder deux ports non
+standard à chaque extrémité d'un canal de données.   </p><p>Réutilisation du canal de données : Lorsque le mode de transfert
+en "flux" est utilisé, la fin de fichier est indiquée implicitement par une
+fermeture du canal. Ceci pose un problème évident lorsque plusieurs fichiers
+doivent être transférés au cours de la même session, dans la mesure où TCP
+doit "bloquer" la connexion qui vient d'être utilisée pendant un certain
+temps fixé pour des raisons de fiabilité. De ce fait, une connexion ouverte
+sous ce mode ne peut pas être réutilisée immédiatement.   </p><p>On donnera deux solutions à ce problème. La première est de négocier
+un autre canal sur des ports non standard. La première est de changer le
+mode de transfert.   </p><p>Commentaire sur les modes de transfert. Le mode de transfert en "flux"
+est par nature non fiable, dans la mesure où il est impossible de déterminer
+si un canal est fermé normalement ou non. Les autres modes de transfert (Bloc,
+Compressé) ne ferment pas le canal après transmission du fichier. Le niveau
+d'encodage de FTP est suffisant pour que le canal puisse être "surveillé"
+et que la fin de fichier puisse être détectée. Ces modes sont donc tout à
+fait exploitables pour la transmission de multiples fichiers.   </p><h3><a name="3.4">3.4. MODES DE TRANSMISSION</a></h3>
+
+<p>La considération suivante à prendre en compte pour transférer des fichiers
+est le choix d'un mode de transmission. FTP définit trois modes : un qui
+formate les données est permet de recommencer la transmission si nécessaire;
+une qui compresse en plus les données pour un transfert plus efficace; et
+un dernier mode qui laisse passer les données avec le moins d'encodage possible.
+Dans ce dernier cas, le mode interagit avec les attributs de structure pour
+déterminer le type de traitement. En mode compressé, le type de représentation
+détermine essentiellement la nature du bourrage.   </p><p>Tous les transferts de données doivent s'achever par la transmission
+d'une séquence de fin-de-fichier (EOF), la quelle peut être explicite, ou
+implicitement déduite de la fermeture du canal. Pour les fichiers de structure
+de type "enregistrement", tous les marqueurs de fin d'enregistrement (EOR)
+sont explicites, y compris le dernier. Pour les fichiers transmis selon une
+structure de pages, la page de type "last-page" sera utilisée pour marquer
+la fin de la transmission.   </p><p><i>NOTE: Dans le reste de cette section, octet signifiera "l'octet de transfert" sauf mention contraire explicite.</i> 
+
+</p><p>Dans le but d'obtenir un transfert standardisé, l'hôte émetteur devra
+traduire sa représentation interne d'une fin de fichier ou fin d'enregistrement
+dans la représentation préconisée par le protocole pour le mode de transfert
+et la structure de fichier donnés, l'hôte récepteur effectuant la transcription
+duale vers sa propre représentation interne. Le champ de comptage d'enregistrements
+d'un mainframe IBM peut ne pas être reconnu par un autre hôte, l'information
+de fin d'enregistrement devant alors être transféré comme un code de contrôle
+à deux octets en mode "flux" ou par marquage de bits dans les descripteurs
+des modes Bloc ou Compressé. La fin de ligne dans un fichier ASCII ou EBCDIC
+sans structure d'enregistrement devrait être indiqué par une séquence &lt;CRLF&gt;
+ou &lt;NL&gt;. Comme ces transformation impliquent un travail supplémentaire
+dans les hôtes, des systèmes identiques ou similaires s'échangeant des fichiers
+préféreront utiliser un transfert binaire dans un mode de type "flux".   </p><p>Les modes de transmission suivants sont reconnus par FTP : 
+
+</p><h4><a name="3.4.1">3.4.1. MODE "FLUX"</a></h4>
+
+<p>Les données sont transmises comme un flux d'octets. Il n'y a dans ce cas
+aucune restriction sur la représentation des données utilisée; Des structures-enregistrement
+sont autorisées.   </p><p>Dans un fichier d'enregistrements, les séquences EOR et EOF seront
+toutes deux marquées par un code de contrôle à deux octets. Le premier octet
+vaudra 0xFF, le caractère d'échappement. Le second octet aura sont bit de
+poids faible à 1 et des 0 ailleurs pour la marque EOR (le second bit à 1
+pour la marque EOF); en somme, l'octet aura la valeur 1 pour l'EOR et 2 pour
+l'EOF. EOR et EOF peuvent être marqué simultanément dans la dernière séquence
+en marquant les deux bits dans le même octet (donc, une valeur 3 pour le
+dernier enregistrement). Si un octet de données devait avoir la valeur OxFF,
+il devra être répété dans le second octet du code de contrôle.   </p><p>Si la structure est de type "fichier", la séquence EOF sera implicitement
+marquée par la fermeture du canal. Tous les octets transmis sont donc des
+octets de données.   </p><h4><a name="3.4.2">3.4.2. MODE BLOC</a></h4>
+
+<p>Le fichier est transmis comme une suite de blocs de données précédés d'un
+ou plusieurs octets d'en-tête. L'en-tête contient un champ de comptage de
+blocs, et un code de description. Le champ de comptage indique la longueur
+totale du bloc de données en octets, et indique donc le début du bloc suivant
+(il n'y a pas de bits de bourrage). Le code de description indique : le dernier
+bloc du fichier (EOF) le dernier bloc de l'enregistrement (EOR), le marqueur
+de reprise (voir la Section traitant de la Récupération d'Erreurs et Reprise
+de Transmission) ou de données suspectes (c-à-d. qu'il est possible que les
+données transférées soient erronées et non fiables). Ce dernier code N'EST
+PAS destiné à implémenter une fonction de contrôle d'erreur sous FTP. Il
+est motivé par la demande de certains sites d'échanger des classes particulières
+de données (ex., données sismiques ou météorologiques) en dépit d'erreurs
+locales qui peuvent survenir (telles que des erreurs de lecture sur des supports
+magnétiques), pour indiquer que certaines données transmises peuvent être
+suspectes pour des raisons autres que la transmission. Des structures-enregistrement
+sont admises dans ce mode, et toute forme de représentation de données peut
+être utilisée.   </p><p>L'en-tête consiste en trois octets. Sur ces 24 bits d'information
+d'en-tête, les 16 bits de poids faible représentent le compte d'octets, les
+8 bits de poids fort donnent le code de description selon les définitions
+ci-dessous.   <b><i></i></b></p><p><b><i>Bloc d'en-tête</i></b> 
+
+</p><p><font color="#008000"><code><pre>+----------------+----------------+----------------+
+|   Descripteur  |          Compte d'octets        |
+|     8 bits     |            16 bits              |
++----------------+----------------+----------------+
+</pre></code></font>
+
+</p><p>Le descripteur est formé de bits indicateurs. Quatre codes sont actuellement
+reconnus, dont le nombre représente la valeur décimale du masque.   </p><p><b><i>Codes de description</i></b> 
+
+</p><p align="center"></p><center><table border="1" cellspacing="1" cellpadding="4" width="407">
+<tbody><tr><td width="18%" valign="top" bgcolor="#ffffff">
+<p><b><i>Valeur</i></b></p></td>
+<td width="82%" valign="top" bgcolor="#ffffff">
+<b><i></i></b><p><b><i>Description</i></b></p></td>
+</tr>
+<tr><td width="18%" valign="top">
+<b>128</b></td>
+<td width="82%" valign="top">
+Le bloc est le dernier d'un enregistrement (EOR en fin de bloc)</td>
+</tr>
+<tr><td width="18%" valign="top">
+<b>64</b></td>
+<td width="82%" valign="top">
+Le bloc est le dernier de la transmission (EOF en fin de bloc)</td>
+</tr>
+<tr><td width="18%" valign="top">
+<b>32</b></td>
+<td width="82%" valign="top">
+Erreurs probables dans les données de ce bloc</td>
+</tr>
+<tr><td width="18%" valign="top">
+<b>16</b></td>
+<td width="82%" valign="top">
+Le bloc de données est le premier d'une reprise</td>
+</tr>
+</tbody></table>
+</center>
+
+<p>Grâce à cet encodage, plusieurs situations simultanées peuvent être codées
+dans un seul bloc. Autant de bits du descripteur que nécessaire peuvent être
+marqués.   </p><p>Le marqueur de reprise est émis comme des données d'un multiple entier
+d'octets de 8-bits représentant des caractères imprimables selon le langage
+utilisé sur le canal de contrôle (ex., par défaut--NVT-ASCII). &lt;SP&gt;
+(Espace, dans le langage approprié) ne doit JAMAIS être employé dans un marqueur
+de reprise.   </p><p>Par exemple, pour transmettre un marqueur de reprise de six caractères, la séquence suivante serait émise : 
+
+</p><p><font color="#008000"><code><pre>+-----------+-----------+-----------+
+|Descripteur|         Compte        |
+|  code=16  |          = 6          |
++-----------+-----------+-----------+
+ 
++-----------+-----------+-----------+
+|  Marqueur |  Marqueur |  Marqueur |
+|   8 bits  |   8 bits  |   8 bits  |
++-----------+-----------+-----------+
+ 
++-----------+-----------+-----------+
+|  Marqueur |  Marqueur |  Marqueur |
+|   8 bits  |   8 bits  |   8 bits  |
++-----------+-----------+-----------+
+</pre></code></font>
+
+</p><h4><a name="3.4.3">3.4.3. MODE COMPRESSE</a></h4>
+
+<p>Trois classes d'informations doivent être envoyées : des données "littérales",
+envoyées comme des chaînes d'octets; des données compressées, consistant
+en des octets "répliqués" ou des octets de bourrage; et des informations
+de contrôle, émis selon des séquences d'échappement à deux octets. Si n&gt;0
+octets (jusqu'à 127) littéraux sont émis, ces n octets doivent être précédés
+d'un octet dont le bit de poids fort est nul, les 7 autres bits contenant
+ce nombre n.   </p><p><b><i>Chaîne d'octets :</i></b> 
+<font color="#008000"><code><pre> 1       7                8                     8
++-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+     +-+-+-+-+-+-+-+-+
+|0|  n          | |      d(1)     | ... |      d(n)     |
++-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+     +-+-+-+-+-+-+-+-+
+                  ^                                     ^
+                  |-------- n octets de données---------|
+ 
+Chaîne de n octets de données d(1),..., d(n)
+Le compte n doit être positif .
+</pre></code></font>
+
+</p><p><b><i>Octets répliqués :</i></b> 
+
+</p><p>Pour compresser une chaîne comportant n répliques de l'octet de données d, les deux octets suivants sont émis : 
+<font color="#008000"><code><pre>  2       6               8   
++-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+
+|1 0|     n     | |       d       |
++-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+-+-+
+</pre></code></font>
+
+</p><p><b><i>Chaîne de bourrage :</i></b> 
+
+</p><p>Une chaîne de n octets de bourrage peut être compressée en seulement
+deux octets, dans lesquels l'octet indiquant la valeur de bourrage change
+selon le type de représentation de données. Si le type est l'ASCII ou EBCDIC
+l'octet de bourrage est l'espace &lt;SP&gt; (ASCII code 32, EBCDIC code 64).
+Si le type est Image ou Local la valeur de bourrage vaut 0.  <font color="#008000"><code><pre>  2       6
++-+-+-+-+-+-+-+-+
+|1 1|     n     |
++-+-+-+-+-+-+-+-+
+</pre></code></font>
+</p><p><b><i>Séquence de contrôle :</i></b> 
+
+</p><p>Une séquence de contrôle est un octet double, dont le premier est
+le caractère d'échappement (octet nul) et le deuxième contient les codes
+de description tels que définis dans le mode Bloc. Le descripteur a la même
+signification que dans le mode Bloc, et s'applique à la chaîne qui le suit.
+  </p><p>Le mode compressé est particulièrement utile pour gagner de la bande
+passante lors de transferts de gros volumes de données, et ce pour un coût
+CPU assez faible. Il peut être utilisé de façon très efficace pour transmettre
+des fichiers de sortie d'impression directement formatés.   </p><h3><a name="3.5">3.5. RECUPERATION D'ERREUR ET REPRISE DE TRANSMISSION</a></h3>
+
+<p>Il n'existe pas de mécanisme permettant de détecter des bits perdus ou
+erronés d'un fichier transféré; ce niveau d'erreur est géré au niveau de
+TCP. Cependant, une procédure de reprise est prévue pour protéger les utilisateurs
+de défaillances majeures des systèmes (incluant le crash d'un hôte, d'un
+processus FTP, ou d'un protocole réseau sous-jacent).   </p><p>La procédure de reprise n'est définie que dans les modes de transfert
+par bloc ou compressé. Elle demande à l'émetteur des données d'envoyer un
+marquer particulier dans le flux de données incluant des informations de
+reprise. Ces informations du marqueur n'ont de signification que pour l'émetteur,
+mais doivent consister en des caractères imprimables au sens du langage utilisé
+pour le contrôle de la connexion (ASCII ou EBCDIC). Le marqueur peut représenter
+un comptage de bits, d'enregistrements, ou tout autre information pouvant
+coder un "point de contrôle". Le récepteur des données, s'il implémente la
+procédure de reprise, notera la position de ce point au niveau de l'hôte
+récepteur, et renvoie cette information à l'utilisateur.   </p><p>Dans le cas d'une faute système, l'utilisateur peut alors enclencher
+la procédure de reprise en notifiant le point de contrôle. L'exemple suivant
+illustre l'utilisation de la procédure de reprise.   </p><p>L'émetteur des données insère un bloc de marquage approprié dans
+le flux de données en un point donné. Le récepteur des données marque le
+point de contrôle dans son système de fichiers local et indique les derniers
+points émis et reçus à l'utilisateur, soit directement, soit en utilisant
+la réponse de code 110 du protocole de contrôle (suivant qui est l'émetteur).
+Lors d'une faute système, l'utilisateur ou le contrôleur requiert un nouveau
+transfert à partir du dernier marqueur en émettant le bloc de reprise avec
+ce marqueur comme argument. La commande de reprise est transmise via le canal
+de contrôle et est immédiatement suivi de la commande (telle que RETR, STOR
+ou LIST) qui était en exécution avant la faute système.  </p><p></p><hr>
+<p align="center"><a href="959-2.htm">Précédent</a> - <a href="959-4.htm">Suivant</a> - <a href="959tm.htm">Retour au sommaire</a>
+
+</p></body></html>

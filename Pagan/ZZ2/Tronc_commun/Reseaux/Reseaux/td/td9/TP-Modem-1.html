@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+   <TITLE>TP Modem (1)</TITLE>
+   <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+   <STYLE TYPE="text/css">
+	   	.rouge {color:red; font-weight:bold}
+   </STYLE>
+</HEAD>
+<BODY BGCOLOR="#f0f0f0">
+
+<TABLE WIDTH="100%">
+<TR>
+	<TD><B STYLE="font-size:larger; color:navy">TP Modem</B></TD>
+	<TD ALIGN=right><SMALL>
+		<I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>
+		1998-1999</I></SMALL></TD></TR>
+</TABLE>
+
+<H1>1 - Schéma de la configuration</H1>
+
+<H2>Les composants</H2>
+	<BLOCKQUOTE>
+	La communication entre ordinateurs par ligne téléphonique implique divers composants
+	reliés par des moyens de communication :<BR><BR>
+	<CENTER><IMG SRC="schema.gif" ALT="schéma de configuration" WIDTH="489" HEIGHT="237" BORDER="0"></CENTER>
+	<TABLE BORDER="1" CELLPADDING="5" CELLSPACING="0">
+	<TR><TD>1</TD>
+		<TD ALIGN=center><SPAN CLASS="rouge">PBX, PABX</SPAN><BR>
+			<I><B>P</B>rivate <B>A</B>utomatic <B>B</B>ranch e<B>X</B>change</I></TD>
+		<TD>- relié à chaque abonné par une ligne téléphonique, il peut mettre deux
+			abonnés en communication, et leur permettre de se transmettre des signaux
+			analogiques (ou numériques).</TD></TR>
+	<TR><TD>2</TD>
+		<TD ALIGN=center><SPAN CLASS="rouge">ligne téléphonique</SPAN><BR>(analogique ou numérique)</TD>
+		<TD>- elle transporte les signaux codant les informations (voix ou autre)<BR></TD></TR>
+	<TR><TD>3</TD>
+		<TD ALIGN=center><SPAN CLASS="rouge">modem</SPAN><BR>
+			<B>mod</B>ulateur-<B>dém</B>odulateur<BR><BR>
+			<TABLE>
+			<TR><TD><B>ETCD</B></TD>
+				<TD><B>E</B>quipement de <B>T</B>erminaison de <B>C</B>ircuit de <B>D</B>onnées</TD></TR>
+			<TR><TD><B><I>DCE</I></B></TD>
+				<TD><B>D</B>ata <B>C</B>ommunication <B>E</B>quipment</TD></TR>
+			</TABLE></TD>
+		<TD>- il reçoit des suites de bits en 4, le code en signaux analogiques, et émet ces signaux en 2<BR>
+			- il reçoit un signal analogique en 2, et le décode en suite de bits, et émet la suite de bits en 4.<BR>
+			<BR>
+			Le codage (débit, compression) est un paramètre du modem.
+			Des codages sont normalisés par des <A HREF="ITU-T.avis-V.html"><U>avis de l'ITU-T</U></A>.<BR>
+			Lire le document "<A HREF="modem-overview.html"><U>Modem Overview</U></A>".
+			<!--Voir aussi "<A HREF="modem-ppp-faq.html#14"><U>à propos des débits de transmission</U></A>".--></TD></TR>
+	<TR><TD>4</TD>
+		<TD ALIGN=center><SPAN CLASS="rouge">liaison modem-contrôleur</SPAN><SUP>(1)</SUP><BR>
+			jonction V24 ou RS232C</TD>
+		<TD>- elle transporte les bits (un par un) entre le modem et le contrôleur.<BR>
+			<BR>
+			Des avis de l'ITU-T et des normes de l'ISO définissent les caractéristiques
+			fonctionnelles, mécaniques) et électriques.<BR>
+			(<A HREF="interface_v24.html"><U>les principaux circuits</U></A> de la jonction)</TD></TR>
+	<TR><TD>5</TD>
+		<TD ALIGN=center><SPAN CLASS="rouge">contrôleur série</SPAN><SUP><SMALL>(1)</SMALL></SUP> (UART)<BR><BR>
+			<TABLE>
+			<TR><TD><B>ETTD</B></TD>
+				<TD><B>E</B>quipement <B>T</B>erminal de <B>T</B>raitement de <B>D</B>onnées</TD></TR>
+			<TR><TD><B><I>DTE</I></B></TD>
+				<TD><B>D</B>ata <B>T</B>erminal <B>E</B>quipment</TD></TR>
+			</TABLE></TD>
+		<TD>- il sérialise/désérialise les données,<BR>
+			- il pilote et analyse les signaux de la jonction V24.<BR><BR>
+			Il est considéré comme une unité périphérique.</TD></TR>
+	<TR><TD>6</TD>
+		<TD ALIGN=center><SPAN CLASS="rouge">liaison processus-contrôleur</SPAN><SUP>(1)</SUP></TD>
+		<TD>- le dialogue entre un processus et le contrôleur se fait directement (adresse,
+			IRQ) et/ou par l'intermédiaire d'un pilote (<I>driver</I>).</TD></TR>
+	</TABLE>
+	</BLOCKQUOTE>
+	<BLOCKQUOTE>
+	<BR>
+	<P><SUP>(1)</SUP> : on désigne souvent par 
+	<B><SPAN STYLE="color:red">port série</SPAN></B> l'ensemble des composants 4, 5 et 6.</P>
+	<BR><BR>
+	</BLOCKQUOTE>
+
+<HR NOSHADE>
+
+</BODY>
+</HTML>

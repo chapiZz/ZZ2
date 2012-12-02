@@ -1,0 +1,999 @@
+<HTML>
+<HEAD>
+<TITLE>Orange Book Glossary E to O</TITLE>
+</HEAD>
+
+<BODY>
+<HR NOSHADE>
+
+<basefont size = 4>
+
+<font size = 5>
+	Glossary
+</font>
+<P>
+	Orange Book Glossary, 
+		<A HREF = "ob_glossary_ad.html">A to D</A><BR>
+	Orange Book Glossary, 
+		<A HREF = "ob_glossary_pz.html">P to Z</A>
+<P>
+	borrowed and adapted from, <I>
+		<A HREF = "http://www.ora.com/catalog/csb/desc.html">Computer Security Basics</A>
+	</I>, Deborah Russell and G. T. Gangemi Sr.
+<P>
+
+<DL>
+<DT>
+		<A NAME = "emanations">
+		<B>emanations</B></A>
+<DD>
+	Electrical and electromagnetic signals emitted from electrical equipment (eg. computers, 
+	terminals, printers, cabling) and transmitted through the air or through conductors. If 
+	the information carried by these emanations is intercepted and 
+		<A HREF = "ob_glossary_ad.html#decipher">deciphered</A>, 
+		<A HREF = "ob_glossary_pz.html#sensitive_information">sensitive information</A> 
+	may be 
+		<A HREF = "ob_glossary_ad.html#compromise">compromised</A>. 
+	Also called "emissions".
+<P>
+
+<DT>
+		<A NAME = "encryption">
+		<B>encryption</B></A>
+<DD>
+	The transformation of original text (called 
+		<A HREF = "ob_glossary_pz.html#plaintext">plaintext</A>) 
+	into unintelligible text (called 
+		<A HREF = "ob_glossary_ad.html#ciphertext">ciphertext</A>). 
+	It may also be applied to any data that can be represented in byte format. Sometimes 
+	called "enciphering".
+<P>
+
+<DT>
+		<A NAME = "evaluation_class">
+		<B>evaluation class</B></A>
+<DD>
+	The 
+		<A HREF = "#orange_book">Orange Book</A> 
+	defines seven security evaluation classes: 
+		<A HREF = "#minimal_security">D</A> 
+	- minimal security, 
+		<A HREF = "ob_glossary_ad.html#discretionary_security_protection">C1</A> 
+	- discretionary security protection, 
+		<A HREF = "ob_glossary_ad.html#controlled_access_protection">C2</A> 
+	- controlled access protection, 
+		<A HREF = "#labeled_security_protection">B1</A> 
+	- labeled security protection, 
+		<A HREF = "ob_glossary_pz.html#structured_protection">B2</A> 
+	- structured protection, 
+		<A HREF = "ob_glossary_pz.html#security_domain">B3</A> 
+	- security domains, and 
+		<A HREF = "ob_glossary_pz.html#verified_design">A1</A> 
+	- verified design. All classes are evaluated, but D is the special case of a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	that has failed a higher evaluation class.
+<P>
+
+<DT>
+		<A NAME = "event">
+		<B>event</B></A>
+<DD>
+		<A HREF = "ob_glossary_pz.html#security">Security-related</A> 
+	activities (any activity that relates to a 
+		<A HREF = "ob_glossary_pz.html#subject">subject's</A> 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	of an 
+		<A HREF = "#object">object</A>) 
+	are often called events. 
+		<A HREF = "ob_glossary_ad.html#audit">Auditing</A> 
+	itself is sometimes called event logging. 
+	Typical events include: logons, logouts, remote 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	accesses, file operations, and changes in 
+		<A HREF = "ob_glossary_pz.html#privilege">privileges</A> 
+	or security attributes.
+<P>
+
+<DT>
+		<A NAME = "export">
+		<B>export</B></A>
+<DD>
+	Transfer of information from one 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	to another. Often used to refer to the transfer of information from a 
+		<A HREF = "ob_glossary_pz.html#trusted_system">trusted system</A> 
+	to an 
+		<A HREF = "ob_glossary_pz.html#untrusted_system">untrusted system</A>.
+<P>
+
+<DT>
+		<A NAME = "exportation_of_labeled_information">
+		<B>exportation of labeled information</B>
+<DD>
+	The process of a 
+		<A HREF = "ob_glossary_pz.html#trusted_system">trusted system</A> 
+	that, when 
+		<A HREF = "ob_glossary_pz.html#write">writing</A> 
+	information to a 
+		<A HREF = "ob_glossary_pz.html#system">system</A>, 
+	continues to have protection mechanisms associated with it. Assigning 
+		<A HREF = "ob_glossary_pz.html#security_level">security levels</A> 
+	to output devices and writing 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity labels</A> 
+	along with data are two ways used to secure 
+		<A HREF = "#export">exported</A> 
+	information. Every 
+		<A HREF = "#I/O_device">I/O device</A> 
+	and 
+		<A HREF = "ob_glossary_ad.html#communications_channel">communications channel</A> 
+	in a system must be designated as 
+		<A HREF = "#multilevel">multilevel</A> 
+	or 
+		<A HREF = "ob_glossary_pz.html#single-level">single-level</A>. 
+	Any changes to these designations must be able to be 
+		<A HREF = "ob_glossary_ad.html#audit">audited</A>. 
+	Typically, a 
+		<A HREF = "ob_glossary_pz.html#system_administrator">system administrator</A> 
+	designates devices during system installation and setup.
+<P>
+
+<DT>
+		<A NAME = "exportation_to_multilevel_devices">
+		<B>exportation to multilevel devices</B></A>
+<DD>
+	The 
+		<A HREF = "#orange_book">Orange Book</A> 
+	requires that the 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	have some way to associate a 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A> 
+	with information 
+		<A HREF = "ob_glossary_pz.html#write">written</A> 
+	to a 
+		<A HREF = "#multilevel">multilevel</A> 
+	device. Mechanisms may differ for different systems and different types of devices. Files 
+	written to such devices must have 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity labels</A> 
+	attached to them (usually written in a header preceding the data in the file). This prevents a 
+		<A HREF = "ob_glossary_pz.html#user">user</A> 
+	from bypassing system controls by simply copying a sensitive file to another, untrusted 
+	system or device. The system must support a way of specifying the lowest and the highest 
+	security levels allowed for data being written to it. In most 
+		<A HREF = "ob_glossary_pz.html#trusted_system">trusted systems</A>, 
+	only non-removable disks are 
+		<A HREF = "ob_glossary_ad.html#category">categorized</A> 
+	as multilevel devices.
+<P>
+
+<DT>
+		<A NAME = "exportation_to_single-level_devices">
+		<B>exportation to single-level devices</B></A>
+<DD>
+	The process of 
+		<A HREF = "ob_glossary_pz.html#write">writing</A> 
+	information to a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	that supports only one particular sensitivity level. The level specified is usually 
+	dependant on its physical location or the inherent 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	of the device type. Usually workstations, printers, communication ports, and removeable media 
+	are characterized as 
+		<A HREF = "ob_glossary_pz.html#single-level">single-level</A> 
+	devices. Output sent to these devices is not required to be 
+		<A HREF = "#labels">labeled</A> 
+	with the 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A> 
+	of the 
+		<A HREF = "#export">exported</A> 
+	information, although many 
+		<A HREF = "ob_glossary_pz.html#trusted_system">trusted systems</A> 
+	do label such output. The 
+		<A HREF = "#orange_book">Orange Book</A> 
+	does require that there be some way (system or procedural) to designate the single level of 
+	information being sent to the device.
+<P>
+
+<DT>
+		<A NAME = "file_protection">
+		<B>file protection</B></A>
+<DD>
+	See 
+		<A HREF = "#file_protection_class">file protection class</A>.
+<P>
+
+<DT>
+		<A NAME = "file_protection_class">
+		<B>file protection class</B></A>
+<DD>
+	A code associated with a file that indicates the file type and associated file 
+		<A HREF = "ob_glossary_ad.html#access">access</A>. 
+	Typical classes are public (anyone can 
+		<A HREF = "ob_glossary_pz.html#read">read</A> 
+	or change the file), read-only (anyone can read, but only the owner and the 
+		<A HREF = "ob_glossary_pz.html#system_administrator">system administrator</A> 
+	can 
+		<A HREF = "ob_glossary_pz.html#write">write</A> 
+	the file), and private (only the owner and the system administrator can read or change 
+	the file).
+<P>
+
+<DT>
+		<A NAME = "file_security">
+		<B>file security</B></A>
+<DD>
+	Protection of files stored on a computer 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	through 
+		<A HREF = "ob_glossary_ad.html#discretionary_access_control">
+		discretionary access control</A> 
+	and/or 
+		<A HREF = "#mandatory_access_control">mandatory access control</A>.
+<P>
+
+<DT>
+		<A NAME = "flaw">
+		<B>flaw</B></A>
+<DD>
+	An error, ommission, or loophole in a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	that allows 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	mechanisms to be bypassed.
+<P>
+
+<DT>
+		<A NAME = "formal_model">
+		<B>formal model</B></A>
+<DD>
+	See 
+		<A HREF = "#formal_security_model">formal security model</A>.
+<P>
+
+<DT>
+		<A NAME = "formal_proof">
+		<B>formal proof</B></A>
+<DD>
+	From the 
+		<A HREF = "#orange_book">Orange Book</A> 
+	definition: "A complete and convincing mathematical argument, presenting the full logical 
+	justification for each proof step, for the truth of a theorem or set of theorems. The 
+		<A HREF = "#formal_verification">formal verification</A> 
+	process uses formal proofs to show the truth of certain properties of formal specification 
+	and for showing that computer programs satisfy their specifications."
+<P>
+
+<DT>
+		<A NAME = "formal_security_model">
+		<B>formal security model</B></A>
+<DD>
+	From the 
+		<A HREF = "#orange_book">Orange Book</A> 
+	definition: "A mathematically precise statement of a 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A>. 
+	To be adequately precise, such a 
+		<A HREF = "#model">model</A> 
+	must represent the initial state of a 
+		<A HREF = "ob_glossary_pz.html#system">system</A>, 
+	the way in which the system progresses from one state to another, and a definition 
+	of a "secure" state of the system. To be acceptable as a basis for a 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>, 
+	the model must be supported by a 
+		<A HREF = "#formal_proof">formal proof</A> 
+	that if the initial state of the system satisfies the definition of the "secure" state and 
+	if all assumptions required by the model hold, then all future states of the system will be 
+	secure. Some 
+		<A HREF = "#formal_model">formal modelling</A> 
+	techniques include: state transition models, temporal logic models, denotional semantics models, 
+	algebraic specification models."
+<P>
+
+<DT>
+		<A NAME = "FTLS">
+		<B>formal top-level specification (FTLS)</B></A>
+<DD>
+	A 
+		<A HREF = "#formal_security_model">formal security model</A> 
+		<A HREF = "ob_glossary_pz.html#top-level_specification">top-level specification</A> 
+	for the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>. 
+	It is also used to prove the 
+		<A HREF = "ob_glossary_pz.html#system">system's</A> 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A>.
+<P>
+
+<DT>
+		<A NAME = "formal_verification">
+		<B>formal verification</B></A>
+<DD>
+	An automated tool used in designing and testing highly 
+		<A HREF = "ob_glossary_pz.html#trusted_system">trusted systems</A>. 
+	The process of using 
+		<A HREF = "#formal_proof">formal proofs</A> 
+	to demonstrate two types of consistency:
+<P>
+	1. Design 
+		<A HREF = "ob_glossary_pz.html#verification">verification</A>: 
+	consistency between a formal specification of a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	and a formal 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A> 
+		<A HREF = "#model">model</A>.
+<P>
+	2. Implementation verification: consistency between a formal specification of a system and 
+	its high-level program implementation.
+<P>
+
+<DT>
+		<A NAME = "gateway">
+		<B>gateway</B></A>
+<DD>
+	Typically, a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	that is attached to two systems, devices, or 
+		<A HREF = "#network">networks</A> 
+	that otherwise do not communicate with each other. Communications from one system or network 
+	to another are routed through the gateway. A gateway system may be used as a guardian or 
+	"firewall" between 
+		<A HREF = "ob_glossary_pz.html#trust">trusted</A> 
+	and 
+		<A HREF = "ob_glossary_pz.html#untrusted_system">untrusted systems</A> 
+	or networks. The gateway filters out any information that's not allowed to pass from the 
+		<A HREF = "ob_glossary_pz.html#trusted_system">trusted system</A> 
+	to the untrusted system, or vice versa.
+<P>
+
+<DT>
+		<A NAME = "granularity">
+		<B>granularity</B></A>
+<DD>
+	The relative fineness or coarseness by which a mechanism can be adjusted. In the Orange 
+	Book, the phrase "to the granularity of a single 
+		<A HREF = "ob_glossary_pz.html#user">user</A>" 
+	means that an 
+		<A HREF = "ob_glossary_ad.html#access_control">access control</A> 
+	mechanism can be adjusted to include or exclude any single user.
+<P>
+
+<DT>
+		<A NAME = "group">
+		<B>group</B></A>
+<DD>
+	A set of 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	in a 
+		<A HREF = "ob_glossary_pz.html#system">system</A>. 
+	A system 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A> 
+	may give certain 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	rights to every member of a group.
+<P>
+
+<DT>
+		<A NAME = "guidance">
+		<B>guidance</B></A>
+<DD>
+	An 
+		<A HREF = "#orange_book">Orange Book</A> 
+	evaluation criteria. It provides guidelines to manufacturers as to what to build into their 
+		<A HREF = "ob_glossary_pz.html#trust">trusted</A> 
+	commercial products to satisfy trust 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A> 
+	for sensitive applications.
+<P>
+
+<DT>
+		<A NAME = "identification">
+		<B>identification</B></A>
+<DD>
+	The process of telling a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	the 
+		<A HREF = "#identity">identity</A> 
+	of a 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A>. 
+	Usually, this is done by entering a name or presenting a 
+		<A HREF = "ob_glossary_pz.html#token">token</A> 
+	to the system. See also 
+		<A HREF = "ob_glossary_ad.html#authentication">authentication</A>.
+<P>
+
+<DT>
+		<A NAME = "identity">
+		<B>identity</B></A>
+<DD>
+	A means of establishing a correspondence between a 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A> 
+	and how the subject is represented to the 
+		<A HREF = "ob_glossary_pz.html#system">system</A>.
+<P>
+
+<DT>
+		<A NAME = "identification_and_authentication">
+		<B>identification and authentication</B></A>
+<DD>
+	See 
+		<A HREF = "#identification">identification</A>, 
+	and 
+		<A HREF = "ob_glossary_ad.html#authentication">authentication</A>.
+<P>
+
+<DT>
+		<A NAME = "impersonation">
+		<B>impersonation</B></A>
+<DD>
+	Posing as an 
+		<A HREF = "ob_glossary_ad.html#authorized_user">authorized user</A>, 
+	usually in an attempt to gain 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	to a 
+		<A HREF = "ob_glossary_pz.html#system">system</A>. 
+	Synonymous with 
+		<A HREF = "#masquerade">masquerade</A>.
+<P>
+
+<DT>
+		<A NAME = "import">
+		<B>import</B></A>
+<DD>
+	Transfer of information into a 
+		<A HREF = "ob_glossary_pz.html#system">system</A>. 
+	Often used to refer to the transfer of information from an 
+		<A HREF = "ob_glossary_pz.html#untrusted_system">untrusted system</A> 
+	to a 
+		<A HREF = "ob_glossary_pz.html#trusted_system">trusted system</A>.
+<P>
+
+<DT>
+		<A NAME = "information_label">
+		<B>information label</B></A>
+<DD>
+	A 
+		<A HREF = "#labels">label</A> 
+	associated with a particular 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A> 
+	or 
+		<A HREF = "#object">object</A> 
+	in a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	(eg. file, process, window). Information labels are used in 
+		<A HREF = "ob_glossary_ad.html#compartmented_mode_workstation">compartmented mode 
+		workstations</A> 
+	and are similar to 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity labels</A>. 
+	However, they differ from sensitivity labels in several ways:
+<P>
+	1. In addition to a 
+		<A HREF = "ob_glossary_ad.html#classification">classification</A> 
+	and a set of 
+		<A HREF = "ob_glossary_ad.html#category">categories</A>, 
+	information labels also contain dissemination markings and handling caveats (eg. EYES ONLY).
+<P>
+	2. They simply represent the sensitivity of the information in the subject or object; 
+	in contrast, sensitivity labels are used to make 
+		<A HREF = "ob_glossary_ad.html#access">access</A> decisions.
+<P>
+	3. They are automatically adjusted as the information content of a subject or object 
+	changes (for example, the contents of a window); in contrast, sensitivity labels remain 
+	static.
+<P>
+
+<DT>
+		<A NAME = "information_level">
+		<B>information level</B></A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A> 
+	implied by an information 
+		<A HREF = "#labels">label's</A> 
+		<A HREF = "ob_glossary_ad.html#classification">classification</A> 
+	and 
+		<A HREF = "ob_glossary_ad.html#category">categories</A>.
+<P>
+
+<DT>
+		<A NAME = "integrity">
+		<B>integrity</B></A>
+<DD>
+	A 
+		<A HREF = "ob_glossary_pz.html#security_principle">security principle</A> 
+	that keeps information from being modified or otherwise corrupted either maliciously 
+	or accidentally. Integrity protects against forgery or tampering. Synonymous with 
+		<A HREF = "ob_glossary_ad.html#accuracy">accuracy</A>.
+<P>
+
+<DT>
+		<A NAME = "I/O_device">
+		<B>I/O device</B></A>
+<DD>
+	A hardware device that performs input/output functions for the 
+		<A HREF = "ob_glossary_pz.html#system">system</A>. 
+	It generally refers to a serial, printer, mouse, SCSI, MIDI, firewire or any other port 
+	that may transmit information into or out of the system, or directly affect the operation 
+	of the system.
+<P>
+
+<DT>
+		<A NAME = "kernel">
+		<B>kernel</B></A>
+<DD>
+	The innermost ring of 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	software that performs the fundamental (or core) functions of the system. Also see 
+		<A HREF = "ob_glossary_pz.html#security_kernel">security kernel</A>.
+<P>
+
+<DT>
+		<A NAME = "key">
+		<B>key</B></A>
+<DD>
+	In 
+		<A HREF = "ob_glossary_ad.html#cryptography">cryptography</A>, 
+	a secret value that's used to 
+		<A HREF = "#encryption">encrypt</A> 
+	and 
+		<A HREF = "ob_glossary_ad.html#decryption">decrypt</A> 
+	messages. A sequence of symbols (often a large number) that's usually known only to the sender 
+	and the receiver of the message.
+<P>
+
+<DT>
+		<A NAME = "keystroke_system">
+		<B>keystroke system</B></A>
+<DD>
+	A 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	that compares a pattern of keystrokes with a stored pattern to determine whether there's 
+	a match.
+<P>
+
+<DT>
+		<A NAME = "label_integrity">
+		<B>label integrity</B></A>
+<DD>
+	Ensures that the 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity labels</A> 
+	associated with 
+		<A HREF = "ob_glossary_pz.html#subject">subjects</A> 
+	and 
+		<A HREF = "#object">objects</A> 
+	are accurate representations of the 
+		<A HREF = "ob_glossary_pz.html#security_level">security levels</A> 
+	of these subjects and objects even in the event of 
+		<A HREF = "ob_glossary_pz.html#system_integrity">system integrity</A> 
+	problems. For example, a 
+		<A HREF = "ob_glossary_pz.html#user">user</A> 
+	edits a TOP SECRET file to remove all TOP SECRET and SECRET information (leaving 
+	only unclassified information), and then changes the sensitivity level to UNCLASSIFIED. If 
+	the 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	crashes at this point, the file may contain TOP SECRET data in a file 
+		<A HREF = "#labels">labeled</A> 
+	UNCLASSIFIED - a clear violation of label 
+		<A HREF = "#integrity">integrity</A>.
+<P>
+
+<DT>
+		<A NAME = "labeling">
+		<B>labeling</B></A>
+<DD>
+	In a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	supporting 
+		<A HREF = "#mandatory_access_control">mandatory access controls</A>, 
+	the assignment of 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity labels</A> 
+	to every 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A> 
+	or 
+		<A HREF = "#object">object</A> 
+	in the system.
+<P>
+
+<DT>
+		<A NAME = "labeling_human-readable_output">
+		<B>labeling human-readable output</B></A>
+<DD>
+	The 
+		<A HREF = "#orange_book">Orange Book</A> 
+	has very clear 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A> 
+	for how to label hard-copy output (output that people see). This includes pages of printed 
+	output, maps, graphics, and other displays. The 
+		<A HREF = "ob_glossary_pz.html#system_administrator">system administrator</A> 
+	must have some way of specifying the 
+		<A HREF = "#labels">labels</A> 
+	that are to appear on the output. Hardcopy output must be labeled at both the beginning and 
+	the end of the document with labels representing the overall sensitivity of the output. Also 
+	the top and bottom of each page must be labeled to reflect the overall sensitivity of the 
+	output or the specific sensitivity of the information on that page.
+<P>
+
+<DT>
+		<A NAME = "labeled_security_protection">
+		<B>labeled security protection</B></A>
+<DD>
+	The B1 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	class. B1 (and higher) systems support 
+		<A HREF = "#mandatory_access_control">mandatory access controls</A>. 
+	The 
+		<A HREF = "ob_glossary_pz.html#system_architecture">system architecture</A> 
+	must more rigorously separate the 
+		<A HREF = "ob_glossary_pz.html#security">security-related</A> 
+	portions of the system from those that are not security-related. Documentation must include a 
+		<A HREF = "#model">model</A> 
+	of the 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A> 
+	supported by the system. It need not be a mathematical one, but it must be a clear statement 
+	of the rules enforced by the system's 
+		<A HREF = "ob_glossary_pz.html#security_feature">security features</A>. 
+	Testing is more stringent.
+<P>
+
+<DT>
+		<A NAME = "labels">
+		<B>labels</B></A>
+<DD>
+	A 
+		<A HREF = "ob_glossary_pz.html#user">user's</A> 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity label</A> 
+	specifies the sensitivity level, or level of 
+		<A HREF = "ob_glossary_pz.html#trust">trust</A>, 
+	associated with that user; a user's sensitivity label is usually called a 
+		<A HREF = "ob_glossary_ad.html#clearance">clearance</A>. 
+	A file's sensitivity label specifies the level of trust that a user must have to be able to 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	that file.
+<P>
+
+<DT>
+		<A NAME = "layering">
+		<B>layering</B></A>
+<DD>
+	An ordering of 
+		<A HREF = "#layers">layers</A> 
+	in a heirarchy such that the lower layers may perform certain basic functions and the higher 
+	layers may perform more complex functions.
+<P>
+
+<DT>
+		<A NAME = "layers">
+		<B>layers</B></A>
+<DD>
+	Part of a structured, heirarchical design of 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	functions. Layers communicate with each other through calls via clearly defined interfaces.
+<P>
+
+<DT>
+		<A NAME = "least_privilege">
+		<B>least privilege</B></A>
+<DD>
+	In terms of 
+		<A HREF = "ob_glossary_pz.html#system_architecture">system architecture</A>, 
+	processes have no more 
+		<A HREF = "ob_glossary_pz.html#privilege">privilege</A> 
+	than they need to perform their function. Only those modules that really need complete 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	privileges are to be located in the 
+		<A HREF = "ob_glossary_pz.html#security_kernel">security kernel</A> 
+	(eg. the innermost ring). Other, less critical, modules should call on more privileged 
+	routines only as needed and only for the duration of the needed operation.
+<P>
+
+<DT>
+		<A NAME = "logic_bomb">
+		<B>logic bomb</B></A>
+<DD>
+	See 
+		<A HREF = "ob_glossary_ad.html#bomb">bomb</A>.
+<P>
+<DT>
+		<A NAME = "login">
+		<B>login</B></A>
+<DD>
+	The process of 
+		<A HREF = "#identification">identifying</A> 
+	oneself to, and having one's 
+		<A HREF = "#identity">identity</A> 
+		<A HREF = "ob_glossary_ad.html#authenticate">authenticated</A> 
+	by, a computer 
+		<A HREF = "ob_glossary_pz.html#system">system</A>.
+<P>
+
+<DT>
+		<A NAME = "malicious_logic">
+		<B>malicious logic</B></A>
+<DD>
+	Code that is included in a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	for an 
+		<A HREF = "ob_glossary_pz.html#unauthorized">unauthorized</A> 
+	purpose.
+<P>
+
+<DT>
+		<A NAME = "mandatory_access_control">
+		<B>mandatory access control (MAC)</B></A>
+<DD>
+	An 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+		<A HREF = "ob_glossary_pz.html#policy">policy</A> 
+	that restricts access to 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+		<A HREF = "#object">objects</A> 
+	(eg. files, directories, devices) based on the sensitivity of the information in the object 
+	(represented by the object's 
+		<A HREF = "#labels">label</A>) 
+	and the 
+		<A HREF = "ob_glossary_ad.html#authorization">authorization</A> 
+	of the 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A> 
+	(usually represented by the 
+		<A HREF = "ob_glossary_pz.html#user">user's</A> 
+		<A HREF = "ob_glossary_ad.html#clearance">clearance</A>) 
+	to access information at that sensitivity level. "Mandatory" means that the system 
+	enforces the policy; users do not have the discretion to share their files. Contrast with 
+		<A HREF = "ob_glossary_ad.html#discretionary_access_control">discretionary 
+		access control</A>.
+<P>
+
+<DT>
+		<A NAME = "mandatory_protection">
+		<B>mandatory protection</B></A>
+<DD>
+	See 
+		<A HREF = "#mandatory_access_control">mandatory access control</A>.
+<P>
+
+<DT>
+		<A NAME = "masquerade">
+		<B>masquerade</B></A>
+<DD>
+	Posing as an 
+		<A HREF = "ob_glossary_ad.html#authorized_user">authorized user</A>, 
+	usually in an attempt to gain 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	to a 
+		<A HREF = "ob_glossary_pz.html#system">system</A>. 
+	Synonymous with 
+		<A HREF = "#impersonation">impersonation</A>.
+<P>
+
+<DT>
+		<A NAME = "measurement">
+		<B>measurement</B></A>
+<DD>
+	An 
+		<A HREF = "#orange_book">Orange Book</A> 
+	evaluation criteria. It provides 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	with a metric with which to assess the degree of 
+		<A HREF = "ob_glossary_pz.html#trust">trust</A> 
+	that can be placed in computer 
+		<A HREF = "ob_glossary_pz.html#system">systems</A> 
+	for the secure processing of classified or other 
+		<A HREF = "ob_glossary_pz.html#sensitive_information">sensitive information</A>. 
+	For example, a 
+		<A HREF = "ob_glossary_pz.html#user">user</A> 
+	can rely on a 
+		<A HREF = "ob_glossary_pz.html#structured_protection">B2</A> 
+	system to be "more secure" than a 
+		<A HREF = "ob_glossary_ad.html#controlled_access_protection">C2</A> 
+	system.
+<P>
+
+<DT>
+		<A NAME = "message_authentication">
+		<B>message authentication</B></A>
+<DD>
+	Ensuring, typically with a 
+		<A HREF = "#message_authentication_code">message authentication code</A>, 
+	that a message received (usually via a 
+		<A HREF = "#network">network</A>) 
+	matches the message sent.
+<P>
+
+<DT>
+		<A NAME = "message_authentication_code">
+		<B>message authentication code</B></A>
+<DD>
+	A code calculated during 
+		<A HREF = "#encryption">encryption</A> 
+	and appended to a message. If the message authentication code calculated during 
+		<A HREF = "ob_glossary_ad.html#decryption">decryption</A> 
+	matches the appended code, the message was not altered during transmission.
+<P>
+
+<DT>
+		<A NAME = "minimal_security">
+		<B>minimal security</B></A>
+<DD>
+	The D 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	class. The 
+		<A HREF = "#orange_book">Orange Book</A> 
+	lists no 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A> 
+	for this class, "...reserved for systems that have been evaluated but that fail to meet the 
+	requirements for a higher 
+		<A HREF = "#evaluation_class">evaluation class</A>."
+<P>
+
+<DT>
+		<A NAME = "model">
+		<B>model</B></A>
+<DD>
+	A representational tool used in defining behaviours and characteristics of a thing or 
+		<A HREF = "ob_glossary_pz.html#system">system</A>. 
+	Also see 
+		<A HREF = "ob_glossary_pz.html#security_model">security model</A>.
+<P>
+
+<DT>
+		<A NAME = "multilevel">
+		<B>multilevel</B></A>
+<DD>
+	Used to describe data or devices. Multilevel 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	allows 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	at different sensitivity levels to 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	a 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	concurrently. The system permits each user to access only the data that he or she is 
+		<A HREF = "ob_glossary_ad.html#authorized">authorized</A> 
+	to access. A multilevel device is one on which a number of different levels of data can 
+	be processed. Contrast with 
+		<A HREF = "ob_glossary_pz.html#single-level">single-level</A>.
+<P>
+
+<DT>
+		<A NAME = "need_to_know">
+		<B>need to know</B></A>
+<DD>
+	A 
+		<A HREF = "ob_glossary_pz.html#security_principle">security principle</A> 
+	stating that a 
+		<A HREF = "ob_glossary_pz.html#user">user</A> 
+	should have 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	only to the data he or she needs to perform a particular function.
+<P>
+
+<DT>
+		<A NAME = "network">
+		<B>network</B></A>
+<DD>
+	A data communications 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	that allows a number of systems and devices to communicate with each other.
+<P>
+
+<DT>
+		<A NAME = "node">
+		<B>node</B></A>
+<DD>
+	A 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	connected to a 
+		<A HREF = "#network">network</A>.
+<P>
+
+<DT>
+		<A NAME = "object">
+		<B>object</B></A>
+<DD>
+	From the 
+		<A HREF = "#orange_book">Orange Book</A> 
+	definition: "A passive entity that contains or receives information. 
+		<A HREF = "ob_glossary_ad.html#access">Access</A> 
+	to an object potentially implies access to the information it contains. Examples of objects 
+	are: records, blocks, pages, segments, files, directories, directory trees, and programs, 
+	as well as bits, bytes, words, fields, processors, video displays, keyboards, clocks, printers, 
+		<A HREF = "#network">network</A> 
+		<A HREF = "#node">nodes</A>, 
+	etc."
+<P>
+
+<DT>
+		<A NAME = "object_reuse">
+		<B>object reuse</B></A>
+<DD>
+	Object reuse 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A> 
+	protect files, memory, and other 
+		<A HREF = "#object">objects</A> 
+	in a 
+		<A HREF = "ob_glossary_pz.html#trusted_system">trusted system</A> 
+	from being accidentally 
+		<A HREF = "ob_glossary_ad.html#access">accessed</A> 
+	by 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	who aren't 
+		<A HREF = "ob_glossary_ad.html#authorized">authorized</A> 
+	to access them. They address what happens when these objects are reassigned. Object reuse 
+	features provide 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	by ensuring that when an object - for example, a 
+		<A HREF = "#login">login</A> 
+	ID - is assigned, allocated, or reallocated, the object doesn't contain data left over from 
+	previous usage. This also includes insuring that print buffers, print spoolers, disk caches, 
+	display buffers, X Window System objects, memory blocks, disk blocks and 
+		<A HREF = "ob_glossary_pz.html#password">password</A> 
+	buffers are erased.
+<P>
+
+<DT>
+		<A NAME = "one-way_encryption">
+		<B>one-way encryption</B></A>
+<DD>
+	Used in 
+		<A HREF = "ob_glossary_pz.html#password">password</A> 
+	protection, it means that the password is never 
+		<A HREF = "ob_glossary_ad.html#decryption">decrypted</A> 
+	into its original form. It is a means of ensuring that passwords remain 
+		<A HREF = "ob_glossary_ad.html#confidentiality">confidential</A> 
+	within the 
+		<A HREF = "#layers">layers</A> 
+	of a 
+		<A HREF = "ob_glossary_pz.html#system">system</A>.
+<P>
+
+<DT>
+		<A NAME = "open_security_environment">
+		<B>open security environment</B></A>
+<DD>
+	An environment in which at least one of the following conditions is true:
+<P>
+	1. Application developers do not have sufficient 
+		<A HREF = "ob_glossary_ad.html#clearance">clearance</A> 
+	or 
+		<A HREF = "ob_glossary_ad.html#authorization">authorization</A> 
+	to provide an acceptable presumption that they have not introduced 
+		<A HREF = "#malicious_logic">malicious logic</A>.
+<P>
+	2. Configuration control does not provide sufficient 
+		<A HREF = "ob_glossary_ad.html#assurance">assurance</A> 
+		that applications are protected against the introduction of malicious logic prior 
+		to and during the operation of 
+			<A HREF = "ob_glossary_pz.html#system">system</A> 
+		applications.
+<P>
+
+<DT>
+		<A NAME = "operational_assurance">
+		<B>operational assurance</B></A>
+<DD>
+	Confidence that a 
+		<A HREF = "ob_glossary_pz.html#trusted_system">trusted system's</A> 
+	architecture and implementation enforce the 
+		<A HREF = "ob_glossary_pz.html#system">system's</A> 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A>. 
+	In the 
+		<A HREF = "#orange_book">Orange Book</A>, 
+	the set of operational 
+		<A HREF = "ob_glossary_ad.html#assurance">assurances</A> 
+	includes 
+		<A HREF = "ob_glossary_pz.html#system_architecture">system architecture</A>, 
+		<A HREF = "ob_glossary_pz.html#system_integrity">system integrity</A>, 
+		<A HREF = "ob_glossary_ad.html#covert_channel_analysis">covert channel analysis</A>, 
+	and 
+		<A HREF = "ob_glossary_pz.html#trusted_recovery">trusted recovery</A>.
+<P>
+
+<DT>
+		<A NAME = "orange_book">
+		<B>orange book</B></A>
+<DD>
+	First released in August of 1983, the Department of Defense Trusted Computer System 
+	Evaluation Criteria (TCSEC) is commonly refered to as the Orange Book because of the 
+	colour of its cover. It is an abstract, very concise description of computer 
+		<A HREF = "ob_glossary_pz.html#security_requirement">security requirements</A>.
+<P>
+</DL>
+
+</BODY>
+</HTML>

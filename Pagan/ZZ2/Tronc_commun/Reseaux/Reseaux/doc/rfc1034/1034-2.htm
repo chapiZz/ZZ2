@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [fr] (WinNT; I) [Netscape]">
+   <TITLE>Preface</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1034
+<BR>Statut : Standard
+<CENTER>
+<H1>
+DOMAIN NAME SYSTEM</H1></CENTER>
+
+<CENTER>
+<H2>
+Concepts de base</H2></CENTER>
+
+<HR>Cr&eacute;dits : P. Mockapetris, ISI
+<BR>Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry
+G. FREMAUX</A>
+<BR>Edition originale : Novembre 87 / Version FR : Avril 1998
+<BR>Remplace : RFC882, RFC883, RFC973
+<HR>
+<H2>
+<FONT COLOR="#000088">2. INTRODUCTION</FONT></H2>
+Cette RFC expose les styles admis pour les noms de domaines, leur utilisation
+dans le cadre de la messagerie par Internet et pour la recherche d'h&ocirc;tes,
+et d&eacute;crit les protocoles et serveurs utilis&eacute;s pour les services
+r&eacute;seaux li&eacute;s aux noms de domaines.&nbsp;<A NAME="2.1"></A>
+<H3>
+2.1. Historique des noms de domaines</H3>
+La motivation essentielle et imp&eacute;rieuse conduisant &agrave; la mise
+en oeuvre du syst&egrave;me de domaines a &eacute;t&eacute; la croissance
+exponentielle d'Internet :
+<UL>
+<LI>
+Au d&eacute;but, la transcription de noms d'h&ocirc;tes en adresses Internet
+s'appuyait sur une table de correspondance maintenue par le Network Information
+Center (NIC) sous forme d'un unique fichier (HOSTS.TXT) lequel &eacute;tait
+transmis par FTP sur tous les h&ocirc;tes [RFC-952, RFC-953]. La bande
+passante consomm&eacute;e par la distribution d'une remise &agrave; jour
+de cette base par cette m&eacute;thode est proportionnelle au carr&eacute;
+du nombre d'h&ocirc;tes sur le r&eacute;seau, et m&ecirc;me lorsque plusieurs
+niveaux de retransmissions FTP &eacute;taient utilis&eacute;s, le trafic
+sortant du serveur NIC restait consid&eacute;rable. La croissance explosive
+du nombre d'h&ocirc;tes a fait rapidement exploser du m&ecirc;me coup ce
+m&eacute;canisme.</LI>
+
+<BR>&nbsp;
+<LI>
+La population internaute changeait dans le m&ecirc;me temps de nature.
+Les h&ocirc;tes en temps partag&eacute; (mainframes) constituant l'ARPANET
+originel ont &eacute;t&eacute; remplac&eacute;s par une architecture distribu&eacute;e
+de stations connect&eacute;es sur des r&eacute;seaux et sous-r&eacute;seaux
+locaux. Les organismes locaux ont commenc&eacute; &agrave; administrer
+leurs propres noms et adresses, mais devaient attendre que le NIC reporte
+les changements dans le fichier HOSTS.TXT pour que ceux-ci soient visibles
+de l'ensemble de la communaut&eacute; Internet. Les organisations souhaitaient
+n&eacute;anmoins pouvoir conserver une certaine autonomie quant &agrave;
+la gestion de leur infrastructure locale.</LI>
+
+<BR>&nbsp;
+<LI>
+Les applications exploitant Internet sont devenues de plus en plus sophistiqu&eacute;es
+et ont cr&eacute;&eacute; le besoin d'un traitement plus g&eacute;n&eacute;ralis&eacute;
+des noms de domaines.</LI>
+</UL>
+Le r&eacute;sultat de tout ceci ont fait &eacute;merger certaines id&eacute;es
+sur l'espace des noms et sa gestion[IEN-116, RFC-799, RFC-819, RFC-830].
+Les propositions ont &eacute;t&eacute; diverses, mais l'une des tendances
+&eacute;mergentes a &eacute;t&eacute; celle d'un espace de noms hi&eacute;rarchis&eacute;,
+et dont le principe hi&eacute;rarchique s'appuierait autant que possible
+sur la structure des organismes eux-m&ecirc;mes, et o&ugrave; les noms
+utiliseraient le caract&egrave;re "." pour marquer la fronti&egrave;re
+entre deux niveaux hi&eacute;rarchiques. Un design mettant en oeuvre une
+base de donn&eacute;es distribu&eacute;e et des ressources g&eacute;n&eacute;ralis&eacute;es
+a &eacute;t&eacute; d&eacute;crit dans les [RFC-882, RFC-883]. Sur la base
+de nombreuses exp&eacute;rimentations, le syst&egrave;me th&eacute;orique
+des domaines a &eacute;volu&eacute; vers celui qui est pr&eacute;sent&eacute;
+dans ce m&eacute;mo.
+<P>Les termes "domaine" ou "nom de domaine" sont utilis&eacute;s dans de
+nombreux contextes tournant autour du DNS d&eacute;crit ici. Tr&egrave;s
+souvent, le terme "nom de domaine" est souvent utilis&eacute; pour d&eacute;crire
+un nom &eacute;crit sous forme de cha&icirc;ne de caract&egrave;res reli&eacute;es
+par des points, sans relation expresse au DNS. Ceci est particuli&egrave;rement
+vrai pour ce qui concerne les adresses de messagerie [Quarterman 86].&nbsp;<A NAME="2.2"></A>
+<H3>
+2.2. Objectifs de la conception du DNS</H3>
+Les objectifs dans lesquels a &eacute;t&eacute; con&ccedil;u le DNS ont
+influenc&eacute; sa structure. Ces objectifs sont les suivants :
+<UL>
+<LI>
+Le but premier est la cr&eacute;ation d'un espace de noms cons&eacute;quent
+utilisables pour r&eacute;f&eacute;rencer des ressources. Pour &eacute;viter
+tout probl&egrave;me de transcodage ou d'encodage, les noms peuvent ne
+mentionner ou inclure aucun des identificateurs r&eacute;seau, adresses,
+chemins, ou information similaire commun&eacute;ment utilis&eacute;s pour
+l'impl&eacute;mentation technique.</LI>
+
+<BR>&nbsp;
+<LI>
+La taille &eacute;norme de la base de donn&eacute;es et sa fr&eacute;quence
+de mise &agrave; jour sugg&egrave;re une maintenance distribu&eacute;e,
+avec cache local pour une performance accrue. Toute approche qui tentera
+d'obtenir une copie int&eacute;grale de la base de donn&eacute;e sera de
+plus en plus co&ucirc;teuse et difficile &agrave; traiter, et de ce fait
+devra &ecirc;tre &eacute;cart&eacute;e. Les m&ecirc;mes principes courent
+pour la constitution de l'espace des noms, et en particulier les m&eacute;canismes
+pour cr&eacute;er et supprimer des noms ; ceux-ci devront &ecirc;tre &eacute;galement
+distribu&eacute;s.</LI>
+
+<BR>&nbsp;
+<LI>
+Lorsque l'on doit composer entre le co&ucirc;t technique d'acquisition
+d'une donn&eacute;e, la fr&eacute;quence des mises &agrave; jour, et la
+validit&eacute; des caches, c'est toujours la source premi&egrave;re de
+donn&eacute;es qui contr&ocirc;le les priorit&eacute;s &agrave; donner.</LI>
+
+<BR>&nbsp;
+<LI>
+Le co&ucirc;t important inh&eacute;rent &agrave; l'impl&eacute;mentation
+d'un tel service suppose qu'il a une utilit&eacute; g&eacute;n&eacute;rale,
+qui n'est pas restreinte &agrave; une application particuli&egrave;re.
+Les noms ainsi constitu&eacute;s devront pouvoir servir &agrave; identifier
+des h&ocirc;tes, r&eacute;cup&eacute;rer des courriers dans des bo&icirc;tes
+aux lettres, et toute autre information non encore identifi&eacute;e. Toute
+donn&eacute;e associ&eacute;e &agrave; un nom sera typ&eacute;e, et les
+requ&ecirc;tes sur ce nom seront limit&eacute;es &agrave; ce seul type.</LI>
+
+<BR>&nbsp;
+<LI>
+Nous souhaitions que l'espace de noms puisse &ecirc;tre utilis&eacute;
+sur des r&eacute;seaux de nature diff&eacute;rente, et pour cela, nous
+avons con&ccedil;u ce syst&egrave;me de telle sorte qu'il puisse s'appuyer
+sur plusieurs familles de protocoles. Par exemple, les adresses d'h&ocirc;tes
+diff&egrave;rent dans leur forme suivant la nature des syst&egrave;mes,
+bien que tous les protocoles utilisent une notion similaire. Le DNS attribue
+une classe aux donn&eacute;es de la m&ecirc;me fa&ccedil;on qu'il attribue
+un type, ce qui nous permettra de pouvoir parall&egrave;lement utiliser
+plusieurs formats distincts pour des donn&eacute;es de type adresse.</LI>
+
+<BR>&nbsp;
+<LI>
+Nous souhaitions de plus que les transactions avec les serveurs de nom
+soient ind&eacute;pendantes du syst&egrave;me de communication utilis&eacute;.
+Certains syst&egrave;mes utiliseront le format du datagramme pour les requ&ecirc;tes
+et les r&eacute;ponses, et n'&eacute;tabliront de circuit commut&eacute;
+virtuel que lorsque la transaction n&eacute;cessite une certaine s&eacute;curit&eacute;
+(ex., la mise &agrave; jour des bases de donn&eacute;es, des transactions
+de longue dur&eacute;e); d'autres syst&egrave;mes demanderont &agrave;
+n'utiliser que des circuits commut&eacute;s virtuels.</LI>
+
+<BR>&nbsp;
+<LI>
+Le syst&egrave;me doit &ecirc;tre compatible avec une grande vari&eacute;t&eacute;
+de plates-formes. Devront pouvoir utiliser ce syst&egrave;me tant des micro-ordinateurs
+que des "mainframes", les m&eacute;thodes d'utilisation pouvant &ecirc;tre
+diff&eacute;rentes.</LI>
+</UL>
+<A NAME="2.3"></A>
+<H3>
+2.3. Pr&eacute;suppos&eacute;s concernant l'utilisation</H3>
+L'organisation du syst&egrave;me de domaines d&eacute;coule de certains
+pr&eacute;suppos&eacute;s quant aux besoins et aux sch&eacute;mas d'exploitation
+de la communaut&eacute; utilisatrice, et est con&ccedil;ue de sorte &agrave;
+&eacute;viter un grand nombre de probl&egrave;mes classiques des grandes
+bases de donn&eacute;es g&eacute;n&eacute;ralistes.
+<P>Les suppositions faites sont :
+<UL>
+<LI>
+La taille totale de la base de donn&eacute;es sera initialement proportionnelle
+au nombre d'h&ocirc;tes utilisant le syst&egrave;me, mais pourra rapidement
+devenir proportionnelle au nombre d'utilisateurs utilisant ces machines
+dans la mesure o&ugrave; des informations telles que les bo&icirc;tes aux
+lettres y seront int&eacute;gr&eacute;es.</LI>
+
+<BR>&nbsp;
+<LI>
+La fr&eacute;quence de modification de la plupart des donn&eacute;es de
+cette base sera assez basse (ex., les changements de bo&icirc;tes aux lettres,
+les adresses d'h&ocirc;tes), mais le syst&egrave;me devra pouvoir traiter
+des sous ensembles de donn&eacute;es n&eacute;cessitant une p&eacute;riode
+de remise &agrave; jour plus &eacute;lev&eacute;e (de l'ordre de quelques
+secondes &agrave; quelques minutes).</LI>
+
+<BR>&nbsp;
+<LI>
+Les limites administratives d&eacute;finies pour r&eacute;partir la responsabilit&eacute;
+de gestion de la base de donn&eacute;es seront g&eacute;n&eacute;ralement
+associ&eacute;es &agrave; celles d'organisations poss&eacute;dant un ou
+plusieurs h&ocirc;tes. Chaque organisation ayant la responsabilit&eacute;
+d'un ensemble de domaines particulier devra mettre en uvre plusieurs serveurs
+de domaines redondants, s oit sur l'h&ocirc;te m&ecirc;me de l'organisme,
+ou sur d'autres h&ocirc;tes dont l'organisme s'occupe ou exploite.</LI>
+
+<BR>&nbsp;
+<LI>
+Les clients du syst&egrave;me de domaines devront pouvoir choisir le serveur
+qu'ils d&eacute;cident d'utiliser armi un ensemble de serveurs nomm&eacute;s
+et consid&eacute;r&eacute;s comme s&ucirc;rs avant d'accepter de s'appuyer
+sur un serveur hors de cet ensemble.</LI>
+
+<BR>&nbsp;
+<LI>
+L'acc&egrave;s &agrave; l'information est plus important que la garantie
+de remise &agrave; jour instantan&eacute;e et d'une consistance permanente
+de la base. De ce fait le processus de remise &agrave; jour utilise un
+principe de diffusion de l'information de proche en proche plut&ocirc;t
+qu'un m&eacute;canisme dont le but serait de remettre &agrave; jour simultan&eacute;ment
+toutes les copies d'une information. Lorsque les mises &agrave; jour sont
+indisponibles suite &agrave; une d&eacute;faillance r&eacute;seau ou de
+l'h&ocirc;te, il sera d'usage de s'en remettre &agrave; l'information "ancienne",
+pendant que les efforts sont faits pour remettre &agrave; jour la base.
+Le mod&egrave;le g&eacute;n&eacute;ral pr&eacute;cise que les copies d'informations
+sont faites tenant compte d'un certain d&eacute;lai de rafra&icirc;chissement.
+Le distributeur mentionne le d&eacute;lai et le r&eacute;cepteur des donn&eacute;es
+est responsable de l'op&eacute;ration de remise &agrave; jour. Dans certains
+cas tr&egrave;s particuliers, des d&eacute;lais tr&egrave;s courts peuvent
+&ecirc;tre sp&eacute;cifi&eacute;es, ou encore la copie peut &ecirc;tre
+interdite.</LI>
+
+<BR>&nbsp;
+<LI>
+Dans tout syst&egrave;me poss&eacute;dant une base de donn&eacute;es r&eacute;partie,
+un serveur de nom pourra recevoir des requ&ecirc;tes auxquelles seuls d'autres
+serveurs peuvent r&eacute;pondre. Les deux approches principales pour contourner
+le probl&egrave;me sont soit la m&eacute;thode "r&eacute;cursive", par
+laquelle le serveur reporte la requ&ecirc;te vers un autre serveur pour
+le compte du client, soit la m&eacute;thode "it&eacute;rative", par laquelle
+le client est enjoint de requ&eacute;rir sur un autre serveur. Les deux
+approches ont leurs avantages et inconv&eacute;nients, mais la m&eacute;thode
+it&eacute;rative reste toutefois pr&eacute;f&eacute;r&eacute;e dans le
+cas o&ugrave; le mode de requ&ecirc;te est le datagramme. Le syst&egrave;me
+de domaines n&eacute;cessitera l'impl&eacute;mentation de l'approche it&eacute;rative,
+mais fournira la m&eacute;thode r&eacute;cursive en option.</LI>
+</UL>
+Le syst&egrave;me de domaines suppose que toutes les donn&eacute;es proviennent
+de fichiers ma&icirc;tres &eacute;parpill&eacute;s dans les h&ocirc;tes
+parties prenantes de ce syst&egrave;me. Ces fichiers ma&icirc;tres de donn&eacute;es
+sont maintenus par l'administrateur local. Les fichiers ma&icirc;tres sont
+des fichiers texte lus par un serveur de domaines local, et qui deviennent
+de ce fait accessibles &agrave; tous les utilisateurs du syst&egrave;me
+de domaines par l'interm&eacute;diaire de la cha&icirc;ne de serveurs.
+Le programme de l'utilisateur acc&egrave;de &agrave; ces diff&eacute;rents
+serveurs par l'interm&eacute;diaire d'une fonction logicielle de "r&eacute;solution
+d'adresse".
+<P>Le format standardis&eacute; des fichiers ma&icirc;tres leur permet
+d'&ecirc;tre &eacute;chang&eacute;s entre h&ocirc;tes diff&eacute;rents
+(via FTP, mail, ou tout autre m&eacute;canisme); cette opportunit&eacute;
+est utile lorsque par exemple, un organisme d&eacute;sire s'attribuer un
+domaine, mais ne souhaite pas supporter l'administration d'un serveur de
+domaines. L'organisme pourra maintenir localement le fichier ma&icirc;tre
+avec un simple &eacute;diteur de texte, puis le transf&eacute;rer sur un
+h&ocirc;te d&eacute;port&eacute; sur lequel sont ex&eacute;cut&eacute;s
+les serveurs de domaines, puis voir avec l'administrateur syst&egrave;me
+pour savoir quel serveur de domaines ira lire les fichiers ainsi charg&eacute;s.
+<P>Chaque h&ocirc;te g&eacute;rant un serveur de noms de domaines et une
+fonction de r&eacute;solution d'adresse est configur&eacute; par un administrateur
+local [RFC-1033]. Pour un serveur de noms, cette configuration d&eacute;finit
+entre autres l'identit&eacute; des fichiers ma&icirc;tres locaux ainsi
+que des instructions pour savoir quels fichiers ma&icirc;tres externes
+doivent &ecirc;tre charg&eacute;s et &agrave; partir de quels serveurs
+distants. Le serveur de noms utilise les fichiers principaux ou ses copies
+pour charger ces zones. Pour les programmes de r&eacute;solution d'adresse,
+les donn&eacute;es de configuration identifient les serveurs de noms qui
+seront les sources primaires d'information.
+<P>Le syst&egrave;me de domaines d&eacute;finit des proc&eacute;dures pour
+acc&eacute;der aux donn&eacute;es oupour faire r&eacute;f&eacute;rence
+&agrave; d'autres serveurs de noms. Le syst&egrave;me de domaines d&eacute;finit
+aussi des proc&eacute;dures pour stocker les donn&eacute;es r&eacute;cup&eacute;r&eacute;es
+et pour rafra&icirc;chir p&eacute;riodiquement les donn&eacute;es selon
+les voeux de l'administrateur syst&egrave;me.
+<P>L'administrateur renseigne :
+<UL>
+<LI>
+La d&eacute;finition des limites de zones.</LI>
+
+<LI>
+Les fichiers principaux de donn&eacute;es.</LI>
+
+<LI>
+La remise &agrave; jour des fichiers de donn&eacute;es.</LI>
+
+<LI>
+Les sp&eacute;cifications de cette remise &agrave; jour.</LI>
+</UL>
+Le syst&egrave;me de domaines fournit :
+<UL>
+<LI>
+Des formats standard pour les ressources.</LI>
+
+<LI>
+Des m&eacute;thodes standard d'acc&egrave;s &agrave; la base de donn&eacute;es.</LI>
+
+<LI>
+Des m&eacute;thodes standard &agrave; l'attention des serveurs de noms
+pour rafra&icirc;chir les donn&eacute;es &agrave; partir de serveurs de
+noms distants.</LI>
+</UL>
+<A NAME="2.4"></A>
+<H3>
+2.4. El&eacute;ments du DNS</H3>
+Le DNS a trois composants principaux :
+<UL>
+<LI>
+L'ESPACE DE NOMS DE DOMAINES et les ENREGISTREMENTS DE RESSOURCES, qui
+sont les sp&eacute;cifications d'un espace de noms structur&eacute; en
+arbre et des donn&eacute;es associ&eacute;es &agrave; ces noms. Conceptuellement,
+chaque noeud et chaque feuille de l'arbre de l'espace de noms de domaines
+contient un ensemble d'informations ; les requ&ecirc;tes sont des tentatives
+pour extraire un type sp&eacute;cifique d'information dans cet ensemble.
+Une requ&ecirc;te cite le nom du domaine d'int&eacute;r&ecirc;t et d&eacute;crit
+le type d'information d&eacute;sir&eacute; quant aux ressources concern&eacute;es.
+Par exemple, Internet utilise certains de ses noms de domaines pour identifier
+des h&ocirc;tes ; une requ&ecirc;te pour des adresses de ressources renverront
+l'adresse Internet de l'h&ocirc;te.</LI>
+
+<BR>&nbsp;
+<LI>
+Les SERVEURS DE NOM sont des programmes serveurs qui d&eacute;tiennent
+l'information sur la structure arborescente et les informations de domaines.
+Un serveur de nom peut stocker momentan&eacute;ment en "cache" des informations
+de structure ou de ressources sur toute partie de l'espace de noms de domaines,
+mais en g&eacute;n&eacute;ral, un serveur de nom n'accueillera que les
+informations relatives &agrave; un sous ensemble de l'espace, et des pointeurs
+vers d'autres serveurs de noms qui, par leur association, se r&eacute;partissent
+la d&eacute;finition de l'ensemble de l'espace. Les serveurs de nom connaissent
+la partie de l'arbre des domaines pour laquelle il d&eacute;tiennent une
+information compl&egrave;te ; un serveur de noms est dit &ecirc;tre AUTORISE
+pour cette partie de l'espace de noms. L'information "autoris&eacute;e"
+est organis&eacute;e en unit&eacute;s appel&eacute;es ZONES, ces zones
+pouvant &ecirc;tre automatiquement distribu&eacute;es aux serveurs de noms
+faisant partie de la "sph&egrave;re de redondance" pour la zone de donn&eacute;es
+consid&eacute;r&eacute;es.</LI>
+
+<BR>&nbsp;
+<LI>
+Les processus de r&eacute;solution, ou RESOLVEURS sont des programmes qui
+extraient l'information des serveurs de noms en r&eacute;ponse aux requ&ecirc;tes
+clientes. Les r&eacute;solveurs doivent pouvoir acc&eacute;der &agrave;
+au moins un serveur de noms et utiliser l'information qu'ils y trouvent
+pour donner directement une r&eacute;ponse au client, ou utiliser les r&eacute;f&eacute;rences
+&agrave; d'autres serveurs de nom contenues dans le serveur "visible" pour
+les contacter &agrave; leur tour et continuer la r&eacute;solution. un
+r&eacute;solveur sera habituellement une routine syst&egrave;me qui peut
+&ecirc;tre appel&eacute;e directement par un programme utilisateur ; en
+g&eacute;n&eacute;ral aucun protocole n'est n&eacute;cessaire entre le
+r&eacute;solveur et l'application utilisatrice.</LI>
+</UL>
+
+<BR>&nbsp;
+<P>Ces trois composants correspondent en gros aux trois "couches" ou points
+de vue sur le syst&egrave;me de noms de domaines :
+<UL>
+<LI>
+Du point de vue de l'utilisateur, le syst&egrave;me de noms de domaines
+est accessible via une proc&eacute;dure simple ou un appel syst&egrave;me
+&agrave; un r&eacute;solveur local. L'espace de domaines consiste en un
+arbre unique dont toutes les parties sont accessibles &agrave; l'utilisateur.</LI>
+
+<BR>&nbsp;
+<LI>
+Du point de vue du r&eacute;solveur, le syst&egrave;me de domaines est
+compos&eacute; d'un nombre non connu de serveurs de noms. Chaque serveur
+de noms h&eacute;berge une ou plusieurs pi&egrave;ces de l'ensemble des
+donn&eacute;es constituant l'arbre des domaines, le r&eacute;solveur consid&eacute;rant
+chacune de ces bases de donn&eacute;es comme essentiellement statique.</LI>
+
+<BR>&nbsp;
+<LI>
+Du point de vue d'un serveur de noms, le syst&egrave;me de domaines consiste
+en un regroupement d'ensembles de donn&eacute;es locales s&eacute;par&eacute;es
+appel&eacute;es zones. Le serveur de noms dispose d'une copie locale de
+certaines zones. Le serveur de noms doit rafra&icirc;chir p&eacute;riodiquement
+ses zones &agrave; partir de fichiers principaux locaux ou situ&eacute;s
+dans des serveurs de noms distants. Les serveurs de noms doivent traiter
+les requ&ecirc;tes arrivant des r&eacute;solveurs de fa&ccedil;on concurrente.</LI>
+</UL>
+Pour une meilleure performance, les impl&eacute;mentations pourront coupler
+ces fonctions. Par exemple, un r&eacute;solveur ex&eacute;cut&eacute; sur
+la m&ecirc;me machine qu'un serveur de noms pourrait partager la base de
+donn&eacute;es accueillant les zones g&eacute;r&eacute;es par le serveur
+de nom et le cache g&eacute;r&eacute;, lui, par le r&eacute;solveur.
+<BR>
+<HR>
+</BODY>
+</HTML>

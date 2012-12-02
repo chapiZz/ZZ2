@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">7. Entit&eacute;s</FONT></H2>
+<P>Les messages de requ&ecirc;te et de r&eacute;ponses contiennent g&eacute;n&eacute;ralement une entit&eacute; dans laquelle est incluse des &eacute;l&eacute;ments de requ&ecirc;te ou de r&eacute;ponse. Une entit&eacute; est d&eacute;finie par une en-t&ecirc;te d'entit&eacute;, et dans la plupart des cas par un corps d'entit&eacute;. Dans ce qui suit "l'&eacute;metteur" et le "r&eacute;cepteur" se r&eacute;f&egrave;rent tant&ocirc;t au client, tant&ocirc;t au serveur, suivant l'agent qui &eacute;met le message.
+<A NAME="7-1"></A>
+<H3>7.1 En-t&ecirc;te d'entit&eacute;</H3>
+<P>Les champs d'en-t&ecirc;te d'entit&eacute; v&eacute;hiculent certaines m&eacute;tainformations concernant le corps d'entit&eacute;, ou, si celui-ci n'existe pas, la ressource vis&eacute;e par la requ&ecirc;te.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+En-t&ecirc;te_entit&eacute;      = Allow                    ; <A HREF="1945-10.htm#10-1">Section 10.1</A>
+                    | Content-Encoding         ; <A HREF="1945-10.htm#10-3">Section 10.3</A>
+                    | Content-Length           ; <A HREF="1945-10.htm#10-4">Section 10.4</A>
+                    | Content-Type             ; <A HREF="1945-10.htm#10-5">Section 10.5</A>
+                    | Expires                  ; <A HREF="1945-10.htm#10-7">Section 10.7</A>
+                    | Last-Modified            ; <A HREF="1945-10.htm#10-10">Section 10.10</A>
+                    | champ_en-t&ecirc;te
+
+champ_en-t&ecirc;te       = en-t&ecirc;te_HTTP</PRE></CODE></FONT>
+
+<P>Le m&eacute;canisme d'extension de l'en-t&ecirc;te d'entit&eacute; permet la d&eacute;finition d'autres champs, ceux-ci n'&eacute;tant pas obligatoirement reconnus par le r&eacute;cepteur. Tout champ non identifi&eacute; doit &ecirc;tre ignor&eacute;, ou, dans le cas d'un proxy, retransmis tel quel.
+<A NAME="7-2"></A>
+<H3>7.2 Corps d'entit&eacute;</H3>
+<P>Le corps d'entit&eacute; (s'il existe) envoy&eacute; dans un message de requ&ecirc;te ou de r&eacute;ponse HTTP est dans un format et sous un encodage d&eacute;fini par les champs d'en-t&ecirc;te d'entit&eacute;.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Corps_entit&eacute;          = *OCTET</PRE></CODE></FONT>
+
+<P>Un corps d'entit&eacute; n'appara&icirc;t dans un message de requ&ecirc;te que dans la mesure ou le type de requ&ecirc;te le demande. La pr&eacute;sence de ce corps est signal&eacute;e par la pr&eacute;sence d'un champ Content-Length dans les champs d'en-t&ecirc;te de la requ&ecirc;te. Les requ&ecirc;tes HTTP/1.0 contenant un corps doivent n&eacute;cessairement pr&eacute;senter un champ d'en-t&ecirc;te Content-Length valide.
+<P>Dans les r&eacute;ponses, la pr&eacute;sence d'un corps d'entit&eacute; est fonction &agrave; la fois de la nature de la requ&ecirc;te pr&eacute;alable, et du code d'&eacute;tat renvoy&eacute;. Toute r&eacute;ponse &agrave; une requ&ecirc;te de type HEAD ne peut contenir de corps d'entit&eacute;, m&ecirc;me si les champs d'en-t&ecirc;te pr&eacute;sents pr&eacute;tendent le contraire. Les codes d'&eacute;tat 1xx (informations), 204 (pas de contenu), et 304 (non modifi&eacute;) supposent implicitement ou explicitement l'absence de tout corps d'entit&eacute;. Toutes les autres r&eacute;ponses peuvent contenir un corps d'entit&eacute;, ou &agrave; d&eacute;faut, un champ Content-Length sp&eacute;cifi&eacute; &agrave; z&eacute;ro (0).
+<A NAME="7-2-1"></A>
+<H4>7.2.1 Type</H4>
+<P>Lorsqu'un corps d'entit&eacute; est pr&eacute;sent dans le message, le type de donn&eacute;es incluses dans ce corps est pr&eacute;cis&eacute; par les champs d'en-t&ecirc;te Content-Type et Content-Encoding. Ceux-ci d&eacute;finissent un mod&egrave;le d'encodage arborescent &agrave; deux niveaux:
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Corps_entit&eacute;     = Content-Encoding( Content-Type( donn&eacute;es ) )</PRE></CODE></FONT>
+
+<P>Le Content-Type le type de m&eacute;dia des donn&eacute;es de la ressource. Un champ Content-Encoding peut &ecirc;tre utilis&eacute; pour sp&eacute;cifier un traitement ou encodage suppl&eacute;mentaire effectu&eacute; sur le type de donn&eacute;es, souvent dans un but de compression, et apparaissant comme une propri&eacute;t&eacute; de la ressource. Par d&eacute;faut, aucun encodage n'est appliqu&eacute; aux donn&eacute;es (la ressource est enregistr&eacute;e et directement accessible sous forme utilisable).
+<P>Tout message HTTP/1.0 contenant un corps d'entit&eacute; doit au moins faire appara&icirc;tre le champ Content-Type d&eacute;finissant la nature des donn&eacute;es de la ressource. Si et seulement si aucun type de m&eacute;dia n'est d&eacute;fini (uniquement dans le cas o&ugrave; le champ Content-Type n'existe pas, comme dans le cas de r&eacute;ponses simples), le r&eacute;cepteur pourra &ecirc;tre amen&eacute; &agrave; d&eacute;terminer ce type par lui-m&ecirc;me, en inspectant le contenu des donn&eacute;es, ou en se basant sur l'extension utilis&eacute;e dans l'URL d&eacute;finissant l'acc&egrave;s &agrave; la ressource. Si le m&eacute;dia demeure non identifiable, le type par d&eacute;faut "application/octet-stream".
+<A NAME="7-2-2"></A>
+<H4>7.2.2 Longueur</H4>
+<P>Lorsqu'un corps d'entit&eacute; est pr&eacute;sent dans un message, la longueur de ce corps doit &ecirc;tre explicit&eacute;e par l'un des deux moyens suivants. Si un champ Content-Length est pr&eacute;sent, sa valeur associ&eacute;e repr&eacute;sente la longueur en octets du corps d'entit&eacute;.
+Autrement, c'est la d&eacute;connexion par le serveur qui marque la fin du corps d'entit&eacute;.
+<P>Cette derni&egrave;re m&eacute;thode ne peut &ecirc;tre utilis&eacute;e pour marquer la fin d'une requ&ecirc;te, car la possibilit&eacute; doit &ecirc;tre laiss&eacute;e au serveur d'envoyer une r&eacute;ponse. C'est pourquoi le protocole HTTP/1.0 pr&eacute;cise que toute requ&ecirc;te contenant un corps d'entit&eacute; doit mentionner sa longueur dans un champ d'en-t&ecirc;te Content-Length valide. Si tet est le cas, et que ce champ n'existe pas dans le message, et dans la mesure o&ugrave; le serveur ne peut calculer ou d&eacute;terminer la longueur de ce corps, ce dernier r&eacute;pondra par un message de code 400 (erreur client).
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: Certains anciens serveurs sp&eacute;cifient un champ Content-Length erron&eacute; lorsque la r&eacute;ponse contient des donn&eacute;es dynamiquement g&eacute;n&eacute;r&eacute;es par le serveur. Il est signal&eacute; ici que cet &eacute;tat de fait ne sera plus tol&eacute;rable dans les nouvelles versions d'HTTP.</FONT></NOTE>
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-6.htm">Pr&eacute;c&eacute;dent</A> - <A HREF="1945-8.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+

@@ -1,0 +1,361 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+	<TITLE>RFC 1700 : POINT-TO-POINT PROTOCOL FIELD ASSIGNMENTS</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+        <STYLE TYPE="text/css">A {background-color:transparent}</STYLE>
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+<P><SPAN STYLE="font-family:sans-serif; font-size:x-large; font-weight:bold; color:navy">RFC 1700</SPAN><BR>
+October 1994<BR>
+<A HREF="rfc1700.html">version complète</A> (464 Ko)</P>
+
+<H1><A NAME="as-h1-5551">POINT-TO-POINT PROTOCOL FIELD ASSIGNMENTS</A></H1>
+<DIV CLASS="toc"><!-- AS-TOC_BEGIN{ -->
+
+<HR>
+<UL>
+	<LI><A HREF="#as-h2-5552">PPP DLL protocol numbers</A>
+	<LI><A HREF="#as-h2-5554">PPP LCP and IPCP codes</A>
+	<LI><A HREF="#as-h2-5555">PPP LCP configuration option types</A>
+	<LI><A HREF="#as-h2-5556">PPP LCP FCS-alternatives</A>
+	<LI><A HREF="#as-h2-5557">PPP LCP callback operation fields</A>
+	<LI><A HREF="#as-h2-5558">PPP IPCP configuration option types</A>
+	<LI><A HREF="#as-h2-5559">PPP ATCP configuration option types</A>
+	<LI><A HREF="#as-h2-55510">PPP OSINLCP configuration option types</A>
+	<LI><A HREF="#as-h2-55511">PPP bridging configuration option types</A>
+	<LI><A HREF="#as-h2-55512">PPP bridging MAC types</A>
+	<LI><A HREF="#as-h2-55513">PPP bridging spanning tree</A>
+	<LI><A HREF="#as-h2-55514">References</A>
+	<LI><A HREF="#as-h2-55515">People</A>
+</UL>
+<!-- AS-TOC_END} -->
+<HR>
+</DIV>
+
+<H2><A NAME="as-h2-5552">PPP DLL protocol numbers</A></H2>
+
+<BLOCKQUOTE>The Point-to-Point Protocol (PPP) Data Link Layer [146,147,175]
+contains a 16 bit Protocol field to identify the the encapsulated
+protocol.  The Protocol field is consistent with the ISO 3309 (HDLC)
+extension mechanism for Address fields.  All Protocols MUST be
+assigned such that the least significant bit of the most significant
+octet equals "0", and the least significant bit of the least
+significant octet equals "1".</BLOCKQUOTE>
+
+<H3><A NAME="as-h3-5553">Assigned PPP DLL Protocol Numbers</A></H3>
+
+<BLOCKQUOTE>
+<PRE><B><U>Value (in hex)  Protocol Name</U></B>
+
+0001            Padding Protocol
+0003 to 001f    reserved (transparency inefficient)
+0021            Internet Protocol
+0023            OSI Network Layer
+0025            Xerox NS IDP
+0027            DECnet Phase IV
+0029            Appletalk
+002b            Novell IPX
+002d            Van Jacobson Compressed TCP/IP
+002f            Van Jacobson Uncompressed TCP/IP
+0031            Bridging PDU
+0033            Stream Protocol (ST-II)
+0035            Banyan Vines
+0037            reserved (until 1993)
+0039            AppleTalk EDDP
+003b            AppleTalk SmartBuffered
+003d            Multi-Link
+003f            NETBIOS Framing
+0041            Cisco Systems
+0043            Ascom Timeplex
+0045            Fujitsu Link Backup and Load Balancing (LBLB)
+0047            DCA Remote Lan
+0049            Serial Data Transport Protocol (PPP-SDTP)
+004b            SNA over 802.2
+004d            SNA
+004f            IP6 Header Compression
+006f            Stampede Bridging
+007d            reserved (Control Escape)             [RFC1661]
+007f            reserved (compression inefficient)    [RFC1662]
+00cf            reserved (PPP NLPID)
+00fb            compression on single link in multilink group
+00fd            1st choice compression
+00ff            reserved (compression inefficient)
+
+0201            802.1d Hello Packets
+0203            IBM Source Routing BPDU
+0205            DEC LANBridge100 Spanning Tree
+0231            Luxcom
+0233            Sigma Network Systems
+
+8001-801f       Not Used - reserved                   [RFC1661]
+8021            Internet Protocol Control Protocol
+8023            OSI Network Layer Control Protocol
+8025            Xerox NS IDP Control Protocol
+8027            DECnet Phase IV Control Protocol
+8029            Appletalk Control Protocol
+802b            Novell IPX Control Protocol
+802d            reserved
+802f            reserved
+8031            Bridging NCP
+8033            Stream Protocol Control Protocol
+8035            Banyan Vines Control Protocol
+8037            reserved till 1993
+8039            reserved
+803b            reserved
+803d            Multi-Link Control Protocol
+803f            NETBIOS Framing Control Protocol
+807d            Not Used - reserved                   [RFC1661]
+8041            Cisco Systems Control Protocol
+8043            Ascom Timeplex
+8045            Fujitsu LBLB Control Protocol
+8047            DCA Remote Lan Network Control Protocol (RLNCP)
+8049            Serial Data Control Protocol (PPP-SDCP)
+804b            SNA over 802.2 Control Protocol
+804d            SNA Control Protocol
+804f            IP6 Header Compression Control Protocol
+006f            Stampede Bridging Control Protocol
+80cf            Not Used - reserved                   [RFC1661]
+80fb            compression on single link in multilink group control
+80fd            Compression Control Protocol
+80ff            Not Used - reserved                   [RFC1661]
+
+c021            Link Control Protocol
+c023            Password Authentication Protocol
+c025            Link Quality Report
+c027            Shiva Password Authentication Protocol
+c029            CallBack Control Protocol (CBCP)
+c081            Container Control Protocol                  [KEN]
+c223            Challenge Handshake Authentication Protocol
+c281            Proprietary Authentication Protocol         [KEN]
+c26f            Stampede Bridging Authorization Protocol
+c481            Proprietary Node ID Authentication Protocol [KEN]</PRE>
+
+
+<P>Protocol field values in the "0xxx" to "3xxx" range identify the
+network-layer protocol of specific datagrams, and values in the "8xxx"
+to "bxxx" range identify datagrams belonging to the associated Network
+Control Protocol (NCP), if any.</P>
+
+<P>It is recommended that values in the "02xx" to "1exx" and "xx01" to
+"xx1f" ranges not be assigned, as they are compression inefficient.</P>
+
+<P>Protocol field values in the "4xxx" to "7xxx" range are used for
+protocols with low volume traffic which have no associated NCP.</P>
+
+<P>Protocol field values in the "cxxx" to "exxx" range identify datagrams
+as Control Protocols (such as LCP).</P>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-5554">PPP LCP and IPCP codes</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) Link Control Protocol (LCP), [146]
+the Compression Control Protocol (CCP), Internet Protocol Control
+Protocol (IPCP), [147] and other control protocols, contain an 8 bit
+Code field which identifies the type of packet.  These Codes are
+assigned as follows:
+
+<PRE><B><U>Code       Packet Type</U></B>
+   1       Configure-Request
+   2       Configure-Ack
+   3       Configure-Nak
+   4       Configure-Reject
+   5       Terminate-Request
+   6       Terminate-Ack
+   7       Code-Reject
+   8     * Protocol-Reject
+   9     * Echo-Request
+  10     * Echo-Reply
+  11     * Discard-Request
+  12     * Identification
+  13     * Time-Remaining
+  14     + Reset-Request
+  15     + Reset-Reply</PRE>
+
+* LCP Only<BR>
++ CCP Only
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-5555">PPP LCP configuration option types</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) Link Control Protocol (LCP)
+specifies a number of Configuration Options [146] which are
+distinguished by an 8 bit Type field.  These Types are assigned as
+follows:
+
+<PRE><B><U>Type       Configuration Option</U></B>
+   1       Maximum-Receive-Unit
+   2       Async-Control-Character-Map
+   3       Authentication-Protocol
+   4       Quality-Protocol
+   5       Magic-Number
+   6       RESERVED
+   7       Protocol-Field-Compression
+   8       Address-and-Control-Field-Compression
+   9       FCS-Alternatives
+  10       Self-Describing-Pad
+  11       Numbered-Mode
+  12       Multi-Link-Procedure
+  13       Callback
+  14       Connect-Time
+  15       Compound-Frames
+  16       Nominal-Data-Encapsulation
+  17       Multilink-MRRU
+  18       Multilink-Short-Sequence-Number-Header-Format
+  19       Multilink-Endpoint-Discriminator
+  20       Proprietary                                     [KEN]
+  21       DCE-Identifier                            [SCHNEIDER]</PRE>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-5556">PPP LCP FCS-alternatives</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) Link Control Protocol (LCP)
+FCS-Alternatives Configuration Option contains an 8-bit Options field
+which identifies the FCS used.  These are assigned as follows:
+
+<PRE>
+<B><U>Bit     FCS       </U></B>
+  1     Null FCS
+  2     CCITT 16-Bit FCS
+  4     CCITT 32-bit FCS</PRE>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-5557">PPP LCP callback operation fields</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) Link Control Protocol (LCP) Callback
+Configuration Option contains an 8-bit Operations field which
+identifies the format of the Message.  These are assigned as follows:
+
+<PRE><B><U>Operation   Description                </U></B>
+        0   Location determined by user authentication.
+        1   Dialing string.
+        2   Location identifier.
+        3   E.164 number.
+        4   X.500 distinguished name.
+        5   unassigned
+        6   Location is determined during CBCP negotiation.</PRE>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-5558">PPP IPCP configuration option types</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) Internet Protocol Control Protocol
+(IPCP) specifies a number of Configuration Options [147] which are
+distinguished by an 8 bit Type field.  These Types are assigned as
+follows:
+
+<PRE><B><U>Type       Configuration Option</U></B>
+   1       IP-Addresses (deprecated)
+   2       IP-Compression-Protocol
+   3       IP-Address</PRE>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-5559">PPP ATCP configuration option types</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) Apple Talk Control Protocol (ATCP)
+specifies a number of Configuration Options [RFC-1378] which are
+distinguished by an 8 bit Type field.  These Types are assigned as
+follows:
+
+<PRE><B><U>Type       Configuration Option</U></B>
+   1       AppleTalk-Address
+   2       Routing-Protocol
+   3       Suppress-Broadcasts
+   4       AT-Compression-Protocol
+   5       Reserved
+   6       Server-information
+   7       Zone-information
+   8       Default-Router-Address</PRE>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-55510">PPP OSINLCP configuration option types</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) OSI Network Layer Control Protocol
+(OSINLCP) specifies a number of Configuration Options [RFC-1377] which
+are distinguished by an 8 bit Type field.  These Types are assigned as
+follows:
+
+<PRE><B><U>Type       Configuration Option</U></B>
+   1       Align-NPDU</PRE>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-55511">PPP bridging configuration option types</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) Bridging Control Protocol (BCP)
+specifies a number of Configuration Options which are distinguished by
+an 8 bit Type field.  These Types are assigned as follows:
+
+<PRE><B><U>Type       Configuration Option</U></B>
+   1       Bridge-Identification
+   2       Line-Identification
+   3       MAC-Support
+   4       Tinygram-Compression
+   5       LAN-Identification
+   6       MAC-Address
+   7       Spanning-Tree-Protocol</PRE>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-55512">PPP bridging MAC types</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) Bridging Control Protocol (BCP)
+contains an 8 bit MAC Type field which identifies the MAC
+encapsulated.  These Types are assigned as follows:
+
+<PRE><B><U>Type       MAC        </U></B>
+   0       Reserved
+   1       IEEE 802.3/Ethernet   with cannonical addresses
+   2       IEEE 802.4            with cannonical addresses
+   3       IEEE 802.5            with non-cannonical addresses
+   4       FDDI                  with non-cannonical addresses
+ 5-10      reserved
+  11       IEEE 802.5            with cannonical addresses
+  12       FDDI                  with cannonical addresses</PRE>
+
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-55513">PPP bridging spanning tree</A></H2>
+
+<BLOCKQUOTE>
+The Point-to-Point Protocol (PPP) Bridging Control Protocol (BCP)
+Spanning Tree Configuration Option contains an 8-bit Protocol field
+which identifies the spanning tree used.  These are assigned as
+follows:
+
+<PRE><B><U>Protocol  Spanning Tree  </U></B>
+   0      Null - no spanning tree protocol supported
+   1      IEEE 802.1D spanning tree protocol
+   2      IEEE 802.1G extended spanning tree protocol
+   3      IBM source route spanning tree protocol
+   4      DEC LANbridge 100 spanning tree protocol</PRE>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-55514">References</A></H2>
+
+<BLOCKQUOTE>
+<P>[RFC1661] Simpson, W., Editor, "The Point-to-Point Protocol (PPP)", STD 51, RFC 1661, Daydreamer, July 1994.</P>
+<P>[RFC1662] Simpson, W., Editor, "PPP in HDLC-like Framing", STD 51, RFC 1662, Daydreamer, July 1994.</P>
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-55515">People</A></H2>
+
+<BLOCKQUOTE>
+[KEN]  &lt;ken@funk.com&gt;<BR>
+[SCHNEIDER] Kevin Schneider &lt;kevin@adtran.com&gt;
+</BLOCKQUOTE>
+
+<H2><A NAME="as-h2-55516">[]</A></H2>
+<BLOCKQUOTE>
+URL = <A HREF="ftp://ftp.isi.edu/in-notes/iana/assignments/ppp-numbers">ftp://ftp.isi.edu/in-notes/iana/assignments/ppp-numbers</A>
+</BLOCKQUOTE>
+
+</BODY>
+</HTML>

@@ -1,0 +1,694 @@
+; BIND version named 4.9.3-P1-plus-CA-98.05-patches Thu Jun  3 14:00:05 EDT 1999
+; BIND version devbld@daneel.zk3.dec.com:/share/daneel/build/v40esupportos.dsk9/v40esupportos.kitbld/obj/alpha/usr/sbin/named
+; zone 'univ-bpclermont.fr'   last serial 2001101101
+; from 195.221.122.100   at Mon Oct 22 21:15:26 2001
+$ORIGIN fr.
+univ-bpclermont	IN	SOA	ciccgw.univ-bpclermont.fr. pays.ciccgw.univ-bpclermont.fr. (
+		2001102201 21600 3600 604800 86400 )
+		IN	NS	ciccgw.univ-bpclermont.fr.
+		IN	NS	cicsun.univ-bpclermont.fr.
+		IN	NS	ns2.nic.fr.
+		IN	MX	0 ciccgw.univ-bpclermont.fr.
+		IN	A	195.221.122.111
+$ORIGIN univ-bpclermont.fr.
+lrl6		IN	A	194.199.40.51
+lrl7		IN	A	194.199.40.52
+opgc		IN	MX	0 opgc.univ-bpclermont.fr.
+		IN	A	193.54.52.100
+$ORIGIN opgc.univ-bpclermont.fr.
+www		IN	CNAME	opgc28.univ-bpclermont.fr.
+$ORIGIN univ-bpclermont.fr.
+zeus		IN	CNAME	mad1.univ-bpclermont.fr.
+barpresse	IN	A	10.1.1.224
+lrl8		IN	A	194.199.40.53
+macjmm		IN	A	194.199.40.38
+lrl9		IN	A	194.199.40.54
+pppsacha	IN	A	192.54.142.195
+mabc1		IN	A	192.54.142.61
+mabc2		IN	A	192.54.142.62
+matpc10		IN	A	193.54.49.90
+scidt01		IN	A	193.54.49.221
+mabc3		IN	A	192.54.142.63
+scipc01		IN	A	193.54.49.185
+matpc11		IN	A	193.54.49.91
+scidt02		IN	A	193.54.49.222
+mabc4		IN	A	192.54.142.64
+herbiers	IN	CNAME	opnapc0.univ-bpclermont.fr.
+scipc02		IN	A	193.54.49.186
+matpc12		IN	A	193.54.49.112
+infopc1		IN	A	192.54.142.125
+scidt03		IN	A	193.54.49.223
+mabc5		IN	A	192.54.142.65
+scipc03		IN	A	193.54.49.187
+matpc13		IN	A	193.54.49.113
+mabc6		IN	A	192.54.142.66
+scipc04		IN	A	193.54.49.188
+matpc14		IN	A	193.54.49.114
+mabc7		IN	A	192.54.142.17
+matpc15		IN	A	193.54.49.115
+ucfma1		IN	CNAME	ucfma.univ-bpclermont.fr.
+scipc05		IN	A	193.54.49.189
+matpc16		IN	A	193.54.49.116
+ucfma2		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.2
+scipc06		IN	A	193.54.49.190
+mabc9		IN	A	192.54.142.67
+libd1		IN	MX	0 libd1.univ-bpclermont.fr.
+		IN	A	192.54.142.37
+geographie	IN	A	194.199.39.236
+matpc17		IN	A	193.54.49.117
+ucfma3		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.3
+scipc07		IN	A	193.54.49.191
+libd2		IN	A	192.54.142.38
+matpc18		IN	A	193.54.49.118
+ucfma4		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.4
+scipc08		IN	A	193.54.49.192
+scipc10		IN	A	193.54.49.194
+matp01		IN	A	193.54.49.92
+matpc19		IN	A	193.54.49.119
+matpc21		IN	A	193.54.49.129
+ucfma5		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.5
+custeii		IN	A	193.54.51.170
+scipc09		IN	A	193.54.49.193
+scipc11		IN	A	193.54.49.195
+cust		IN	CNAME	custsv.univ-bpclermont.fr.
+macelv		IN	A	194.199.40.69
+matpc22		IN	A	193.54.49.128
+piaf		IN	CNAME	ciccgw.univ-bpclermont.fr.
+scipc12		IN	A	193.54.49.196
+crayma		IN	A	193.54.49.10
+ldap		IN	CNAME	webubp.univ-bpclermont.fr.
+matp03		IN	A	193.54.49.109
+biotx1		IN	A	194.214.132.8
+ucfma8		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.8
+biotx2		IN	A	194.214.132.9
+cictx1		IN	A	192.54.142.55
+courrier	IN	A	195.221.122.100
+ucfma9		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.9
+cictx2		IN	A	192.54.142.115
+chgmac		IN	A	194.214.132.17
+macpjm		IN	A	194.199.40.29
+amipc1		IN	A	193.54.49.100
+amipc2		IN	A	193.54.49.99
+pcgl		IN	A	194.214.132.150
+psyl026		IN	A	194.199.40.26
+amipc3		IN	A	193.54.49.98
+pclirp1		IN	A	194.214.132.193
+mad1		IN	MX	0 ciccgw.univ-bpclermont.fr.
+		IN	A	192.54.142.77
+amipc5		IN	A	193.54.49.96
+mad2		IN	A	192.54.142.141
+amipc6		IN	A	193.54.49.101
+mad3		IN	A	192.54.142.191
+amipc7		IN	A	193.54.49.102
+amipc8		IN	A	193.54.49.103
+laposte		IN	CNAME	ciccgw.univ-bpclermont.fr.
+scitx01		IN	A	193.54.49.231
+murdoch		IN	A	194.214.132.194
+scitx02		IN	A	193.54.49.232
+intranet	IN	CNAME	webubp.univ-bpclermont.fr.
+scitx03		IN	A	193.54.49.233
+scitx04		IN	A	193.54.49.234
+lirep		IN	CNAME	sancy.univ-bpclermont.fr.
+scitx05		IN	A	193.54.49.235
+suio		IN	CNAME	srvse.univ-bpclermont.fr.
+opale		IN	A	193.54.52.213
+scitx06		IN	A	193.54.49.236
+scitx07		IN	A	193.54.49.237
+scitx08		IN	A	193.54.49.238
+scitx10		IN	A	193.54.49.240
+scitx09		IN	A	193.54.49.239
+scitx11		IN	A	193.54.49.241
+custsv		IN	MX	0 custsv.univ-bpclermont.fr.
+		IN	A	193.54.51.1
+scitx12		IN	A	193.54.49.242
+pcstg		IN	A	194.199.39.47
+matma1		IN	A	193.54.49.61
+sancerre	IN	A	195.221.120.130
+matma2		IN	A	193.54.49.62
+webdes		IN	A	193.54.51.47
+matma3		IN	A	193.54.49.63
+matma4		IN	A	193.54.49.64
+volcans-ia	IN	MX	10 iut.u-clermont1.fr.
+		IN	A	194.214.132.195
+uel		IN	CNAME	webubp.univ-bpclermont.fr.
+matma5		IN	A	193.54.49.65
+matma6		IN	A	193.54.49.66
+matma7		IN	A	193.54.49.67
+macbc		IN	A	194.199.40.36
+matma8		IN	A	193.54.49.68
+lgril		IN	A	194.199.40.244
+matma9		IN	A	193.54.49.69
+macan		IN	A	194.199.40.35
+gisun01		IN	MX	10 ciccgw.univ-bpclermont.fr.
+		IN	A	192.54.142.42
+wwwmaths	IN	CNAME	math.univ-bpclermont.fr.
+ubpvalor	IN	CNAME	pcvalor.univ-bpclermont.fr.
+torseur		IN	A	193.54.49.248
+goulac		IN	MX	0 ciccgw.univ-bpclermont.fr.
+		IN	A	192.54.142.58
+wwwlasmea	IN	CNAME	lasmea.univ-bpclermont.fr.
+bindmaster	IN	CNAME	ciccgw.univ-bpclermont.fr.
+macat		IN	A	194.199.40.40
+mfle		IN	CNAME	lrl.univ-bpclermont.fr.
+ucfgm2		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.14
+violette	IN	A	194.214.132.15
+wwwlac		IN	A	194.199.40.80
+ovgv		IN	CNAME	ciccgw.univ-bpclermont.fr.
+cicn132		IN	A	192.168.132.100
+casimir		IN	A	194.214.132.234
+wwwadaubp	IN	CNAME	math.univ-bpclermont.fr.
+picasso		IN	A	193.54.49.24
+ltgc		IN	CNAME	ciccgw.univ-bpclermont.fr.
+clercat		IN	CNAME	suze.univ-bpclermont.fr.
+pcselect	IN	A	193.54.49.95
+sacha		IN	A	195.221.122.210
+lgccf1		IN	A	193.54.51.173
+neuro		IN	A	192.54.142.133
+cigale		IN	A	194.214.132.196
+odalix		IN	A	194.199.39.41
+lgccf2		IN	A	193.54.51.174
+srvpsy		IN	MX	0 srvpsy.univ-bpclermont.fr.
+		IN	A	194.199.40.21
+lgccf3		IN	A	193.54.51.175
+lgccf4		IN	A	193.54.51.176
+mvecache	IN	A	192.54.142.170
+cicn142		IN	A	192.168.142.100
+lgccf5		IN	MX	0 lgccf5.univ-bpclermont.fr.
+		IN	A	193.54.51.179
+flamengo	IN	A	193.55.95.2
+cic40		IN	A	194.199.40.100
+macdm		IN	A	194.199.40.31
+forpc1		IN	A	194.199.40.14
+pclv		IN	A	194.199.39.55
+forpc2		IN	A	194.199.40.15
+cic39		IN	A	194.199.39.100
+forpc3		IN	A	194.199.40.16
+forpc4		IN	A	194.199.40.17
+forpc5		IN	A	194.199.40.18
+cic45		IN	A	194.254.45.100
+forpc6		IN	A	194.199.40.19
+sanlav		IN	A	192.54.142.85
+forpc7		IN	A	194.199.40.108
+lmiserv		IN	A	193.54.49.220
+ucfma		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.1
+lima		IN	CNAME	tournesol.univ-bpclermont.fr.
+sancy		IN	MX	0 sancy.univ-bpclermont.fr.
+		IN	A	194.214.132.189
+astrix		IN	A	193.54.51.101
+gcbio1		IN	A	192.54.142.215
+mabc10		IN	A	192.54.142.236
+cedre		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.12
+ubpsco		IN	A	192.54.142.154
+macet		IN	A	194.199.40.33
+ubpsc2		IN	A	193.54.49.26
+lmipc13		IN	A	192.54.142.91
+lmipc14		IN	A	192.54.142.34
+cust-interne	IN	CNAME	custsv.univ-bpclermont.fr.
+webubp		IN	A	195.221.122.111
+ucfia2		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.7
+custgest9	IN	A	193.54.51.26
+macgj		IN	A	192.54.142.131
+garp		IN	A	193.54.49.247
+gril		IN	CNAME	ciccgw.univ-bpclermont.fr.
+ubpcf2		IN	CNAME	cfdvs3.univ-bpclermont.fr.
+chimie		IN	CNAME	chimtp.univ-bpclermont.fr.
+infopc01	IN	A	195.221.122.68
+cies-lyon	IN	CNAME	volcans-ia.univ-bpclermont.fr.
+pcvalor		IN	A	194.199.40.232
+englishlab	IN	A	194.199.40.117
+$ORIGIN lac.univ-bpclermont.fr.
+www		IN	CNAME	wwwlac.univ-bpclermont.fr.
+$ORIGIN univ-bpclermont.fr.
+libd-pc01	IN	A	192.54.142.57
+crmp-dsx	IN	A	194.214.132.65
+lrlweb		IN	CNAME	lrl.univ-bpclermont.fr.
+libd-pc02	IN	A	192.54.142.140
+libd-pc03	IN	A	192.54.142.80
+libd-pc04	IN	A	192.54.142.161
+libd-pc05	IN	A	192.54.142.93
+mg		IN	MX	0 ciccgw.univ-bpclermont.fr.
+		IN	A	192.54.142.142
+libd-pc07	IN	A	192.54.142.83
+infochim	IN	A	194.214.132.152
+libd-pc10	IN	A	192.54.142.163
+libd-pc08	IN	A	192.54.142.56
+libd-pc11	IN	A	192.54.142.78
+libd-pc09	IN	A	192.54.142.81
+turing		IN	CNAME	libd-pc04.univ-bpclermont.fr.
+custtc10	IN	A	193.54.51.40
+gargamel	IN	A	193.54.49.29
+libd-pc12	IN	A	192.54.142.59
+pcsd		IN	A	194.199.39.9
+custtc11	IN	A	193.54.51.67
+cicc		IN	CNAME	cfdvs3.univ-bpclermont.fr.
+gwadm		IN	A	195.221.122.100
+ciccache	IN	A	195.221.122.200
+bcp06		IN	A	194.214.132.160
+pcsg		IN	A	194.199.40.2
+ispc01		IN	A	193.54.49.161
+cic120		IN	A	195.221.120.100
+biblet		IN	A	194.199.39.62
+ubpch2		IN	A	192.54.142.107
+ispc02		IN	A	193.54.49.162
+cic121		IN	A	195.221.121.100
+ispc03		IN	A	193.54.49.163
+ubpch4		IN	A	192.54.142.118
+cic122		IN	A	195.221.122.100
+ispc04		IN	A	193.54.49.164
+iris		IN	A	192.54.142.54
+cic123		IN	A	195.221.123.100
+babel		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.6
+ispc05		IN	A	193.54.49.165
+ispc06		IN	A	193.54.49.166
+ispc07		IN	A	193.54.49.167
+ispc08		IN	A	193.54.49.168
+ispc10		IN	A	193.54.49.170
+biocem		IN	MX	0 biocem.univ-bpclermont.fr.
+		IN	A	194.214.132.207
+ispc09		IN	A	193.54.49.169
+ispc11		IN	A	193.54.49.171
+lbp		IN	CNAME	ciccgw.univ-bpclermont.fr.
+ispc12		IN	A	193.54.49.172
+pariou		IN	MX	0 lirep.univ-bpclermont.fr.
+		IN	A	194.214.132.188
+cic131		IN	A	194.199.131.100
+cic132		IN	A	194.214.132.100
+cic133		IN	A	194.199.133.100
+maclb		IN	A	194.199.40.41
+cic134		IN	A	194.199.134.100
+lgcmsf		IN	A	193.54.51.177
+ns		IN	CNAME	cicold.univ-bpclermont.fr.
+opgcf4		IN	MX	0 opgcf4.univ-bpclermont.fr.
+		IN	A	193.54.52.104
+cfdvs3		IN	A	192.54.142.104
+opgcf5		IN	A	193.54.52.205
+therm00		IN	A	194.214.132.94
+pcjsg		IN	A	194.199.40.3
+opgcf6		IN	CNAME	opgcrv.univ-bpclermont.fr.
+w3deai		IN	CNAME	LIBD-Pentium6.univ-bpclermont.fr.
+ubpcd		IN	A	192.168.122.202
+therm01		IN	A	194.214.132.27
+linguist	IN	CNAME	lrl.univ-bpclermont.fr.
+opgcf7		IN	CNAME	oprams.univ-bpclermont.fr.
+therm02		IN	A	194.214.132.28
+opgcf8		IN	MX	0 opgcf8.univ-bpclermont.fr.
+		IN	A	193.54.52.108
+therm03		IN	A	194.214.132.29
+therm04		IN	A	194.214.132.31
+ruca		IN	CNAME	webubp.univ-bpclermont.fr.
+therm05		IN	A	194.214.132.32
+macmc		IN	A	194.199.40.27
+therm06		IN	A	194.214.132.96
+therm07		IN	A	194.214.132.95
+maclm		IN	A	194.199.40.32
+pavin		IN	MX	0 lirep.univ-bpclermont.fr.
+		IN	A	194.214.132.192
+therm10		IN	A	194.214.132.91
+therm08		IN	A	194.214.132.93
+therm09		IN	A	194.214.132.92
+lasmea		IN	MX	0 lasmea.univ-bpclermont.fr.
+		IN	A	193.54.50.15
+hsadm		IN	CNAME	webubp.univ-bpclermont.fr.
+ucfma20		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.120
+therm13		IN	A	194.214.132.88
+macmi		IN	A	194.199.40.34
+ucfma21		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.121
+biblio		IN	A	194.199.39.27
+ucfma22		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.122
+chisg1		IN	MX	0 ciccgw.univ-bpclermont.fr.
+		IN	MX	10 chisg1.univ-bpclermont.fr.
+		IN	A	194.214.132.21
+chisg2		IN	MX	0 ciccgw.univ-bpclermont.fr.
+		IN	MX	10 chisg2.univ-bpclermont.fr.
+		IN	A	194.214.132.22
+math		IN	MX	0 math.univ-bpclermont.fr.
+		IN	A	193.54.49.11
+bermudes	IN	A	192.54.142.98
+therm19		IN	A	194.214.132.176
+wwwpsy		IN	CNAME	srvpsy.univ-bpclermont.fr.
+ovgv-cache	IN	A	195.221.122.35
+ri		IN	CNAME	ciccgw.univ-bpclermont.fr.
+lgc		IN	CNAME	lgccf5.univ-bpclermont.fr.
+ciccgw		IN	MX	0 ciccgw.univ-bpclermont.fr.
+		IN	A	195.221.122.100
+		IN	A	192.54.142.103
+multi-lsh	IN	CNAME	multilsh.univ-bpclermont.fr.
+busciences	IN	CNAME	ciccgw.univ-bpclermont.fr.
+macnm		IN	A	194.199.40.37
+chimpc		IN	A	194.214.132.18
+wwwlma		IN	CNAME	math.univ-bpclermont.fr.
+macselect	IN	A	193.54.49.60
+protistes	IN	A	195.221.122.160
+$ORIGIN protistes.univ-bpclermont.fr.
+www		IN	CNAME	protistes.univ-bpclermont.fr.
+$ORIGIN univ-bpclermont.fr.
+macpc		IN	A	194.199.40.22
+suze		IN	MX	0 suze.univ-bpclermont.fr.
+		IN	A	195.221.120.8
+msdl		IN	CNAME	lrl.univ-bpclermont.fr.
+sciwts		IN	A	193.54.49.253
+llaic		IN	MX	0 llaic.univ-bpclermont.fr.
+		IN	A	193.49.118.50
+hpfcrm		IN	MX	10 ciccgw.univ-bpclermont.fr.
+		IN	A	192.54.142.34
+pcicc114	IN	A	195.221.122.114
+pcicc115	IN	A	195.221.122.115
+macph		IN	A	194.199.40.30
+pcicc116	IN	A	195.221.122.116
+lacc		IN	CNAME	ciccgw.univ-bpclermont.fr.
+$ORIGIN lacc.univ-bpclermont.fr.
+www		IN	CNAME	wwwlac.univ-bpclermont.fr.
+$ORIGIN univ-bpclermont.fr.
+pcicc117	IN	A	195.221.122.117
+biocemmac1	IN	A	194.214.132.203
+pcicc120	IN	A	195.221.122.120
+pcicc118	IN	A	195.221.122.118
+biocemmac2	IN	A	194.214.132.204
+matm10		IN	A	193.54.49.70
+pcicc121	IN	A	195.221.122.121
+pcicc119	IN	A	195.221.122.119
+biocemmac3	IN	A	194.214.132.205
+matm11		IN	A	193.54.49.71
+hpll		IN	A	192.54.142.32
+biocemmac4	IN	A	194.214.132.198
+wwwmath		IN	CNAME	math.univ-bpclermont.fr.
+matm12		IN	A	193.54.49.72
+matm13		IN	A	193.54.49.73
+matm14		IN	A	193.54.49.74
+wwwlmp		IN	CNAME	math.univ-bpclermont.fr.
+pcicc125	IN	A	195.221.122.125
+matm15		IN	A	193.54.49.75
+webadm		IN	CNAME	webubp.univ-bpclermont.fr.
+matm16		IN	A	193.54.49.76
+matm17		IN	A	193.54.49.77
+matm18		IN	A	193.54.49.78
+matm20		IN	A	193.54.49.80
+pcicc129	IN	A	195.221.122.129
+matm19		IN	A	193.54.49.79
+matm21		IN	A	193.54.49.131
+matm22		IN	A	193.54.49.132
+matm23		IN	A	193.54.49.133
+matm24		IN	A	193.54.49.134
+LIBD-Pentium2	IN	CNAME	libd-pc02.univ-bpclermont.fr.
+matm25		IN	A	193.54.49.135
+matm26		IN	A	193.54.49.136
+sparcb1		IN	A	193.54.49.107
+matm27		IN	A	193.54.49.137
+sparcb2		IN	A	193.54.49.108
+matm28		IN	A	193.54.49.138
+matm30		IN	A	193.54.49.140
+localhost	IN	A	127.0.0.1
+LIBD-Pentium6	IN	A	192.54.142.49
+macsd		IN	A	194.199.40.28
+matm29		IN	A	193.54.49.139
+macsg		IN	A	194.199.40.42
+maths		IN	CNAME	math.univ-bpclermont.fr.
+matx00		IN	A	193.54.49.30
+macrr		IN	A	192.54.142.132
+wwwlacc		IN	CNAME	wwwlac.univ-bpclermont.fr.
+fwlasmea	IN	A	193.54.50.250
+cosmic		IN	MX	0 cosmic.univ-bpclermont.fr.
+		IN	A	192.54.142.105
+matx01		IN	A	193.54.49.31
+lermes		IN	CNAME	lgccf5.univ-bpclermont.fr.
+sciences	IN	CNAME	ciccgw.univ-bpclermont.fr.
+matx02		IN	A	193.54.49.32
+matx03		IN	A	193.54.49.33
+pcicc2		IN	A	192.54.142.216
+matx04		IN	A	193.54.49.34
+lmiindy0	IN	A	193.54.49.209
+matx05		IN	A	193.54.49.35
+lmiindy1	IN	A	193.54.49.210
+biocempc1	IN	A	194.214.132.202
+wwwsci		IN	CNAME	math.univ-bpclermont.fr.
+matx06		IN	A	193.54.49.36
+pcicc5		IN	A	192.54.142.19
+lmiindy2	IN	A	193.54.49.211
+biocempc2	IN	A	194.214.132.201
+matx07		IN	A	193.54.49.37
+pcicc6		IN	A	192.54.142.20
+lmiindy3	IN	A	193.54.49.212
+biocempc3	IN	A	194.214.132.206
+matx08		IN	A	193.54.49.38
+matx10		IN	A	193.54.49.40
+pcicc7		IN	A	192.54.142.21
+lmiindy4	IN	A	193.54.49.213
+macic3		IN	A	192.54.142.156
+biologie	IN	CNAME	ciccgw.univ-bpclermont.fr.
+matx09		IN	A	193.54.49.39
+matx11		IN	A	193.54.49.141
+pcicc8		IN	A	192.54.142.22
+lmiindy5	IN	A	193.54.49.214
+chimtp		IN	MX	0 chimtp.univ-bpclermont.fr.
+		IN	MX	10 ciccgw.univ-bpclermont.fr.
+		IN	A	194.214.132.110
+matx12		IN	A	193.54.49.142
+pcicc9		IN	A	192.54.142.23
+lmiindy6	IN	A	193.54.49.215
+matx13		IN	A	193.54.49.143
+lmiindy7	IN	A	193.54.49.216
+gecbio		IN	CNAME	ciccgw.univ-bpclermont.fr.
+matx14		IN	A	193.54.49.144
+lmiindy8	IN	A	193.54.49.217
+matx15		IN	A	193.54.49.145
+socn132		IN	A	192.168.132.253
+biocemnt1	IN	A	194.214.132.199
+matx16		IN	A	193.54.49.146
+biocemnt2	IN	A	194.214.132.200
+matx17		IN	A	193.54.49.147
+logiciel	IN	A	192.168.49.243
+matx18		IN	A	193.54.49.148
+matx19		IN	A	193.54.49.149
+matx21		IN	A	193.54.49.151
+custgp1		IN	A	193.54.51.168
+handisup	IN	CNAME	webubp.univ-bpclermont.fr.
+matx22		IN	A	193.54.49.152
+opgc03		IN	MX	0 opgc03.univ-bpclermont.fr.
+		IN	A	193.54.52.103
+ufr-lac		IN	MX	0 courrier.univ-bpclermont.fr.
+		IN	MX	10 ufr-lac.univ-bpclermont.fr.
+		IN	A	194.199.40.196
+matx23		IN	A	193.54.49.153
+matx24		IN	A	193.54.49.154
+matx25		IN	A	193.54.49.155
+wwwlsh		IN	A	194.199.39.251
+matx26		IN	A	193.54.49.156
+opgc10		IN	MX	0 opgc10.univ-bpclermont.fr.
+		IN	A	193.54.52.110
+matx30		IN	A	193.54.49.55
+opgc11		IN	A	193.54.52.111
+matx31		IN	A	193.54.49.41
+matx29		IN	A	193.54.49.159
+opgc12		IN	MX	0 opgc12.univ-bpclermont.fr.
+		IN	A	193.54.52.112
+seesib		IN	A	194.214.132.64
+opgc13		IN	CNAME	opale.univ-bpclermont.fr.
+matx32		IN	A	193.54.49.42
+pcarc		IN	A	192.54.142.97
+glm		IN	MX	0 ciccgw.univ-bpclermont.fr.
+		IN	A	192.54.142.43
+matx33		IN	A	193.54.49.43
+opgc14		IN	CNAME	opintg.univ-bpclermont.fr.
+opgc15		IN	MX	0 opgc15.univ-bpclermont.fr.
+		IN	A	193.54.52.215
+matx34		IN	A	193.54.49.44
+opgc16		IN	MX	0 opgc16.univ-bpclermont.fr.
+		IN	A	193.54.52.116
+matx35		IN	A	193.54.49.45
+opgc17		IN	A	193.54.52.117
+matx36		IN	A	193.54.49.46
+macirem1	IN	A	193.54.49.59
+opgc18		IN	A	193.54.52.118
+matx37		IN	A	193.54.49.47
+macirem2	IN	A	193.54.49.58
+clrvisio	IN	A	194.214.132.6
+matx38		IN	A	193.54.49.48
+matx40		IN	A	193.54.49.50
+matx39		IN	A	193.54.49.49
+custpceii	IN	A	193.54.51.20
+portsd		IN	A	194.199.39.8
+pcicc10		IN	A	192.54.142.24
+pccat		IN	A	194.199.40.23
+pcicc11		IN	A	192.54.142.11
+mrue		IN	A	194.199.40.70
+opgcrv		IN	A	193.54.52.206
+pcicc12		IN	A	192.54.142.12
+pcicc13		IN	A	192.54.142.13
+cfdcos		IN	MX	10 ciccgw.univ-bpclermont.fr.
+		IN	A	192.54.142.120
+opgc28		IN	MX	0 opgc28.univ-bpclermont.fr.
+		IN	A	193.54.52.128
+pcmfr		IN	A	194.199.40.11
+pcicc15		IN	A	192.54.142.15
+scisrv		IN	MX	0 scisrv.univ-bpclermont.fr.
+		IN	A	193.54.49.160
+macyb		IN	A	192.54.142.243
+pcicc17		IN	A	192.54.142.25
+sci		IN	CNAME	scisrv.univ-bpclermont.fr.
+opnapc0		IN	A	195.221.120.200
+bmiu64		IN	A	195.221.120.50
+opnapc1		IN	A	195.221.120.201
+lminux		IN	A	193.54.49.218
+axiom		IN	A	193.54.49.110
+ciri		IN	CNAME	ciccgw.univ-bpclermont.fr.
+opnapc2		IN	A	195.221.120.202
+opnapc3		IN	A	195.221.120.203
+bmiu68		IN	A	195.221.120.46
+come		IN	A	194.214.132.226
+bmiu69		IN	A	195.221.120.54
+custcs		IN	MX	0 cust.univ-bpclermont.fr.
+		IN	MX	10 custcs.univ-bpclermont.fr.
+		IN	A	193.54.51.8
+cetsis		IN	A	193.55.95.79
+macjcc		IN	A	194.199.40.24
+wmail		IN	A	195.221.122.100
+lrl		IN	MX	0 lrl.univ-bpclermont.fr.
+		IN	A	194.199.39.111
+lettres		IN	CNAME	ciccgw.univ-bpclermont.fr.
+geem		IN	CNAME	ciccgw.univ-bpclermont.fr.
+sapin		IN	CNAME	math.univ-bpclermont.fr.
+multilsh	IN	A	194.199.39.200
+matpc1		IN	A	193.54.49.81
+cfdmv2		IN	CNAME	cfdvs3.univ-bpclermont.fr.
+lsh		IN	A	194.199.39.1
+ftpobs		IN	CNAME	opgc16.univ-bpclermont.fr.
+matpc4		IN	A	193.54.49.84
+laept		IN	CNAME	ciccgw.univ-bpclermont.fr.
+matpc5		IN	A	193.54.49.85
+matpc6		IN	A	193.54.49.86
+lrlmail		IN	CNAME	lrl.univ-bpclermont.fr.
+sciwts01	IN	A	193.54.49.173
+matpc7		IN	A	193.54.49.87
+sciwts02	IN	A	193.54.49.174
+matpc8		IN	A	193.54.49.88
+sciwts03	IN	A	193.54.49.175
+matpc9		IN	A	193.54.49.89
+sciwts04	IN	A	193.54.49.176
+cratere		IN	MX	0 lirep.univ-bpclermont.fr.
+		IN	A	194.214.132.190
+ppp1		IN	A	192.54.142.199
+ubpsc		IN	A	193.54.49.25
+sciwts05	IN	A	193.54.49.177
+ppp2		IN	A	192.54.142.198
+sciwts06	IN	A	193.54.49.178
+bmiu		IN	CNAME	sancerre.univ-bpclermont.fr.
+ppp3		IN	A	192.54.142.197
+sciwts07	IN	A	193.54.49.179
+margaux		IN	A	192.54.142.82
+ppp4		IN	A	192.54.142.196
+sclv		IN	CNAME	ciccgw.univ-bpclermont.fr.
+sciwts08	IN	A	193.54.49.180
+sciwts10	IN	A	193.54.49.182
+custtc1		IN	A	193.54.51.31
+jupiter		IN	MX	0 ciccgw.univ-bpclermont.fr.
+		IN	A	192.54.142.52
+sciwts09	IN	A	193.54.49.181
+sciwts11	IN	A	193.54.49.183
+custtc2		IN	A	193.54.51.32
+sciwts12	IN	A	193.54.49.184
+custtc3		IN	A	193.54.51.33
+custtc4		IN	A	193.54.51.34
+cicold		IN	MX	0 cicold.univ-bpclermont.fr.
+		IN	A	192.54.142.100
+custtc5		IN	A	193.54.51.35
+cicsun		IN	MX	0 cicsun.univ-bpclermont.fr.
+		IN	A	195.221.122.123
+custtc6		IN	A	193.54.51.36
+custtc7		IN	A	193.54.51.37
+custtc8		IN	A	193.54.51.38
+custdev		IN	A	193.54.51.16
+custtc9		IN	A	193.54.51.39
+opintg		IN	A	193.54.52.114
+maison-recherche	IN	CNAME	webubp.univ-bpclermont.fr.
+backup		IN	MX	0 backup.univ-bpclermont.fr.
+		IN	A	193.54.50.40
+lminux1		IN	MX	0 lminux1.univ-bpclermont.fr.
+		IN	A	193.54.49.219
+dessmicroelec	IN	A	194.214.132.170
+news		IN	CNAME	cicsun.univ-bpclermont.fr.
+cicn40		IN	A	192.168.40.100
+cicn39		IN	A	192.168.39.100
+wwwobs		IN	CNAME	opgc28.univ-bpclermont.fr.
+staps10		IN	A	194.214.132.134
+custgw		IN	A	193.54.51.241
+matrice		IN	A	193.54.49.250
+bulettres	IN	CNAME	ciccgw.univ-bpclermont.fr.
+c122cache	IN	A	195.221.122.200
+ensccf		IN	MX	0 ensccf.univ-bpclermont.fr.
+		IN	A	194.214.132.107
+irem-pc1	IN	A	193.54.49.93
+macsuc		IN	A	194.199.39.7
+chicache	IN	CNAME	therm04.univ-bpclermont.fr.
+tournesol	IN	A	193.54.51.166
+oprams		IN	A	193.54.52.107
+moniut		IN	NS	yellow.moniut.univ-bpclermont.fr.
+$ORIGIN moniut.univ-bpclermont.fr.
+yellow		IN	A	194.214.131.2
+$ORIGIN univ-bpclermont.fr.
+iono		IN	A	194.214.132.23
+clp		IN	MX	0 clp.univ-bpclermont.fr.
+		IN	A	194.214.132.197
+macnrs		IN	A	194.199.40.68
+hsdp		IN	CNAME	webubp.univ-bpclermont.fr.
+ensccf2		IN	A	194.214.132.105
+gecbio1		IN	A	192.54.142.175
+webgril		IN	CNAME	lgril.univ-bpclermont.fr.
+gecbio2		IN	A	192.54.142.174
+pcgec1		IN	A	192.54.142.30
+intrabmiu	IN	CNAME	barintra.univ-bpclermont.fr.
+pcgec2		IN	A	192.54.142.114
+srvse		IN	A	194.199.40.151
+pcgec4		IN	A	192.54.142.117
+lrl10		IN	A	194.199.40.55
+pcgec5		IN	A	192.54.142.116
+lrl11		IN	A	194.199.40.56
+cicopr		IN	MX	0 cicopr.univ-bpclermont.fr.
+		IN	A	192.54.142.124
+lrl12		IN	A	194.199.40.57
+pcgec7		IN	A	192.54.142.96
+lrl13		IN	A	194.199.40.58
+lrl14		IN	A	194.199.40.59
+fdmsf		IN	A	193.54.51.178
+lrl15		IN	A	194.199.40.60
+cnis1		IN	A	192.168.142.101
+staps		IN	CNAME	ciccgw.univ-bpclermont.fr.
+lrl16		IN	A	194.199.40.61
+cnis2		IN	A	192.168.142.102
+cnis3		IN	A	192.168.142.103
+ertac		IN	CNAME	ciccgw.univ-bpclermont.fr.
+lrl20		IN	A	194.199.40.219
+cnis4		IN	A	192.168.142.104
+gmpc00		IN	A	193.54.49.249
+lrl21		IN	A	194.199.40.220
+cnis5		IN	A	192.168.142.105
+cnis6		IN	A	192.168.142.106
+renass		IN	A	193.54.52.53
+cicadm		IN	MX	0 cicadm.univ-bpclermont.fr.
+		IN	A	195.221.122.110
+sctu		IN	CNAME	ciccgw.univ-bpclermont.fr.
+gentiane	IN	MX	0 gentiane.univ-bpclermont.fr.
+		IN	A	192.54.142.9
+cfdvax		IN	CNAME	cfdvs3.univ-bpclermont.fr.
+labco1		IN	A	194.214.132.20
+www		IN	CNAME	webubp.univ-bpclermont.fr.
+lrl1		IN	A	194.199.40.46
+barintra	IN	A	195.221.120.43
+lrl2		IN	A	194.199.40.47
+lrl3		IN	A	194.199.40.48
+gmpc1		IN	A	193.54.49.94
+lrl4		IN	A	194.199.40.49
+lrl5		IN	A	194.199.40.50

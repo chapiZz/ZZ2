@@ -1,0 +1,114 @@
+<HTML>
+<HEAD>
+	<TITLE>TCPWRAPPERS</TITLE>
+	<LINK HREF="../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+
+<H1>Contrôle d'accès par les <I>tcpwrappers</I></H1>
+<P ALIGN="RIGHT"><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>
+1999-2000</I></P>
+
+<HR>
+<H2>1 - Qu'est-ce qu'un <I>tcpwrapper</I> ?</H2>
+<H3>1.1 - Principes</H3>
+
+	<BLOCKQUOTE>
+	<P>Le <I>tcpwrapper</I> est un logiciel qui <B>filtre les accès</B> à certains serveurs d'application, telles telnet, FTP...</P>
+	<P>Pour que l'accès à un serveur puisse être ainsi filtré, il faut que le serveur ne soit lancé que lorsque'une demande arrive, 
+	à la différence de serveurs lancés au démarrage du système (comme <TT>mountd</TT>).<BR>
+	Le lancement de tels serveurs est effectué par le processus <TT>inetd</TT> qui est en attente sur tous les ports décrits dans 
+	son fichier de configuration <A HREF="/etc/inetd.conf"><TT>/etc/inetd.conf</TT></A>.</P>
+	</BLOCKQUOTE>
+
+<H3>1.2 - Fonctionnement</H3>
+ 
+	<BLOCKQUOTE>
+	<P>Lorsqu'il démarre, le processus <TT>inetd</TT> se met en attente d'appel sur tous les ports correspondants aux applications qu'il
+	doit prendre en charge, applications dont la liste de trouve dans <A HREF="/etc/inetd.conf"><TT>/etc/inetd.conf</TT></A>.<BR>
+	La correspondance entre nom d'application (service) et n°port TCP se trouve dans <A HREF="/etc/services"><TT>/etc/services</TT></A>.<BR>
+	(Note : la modification d'un de ces fichiers nécessitent d'envoyer un signal HUP au processus <TT>inetd</TT>)</P>
+	
+	<P>Lorsqu'une demande arrive, elle est reçue par le processus <TT>inetd</TT>, qui crée un processus fils pour exécuter le 
+	programme donné dans la ligne de <A HREF="/etc/inetd.conf"><TT>/etc/inetd.conf</TT></A> correspondant au n°port TCP appelé.</P>
+		<BLOCKQUOTE>
+		<TABLE>
+		<TR><TH>protégé par tcpwrapper</TH><TH>ligne de /etc/inetd.conf</TH></TR>
+		<TR><TD ALIGN=center>non</TD><TD NOWRAP><TT>telnet  stream  tcp     nowait  root    <U>in.telnetd</U></TT></TD></TR>
+		<TR><TD ALIGN=center>oui</TD><TD NOWRAP><TT>telnet  stream  tcp     nowait  root    <U>/usr/sbin/tcpd  in.telnetd</U></TT></TD></TR>
+		</TABLE>
+
+		service protégé par tcpwrapper 
+		</BLOCKQUOTE>
+	Si le <I>tcpwrapper</I> n'est pas activé, c'est le programme du serveur de l'application.
+	
+	<P>Si le <I>tcpwrapper</I> est actif, <TT>inetd</TT> lance un processus <TT>tcpd</TT>, en lui passant en paramètres la ligne 
+	de commande de lancement du serveur.<BR>
+	Le processus <TT>tcpd</TT> confronte la demande (service, @IP de l'appelant) aux règles de filtrage précisées dans les fichiers 
+	<A HREF="/etc/hosts.allow"><TT>hosts.allow</TT></A> et <A HREF="/etc/hosts.deny"><TT>hosts.deny</TT></A> du <I>tcpwrapper</I> :</P>
+	<OL>
+	<LI>si la demande apparait dans le fichier <TT>hosts.allow</TT>, le <I>tcpwrapper</I> la passe au serveur correspondant.</LI>
+	<LI>si la demande apparait dans le fichier <TT>hosts.deny</TT>, le <I>tcpwrapper</I> la refuse.</LI>
+	<LI>si la demande n'apparait dans aucun de ces deux fichiers, le <I>tcpwrapper</I> la passe au serveur correspondant.</LI>
+	</OL>
+	<P>Dans tous les cas, le <I>tcpwrapper</I> journalise la demande par <TT>syslog</TT>, selon 
+	<A HREF="/etc/syslog.conf"><TT>/etc/syslog.conf</TT></A>, par exemple dans <A HREF="/var/log/secure"><TT>/var/log/secure</TT></A>.</P>
+	<P>Si la demande est acceptée, le processus <TT>tcpd</TT>   le programme indiqué en paramètre, c'est-à-dire le serveur.</P>
+	</BLOCKQUOTE>
+
+<H3>1.3 - Configuration</H3>
+
+	<BLOCKQUOTE>
+	<DL>
+	<DT><B>Activation /désactivation du <I>tcpwrapper</I></B></DT>
+		<DD>dans la ligne de <A HREF="/etc/inetd.conf"><TT>/etc/inetd.conf</TT></A> correspondant au serveur</DD>
+	<DT><BR>
+	<B>Les règles</B></DT>
+		<DD>dans les fichiers <A HREF="/etc/hosts.allow"><TT>hosts.allow</TT></A> et <A HREF="/etc/hosts.deny"><TT>hosts.deny</TT></A>, 
+			dont les lignes ont le format (voir hosts.access(5)):
+				<BLOCKQUOTE><TT>serveurs: liste de systèmes-clients [: commande-shell]</TT></BLOCKQUOTE>
+			<TABLE>
+			<TR><TD><TT>serveur(s)</TT></TD>
+				<TD>un ou plusieurs noms de serveurs (argv[0]) auxquels s'applique la règle<BR>
+					ou un mot-clé : <TT>ALL</TT>, <TT></TT></TD></TR>
+			<TR><TD><TT>système-client</TT></TD>
+				<TD>un nom de système, une adresse de système, avec possibilité de regroupement de noms ou d'adresses<BR>
+					ou un mot-cle : <TT>ALL</TT>, <TT>LOCAL</TT>, <TT>UNKNOWN</TT>, <TT>KNOWN</TT> ou<TT>PARANOID</TT><BR>
+					et avec possibilité d'exceptions à la règle</TD></TR>
+			</TABLE></DD>
+	</DL>
+	</BLOCKQUOTE>
+
+<H2>2 - Manipulation des <I>tcpwrappers</I></H2>
+		<BLOCKQUOTE>
+		<DL>
+		<DT><B>Mode opératoire</B> :</DT>
+			<DD>Le système <TT><I>zuta</I></TT> est le système de l'opérateur, qu'il configure selon ses choix.<BR>
+				Pour tester sa configuration de <TT><I>zuta</I></TT>, l'opérateur fait un telnet sur un autre système 
+				(<TT><I>zutb</I></TT>, <TT><I>zutc</I></TT>...ou <TT>se1</TT>), et tente de lancer une session FTP avec 
+				son système.</DD>
+			<DD><BR>Après chaque modification de la configuration, vérifier si le lancement d'une session-FTP est possible ou non.</DD>
+		</DL>
+		</BLOCKQUOTE>
+		<BLOCKQUOTE>
+		<DL>
+		<DT><B>Opérations à effectuer</B></DT>
+		<DT><OL>
+			<LI>désactiver le <I>tcpwrapper</I></LI>
+			<LI>activer le <I>tcpwrapper</I>, sans rien mettre concernant FTP dans les fichiers <TT>hosts.allow</TT> et <TT>hosts.deny</TT></LI>
+			<LI>interdire toute session FTP, y compris du système lui-même</LI>
+			<LI>autoriser une session seulement à partir d'un système <TT>zut</TT>, de plusieurs</LI>
+			<LI>autoriser tous les systèmes de l'ISIMA</LI>
+			<LI>autoriser tous les systèmes, sauf ceux du réseau <TT>192.54.142.0</TT>, et ceux du domaine-Internet <TT>hacker.com</TT></LI>
+			</OL></DT>
+		</DL>
+		</BLOCKQUOTE>
+
+	
+
+<HR>
+
+<H1>Restaurer les fichiers modifi&eacute;s</H1>
+<HR>
+</BODY></HTML>

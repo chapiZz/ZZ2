@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+           "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+ <TITLE>Configuration de NT Serveur comme serveur PPP</TITLE>
+ <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+<H1><A NAME="tth_sEc1"></A>Configuration de NT Serveur comme serveur PPP.</H1>
+
+<HR>
+<!-- AS-TOC_BEGIN{ -->
+<BLOCKQUOTE>
+	<DL>
+	<DT><A HREF="#tth_sEc1.1"><SMALL>1&nbsp; Configuration des modems</SMALL></A></DT>
+		<DD><A HREF="#tth_sEc1.1.1"><SMALL>1.1&nbsp;Installation des modem</SMALL>s</A></DD>
+		<DD><A HREF="#tth_sEc1.1.2"><SMALL>1.2&nbsp;Test et post-configurati</SMALL>on<BR><BR></A></DD>
+	<DT><A HREF="#tth_sEc1.2"><SMALL>2&nbsp; Configuration de la couche PPP<BR><BR></SMALL></A></DT>
+	<DT><A HREF="#tth_sEc1.3"><SMALL>3&nbsp; Fonctionnement courant et gestions des utilisateurs.</SMALL></A></DT>
+	</DL>
+</BLOCKQUOTE>
+<!-- AS-TOC_END} -->
+<HR>
+                                          
+<P>Windows NT fournit un suport natif pour le protocole
+PPP et permet donc d'envoyer à travers des lignes séries
+les protocoles : NetBui, IP et IPX/SPX.</P>
+
+
+<BLOCKQUOTE>Les outils présentés permettent de configurer les trois composantes 
+d'une liaison PPP, à savoir la configuration des modems, la configuration
+des protocoles envoyés à travers PPP et la gestion courante des
+dialogues. L'ensemble de ces services est appelé <I>Remote Acces Service</I> (RAS)
+ou Service d'Accès Distant en Francais.</BLOCKQUOTE> 
+
+<H3><A NAME="tth_sEc1.1"></A>1&nbsp; Configuration des modems</H3>
+
+
+<BLOCKQUOTE>Deux outils permettent de réaliser ces opérations, l'icone d'<B>installation
+de modem</B> du "Panneau de configuration" et l'utilitaire <B>Hhyper-terminal</B>
+du menu accessoire.</BLOCKQUOTE>
+
+<H4><A NAME="tth_sEc1.1.1"></A>1.1&nbsp;Installation des modems</H4>
+
+<OL type="1">
+<li> <P>Connecter le modem à la machine et s'assurer qu'il est allumé</P>
+<li> <P>Ouvrir le "Panneau de configuration"</P>
+<li> <P>Double cliquer sur l'icone modem</P>
+<li> <P>Cliquer sur Ajouter</P>
+<li> <P>Cocher "Ne pas détecter ...."</P>
+<li> <P>Cliquer sur Suivant</P>
+<li> <P>Choisir le modem dans la liste ou de préférences, cliquer
+sur "Disquette fournie" et insérer la disquette du constructeur de
+votre modem. Puis cliquer sur Suivant</P>
+<li> <P>Choisir le port sur lequel le modem se trouve.<BR>
+	Si vous avez plusieurs modems identiques cliquer sur "Tous les
+	ports", sinon choisissez COM1 ou COM2.</P>
+<li> <P>Le modem s'installe, attendre ...</P>
+<li> <P>Le système vous signale que vous devrez redémarrer pour utiliser
+le modem .... donc cliquer sur "Terminer et redémarrer" même si cela
+ne vous semble pas nécessaire.</P>
+</OL>
+
+<H4><A NAME="tth_sEc1.1.2"></A>1.2&nbsp;Test et post-configuration</H4>
+
+<OL type="1">
+<li> <P>Ré-ouvrir le "Panneau de configuration" modem</P>
+<li> <P>Choisir le modem dans la liste et cliquer sur Propriétés</P>
+<li> <P>Régler éventuellement la vitesse puis cliquer l'onglet Connexion<BR>
+	Mettre les paramètres suivants : Bits de données=8, bit de stop=1, parité=None</P>
+<li> <P>Cliquer sur Avancés. Dans cette boite, vous pourrez éventuellement
+ajouter une chaîne d'init particulière (volume haut parleur, contrôle de
+flux etc ...) [voir la <A HREF="modem-faqd.html#22"><U>FAQ sur les modems</U></A>]</P>
+<li> <P>une fois que tout est correct cliquer sur OK</P>
+</OL>
+<P>Pour vérifier lancer Hyperterminal à partir du Menu Accessoires,
+les diodes CS et TX du modem doivent s'allumer ...</P>
+<p>Les test suivants doivent être vérifiés dans l'ordre car
+il faut vérifier l'un pour pouvoir tester l'autre.
+
+<OL type="1">
+<li> <P>Taper ATZ le modem doit vous repondre OK, </P>
+<li> <P>Configurer votre modem en Auto-response  à l'aide
+de la commande Hayes adaptée (ATS0=1 pour US robotics) </P>
+<li> <P>Enregistrer la configuration du modem dans sa NVRAM à
+l'aide de la commande Hayes adaptée (AT&amp;W0 pour US robotics)</P>
+<li> <P>Taper ATA pour tester la ligne, le modem doit décrocher,
+si il vous repond "NO DIAL TONE" c'est qu'il y a un problème de liaison
+téléphonique.</P>
+<li> <P>A l'aide d'un autre poste appeler votre modem, il doit afficher
+RINGING puis décrocher au bout d'une ou deux sonneries.</P>
+</OL>
+<P>Tant que tout cela ne fonctionne pas correctement, il est inutile
+de passer à l'étape suivante.</P>
+
+<H3><A NAME="tth_sEc1.2"></A>2&nbsp; Configuration de la couche PPP</H3>
+
+<p>
+Comme pour Windows 95 la configurattion de l'accés à distance
+se fait à l'aide de l'icone réseau du "Panneau de configuration".
+Par contre, le protocole PPP n'est pas vu comme une carte réseau
+comme pour Windows 95, mais comme un service du groupe réseau
+cela induit quelques différences de configuration.
+
+<p>
+
+<OL type="1">
+<li> Double Cliquer sur l'icone Réseau du "Panneau de configuration"
+
+<p>
+
+<li> Dans l'onglet Service choisir Nouveau
+
+<p>
+
+<li> Dans la liste Service choisir "Service d'accès distant"
+et insérer le CDROM de NT 4 ou assurez-vous qu'une distribution 
+d'installation et accessible.
+
+<p>
+
+<li> NT 4 lit divers fichiers puis vous propose de choisir un
+modem, choisissez celui ou ceux que vous souhaitez dédier à ce service.
+Puis valider par OK.
+
+<p>
+
+<li> NT vous affiche une boite de dialogue intitulée "Installation du 
+service d'accès distant". Sélectionner le modem et cliquer sur Configurer. <BR>
+Dans la
+liste des types d'appel choisir "Appel Sortant et Entrant" ou Appel entrant 
+seulement". puis cliquer sur OK
+
+<p>
+
+<li>  Ensuite, cliquer sur l'icone Réseau pour définir les paramètres 
+liés au protocole réseau.
+
+<p>
+
+<li> Trois protocoles sont configurables à ce niveau : NetBui, IP et IPX/SPX.<BR>
+En commun pour les trois,  il y a l'autorisation au reste du réseau. C'est à
+dire est-ce que le serveur NT doit ce comporter en routeur et donner accès aux
+autres ressources du réseau.
+
+<p>
+Un autre paramètre commun est le type de contrôle, si le réseau est 
+hétérogène il est de bon ton de cliquer sur "Autoriser n'importe quel type
+d'identification" pour permettre aux machines autres que Microsoft d'ouvrir 
+des sessions sans problème.
+
+<p>
+Pour le reste, je détaillerai uniquement le protocole IP. Donc cocher IP et
+choisir Configurer. Soit vous avez un serveur DHCP et il n'y a rien à faire,
+soit vous n'en avez pas et il faudra utliser des adresses statiques, ce qui est
+le cas ici.
+
+<p>
+Remplir la plage d'adresses correspondante en utilisant des adresses 
+libres de votre réseau. Il faut en mettre une de plus que le 
+nombre de modems. L'adresse suplémentaire servira d'adresse locale au serveur.
+
+<p>
+
+<li> Une fois la boite corespondante remplie cliquer sur OK, puis
+OK dans le panneau de Configuration réseau et laisser redémarrer votre serveur.
+
+<p>
+</OL><P>Une fois que la machine a rebooté, vous pouvez contrôler que tout
+c'est bien passé en utilisant l'icone Services du "Panneau de configuration" et 
+contrôler l'apparition du serveur RAS dans le "Panneau de configuration" réseau.</P>
+
+<p>
+Si tous marche bien il suffit de donner les droits de connexion
+à distance aux utilisateurs concernés à l'aide du gestionnaire des
+utilisateurs par exemple.
+
+<p>
+
+<H3><A NAME="tth_sEc1.3"></A>3&nbsp; Fonctionnement courant et gestions des utilisateurs</H3>
+
+<p>
+Il y deux outils qui permettent de monitorer les connexions : le Moniteur 
+d'accès à distance accessible à partir d'un "Panneau de configuration" et 
+l'administrateur d'accès distant du menu administration :
+
+<p>
+
+<OL type="1">
+<li> le Moniteur d'accès à distance 
+
+<p>
+Permet de surveiller l'état du serveur, de voir ses performances et
+de mettre fin aux connexionx si cela s'avère nécessaire.
+
+<p>
+
+<li> L'administrateur d'accès à distance permet lui de gérer 
+les droits utilisateur pour l'accès à distance et de lancer ou
+d'arrêter les services. <BR>Attention cependant à configurer correctement
+les fonctions de rappel automatique à moins que vous soyez une
+taupe de France Telecom (tm). <BR>NT ne distingue pas les comptes PPP
+des comptes ordinaires; un utilisateur PPP devra donc être verrouillé
+par ailleurs.
+
+<p>
+</OL>
+<P>Afin de tester tout cela vous pouver installer la suite IIS de
+Microsoft avec au besoin la carte de bouclage logiciel si
+vous n'avez pas de cartes ethernet ou si vous souhaitez
+isoler votre machines d'accès distant pour faire des tests.
+Vous pourrez alors faire des requêtes HTTP sur les clients pour
+vérifier le fonctionnenement de tout cela.</P>
+
+<p>
+
+<p><hr><small>File translated from T<sub>E</sub>X by <a href="http://hutchinson.belmont.ma.us/tth/tth.html">T<sub><font size="-1">T</font></sub>H</a>, version 1.32.</small>
+
+</BODY>
+</HTML>

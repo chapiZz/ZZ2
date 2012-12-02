@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [fr] (WinNT; I) [Netscape]">
+   <TITLE>1034-5
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+RFC: 1034
+<BR>Statut : Standard
+<CENTER>
+<H1>
+DOMAIN NAME SYSTEM</H1></CENTER>
+
+<CENTER>
+<H2>
+Concepts de base</H2></CENTER>
+
+<HR>
+<BR>Cr&eacute;dits : P. Mockapetris, ISI
+<BR>Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry
+G. FREMAUX</A>
+<BR>Edition originale : Novembre 87 / Version FR : Avril 1998
+<BR>Remplace : RFC882, RFC883, RFC973
+<BR>
+<HR>
+<H2>
+<FONT COLOR="#000080">7. REFERENCES et BIBLIOGRAPHIE</FONT></H2>
+<TT>[Dyer 87] Dyer, S., and F. Hsu, "Hesiod", Project Athena Technical
+Plan - Name Service, April 1987, version 1.9. Describes the fundamentals
+of the Hesiod name service.</TT>
+<P><TT>[IEN-116] J. Postel, "Internet Name Server", IEN-116, USC/Information
+Sciences Institute, August 1979. A name service obsoleted by the Domain
+Name System, but still in use.</TT>
+<P><TT>[Quarterman 86] Quarterman, J., and J. Hoskins, "Notable Computer
+Networks", Communications of the ACM, October 1986, volume 29, number 10.</TT>
+<P><TT>[RFC-742] K. Harrenstien, "NAME/FINGER", RFC-742, Network Information
+Center, SRI International, December 1977.</TT>
+<P><TT>[RFC-768] J. Postel, "User Datagram Protocol", RFC-768, USC/Information
+Sciences Institute, August 1980.</TT>
+<P><TT>[RFC-793] J. Postel, "Transmission Control Protocol", RFC-793, USC/Information
+Sciences Institute, September 1981.</TT>
+<P><TT>[RFC-799] D. Mills, "Internet Name Domains", RFC-799, COMSAT, September
+1981. Suggests introduction of a hierarchy in place of a flat name space
+for the Internet. &lt;&uml;P>[RFC-805] J. Postel, "Computer Mail Meeting
+Notes", RFC-805, USC/Information Sciences Institute, February 1982. &lt;&uml;P>[RFC-810]
+E. Feinler, K. Harrenstien, Z. Su, and V. White, "DOD Internet Host Table
+Specification", RFC-810, Network Information Center, SRI International,
+March 1982. Obsolete. See RFC-952.</TT>
+<P><TT>[RFC-811] K. Harrenstien, V. White, and E. Feinler, "Hostnames Server",
+RFC-811, Network Information Center, SRI International, March 1982. Obsolete.
+See RFC-953.</TT>
+<P><TT>[RFC-812] K. Harrenstien, and V. White, "NICNAME/WHOIS", RFC-812,
+Network Information Center, SRI International, March 1982.</TT>
+<P><TT>[RFC-819] Z. Su, and J. Postel, "The Domain Naming Convention for
+Internet User Applications", RFC-819, Network Information Center, SRI International,
+August 1982. Early thoughts on the design of the domain system. Current
+implementation is completely different.</TT>
+<P><TT>[RFC-821] J. Postel, "Simple Mail Transfer Protocol", RFC-821, USC/Information
+Sciences Institute, August 1980.</TT>
+<P><TT>[RFC-830] Z. Su, "A Distributed System for Internet Name Service",
+RFC-830, Network Information Center, SRI International, October 1982. Early
+thoughts on the design of the domain system. Current implementation is
+completely different.</TT>
+<P><TT>[RFC-882] P. Mockapetris, "Domain names - Concepts and Facilities,"
+RFC-882, USC/Information Sciences Institute, November 1983. Superceeded
+by this memo.</TT>
+<P><TT>[RFC-883] P. Mockapetris, "Domain names - Implementation and Specification,"
+RFC-883, USC/Information Sciences Institute, November 1983. Superceeded
+by this memo.</TT>
+<P><TT>[RFC-920] J. Postel and J. Reynolds, "Domain Requirements", RFC-920,
+USC/Information Sciences Institute October 1984. Explains the naming scheme
+for top level domains.</TT>
+<P><TT>[RFC-952] K. Harrenstien, M. Stahl, E. Feinler, "DoD Internet Host
+Table Specification", RFC-952, SRI, October 1985. Specifies the format
+of HOSTS.TXT, the host/address table replaced by the DNS.</TT>
+<P><TT>[RFC-953] K. Harrenstien, M. Stahl, E. Feinler, "HOSTNAME Server",
+RFC-953, SRI, October 1985. This RFC contains the official specification
+of the hostname server protocol, which is obsoleted by the DNS. This TCP
+based protocol accesses information stored in the RFC-952 format, and is
+used to obtain copies of the host table.</TT>
+<P><TT>[RFC-973] P. Mockapetris, "Domain System Changes and Observations",
+RFC-973, USC/Information Sciences Institute, January 1986. Describes changes
+to RFC-882 and RFC-883 and reasons for them. Now obsolete.</TT>
+<P><TT>[RFC-974] C. Partridge, "Mail routing and the domain system", RFC-974,
+CSNET CIC BBN Labs, January 1986. Describes the transition from HOSTS.TXT
+based mail addressing to the more powerful MX system used with the domain
+system.</TT>
+<P><TT>[RFC-1001] NetBIOS Working Group, "Protocol standard for a NetBIOS
+service on a TCP/UDP transport: Concepts and Methods", RFC-1001, March
+1987. This RFC and RFC-1002 are a preliminary design for NETBIOS on top
+of TCP/IP which proposes to base NetBIOS name service on top of the DNS.</TT>
+<P><TT>[RFC-1002] NetBIOS Working Group, "Protocol standard for a NetBIOS
+service on a TCP/UDP transport: Detailed Specifications", RFC-1002, March
+1987.</TT>
+<P><TT>[RFC-1010] J. Reynolds and J. Postel, "Assigned Numbers", RFC-1010,
+USC/Information Sciences Institute, May 1987 Contains socket numbers and
+mnemonics for host names, operating systems, etc.</TT>
+<P><TT>[RFC-1031] W. Lazear, "MILNET Name Domain Transition", RFC-1031,
+November 1987. Describes a plan for converting the MILNET to the DNS.</TT>
+<P><TT>[RFC-1032] M. K. Stahl, "Establishing a Domain - Guidelines for
+Administrators", RFC-1032, November 1987. Describes the registration policies
+used by the NIC to administer the top level domains and delegate subzones.</TT>
+<P><TT>[RFC-1033] M. K. Lottor, "Domain Administrators Operations Guide",
+RFC-1033, November 1987. A cookbook for domain administrators.</TT>
+<P><TT>[Solomon 82] M. Solomon, L. Landweber, and D. Neuhengen, "The CSNET
+Name Server", Computer Networks, vol 6, nr 3, July 1982. Describes a name
+service for CSNET which is independent from the DNS and DNS use in the
+CSNET.</TT>
+<CENTER>
+<P>
+<HR></CENTER>
+
+</BODY>
+</HTML>

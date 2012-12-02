@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+	<TITLE>Etude du DNS - (3) la base de données</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+	<style type="text/css">
+		dt, dd, pre {font-family:monospace; font-size:small; font-weight:bold}
+		dt {color:blue}
+	</style>
+</HEAD>
+
+<BODY BGCOLOR="white">
+<h3>Exercice 3.2</h3>
+<dl>
+<dt>host -a u-clermont.fr</dt>
+	<dd><pre>u-clermont1.fr          NS      iutsux01.u-clermont1.fr
+u-clermont1.fr          NS      cicsun.univ-bpclermont.fr
+u-clermont1.fr          NS      uadmin.u-clermont1.fr</pre></dd>
+</dl>
+<dl>
+<dt>host -a --server=iutsux01.u-clermont1.fr u-clermont1.fr</dt>
+	<dd><pre>u-clermont1.fr          NS      uadmin.u-clermont1.fr
+u-clermont1.fr          NS      iutsux01.u-clermont1.fr
+u-clermont1.fr          NS      cicsun.univ-bpclermont.fr
+u-clermont1.fr          SOA     uadmin.u-clermont1.fr postmaster.uadmin.u-clermont1.fr (
+                        2002042901      ;serial (version)
+                        21600   ;refresh period (6 hours)
+                        3600    ;retry interval (1 hour)
+                        86400   ;expire time (1 day)
+                        86400   ;default ttl (1 day)
+                        )
+u-clermont1.fr          MX      0 courrier.u-clermont1.fr
+ !!! u-clermont1.fr MX host courrier.u-clermont1.fr is not canonical</pre></dd>
+</dl>
+<dl>
+<dt>host -a isima.fr</dt>
+	<dd><pre>isima.fr                NS      ns2.nic.fr
+isima.fr                NS      sp.isima.fr
+isima.fr                MX      0 sp.isima.fr</pre></dd>
+</dl>
+<dl>
+<dt>host -a --server=ns2.nic.fr isima.fr</dt>
+	<dd><pre>isima.fr                MX      0 sp.isima.fr
+isima.fr                NS      sp.isima.fr
+isima.fr                NS      ns2.nic.fr
+isima.fr                SOA     sp.isima.fr postmaster.isima.fr (
+                        2002051303      ;serial (version)
+                        21600   ;refresh period (6 hours)
+                        3600    ;retry interval (1 hour)
+                        604800  ;expire time (1 week)
+                        86400   ;default ttl (1 day)</pre></dd>
+</dl>
+<dl>
+<dt>host -a fr.</dt>
+	<dd><pre>fr                      SOA     NS1.nic.fr nic.nic.fr (
+                        2002051300      ;serial (version)
+                        21600   ;refresh period (6 hours)
+                        3600    ;retry interval (1 hour)
+                        3600000 ;expire time (5 weeks, 6 days, 16 hours)
+                        86400   ;default ttl (1 day)
+                        )
+fr                      NS      ns2.nic.fr
+fr                      NS      NS3.nic.fr
+fr                      NS      NS-EXT.VIX.COM
+fr                      NS      NS.EU.NET
+fr                      NS      DNS.CS.WISC.EDU
+fr                      NS      DNS.INRIA.fr
+fr                      NS      DNS.PRINCETON.EDU
+fr                      NS      NS1.nic.fr</pre></dd>
+</dl>
+
+</BODY>
+</HTML>

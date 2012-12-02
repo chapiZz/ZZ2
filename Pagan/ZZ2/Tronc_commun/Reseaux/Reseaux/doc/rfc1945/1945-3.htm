@@ -1,0 +1,235 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">3. Param&egrave;tres du protocole</FONT></H2>
+<A NAME="3-1"></A>
+<H3>3.1 Num&eacute;ro de Version</H3>
+<P>HTTP utilise un sch&eacute;ma de num&eacute;rotation "<sup&eacute;rieure>.<inf&eacute;rieure>" pour indiquer la version du protocole. Cette technique permet &agrave; un &eacute;metteur d'envoyer une indication sur sa capacit&eacute; &agrave; comprendre une r&eacute;ponse, plut&ocirc;t que les fonctionnalit&eacute;s qu'il permet. Les composants du message ne pourront alt&eacute;rer ce num&eacute;ro de version car ils n'affectent pas le comportement de la communication et ne font qu'&eacute;tendre les possibilit&eacute;s des champs qui les contiennent. Le nombre <inf&eacute;rieur> est incr&eacute;ment&eacute; lorsque les changements apport&eacute;s au protocole ajoutent des fonctionnalit&eacute;s ne modifiant pas la r&eacute;ponse de l'algorithme d'interpr&eacute;tation, mais qui peuvent ajouter des nouvelles syntaxes ou des nouvelles fonctionnalit&eacute;s c&ocirc;t&eacute; &eacute;metteur. Le nombre \<sup&eacute;rieur\> est incr&eacute;ment&eacute; lorsque le format de message est chang&eacute;.
+<P>La version d'un message HTTP est indiqu&eacute; par un champ HTTP-Version dans la premi&egrave;re ligne du message. Si la version n'est pas sp&eacute;cifi&eacute;e, le r&eacute;cepteur prendra par d&eacute;faut la version la plus restrictive: HTTP/0.9.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+HTTP-Version       = "HTTP" "/" 1*DIGIT "." 1*DIGIT</PRE></CODE></FONT>
+
+<P>Notez que les nombres "sup&eacute;rieure" et "inf&eacute;rieure" doivent &ecirc;tre pris comme deux entiers distincts et que chacun peut &ecirc;tre amen&eacute; &agrave; prendre une valeur sup&eacute;rieure &agrave; un simple digit. Ainsi, HTTP/2.4 est une version plus basse que HTTP/2.13, &agrave; son tour plus basse que HTTP/12.3. Des z&eacute;ros mentionn&eacute;s en t&ecirc;te de nombre doivent &ecirc;tre ignor&eacute;s par le r&eacute;cepteur, et ne devraient pas &ecirc;tre &eacute;mis par l'&eacute;metteur.
+<P>Ce document d&eacute;finit les versions 0.9 et 1.0 du protocole HTTP. Les applications envoyant des "requ&ecirc;tes pleines" ou "r&eacute;ponses pleines", et d&eacute;finies dans cette sp&eacute;cification, doivent signaler une version HTTP-Version "HTTP/1.0".
+
+<P>Les serveurs HTTP/1.0 doivent:
+
+<UL><LI> reconna&icirc;tre le format de la ligne de requ&ecirc;te HTTP/0.9 et HTTP/1.0
+<LI> comprendre toute requ&ecirc;te &eacute;mise sous les formats HTTP/0.9 ou HTTP/1.0;
+<LI> r&eacute;pondre avec un message sur la m&ecirc;me version de protocole que celle &eacute;mise dans la requ&ecirc;te client.</UL>
+
+<P>Les clients HTTP/1.0 doivent:
+
+<UL><LI> reconna&icirc;tre le format de ligne d'&eacute;tat des r&eacute;ponses HTTP/1.0;
+<LI> comprendre toute r&eacute;ponse au format HTTP/0.9 ou HTTP/1.0.</UL>
+
+<P>Les applications des Proxy et routeurs doivent prendre certaines pr&eacute;cautions lorsqu'ils retransmettent des requ&ecirc;tes d'un format diff&eacute;rent que celui de l'application native. Comme la version de protocole indique les possibilit&eacute;s fonctionnelles de l'application de l'&eacute;metteur, un proxy/routeur ne doit jamais &eacute;mettre de requ&ecirc;te de niveau sup&eacute;rieur &agrave; celui de sa propre application HTTP; si une telle requ&ecirc;te lui parvient, le proxy/routeur doit d&eacute;grader le num&eacute;ro de version, ou renvoyer une erreur. Les requ&ecirc;tes re&ccedil;ues sur un niveau inf&eacute;rieur peuvent &ecirc;tre relev&eacute;es au niveau de version de l'application native; la r&eacute;ponse de ces proxies/routeurs doivent n&eacute;anmoins suivre les r&egrave;gles &eacute;nonc&eacute;es ci-avant.
+<A NAME="3-2"></A>
+<H3>3.2 Uniform Resource Identifiers</H3>
+<P>Les URI sont connues sous de nombreux noms: adresses WWW,  identificateur universel de document (Universal Document Identifiers), identificateur universel de ressource (Universal Resource Identifiers) [2], et finalement la combinaison d'une localisation uniforme de ressource (Uniform Resource Locators ou URL) [4] et d'un nom (Name - URN) [16]. Pour autant que le protocole HTTP est concern&eacute;, les Uniform Resource Identifiers sont simplement des cha&icirc;nes format&eacute;es identifiant --via un nom, une localisation, ou toute autre caract&eacute;ristiques -- une ressource r&eacute;seau.
+<A NAME="3-2-1"></A>
+<H4>3.2.1 Syntaxe g&eacute;n&eacute;rale</H4>
+<P>Les URI dans HTTP peuvent &ecirc;tre repr&eacute;sent&eacute;es sous forme absolue, ou relativement &agrave; une autre URI connue [9], suivant le contexte. Les deux formes sont diff&eacute;renci&eacute;es par le fait qu'une URI absolue commence toujours par un sch&egrave;me contenant un nom suivi du caract&egrave;re ":".
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+URI               = (URIabsolue | URIrelative ) [ "#" fragment ]
+URIabsolue        = scheme ":" *( uchar | reserve )
+URIrelative       = chem_res | chem_abs | chem_rel
+
+chem_res          = "//" loc_res [ chem_abs ]
+chem_abs          = "/" chem_rel
+chem_rel          = [ chemin ] [ ";" params ] [ "?" requete ]
+
+chemin            = fsegment *( "/" segment )
+fsegment          = 1*pchar
+segment           = *pchar
+
+params            = param *( ";" param )
+param             = *( pchar | "/" )
+
+scheme            = 1*( ALPHA | DIGIT | "+" | "-" | "." )
+loc_res           = *( pchar | ";" | "?" )
+requete           = *( uchar | reserve ) 
+fragment          = *( uchar | reserve ) 
+
+pchar             = uchar | ":" | "@" | "&" | "=" | "+"
+uchar             = non_reserve | echap
+non_réservé       = ALPHA | DIGIT | sur | extra | national
+
+echap             = "%" HEX HEX
+reserve           = ";" | "/" | "?" | ":" | "@" | "&" | "=" | "+"
+extra             = "!" | "*" | "'" | "(" | ")" | ","
+sur               = "$" | "-" | "_" | "."
+non_sur           = CTL | SP | <"> | "#" | "%" | "<" | ">"
+national          = <tout OCTET hormis ALPHA, DIGIT, reserve, extra, sur,
+                     et non_sur></PRE></CODE></FONT>
+
+<P>Pour une information d&eacute;finitive sur la syntaxe des URL voir les RFC 1738 [4] et
+RFC 1808 [9]. La notation BNF inclue des caract&egrave;res nationaux non permis dans les URL valides telles que sp&eacute;cifi&eacute;es dans la RFC 1738, car les serveurs HTTP ne sont pas limit&eacute;s &agrave; l'ensemble de caract&egrave;res non r&eacute;serv&eacute;s pour le codage de la prtie relative du chemin d'acc&egrave;s, et les proxies HTTP peuvent recevoir des requ&ecirc;tes &agrave; destinations d'URI autres que celles d&eacute;finies dans la RFC 1738.
+<A NAME="3-2-2"></A>
+<H4>3.2.2 URL http</H4>
+<P>Le sch&egrave;me "http" est utilis&eacute; pour localiser une ressource r&eacute;seau via le protocole HTTP. Cette section d&eacute;finit la syntaxe et la s&eacute;mantique des URL.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+http_URL          = "http:" "//" host [ ":" port ] [ chem_abs ]
+
+host              = [un nom Internet d'ordinateur valide ou une
+                     adresse IP (sous forme num&eacute;rique),
+                     comme d&eacute;finie en Section 2.1 de la RFC 1123]
+
+port              = *DIGIT</PRE></CODE></FONT>
+
+<P>Si le port est vide ou non sp&eacute;cifi&eacute;, le port 80 est pris par d&eacute;faut. La s&eacute;mantique pr&eacute;cise que cette ressource est localis&eacute;e sur le serveur acceptant les connexions TCP sur ce port et sur cet ordinateur, l'URI de requ&ecirc;te de la ressource en est le chemin d'acc&egrave;s absolu chem_abs. Si chem_abs n'est pas pr&eacute;cis&eacute; dans l'URL, il doit &ecirc;tre remplac&eacute; par un "/" lorsque l'URI de requ&ecirc;te est utilis&eacute;e (Section 5.1.2).
+
+<P><FONT SIZE=-1 COLOR="#666666">Note: Bien que le protocole HTTP soit ind&eacute;pendant de la couche transport, l'URL http identifie la ressource par son adresse TCP, Les ressources non TCP devant &ecirc;tre atteintes via un autre sch&egrave;me d'URI.</FONT>
+
+<P>La forme canonique d'une URL "http" est obtenue en convertissant tous les caract&egrave;res UPALPHA dans la cha&icirc;ne "host" par leur &eacute;quivalent LOALPHA (les noms de host ne tiennent pas compte de la casse), en &eacute;ludant le descriptif [ ":" port ] si le port vaut 80, et en rempla&ccedil;ant le chem_abs vide par un "/".
+<A NAME="3-3"></A>
+<H3>3.3 Formats de temps et de date</H3>
+<P>Les applications HTTP/1.0 ont historiquement reconnu trois formats distincts pour la d&eacute;finition de dates et d'unit&eacute;s temporelles:
+
+<P><CODE>Sun, 06 Nov 1994 08:49:37 GMT    ; RFC 822, mis &agrave; jour par la RFC 1123<BR>
+Sunday, 06-Nov-94 08:49:37 GMT   ; RFC 850, rendue obsol&egrave;te depuis la RFC 1036<BR>
+Sun Nov  6 08:49:37 1994         ; Format asctime() du C ANSI</CODE>
+
+<P>Le premier format est pr&eacute;f&eacute;r&eacute; pour Internet pour une raison li&eacute;e &agrave; la longueur fixe de ses sous-champs, d&eacute;finis par la RFC 1123 [6] (une mise &agrave; jour de la RFC 822 [7]). Le second format est d'usage commun, mais se base sur le format de date tel que d&eacute;fini par la RFC 850 [10] d&eacute;sormais obsol&egrave;te, et pr&eacute;sente l'inconv&eacute;nient d'un champ d'ann&eacute;e sur deux digits. Les clients et serveurs HTTP/1.0 doivent reconna&icirc;tre les trois formats, m&ecirc;me s'ils ne doivent jamais g&eacute;n&eacute;rer le troisi&egrave;me (convention du C).
+
+<P><FONT SIZE=-1 COLOR="#666666">Note: Les r&eacute;cepteurs de valeurs de date doivent avoir une impl&eacute;mentation robuste et de ce fait &ecirc;tre capables de reconna&icirc;tre des formats de date &eacute;manent d'applications non-HTTP, comme il peut leur en parvenir en postant ou r&eacute;cup&eacute;rant des messages via proxy/routeur de et vers SMTP ou NNTP.</FONT>
+
+<P>Tout index temporel HTTP/1.0 doit &ecirc;tre repr&eacute;sent&eacute; en temps universel (Universal Time - UT), connu aussi sous l'appellation Greenwich Mean Time (GMT), sans exception possible. Ceci est indiqu&eacute; dans les deux premiers formats par l'inclusion du mot "GMT", abr&eacute;viation en trois lettre du code de zone, et doit &ecirc;tre suppos&eacute; comme vrai &agrave; la lecture d'un temps asctime().
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+HTTP-date            = rfc1123-date | rfc850-date | asctime-date
+
+rfc1123-date         = jsem "," SP date1 SP temps SP "GMT"
+rfc850-date          = joursem "," SP date2 SP temps SP "GMT"
+asctime-date         = jsem SP date3 SP temps SP 4DIGIT
+
+date1                = 2DIGIT SP mois SP 4DIGIT
+                     ; jour mois an (e.g., 02 Jun 1982)
+date2                = 2DIGIT "-" mois "-" 2DIGIT
+                     ; jour-mois-an (e.g., 02-Jun-82)
+
+date3                = mois SP ( 2DIGIT | ( SP 1DIGIT ))
+                     ; mois jour (e.g., Jun  2) 
+
+temps                = 2DIGIT ":" 2DIGIT ":" 2DIGIT
+                     ; 00:00:00 - 23:59:59
+
+jsem                 = "Mon" | "Tue" | "Wed"
+                     | "Thu" | "Fri" | "Sat" | "Sun"
+
+joursem              = "Monday" | "Tuesday" | "Wednesday"
+                     | "Thursday" | "Friday" | "Saturday" | "Sunday"
+
+mois                 = "Jan" | "Feb" | "Mar" | "Apr"
+                     | "May" | "Jun" | "Jul" | "Aug"
+                     | "Sep" | "Oct" | "Nov" | "Dec"</PRE></CODE></FONT>
+
+<P><FONT SIZE=-1 COLOR="#666666">Note: Les contraintes au niveau du format de date HTTP ne sont valables qu'&agrave; l'int&eacute;rieur du r&eacute;seau de transmission. Les clients et serveurs ne sont pas oblig&eacute;s de respecter cette pr&eacute;sentation pour l'affichage, la pr&eacute;sentation de requ&ecirc;te, l'acc&egrave;s, etc.</FONT>
+<A NAME="3-4"></A>
+<H3>3.4 Tables de caract&egrave;res</H3>
+<P>HTTP utilise la m&ecirc;me d&eacute;finition du vocable "table de caract&egrave;res" que celle utilis&eacute;e par MIME:
+
+<UL><P><CITE>Le terme "table de caract&egrave;res" utilis&eacute; dans ce document se r&eacute;f&eacute;re &agrave; une m&eacute;thode utilisant une ou plusieurs tables pour convertir une s&eacute;quence d'octets en caract&egrave;res. Notez qu'une conversion inverse n'est pas forc&eacute;ment demand&eacute;e, c'est &agrave; dire que tout octet peut ne pas &ecirc;tre repr&eacute;sent&eacute; par un caract&egrave;re, et qu'&agrave; l'inverse, une cha&icirc;ne de caract&egrave;res peut tr&egrave;s bien &ecirc;tre repr&eacute;sentable par plus d'une seule s&eacute;quence d'octets. Cette d&eacute;finition permet un grand nombre de types de conversions, depuis celle, &eacute;l&eacute;mentaire, &agrave; une table comme l'ASCII-US jusqu'&agrave; des m&eacute;thodes plus complexes &agrave; "commutation de tables" comme celles d&eacute;finies par l'ISO 2022. Cependant, la d&eacute;finition associ&eacute;e au nom d'une "table de caract&egrave;re" MIME doit parfaitement et enti&egrave;rement sp&eacute;cifier le passage des octets aux caract&egrave;res. En particulier, le recours &agrave; des informations externes pour pouvoir assumer la conversion est interdit.</CITE></UL>
+
+<P><FONT SIZE=-1 COLOR="#666666">Note: Le terme "table de caract&egrave;res" est aussi commun&eacute;ment appel&eacute; "encodage". Cependant, comme HTTP et MIME partagent les m&ecirc;mes d&eacute;finitions, il est important qu'ils partagent aussi la terminologie.</FONT>
+
+<P>Les "tables de caract&egrave;res" HTTP sont d&eacute;finies par des mots sans distinction de casse. L'ensemble complet de ces tables constitue le "registre de tables de l'IANA" (Character Set registry [15]). Cependant, comme ce "registre" ne d&eacute;finit pas un nom unique et d&eacute;finitif pour chacune de ces tables, nous avons d&eacute;fini ici les noms les plus couramment utilis&eacute;s dans les entit&eacute;s HTTP. Ces "tables de caract&egrave;res" incluent celles d&eacute;finies dans la RFC 1521 [5] -- ASCII-US [17] et ISO-8859 [18] -- ainsi que celles sp&eacute;cifiquement d&eacute;finies pour usage dans les param&egrave;tres de caract&egrave;res MIME.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+charset            = "US-ASCII" | "ISO-8859-1" | "ISO-8859-2" 
+                   | "ISO-8859-3" | "ISO-8859-4" | "ISO-8859-5" 
+                   | "ISO-8859-6" | "ISO-8859-7" | "ISO-8859-8" 
+                   | "ISO-8859-9" | "ISO-2022-JP" | "ISO-2022-JP-2" 
+                   | "ISO-2022-KR" | "UNICODE-1-1" | "UNICODE-1-1-UTF-7" 
+                   | "UNICODE-1-1-UTF-8" | <I>autre_nom</I></PRE></CODE></FONT>
+
+<P>Bien qu'HTTP permette l'utilisation de tout nom arbitraire pour d&eacute;signer une table de caract&egrave;res, tout nom d&eacute;signant d&eacute;j&agrave; une des tables du registre IANA doit indiquer cette table pr&eacute;cise. Il est conseill&eacute; que les applications s'en tiennent aux tables de caract&egrave;res d&eacute;finies dans ce registre.
+<P>La table de caract&egrave;re indiqu&eacute;e pour un corps d'entit&eacute; doit &ecirc;tre le plus petit d&eacute;nominateur commun de l'ensemble des codes de caract&egrave;res utilis&eacute;s dans ce corps, sauf si l'on pr&eacute;f&egrave;re syst&eacute;matiquement s'en tenir aux tables de base ASCII-US ou ISO-8859-1.
+<A NAME="3-5"></A>
+<H3>3.5 Indication d'encodage du contenu</H3>
+<P>Les valeurs de "codage de contenu" indiquent la nature de la transformation qui a &eacute;t&eacute; appliqu&eacute;e &agrave; une ressource. Cette information a &eacute;t&eacute; initialement d&eacute;finie pour pouvoir garder la trace d'un type de ressource compress&eacute;e ou encrypt&eacute;e. Typiquement, la ressource est disponible sous forme encod&eacute;e, et ne sera d&eacute;cod&eacute;e qu'au moment de son utilisation.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+content-coding        = "x-gzip" | "x-compress" | transformation</PRE></CODE></FONT>
+
+<P><FONT SIZE = -1 COLOR="#666666">Note: Pour des raisons de compatibilit&eacute; future, les applications HTTP/1.0 doivent interpr&eacute;ter "gzip" et "compress" respectivement comme "x-gzip" et "x-compress".</FONT>
+
+<P>Toute mention d'encodage est ind&eacute;pendante de la casse. L'HTTP/1.0 utilise les descripteurs d'encodage dans le champ Content-Encoding (<A HREF="1945-10.htm#10-3">Section 10.3</A>) de l'en-t&ecirc;te. Le plus important est que cette information indique quel est le type de d&eacute;codage que le r&eacute;cepteur devra utiliser pour exploiter la ressource. Notez qu'un m&ecirc;me programme peut &ecirc;tre capable de d&eacute;coder plusieurs types d'encodage. Les deux valeurs d&eacute;finies dans cette sp&eacute;cification sont:
+
+<P><B>x-gzip</B>
+<P><UL>Un format de compression g&eacute;r&eacute; par le programme de compression "gzip" (GNU zip) d&eacute;velopp&eacute; par Jean-Loup Gailly. Ce codage est de type Lempel-Ziv (LZ77) avec CRC sur 32 bits.</UL>
+
+<P><B>x-compress</B>
+<P><UL>Un format de compression g&eacute;r&eacute; par le programme "compress" effectuant une compression adaptative de type Lempel-Ziv-Welch (LZW).</UL>
+
+<P><FONT SIZE=-1 COLOR="#666666">Note: L'utilisation de noms de programmes pour nommer des formats d'encodage n'est pas souhaitable et sera d&eacute;conseill&eacute; dans le futur. Leur utilisation dans ce cas provient surtout d'une habitude historique, mais ce n'est pas une habitude &agrave; prendre.</FONT>
+<A NAME="3-6"></A>
+<H3>3.6 Types de m&eacute;dia</H3>
+<P>HTTP exploite les d&eacute;finition de types de m&eacute;dia Internet Media Types [13] dans le champ Content-Type de l'en-t&ecirc;te (<A HREF="1945-10.htm#10-5">Section 10.5</A>) afin de proposer une m&eacute;thode de typage ouverte et &eacute;volutive.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+media-type           = type "/" soustype *( ";" param&egrave;tre )
+type                 = nom_type
+soustype             = nom_soustype</PRE></CODE></FONT>
+
+<P>Les param&egrave;tres suivent la description de type/soustype, sous la forme de paires attribut/valeur.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+parametre               = attribut "=" valeur
+attribut                = nom_attribut
+valeur                  = nom_valeur | cha&icirc;ne entre guillemets </PRE></CODE></FONT>
+
+<P>Le type, sous-type et les noms d'attributs sont insensibles &agrave; la casse. Les valeurs associ&eacute;es aux attributs peuvent l'&ecirc;tre ou ne pas l'&ecirc;tre, suivant la s&eacute;mantique du nom de l'attribut. les types et sous type ne peuvent &ecirc;tre s&eacute;par&eacute; par un LWS. Ceci est valable pour les paires attribut/valeur Lorsqu'un r&eacute;cepteur re&ccedil;oit un param&egrave;tre irrecevable pour le type de m&eacute;dia sp&eacute;cifi&eacute;, il devra traiter le descripteur comme si cette paire attribut/valeur n'existait pas..
+<P>Certaines anciennes applications HTTP ne reconnaissent pas le type de m&eacute;dia. Les applications HTTP/1.0 ne pourront d&eacute;finir le type que lorsque la sp&eacute;cification du contenu est indispensable.
+<P>Les valeurs admises de types de m&eacute;dia sont d&eacute;finies par la Internet Assigned Number Authority (IANA [15]). Le processus d'enregistrement d'un type de m&eacute;dia est sp&eacute;cifi&eacute; dans la RFC 1590 [13]. L'usage de types non enregistr&eacute;s est d&eacute;conseill&eacute;.
+<A NAME="3-6-1"></A>
+<H4>3.6.1 Canonisation et texte par d&eacute;faut</H4>
+<P>Les types de m&eacute;dia Internet sont enregistr&eacute;s sous une forme canonique. En principe, un corps d'entit&eacute; transf&eacute;r&eacute; par HTTP doit &ecirc;tre repr&eacute;sent&eacute; dans sa forme canonique avant transmission. Si le corps a &eacute;t&eacute; encod&eacute; sous un codage sp&eacute;cifi&eacute; par un Content-Encoding, il devait &ecirc;tre sous sa forme canonique avant encodage.
+<P>Les sous types du type "text" utilisent dans leur forme canonique la s&eacute;quence CRLF en tant que fin de ligne. Cependant, HTTP permet le transport de texte dans lequel un CR ou un LF seul repr&eacute;sente la fin de ligne, tant que l'on reste &agrave; l'int&eacute;rieur du corps de l'entit&eacute;. Les applications HTTP doivent accepter des fins de ligne repr&eacute;sent&eacute;es par la s&eacute;quence CRLF, par un CR seul, ou par un LF seul, d&egrave;s qu'il s'agit d'un m&eacute;dia "text".
+<P>De plus, si le m&eacute;dia texte utilise une table de caract&egrave;re dans laquelle les caract&egrave;res 13 et 10 ne correspondent pas aux caract&egrave;res CR et LF, comme c'est le cas pour certains codages multi-octets, HTTP permet l'usage de toute s&eacute;quence de caract&egrave;res d&eacute;sign&eacute;s comme &eacute;quivalents des CR et LF et faisant office de fins de ligne. Cette souplesse n'est permise par HTTP que dans le corps de l'entit&eacute;; Un CRLF "l&eacute;gal" ne devra pas &ecirc;tre remplac&eacute; par un CR seul ou un LF seul dans aucune des structures de contr&ocirc;le HTTP (telles que les champs d'en-t&ecirc;tes ou les limites "multipart").
+<P>Le param&egrave;tre "charset" est utilis&eacute; avec certains types de m&eacute;dia pour d&eacute;finir la table de caract&egrave;res utilis&eacute;e (<A HREF="1945-3.htm#3-4">Section 3.4</A>) dans les donn&eacute;es. Lorsque ce param&egrave;tre n'est pas explicitement renseign&eacute;, les sous-types du m&eacute;dia "text" prennent par d&eacute;faut la table de caract&egrave;res "ISO-8859-1". Des donn&eacute;es cod&eacute;es selon une autre table de caract&egrave;res que "ISO-8859-1" ou ses sous-ensembles devra n&eacute;cessairement entra&icirc;ner une sp&eacute;cification explicite de ce codage, sous peine d'&ecirc;tre ininterpr&eacute;tables par le r&eacute;cepteur.
+
+<P><FONT SIZE=-1 COLOR="#666666">Note: De nombreux serveurs HTTP actuels diffusent des donn&eacute;es cod&eacute;es selon une table de caract&egrave;res autre que "ISO-8859-1" et sans explicitation correcte. Cette attitude r&eacute;duit l'interop&eacute;rabilit&eacute; propre du r&eacute;seau et est fortement d&eacute;conseill&eacute;e. Pour compenser de manque de rigueur, certains utilisateurs HTTP proposent une option permettant de changer la table de caract&egrave;res par d&eacute;faut utilis&eacute;e lorsque des donn&eacute;es sont re&ccedil;ues sans explicitation de cette information.</FONT>
+<A NAME="3-6-2"></A>
+<H4>3.6.2 Types multiples "multipart"</H4>
+<P>Le MIME d&eacute;finit un certain nombre de types "multipart" -- encapsulation de plusieurs entit&eacute;s dans un m&ecirc;me corps d'entit&eacute;. Les types "multipart" enregistr&eacute;s par l'IANA [15] n'ont pas de signification particuli&egrave;re aux yeux d'HTTP/1.0,  bien que les utilisateurs dussent &ecirc;tre en mesure de pouvoir reconna&icirc;tre chaque sous type de fa&ccedil;on &agrave; correctement interpr&eacute;ter chaque sous partie du corps. Un utilisateur HTTP suivra les m&ecirc;mes r&egrave;gles de comportement qu'un utilisateur MIME dans le cas d'une r&eacute;ception de donn&eacute;es "multipart". Les serveurs HTTP ne sont pas sens&eacute; supposer que tous les clients HTTP puissent recevoir des donn&eacute;es ainsi pr&eacute;sent&eacute;es.
+<P>Tous les types "multipart" partagent la m&ecirc;me syntaxe et doivent sp&eacute;cifier un param&egrave;tres de "limite" dans la d&eacute;finition du type. Le corps du message fait lui-m&ecirc;me partie du protocole et doit s'en tenir &agrave; la s&eacute;quence CRLF pour repr&eacute;senter des sauts de lignes entre les parties. Chaque partie d'un document "multipart" peut elle m&ecirc;me contenir des champs d'en-t&ecirc;te HTTP significatifs pour son contenu.
+<A NAME="3-7"></A>
+<H3>3.7 Produits</H3>
+<P>La sp&eacute;cification de produit permet &agrave; deux application en communication de s'identifier l'une &agrave; l'autre par un simple nom, suivi d'un "slash" ('/') et d'un num&eacute;ro de version, tous deux optionnels. Les champs acceptant cette sp&eacute;cification permettent de lister des sous-&eacute;l&eacute;ments significatifs d'un produit, s&eacute;par&eacute;s par un espace. Par convention, les produits sont rang&eacute;s par ordre d'importance dans le processus d'identification.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+produit             = nom_produit ["/" version]<BR>
+version             = num&eacute;ro_de_version</PRE></CODE></FONT>
+
+<P>Exemples:
+
+<P><CENTER><CODE>User-Agent: CERN-LineMode/2.15 libwww/2.17b3<BR>
+<BR>
+Server: Apache/0.8.4</CODE></CENTER>
+
+<P>Les sp&eacute;cifications de produits doivent &ecirc;tre concises et directes -- l'utilisation de ce champ &agrave; vocation publicitaire ou pour diffuser des informations non essentielles est strictement interdit. Le sous-champ de num&eacute;ro de version accepte tout caract&egrave;re valide pour des noms. Il est demand&eacute; de ne pas abuser de cette permissivit&eacute; et de conserver ce champ pour l'indication de la version &agrave; l'exclusion de toute autre information.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-2.htm">Pr&eacute;c&eacute;dent</A>  - <A HREF="1945-4.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+

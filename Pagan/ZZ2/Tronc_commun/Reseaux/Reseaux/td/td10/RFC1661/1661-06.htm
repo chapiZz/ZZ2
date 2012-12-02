@@ -1,0 +1,223 @@
+<HTML>
+<TITLE>PPP - RFC 1661 - VF</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<P>RFC: 1661<BR>
+Statut : Standard<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm" TARGET="_top">INDEX FRANCAIS</A>
+<CENTER><H1>POINT TO POINT PROTOCOL - PPP</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER> W. Simpson / Juillet 1994<BR>
+Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry G. FREMAUX</A> Ing&eacute;nieur Professeur / <A HREF="http://www.eisti.fr">EISTI</A><BR>
+Edition originale : Mai 1996 / Version FR: Janvier 1998
+<HR>
+<CENTER>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-05.htm">Précédent</A> - <A HREF="1661ap.htm">Suivant</A><HR>
+</CENTER>
+<A NAME="6"></A>
+<H2>6.  Options de Configuration LCP</H2>
+<P>Les Options de Configuration du LCP permettent la négociation de certaines modifications des valeurs par défaut des paramètres d'une liaison Point à Point. Si une Option de Configuration n'est pas mentionnée dans une <I>Requête-Configuration</I>, on suppose que c'est la valeur par défaut qui est requise pour cette Option.
+<P>Certaines Options de Configuration PEUVENT apparaître plus d'une fois. Cette possibilité est spécifique à certaines Options de Configuration, et est annoncée dans la description de chaque Option de Configuration. (aucune des Options de Configuration décrites dans ce document ne peut être mentionnée plus d'une fois).
+<P>La fin de la liste d'Options de Configuration peut être identifiée par calcul à l'aide du champ Longueur dans le paquet LCP.
+<P>Sauf mention contraire, toutes les Options de Configuration concernent une transmission "half-duplex", soit une moitié de la communication; typiquement, elles spécifient les caractéristiques attendues en réception du point de vue de l'émetteur de la Requête.
+<A NAME="6.a"></A>
+<H4>Philosophie</H4>
+<P>Les options indiquent soit la disponibilité soit la nécessité d'implémentation de l'option demandée par la requête. Une implémentation ne pouvant interpréter aucune option DEVRAIT néanmoins pouvoir fonctionner avec une autre qui les reconnaît toutes.
+<P>Des valeurs par défaut sont spécifiées pour chacune des options, permettant ainsi à la liaison de pouvoir s'établir sans aucune négociation, mais peut être sur un mode réduit ou non optimisé.
+<P>Sauf mention explicite, l'acquittement des options n'impose pas au distant l'utilisation d'une autre valeur que celle par défaut.
+<P>Il n'est donc pas nécessaire d'émettre les options requises avec les valeurs par défaut dans une <I>Requête-Configuration</I>. 
+<P>Un prototype du format général des Options de Configuration est donné ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Type      |   Longueur    |    Données ...
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<A NAME="6.b"></A>
+<H4>Type</H4>
+<P>Le champ Type est défini sur un octet, et indique le type d'Option de Configuration. Ce document liste quelques options de base établies à la construction du protocole. Les dernières Options validées sont indiquées dans la RFC "Assigned Numbers" [2]. Voici les valeurs initialement admises :
+
+<P><CENTER><TABLE><TR><TD WIDTH=20><FONT COLOR="#000088">0</FONT></TD><TD><FONT COLOR="#000088">RESERVE</FONT></TD></TR>
+<TR><TD WIDTH=20><FONT COLOR="#000088">1</FONT></TD><TD><FONT COLOR="#000088">Unité-Réception-Maximale</FONT></TD></TR>
+<TR><TD WIDTH=20><FONT COLOR="#000088">3</FONT></TD><TD><FONT COLOR="#000088">Protocole-Authentification</FONT></TD></TR>
+<TR><TD WIDTH=20><FONT COLOR="#000088">4</FONT></TD><TD><FONT COLOR="#000088">Protocole-Qualité</FONT></TD></TR>
+<TR><TD WIDTH=20><FONT COLOR="#000088">5</FONT></TD><TD><FONT COLOR="#000088">Nombres-Magiques</FONT></TD></TR>
+<TR><TD WIDTH=20><FONT COLOR="#000088">7</FONT></TD><TD><FONT COLOR="#000088">Compression-Protocoles</FONT></TD></TR>
+<TR><TD WIDTH=20><FONT COLOR="#000088">8</FONT></TD><TD><FONT COLOR="#000088">Compression-Adresses-et-Contrôles</FONT></TD></TR></TABLE></CENTER>
+<A NAME="6.c"></A>
+<H4>Longueur</H4>
+<P>Le champ Longueur est défini sur un octet, et indique la longueur de l'Option de Configuration en comptant l'octet de Type, la longueur elle-même et le champ de Données.
+<P>Si une Option de Configuration dans une <I>Requête-Configuration</I> porte un numéro valide, mais spécifie une longueur erronée ou non interprétable, un paquet <I>Configuration-NonAcquittée</I> DEVRAIT être transmis explicitant l'Option de Configuration demandée, avec sa Longueur et ses Données régulières.
+<A NAME="6.c"></A>
+<H4>Données</H4>
+<P>Le champ de Données peut transporter zéro ou un nombre quelconque d'octets, et contient des informations spécifiques à l'Option de Configuration. Le format et la longueur du champs Données est déterminé par calcul à l'aide du champ de Type et de Longueur.
+<P>Lorsque la longueur mentionnée semble prétendre que les données s'arrêtent au delà de la longueur du champ Information du paquet LCP, ce paquet entier doit être ignoré sans affecter pour autant l'automate.
+<A NAME="6.1"></A>
+<H3>6.1.  Unité-Réception-Maximale (URM)</H3>
+<H4>Description</H4>
+<P>Cette Option de Configuration peut être utilisée pour informer le distant que cette implémentation peut accepter des paquets plus grands que l'URM standard, ou à l'inverse pour forcer le distant à envoyer des paquets plus courts.
+<P>La valeur par défaut est de 1500 octets. Si des paquets plus courts sont demandés par une implémentation, celle-ci DEVRA néanmoins rester capable de recevoir des paquets de 1500 octets au cas ou la synchronisation de la ligne serait perdue.
+
+Note d'Implémentation :
+<P>Cette option est utilisée pour indiquer une performance de l'implémentation. Le distant n'est pas tenu d'exploiter cette performance. Par exemple, lorsqu'une implémentation indique une URM de 2048 octets, le distant n'est pas obligé d'envoyer des paquets de cette taille. Le distant n'a pas non plus nécessairement à refuser la négociation de l'option et peut librement émettre des paquets de 1500 octets, dans la mesure où toute implémentation doit au moins accepter des paquets de cette taille.
+<P>Le format de l'Option de Configuration Unité-Réception-Maximale est donné ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Type      |    Longueur   |   Unité-Réception-Maximum     |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Type</H4>
+<P>      1
+<H4>Longueur</H4>
+<P>      4
+<H4>Unité-Réception-Maximum</H4>
+<P>Le champ Unité-Réception-Maximale est codé sur deux octets, et spécifie le nombre maximum d'octets que doit comporter un ensemble Information plus Bourrage. Il ne compte pas les octets de trame, le champ de Protocole, le FCS, ni aucun bits ou octets "transparents".
+<A NAME="6.2"></A>
+<H3>6.2. Protocole-Authentification</H3>
+<H4>Description</H4>
+<P>Sur certaines liaisons, il peut être utile de demander au distant de s'authentifier avant de permettre le transit de protocoles de niveau réseau.
+<P>Cette Option de Configuration procure une méthode pour négocier l'usage d'un protocole d'authentification spécifique. Par défaut, aucune authentification n'est demandée.
+<P>Une implémentation NE DOIT PAS faire figurer plusieurs Options Protocole-Authentification dans ses paquets de <I>Requête-Configuration</I>. Au lieu de cela, elle DEVRAIT tenter de configurer le protocole le plus "adéquat" en premier. Si ce protocole est rejeté par la négociation, alors l'implémentation DEVRAIT tenter de négocier le protocole suivant dans l'ordre de préférence dans un nouveau paquet <I>Requête-Configuration</I>.
+<P>L'implémentation émettant la <I>Requête-Configuration</I> indique qu'il attend que le distant s'authentifie. Si le distant acquitte cette option, alors il accepte de s'authentifier avec le protocole spécifié dans la requête. Une implémentation recevant un acquittement pour cette option DEVRAIT attendre l'identification du distant en activant le protocole indiqué.
+<P>Il n'y a aucune obligation que l'authentification soit faite dans les deux sens, ni que le même protocole soit utilisé dans les deux directions pour effectuer une "reconnaissance" bilatérale. Il est tout à fait acceptable que deux protocoles distincts soient utilisés pour les deux sens d'authentification. Ceci dépendra évidemment du résultat de la négociation.
+<P>Le format pour l'Option de Configuration Protocole-Authentification est donné ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Type      |    Longueur   |  Protocole-Authentification   |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |    Données ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+
+<H4>Type</H4>
+<P>      3
+<H4>Longueur</H4>
+<P>      >= 4
+<H4>Protocole-Authentification</H4>
+<P>Le champ Protocole-Authentification est décrit par deux octets, et indique le protocole d'authentification  désiré. Les valeurs de ce champ sont toujours les mêmes que celles mentionnées dans le champ de protocole PPP pour ce même protocole d'authentification.
+<P>Ce document liste quelques valeurs de protocoles d'authentification établies à la construction de ce protocole. Les derniers protocoles validés sont indiqués dans la RFC "Assigned Numbers" [2]. Voici les valeurs initialement admises :
+<H4>Identificateur (hexa) de Protocole</H4>
+<P>      c023            PAP (protocole d'identification par mot de passe)
+<P>      c223            CHAP (protocole par échange de certificats)
+<H4>Données</H4>
+<P>Le champ de donnée contient zéro ou un nombre quelconque d'octets, et contient des données additionnelles selon le protocole spécifié.
+<A NAME="6.3"></A>
+<H3>6.3. Protocole-Qualité</H3>
+<H4>Description</H4>
+<P>Sur certaines liaisons, il peut être souhaitable de déterminer quand, et dans quelle proportion la liaison perd des données. Ce procédé est appelé contrôle de qualité de liaison.
+<P>Cette Option de Configuration procure une méthode pour négocier l'usage d'un protocole particulier pour le contrôle de qualité de liaison. Par défaut, le contrôle de qualité de liaison est désactivé.
+<P>L'implémentation émettant la <I>Requête-Configuration</I> indique qu'elle demande au distant de lui envoyer des données pour tester la qualité de liaison. Si un distant acquitte cette option, alors il déclare accepter l'usage de ce protocole. Une implémentation recevant un acquittement pour cette option DEVRAIT attendre du distant un échange sur le protocole convenu.
+<P>Il n'y a aucune obligation que le contrôle de qualité soit fait dans les deux sens, ni que le même protocole soit utilisé dans les deux directions. Il est tout à fait acceptable que deux protocoles distincts soient utilisés pour les deux sens de la mesure. Ceci dépendra évidemment du résultat de la négociation.
+<P>Le format pour l'Option de Configuration Protocole-Qualité est donné ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Type      |   Longueur    |       Protocole-Qualité       |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |    Données ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Type</H4>
+<P>      4
+<H4>Longueur</H4>
+<P>      >= 4
+<H4>Protocole-Qualité</H4>
+<P>Le Protocole-Qualité est décrit sur deux octets, et indique le type de protocole de contrôle de qualité demandé. Les valeurs de ce champ sont toujours les mêmes que celles mentionnées dans le champ de protocole PPP pour ce même protocole de mesure.
+<P>Ce document liste quelques valeurs de protocoles de contrôle établies à la construction de ce protocole. Les derniers protocoles validés sont indiqués dans la RFC "Assigned Numbers" [2]. Voici les valeurs initialement admises :
+<H4>Identificateur (hexa) de Protocole</H4>
+      c025            Link Quality Report
+<H4>Données</H4>
+<P>Le champ de donnée contient zéro ou un nombre quelconque d'octets, et contient des données additionnelles selon le protocole spécifié.
+
+<A NAME="6.4"></A>
+<H3>6.4. Nombres-Magiques</H3>
+<H4>Description</H4>
+<P>Cette Option de Configuration procure une méthode pour détecter des liaisons rebouclées et d'autres anomalies au niveau Liaison de Données. Cette Option de Configuration POURRA être nécessaire selon la présence ou l'absence d'autres Options de Configuration telles que l'option Protocole-Qualité. Par défaut, l'option Nombres-Magiques n'est pas négociée, et la valeur zéro doit être utilisée là où un Nombre-Magique aurait du être inscrit.
+<P>Avant de requérir cette Option de Configuration, une implémentation DOIT choisir son propre Nombre-Magique. Il est conseillé de choisir ce Nombre-Magique de la façon la plus aléatoire possible de sorte qu'il puisse être garanti avec une très forte probabilité que ce nombre soit unique pour deux implémentation en contact. Un bonne méthode pour obtenir l'unicité de ce nombre est de prendre comme base de calcul un nombre lui-même unique. Répondent à cette définition les numéros de série des machines, ou d'autres adresses matérielles dans le réseau, des horloges datées, etc. Des nombres présentant un bon facteur d'aléatoire sont obtenus par mesure précise du temps entre deux événements tels que la réception de paquets sur une autre connexion réseau, le temps de réponse d'un serveur, ou la cadence de frappe d'un utilisateur humain. Il peut être aussi suggéré de combiner plusieurs source aléatoires pour augmenter la probabilité d'unicité.
+<P>Lorsqu'une <I>Requête-Configuration</I> précise une Option de Configuration Nombres-Magiques, le Nombre-Magique reçu est comparé avec le Nombre-Magique de la dernière requête émise vers un distant. Si ces deux Nombres-Magiques sont distincts, la ligne est considérée comme non bouclée, et le Nombre-Magique DEVRAIT être acquitté. Si les deux Nombres-Magiques sont égaux, alors il est probable, mais pas certain, que la ligne est rebouclée et que la requête reçue est en fait la dernière émise. Pour s'assurer de cette éventualité, un paquet <I>Configuration-NonAcquittée</I> DOIT être émis avec une nouvelle valeur de Nombre-Magique. Une nouvelle <I>Requête-Configuration</I> NE DEVRAIT PAS être émise vers le distant tant qu'une réaction normale n'est pas obtenue (c'est à dire, un paquet <I>Configuration-NonAcquittée</I> est reçu ou la temporisation de Reprise expire).
+<P>La réception d'un paquet <I>Configuration-NonAcquittée</I> présentant un Nombre-Magique différent de celui transmis dans le dernier paquet <I>Configuration-NonAcquittée</I> émise vers le distant prouve que la liaison n'est pas bouclée, en éliminant le cas possible bien qu'improbable de Nombres-Magiques égaux par pur hasard. Si les deux Nombres-Magiques des paquets <I>Configuration-NonAcquittée</I> sont égaux, la probabilité d'être en présence d'une boucle augmente, et un nouveau Nombre-Magique DOIT être choisi. Dans les deux cas, une nouvelle <I>Requête-Configuration</I> DEVRAIT être émise avec ce nouveau Nombre-Magique.
+<P>Si la ligne est effectivement en état rebouclé, cette séquence (transmission d'une <I>Requête-Configuration</I>, réception d'une <I>Requête-Configuration</I>, transmission d'un <I>Configuration-NonAcquittée</I>, réception d'un <I>Configuration-NonAcquittée</I>) se reproduira encore et encore. Si la ligne n'était pas bouclée, au pire cette séquence pourrait se produire un certain nombre (petit) de fois, mais aurait vraiment très peu de chance de se répéter continuellement. Selon toute attente, les Nombres-Magiques choisis des deux côtés de la liaison devraient rapidement diverger, arrêtant ainsi cette séquence. La table suivante montre la probabilité de collisions en supposant que les deux extrémités choisissent des Nombres-Magiques selon une loi de distribution parfaitement uniforme :
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+         Nombre de Collisions        Probabilité
+         --------------------   ---------------------
+                 1              1/2**32    = 2.3 E-10
+                 2              1/2**32**2 = 5.4 E-20
+                 3              1/2**32**3 = 1.3 E-29</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+
+<P>Pour que cette divergence puisse survenir, il faut assurer un caractère aléatoire et unique suffisant. Si une source présentant ces qualités intrinsèques suffisantes ne peut être trouvée, il est conseillé de ne pas activer cette Option de Configuration; Des <I>Requête-Configuration</I> ne DOIVENT PAS être émises avec cette option et toute Option de Configuration Nombre-Magique émise par le distant DOIT être soit Acquittée soit rejetée. Dans ce cas, l'implémentation n'a pas la possibilité de détecter avec suffisamment d'assurance une situation de rebouclage, bien que cette dernière puisse l'être par le distant.
+<P>Si une implémentation émet effectivement une <I>Requête-Configuration</I> affichant une Option de Configuration Nombres-Magiques, alors elle de DOIT PAS répondre a une <I>Requête-Configuration</I> distante avec la même option par un paquet <I>Configuration-Rejetée</I>. En d'autres termes, si une implémentation désire utiliser l'option Nombres-Magiques, alors elle DOIT alors accepter que le distant en fasse de même. Si une implémentation reçoit un paquet <I>Configuration-Rejetée</I> en réponse à une <I>Requête-Configuration</I>, cela signifiera seulement que le lien n'est pas rebouclé, et que le distant ne désira pas utiliser les Nombres-Magiques. Dans ce cas, une implémentation DEVRAIT réagir comme si la négociation avait abouti (comme si une <I>Configuration-Acquittée</I> avait été reçue à la place).
+<P>Le Nombre-Magique peut aussi être utilisé pour détecter un rebouclage de ligne pendant une phase de fonctionnement normale, en plus d'une phase de négociation d'options. Tous les paquets LCP <I>Requête-Echo</I>, <I>Réponse-Echo</I>, et <I>Requête-Elimination</I> ont un champ Nombre-Magique. Si les Nombres-Magiques ont été négociés avec sucés, une implémentation DOIT transmettre ces paquets avec le Nombre-Magique négocié.
+<P>Le champ Nombre-Magique de ces paquets DEVRAIT être testé sur réception. Tous les champs Nombres-Magiques reçus DOIVENT avoir une valeur soit nulle soit égale au Nombre-Magique unique défini pour le distant, suivant le résultat de la négociation de cette option entre les deux entités.
+<P>La réception d'un champ Nombre-Magique de valeur égale au Nombre-Magique défini par l'implémentation locale signifie la possibilité d'une liaison rebouclée. La réception d'un Nombre-Magique de valeur différente que celle négociée comme local, ou de la valeur distante, ou nulle si des valeurs n'ont pas été négociées, indique que la liaison a été mal configurée.
+<P>Les procédures pour se récupérer de l'un ou l'autre cas de figure ne sont pas précisées, et peuvent varier d'une implémentation à l'autre. Une méthode quelque peu pessimiste est d'assimiler ces situations à un événement Down du LCP. Une réouverture relancera le processus pour négocier de nouveau la liaison, processus qui ne pourra être achevé tant que perdurent les causes de rebouclage de la liaison, et tant que des Nombres-Magiques conformes n'ont pu être négociés. Une méthode plus optimiste (dans le cas d'un lien en boucle) est d'entamer la transmission de paquets <I>Requête-Echo</I> LCP jusqu'à ce que soit reçu un paquet <I>Réponse-Echo</I> conforme, indiquant de ce fait la fin d'une telle situation.
+<P>Le format pour l'Option de Configuration Nombres-Magiques est donnée ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Type      |   Longueur    |        Nombres-Magiques
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      Nombres-Magiques(suite)      |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Type</H4>
+      5
+<H4>Longueur</H4>
+      6
+<H4>Nombres-Magiques</H4>
+<P>Le champ Nombres-Magiques est décrit sur quatre octets, et donne un nombre supposé être unique vis à vis de l'autre extrémité. Une valeur nulle est illégale et DOIT être refusée, si l'Option Nombres-Magiques n'est pas elle-même rejetée.
+<A NAME="6.5"></A>
+<H3>6.5. Compression-Champ-Protocole (PFC) </H3>
+<H4>Description</H4>
+<P>Cette Option de Configuration procure une méthode pour négocier la compression du champ Protocole PPP. Par défaut, toutes les implémentations DOIVENT transmettre des paquets avec un champ Protocole PPP de deux octets.
+<P>Les valeurs pour le champ Protocole PPP sont choisis de sorte que certaines valeurs puissent être exprimées sous une forme réduite d'un octet, et de façon tout à fait univoque par rapport à leur expression en deux octets. Cette Option de Configuration est envoyée pour informer le distant que le local accepte des valeurs de Protocole compressées sur un octet.
+<P>Comme indiqué précédemment, le champ Protocole utilise un mécanisme d'extension conforme à au mécanisme de l'ISO 3309 concernant les champs d'Adresse; le bit de poids faible (LSB) de chaque octet est utilisé pour indiquer l'extension du champ Protocole. Un "0" binaire comme LSB indique que l'octet suivant code la suite du champ Protocole. Un "1" binaire comme LSB marque le dernier octet du champ Protocole. Notez qu'ainsi, un nombre quelconques d'octets nuls peuvent être placés avant le champ, indiquant toujours la même valeur (considérez les deux représentations pour la valeur 3, 00000011 et 00000000 00000011).
+<P>Sur des liaisons à bas débit, il est souhaitable de préserver la bande passante utile en envoyant le moins de données redondantes ou non significatives possible. L'Option de Configuration Compression-Champ-Protocole permet de privilégier tantôt simplicité d'implémentation, tantôt optimisation de la bande utile. Si la négociation se déroule avec sucés, le mécanisme d'extension ISO 3309 peut être utilisé pour compresser le champ Protocole sur un octet au lieu de deux. La grande majorité des paquets émis par la suite peuvent être compressés dans la mesure où la plupart des valeurs de protocoles utilisées sont inférieures à 256.
+<P>Des champs Protocoles ne doivent JAMAIS être compressés sauf si cette Option de Configuration a été négociée. Une fois cette option négociée, les implémentations PPP DOIVENT accepter des paquets PPP de champ Protocole à un ou deux octets, SANS distinction AUCUNE entre les deux formes.
+<P>Le champ Protocole n'est JAMAIS compressé lors de l'envoi de paquets LCP. Cette règle garantit une reconnaissance univoque des paquets LCP.
+<P>Lorsqu'un champ Protocole est compressé, le champ FCS de la couche données (Data Link Layer) est calculé sur la trame compressée, et non sur la trame originale.
+<P>Le format de l'Option de Configuration Compression-Champ-Protocole est donné ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Type      |   Longueur    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Type</H4>
+<P>      7
+<H4>Longueur</H4>
+<P>      2
+
+<A NAME="6.6"></A>
+<H3>6.6.  Compression-Adresse-et-Contrôles (ACFC) </H3>
+<H4>Description</H4>
+<P>Cette Option de Configuration procure une méthode pour négocier la compression des champs d'Adresse et Contrôles de la couche de données (Data Link Layer). Par défaut, toutes les implémentations DOIVENT transmettre des trames avec des champs Adresse et Contrôles appropriés à la définition de la trame correspondante.
+<P>Dans la mesure où ces données ont souvent des valeurs statiques pour des liaisons point-à-point, il est possible sans risque de les compresser. Cette Option de Configuration est envoyée pour informer le distant que l'implémentation locale peut recevoir des champs Adresse et Contrôles compressés. Si une trame compressée est reçue alors que cette option n'a pas été négociée, ces trames devront être ignorées.
+<P>Les champs Adresse et Contrôle NE DOIVENT PAS être compressés dans des paquets LCP. Cette règle permet d'assurer une reconnaissance univoque des paquets LCP. Lorsque les champs Adresse et Contrôle sont compressés, le champ FCS de la couche de données (Data Link Layer) est calculé sur la trame compressée et non sur la trame originale.
+<P>Le format de L'Option de Configuration Compression-Adresse-et-Contrôle est donné ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Type      |   Longueur    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Type</H4>
+<P>8
+<H4>Longueur</H4>
+<P>2
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-05.htm">Précédent</A> - <A HREF="1661ap.htm">Suivant</A></BODY></HTML>
+

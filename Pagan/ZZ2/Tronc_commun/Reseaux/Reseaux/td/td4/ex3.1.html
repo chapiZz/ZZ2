@@ -1,0 +1,91 @@
+<HTML>
+<HEAD>
+	<TITLE>Etude du DNS - (3) la base de données</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+	<style type="text/css">
+		dt, dd, pre {font-family:monospace; font-size:small; font-weight:bold}
+		dt {color:blue}
+	</style>
+</HEAD>
+
+<BODY BGCOLOR="white">
+<h3>Exercice 3.1-1</h3>
+<dl>
+<dt>host -a custsv.univ-bpclermont.fr</dt>
+	<dd><pre>custsv.univ-bpclermont.fr       A       193.54.51.1
+custsv.univ-bpclermont.fr       MX      0 custsv.univ-bpclermont.fr</pre></dd>
+</dl>
+<dl>
+<dt>host -a cust.univ-bpclermont.fr</dt>
+	<dd><pre>cust.univ-bpclermont.fr CNAME   custsv.univ-bpclermont.fr
+custsv.univ-bpclermont.fr       A       193.54.51.1
+custsv.univ-bpclermont.fr       MX      0 custsv.univ-bpclermont.fr</pre></dd>
+</dl>
+<dl>
+<dt>host -a luna.cust2000.univ-bpclermont.fr</dt>
+	<dd><pre>luna.cust2000.univ-bpclermont.fr        A       192.168.51.159</pre></dd>
+</dl>
+<dl>
+<dt>host -a www.isima.fr</dt>
+	<dd><pre>www.isima.fr            A       193.55.95.79</pre></dd>
+</dl>
+<dl>
+<dt>host -a  univ-bpclermont.fr</dt>
+	<dd><pre>univ-bpclermont.fr      A       195.221.122.111
+univ-bpclermont.fr      NS      ns2.nic.fr
+univ-bpclermont.fr      NS      ciccgw.univ-bpclermont.fr
+univ-bpclermont.fr      NS      cicsun.univ-bpclermont.fr
+univ-bpclermont.fr      SOA     ciccgw.univ-bpclermont.fr pays.ciccgw.univ-bpclermont.fr (
+                        2002050201      ;serial (version)
+                        21600   ;refresh period (6 hours)
+                        3600    ;retry interval (1 hour)
+                        604800  ;expire time (1 week)
+                        86400   ;default ttl (1 day)
+                        )
+univ-bpclermont.fr      MX      0 ciccgw.univ-bpclermont.fr</pre></dd>
+</dl>
+<dl>
+<dt>host -a  cust2000.univ-bpclermont.fr</dt>
+	<dd><pre>cust2000.univ-bpclermont.fr     A       192.168.151.66
+cust2000.univ-bpclermont.fr     A       192.168.51.206
+cust2000.univ-bpclermont.fr     A       192.168.51.205
+cust2000.univ-bpclermont.fr     NS      zorglub.cust2000.univ-bpclermont.fr
+cust2000.univ-bpclermont.fr     NS      bossuet.cust2000.univ-bpclermont.fr
+cust2000.univ-bpclermont.fr     SOA     zorglub.cust2000.univ-bpclermont.fr admin (
+                        554     ;serial (version)
+                        900     ;refresh period (15 minutes)
+                        600     ;retry interval (10 minutes)
+                        86400   ;expire time (1 day)
+                        3600    ;default ttl (1 hour)
+                        )
+cust2000.univ-bpclermont.fr     MX      10 cust
+ !!! cust2000.univ-bpclermont.fr MX host cust is not canonical
+cust2000.univ-bpclermont.fr     RP      chich\@cust.univ-bpclermont.fr v</pre></dd>
+</dl>
+<dl>
+<dt>host -a isima.fr</dt>
+	<dd><pre>isima.fr                NS      sp.isima.fr
+isima.fr                NS      ns2.nic.fr
+isima.fr                MX      0 sp.isima.fr</pre></dd>
+</dl>
+<dl>
+<dt>host -a fr.</dt>
+	<dd><pre>fr                      SOA     NS1.nic.fr nic.nic.fr (
+                        2002051300      ;serial (version)
+                        21600   ;refresh period (6 hours)
+                        3600    ;retry interval (1 hour)
+                        3600000 ;expire time (5 weeks, 6 days, 16 hours)
+                        86400   ;default ttl (1 day)
+                        )
+fr                      NS      NS-EXT.VIX.COM
+fr                      NS      NS.EU.NET
+fr                      NS      DNS.CS.WISC.EDU
+fr                      NS      DNS.INRIA.fr
+fr                      NS      DNS.PRINCETON.EDU
+fr                      NS      NS1.nic.fr
+fr                      NS      ns2.nic.fr
+fr                      NS      NS3.nic.fr</pre></dd>
+</dl>
+<hr>
+</BODY>
+</HTML>

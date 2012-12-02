@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//AdvaSoft//DTD HTML 3.2 extended 961018//EN">
+<HTML>
+<HEAD>
+	<TITLE>TP PPP</TITLE>
+        <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+
+	<H1>PPP : les phases d'une connexion</H1>
+
+
+
+<HR>
+
+<P ALIGN=right STYLE="font-size: x-small">extrait de "Le service d'accès PPP
+au Centre de Calcul In2p3
+par Réseau Téléphonique Commuté", <BR>Gérard DREVON,
+Centre de Calcul In2p3, octobre 1996
+</P>
+<OL START=0>
+<LI><H3>Phase préalable: l'Appel RTC</H3>
+
+<BLOCKQUOTE>La phase préalable consiste à appeler le modem distant.<BR><BR>
+Pour cela , les deux modems doivent être impérativement de type HAYES,
+répondant donc aux commandes <TT>AT</TT>, car l'application PPP génére un appel sous
+cette forme (<TT>ATDT7012345678</TT> etc...), et attend la fin du dialogue entre modems
+sous forme du message CONNECT (si tout va bien, bien sûr!).<BR><BR>
+A partir de cet instant, la connexion téléphonique étant établie et supposée
+stable, commencent les négociations des différentes couches de protocoles de PPP
+nécessaires à l'utilisation de la ligne par les applications TCP/IP.
+</BLOCKQUOTE>
+</LI>
+<LI><H3>La couche LCP</H3>
+
+<BLOCKQUOTE>C'est la négociation du niveau LCP (<I>Link Control Protocol</I> - RFC 1333 ). <BR>
+Cette
+couche est chargée, sur chacune des deux machines , de tester en continu la qualité
+de la ligne, par un process appelé <I>Link Quality Monitoring</I>. <BR>Celui-ci émet, à
+intervalles réguliers et négociés, des paquets <I>Link Quality Report</I> vers son
+collègue "d'en face", à charge pour celui-ci de prendre les mesures qui s'imposent,
+en accord avec son propre système. <BR>Ces paquets sont remplis d'informations en
+provenance de divers compteurs qui surveillent le trafic en cours. <BR>La négociation
+aboutit donc sur un accord concernant ces échanges de paquets LQR, ou échoue.<BR><BR>
+Dans ce dernier cas, c'est la <I>Link Termination Phase</I> : l'ordre est transmis au
+modem de raccrocher (<TT>ATHangup</TT>).<BR><BR>
+Sinon cela correspond à l'écran au status "<TT>Establishment</TT>" dans Mac PPP,
+suivi du message "<TT>Link Dead</TT>" éventuellement, ou au message LCP "<TT>Opened</TT>" dans le
+fenêtre Trace PPP, dans une implémentation de type <I>Trumpet Software</I> pour
+Windows3.1 ou 95
+</BLOCKQUOTE>
+</LI>
+<LI><H3>PAP</H3>
+
+<BLOCKQUOTE>La deuxième phase concerne l'option facultative d'authentification de
+l'appelant, si cette option a été mise en oeuvre sur le serveur d'accès. <BR>Elle est
+décrite dans la RFC 1334, et est considérée comme une extension de la couche
+LCP décrite ci-dessus.<BR><BR>
+Deux protocoles sont possibles dans cette phase, qui sont très différents
+dans leur conception: <I>Password Authentication Protocol</I> (PAP) et <I>Challenge
+Handshake Protocol</I> (CHAP).
+<BLOCKQUOTE><SMALL>Il est simplement utile de rappeler ici que cette authentification , par password, est nécessaire et
+doit responsabiliser les personnes utilisant PPP, pour accéder au Centre, car un appel leur permet
+d'accéder à tout le réseau Internet depuis l'extérieur avec les risques inhérents en matière de
+sécurité. Vous êtes responsables de l'utilisation de votre compte comme sur n'importe quelle
+machine.</SMALL></BLOCKQUOTE>
+Si cette phase échoue, parce qu'une extrémité n'obtient pas de password dans
+les délais impartis ou parce qu'il est erroné, là encore on entre dans la <I>Link
+Termination Phase</I> (voir ci-dessus). Sinon...</BLOCKQUOTE>
+</LI>
+<LI><H3>La couche IPCP</H3>
+
+<BLOCKQUOTE>La couche LCP ayant achèvé ses négociations, elle passe "<TT>UP</TT>" et donne la
+main à la couche supérieure: la couche IPCP (<I>Internet Protocol Control
+Protocol</I>, RFC 1134-1332).<BR><BR>
+Elle est chargée de la négociation entre les deux extrémités, concernant cette
+fois-ci les paramètres d'échanges de packets IP (ceux qui permettent aux
+applications de type Telnet, FTP, etc, de fonctionner). <BR>Ainsi est négociée la taille
+maxi des packets en octets, la compression des en-têtes, la taille des fenêtres de
+retransmissions, l'adresse IP souhaitée, figée ou négociée avec le serveur, etc...).<BR>
+Là encore, l'échec de cette négociation peut aboutir à la Phase de Terminaison de la
+Liaison .<BR><BR>
+On conçoit donc qu'un échange de paquets soit nécessaire à ces
+négociations, ce qui n'est pas sans influer sur la durée de la phase
+d'établissement d'une liaison PPP, ajoutée à celle propre à tous les modems
+modernes à haute vitesse. <BR>Lorsque la couche IPCP termine sa négociation
+avec succès (<TT>UP</TT>), la liaison est déclarée "<TT>Opened</TT> ", ouverte donc, au passage de
+paquets de données des applications qui, seules, intéressent l'utilisateur: Telnet,
+FTP, Netscape, Fetch, Eudora, etc...</BLOCKQUOTE>
+</LI>
+</OL>
+<HR>
+</BODY>
+</HTML>

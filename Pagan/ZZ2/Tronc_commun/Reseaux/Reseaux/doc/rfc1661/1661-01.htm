@@ -1,0 +1,63 @@
+<HTML>
+<TITLE>PPP - RFC 1661 - VF</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<P>RFC: 1661<BR>
+Statut : Standard<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm" TARGET="_top">INDEX FRANCAIS</A>
+<CENTER><H1>POINT TO POINT PROTOCOL - PPP</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER> W. Simpson / Juillet 1994<BR>
+Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry G. FREMAUX</A> Ing&eacute;nieur Professeur / <A HREF="http://www.eisti.fr">EISTI</A><BR>
+Edition originale : Mai 1996 / Version FR: Janvier 1998
+<HR>
+<CENTER>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-00.htm">Précédent</A> - <A HREF="1661-02.htm">Suivant</A><HR>
+</CENTER>
+<A NAME="1"></A><H2>1.  Introduction</H2><P>Le protocole Point-à-Point est utilisé pour des liaisons simples transportant des paquets de données entre deux éléments. Ces liens permettent une communication simultanée bidirectionnelle (full-duplex), et sont supposés transmettre des paquets dans l'ordre. PPP propose une solution commune pour un raccordement aisé d'une grande variété d'hôtes, de ponts et de routeurs [1].
+<A NAME="1.a"></A>
+<H4>Encapsulation</H4>
+<P>L'encapsulation PPP permet le multiplexage de différentes connexions protocolaires au niveau réseau simultanées sur la même liaison physique. Cette encapsulation a été conçue dans l'exigence d'une excellente compatibilité avec la plus grande variété de matériels.
+<P>Seuls 8 octets supplémentaires sont nécessaires pour accomplir l'encapsulation lorsque ce protocole est utilisé dans des trames de type HDLC. Dans des environnements dans lesquels la bande passante est une préoccupation majeure, cette encapsulation et la mise en trame peut être réduite à 2 ou 4 octets.
+<P>Pour permettre des implémentations à haute vitesse, l'encapsulation par défaut utilise des champs élémentaires, un seul d'entre eux devant être examiné pour réaliser le démultiplexage. L'en-tête par défaut et les champs d'information tombent toujours sur des limites de mots de 32-bits, la fin de message pouvant être complétée par des octets de "bourrage".
+<A NAME="1.b"></A>
+<H4>Protocole de contrôle de liaison (Link Control Protocol)</H4>
+<P>Afin d'être suffisamment souple pour pouvoir être porté dans de nombreux environnements, le protocole PPP dispose d'un protocole de contrôle de liaison (Link Control Protocol - LCP). Le LCP est utilisé pour effectuer la négociation automatique des options de format d'encapsulation, la gestion de tailles variables de paquets, la détection d'un rebouclage de liaison ainsi que d'autres erreurs courantes de configuration, ainsi que pour gérer la rupture de liaison. Les autres fonctionnalités apportées concernent l'authentification de l'identité de l'hôte dans lequel il est implémenté, ainsi que la détection de fautes de fonctionnement sur la liaison.
+<A NAME="1.c"></A>
+<H4>Protocole de gestion réseau (Network Control Protocol)</H4>
+<P>Les liaisons Point-à-Point tendent à mettre en exergue de nombreux problèmes vis à vis de protocoles réseaux communs. Par exemple, l'assignation et la gestion des adresses IP, pouvant poser des problèmes y compris dans l'environnement limité d'un LAN, est particulièrement délicate lorsque la liaison passe par un réseau de type circuit commuté (par exemple une connexion modem via réseau téléphonique). Ces problèmes sont gérés par une famille de protocoles de gestion réseau (Network Control Protocols - NCPs), chacun traitant des aspects particuliers à la gestion de tel ou tel type de protocole de niveau réseau. Ces protocoles NCPs sont définis dans des documents associés.
+<A NAME="1.d"></A>
+<H4>Configuration</H4>
+<P>Le but des liaisons PPP est qu'elles soient facilement configurables. Du fait de leur design, les paramètres standard par défaut correspondent aux configurations les plus communes. Les implémenteurs pourront passer dans un mode amélioré, dont les paramètres seront automatiquement transmis au correspondant sans aucune intervention de l'opérateur. En fin, l'opérateur pourra configurer explicitement certaines options nécessaires au fonctionnement de la liaison dans son environnement, laquelle configuration ne pourrait être effectuée autrement.
+<P>L'auto-configuration de la liaison est implémentée grâce à un mécanisme de négociation d'options extensible, par lequel chaque extrémité de la liaison renseigne l'autre de ses possibilités et de ses contraintes propres. Bien que ce mécanisme de négociation d'options ne soit décrit dans ce document qu'en rapport avec le Link Control Protocol (LCP), les fonctionnalités en sont suffisamment générales pour pouvoir être réutilisées par d'autres protocoles de contrôle, parmi lesquels la famille des protocoles NCP.
+<A NAME="1.1"></A>
+<H3>1.1. Note sur la sémantique</H3>
+<P>Dans ce document, plusieurs mots différents sont utilisés pour exprimer la force d'une obligation ou le statut d'une recommandation. Ces mots seront souvent écrits en capitales.
+<H4>DOIT, DEVRA</H4>
+<P>Ce mot, ou l'utilisation des adverbes "nécessairement" ou "obligatoirement", signifie que le comportement exprimé est une condition sine qua non à remplir pour la conformité au standard.
+<H4>NE DOIT PAS</H4>
+<P>Cette expression, ou l'utilisation des adjectifs "interdit" ou "prohibé" indique une interdiction absolue du comportement décrit.
+<H4>DEVRAIT</H4>
+<P>Associé à la sémantique de "recommandé", signifie qu'il peut exister des raisons valables et légitimes pour que dans certaines circonstances, le comportement décrit soit ignoré, mais que ne pas implémenter ce dernier doit être le résultat d'une analyse minutieuse des conséquences. Une implémentation complète devra se tenir à implémenter ces comportements "conseillés".
+<H4>POURRAIT, POURRA</H4>
+<P>Associé à la sémantique "optionnel", signifie que ce comportement est un autorisé parmi une série d'alternatives possibles. Une implémentation qui ignore cette option DEVRA néanmoins s'attendre à interopérer avec une autre implémentation qui peut, quant à elle, l'utiliser.
+<A NAME="1.2"></A>
+<H3>1.2. Terminologie</H3>
+<P>Ce document utilise abondamment les termes suivants:
+<H4>Datagramme</H4>
+<P>L'unité de transmission de la couche réseau (par exemple IP).  Un datagramme peut être encapsulé dans un ou plusieurs paquets passés à la couche liaison.
+<H4>Trame</H4>
+<P>L'unité de transmission de la couche liaison. Une trame  peut comporter une en-tête et/ou une queue, et bien sûr des octets de données.
+<H4>Paquet</H4>
+<P>L'unité d'encapsulation de base, passant entre la couche réseau et la couche liaison de données. Un paquet est en général associé à une trame; sauf pour les cas particuliers où une fragmentation du paquet doit être opérée, où lorsque plusieurs paquets sont insérées dans une trame unique.
+<H4>Correspondant (peer)</H4>
+<P>L'autre extrémité d'une liaison point-à-point.
+<H4>Paquets ignorés</H4>
+<P>Se dit lorsque l'implémentation élimine et détruit le paquet sans autre traitement ultérieur. L'implémentation DEVRAIT proposer la possibilité d'archiver l'erreur, y compris le contenu du paquet détruit, et DEVRAIT pouvoir établir des statistiques sur ce genre d'événements.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-00.htm">Précédent</A> - <A HREF="1661-02.htm">Suivant</A></BODY></HTML>
+

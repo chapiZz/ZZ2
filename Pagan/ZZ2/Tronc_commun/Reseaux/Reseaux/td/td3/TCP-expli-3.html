@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+ <TITLE>Etude d'un protocole fiable : TCP</TITLE>
+	<LINK HREF=../../reseaux.css REL=STYLESHEET TYPE=text/css>
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+<H1>Etude d'un protocole fiable : TCP</H1>
+<P ALIGN=right><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>1999-2000</I></P>
+
+<H2>Contrôle de flux</H2>
+<HR>
+<BLOCKQUOTE>
+	<P>Le contrôle de flux est le mécanisme par lequel un destinataire contrôle le
+	rythme d'émission d'un expéditeur de données.<BR>
+	C'est pour éviter que des PDU de données soient envoyées alors que le destinataire
+	n'est pas en état de les recevoir ou de mémoriser les octets dans son buffer de
+	réception.</P>
+	
+	<P>Le protocole TCP inclus un mécanisme de contrôle de flux :</P>
+	<UL>
+	<LI><P>	Chaque entité-TCP qui émet une PDU-TCP indique dans le champ <TT>win</TT> combien il reste de place dans son buffer 
+		de réception.<BR>
+		Elle annonce ainsi sa capacité de réception.</P></LI>
+	<LI><P>Une entité-TCP n'émet pas de PDU de données contenant plus d'octets de données qu'il n'y a de place dans le buffer 
+		de réception du destinataire.</P></LI>
+	</UL>
+</BLOCKQUOTE>
+<HR>
+
+</BODY>
+</HTML>

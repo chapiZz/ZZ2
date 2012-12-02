@@ -1,0 +1,76 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">11. Authentification d'acc&egrave;s sous HTTP</FONT></H2>
+<P>HTTP propose un m&eacute;canisme simple de "mod&egrave;le-accr&eacute;ditif" pour permettre &agrave; un serveur de fournir un mod&egrave;le d'identification et d'authentification &agrave; un client, et &agrave; un client de s'authentifier pour une requ&ecirc;te particuli&egrave;re. Ce m&eacute;canisme utilise un syst&egrave;me de noms extensible et ind&eacute;pendant de la casse, dans le but d'identifier le sch&eacute;ma d'authentification, suivie d'une liste de paires "attribut/valeur" s&eacute;par&eacute;es par des virgules, destin&eacute;es &agrave; transmettre les param&egrave;tres n&eacute;cessaires pour achever l'authentification.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Scheme-auth        = <I>nom_de_scheme</I>
+
+param-auth         = <I>nom_param</I> "=" cha&icirc;ne entre guillemets
+</PRE></CODE></FONT>
+<P>Le message de r&eacute;ponse 401 (non autoris&eacute;) est utilis&eacute; par un serveur origine pour soumettre le "mod&egrave;le" d'authentification &agrave; un client. Cette r&eacute;ponse doit comporter un champ d'en-t&ecirc;te WWW-Authenticate proposant au moins un mod&egrave;le valide pour la ressource &agrave; atteindre.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Mod&egrave;le           = scheme-auth 1*SP domaine_valide *( "," param_auth )
+
+domaine_valide   = "realm" "=" espace_domaine
+espace-domaine   = cha&icirc;ne entre guillemets</PRE></CODE></FONT>
+
+<P>L'attribut de domaine (ind&eacute;pendant de la casse) est requis dans tous les sch&egrave;mes d'authentification qui soumettent un mod&egrave;le. L'espace de domaine (ind&eacute;pendant de la casse), combin&eacute; &agrave; l'URL canonique du serveur origine, d&eacute;finit l'espace prot&eacute;g&eacute;. Cette technique permet de partitionner un serveur prot&eacute;g&eacute; en plusieurs sous ensembles, prot&eacute;g&eacute;s individuellement, chacun avec leur propre mod&egrave;le et leurs propres param&egrave;tres d'autorisation li&eacute;es ou non &agrave; une base de donn&eacute;e d'authentification. Le domaine accessible est exprim&eacute; sous forme de cha&icirc;ne de caract&egrave;res, en g&eacute;n&eacute;ral donn&eacute;e par le serveur origine, avec &eacute;ventuellement une s&eacute;mantique suppl&eacute;mentaire d&eacute;pendant du mod&egrave;le d'authentification.
+<P>Un utilisateur d&eacute;sireux de s'authentifier aupr&egrave;s d'un serveur - en g&eacute;n&eacute;ral, mais pas n&eacute;cessairement, apr&egrave;s avoir re&ccedil;u une r&eacute;ponse 401-peut le faire en sp&eacute;cifiant un champ Authorization dans l'en-t&ecirc;te de sa requ&ecirc;te. La valeur dans le champ Authorization consiste contient l'accr&eacute;ditif n&eacute;cessaire &agrave; l'acc&egrave;s au domaine autoris&eacute; pour la ressource vis&eacute;e.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+accr&eacute;ditif         = accr&eacute;ditif_de_base | ( mod&egrave;le_authentification#param&egrave;tres )</PRE></CODE></FONT>
+
+<P>Le domaine accessible par un utilisateur utilisant cet accr&eacute;ditif est d&eacute;termin&eacute; par les donn&eacute;es de protection du serveur. Si une requ&ecirc;te pr&eacute;c&eacute;dente &agrave; abouti &agrave; une autorisation d'acc&egrave;s, le m&ecirc;me accr&eacute;ditif donnera acc&egrave;s au m&ecirc;me domaine accessible durant un temps d&eacute;termin&eacute; par le le mod&egrave;le d'authentification, ses param&egrave;tres, et/ou les  pr&eacute;f&eacute;rences utilisateur. Sauf mention explicite dans le mod&egrave;le, un espace prot&eacute;g&eacute; ne peut sortir du cadre du serveur qui le g&egrave;re.
+<P>Si le serveur refuse l'acc&egrave;s &agrave; une requ&ecirc;te, il d&eacute;livrera en retour une r&eacute;ponse 403 (acc&egrave;s interdit).
+<P>Le protocole HTTP n'exclut pas l'utilisation de sch&eacute;mas de protection additionnels, venant compl&eacute;ter ou remplacer le paradigme "mod&egrave;le-accr&eacute;ditif". D'autres m&eacute;canismes, tels que le cryptage au niveau "transport" ou l'encapsulation de messages, peuvent &ecirc;tre utilis&eacute;s avec des champs d'en-t&ecirc;te additionnels v&eacute;hiculant les  informations d'authentification. Ces m&eacute;canismes ne sont toutefois pas d&eacute;crits dans cette sp&eacute;cification.
+<P>Les proxies doivent &ecirc;tre compl&egrave;tement transparents vis &agrave; vis du m&eacute;canisme d'authentification. C'est &agrave; dire qu'ils doivent retransmettre les champs WWW-Authenticate et Authorization tels que, et ne doivent pas enregistrer une r&eacute;ponse &agrave; un message contenant le champ Authorization dans leur cache. HTTP/1.0 ne fournit aucun moyen &agrave; un client de s'identifier vis &agrave; vis d'un proxy.
+<A NAME="11-1"></A>
+<H3>11.1 Mod&egrave;le d'authentification de base</H3>
+<P>Le mod&egrave;le dit "de base" demande &agrave; un utilisateur de s'authentifier par un user-ID et un mot de passe pour chaque "domaine d'acc&egrave;s". La donn&eacute;e d'authentification doit repr&eacute;senter comme une cha&icirc;ne non visible, pouvant seulement &ecirc;tre compar&eacute;e &agrave; d'autres accr&eacute;ditifs de r&eacute;f&eacute;rence par le serveur concern&eacute;. Le serveur n'autorisera l'acc&egrave;s que si et l'user-ID, et le mot de passe correspondent &agrave; un sch&egrave;me d'authentification d&eacute;fini pour le domaine auquel appartient l'URI-vis&eacute;e. Il n'y a pas de param&egrave;tres optionnels pour ce mod&egrave;le.
+
+<P>Sur toute r&eacute;ception d'une requ&ecirc;te non autoris&eacute;e visant une URI dans l'espace prot&eacute;g&eacute;, le serveur doit renvoyer une demande d'identification de forme:
+
+<P><CODE><CENTER>WWW-Authenticate: Basic realm="WallyWorld"</CENTER></CODE>
+
+<P>dans laquelle "WallyWorld" est le nom symbolique de l'espace contenant l'URI-vis&eacute;e, attribu&eacute; par le serveur.
+
+<P>Pour obtenir l'autorisation d'acc&egrave;s, le client enverra l'user-ID et le mot de passe, s&eacute;parat&eacute;s par un "deux-points" (":"), le tout encod&eacute; en base64 [5].
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Accr&eacute;ditif_de_base    = "Basic" SP cookie-basique
+
+cookie-basique        = ["userID-mot_de_passe" encod&eacute; base64 [5],
+                        limit&eacute; &agrave; 76 char/line]
+
+userID-mot_de_passe   = [ nom_ID ] ":" *TEXT</PRE></CODE></FONT>
+
+<P>Si le client voulait utiliser l'user-ID "Aladdin" et le mot de passe "open sesame", il sp&eacute;cifierait le champ ainsi:
+
+<P><CODE><CENTER>Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</CENTER></CODE>
+
+<P>Le mod&egrave;le de base ci-d&eacute;fini est une m&eacute;thode non s&eacute;curis&eacute;e de filtrage d'acc&egrave;s &agrave; des ressources donn&eacute;es sur un serveur HTTP. Il suppose en effet que la connexion entre l'utilisateur et le serveur est un lien digne de confiance. Ceci n'est pas le cas sur des r&eacute;seaux ouverts, et ce mod&egrave;le doit &ecirc;tre utilis&eacute; en connaissance de cause. Malgr&eacute; cette faiblesse, les clients devront impl&eacute;menter ce mod&egrave;le afin de pouvoir communiquer avec les serveurs qui l'utilisent.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-10.htm">Pr&eacute;c&eacute;dent</A> - <A HREF="1945-12.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+
+

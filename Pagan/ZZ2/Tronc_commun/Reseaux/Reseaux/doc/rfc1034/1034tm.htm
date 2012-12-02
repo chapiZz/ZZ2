@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [fr] (WinNT; I) [Netscape]">
+   <TITLE>1034-5
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+RFC: 1034
+<BR>Statut : Standard
+<CENTER>
+<H1>
+DOMAIN NAME SYSTEM</H1></CENTER>
+
+<CENTER>
+<H2>
+Concepts de base</H2></CENTER>
+
+<HR>
+<BR>Cr&eacute;dits : P. Mockapetris, ISI
+<BR>Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry
+G. FREMAUX</A>
+<BR>Edition originale : Novembre 87 / Version FR : Avril 1998
+<BR>Remplace : RFC882, RFC883, RFC973
+<BR>
+<HR>
+<H2>
+<FONT COLOR="#000080">Table des Mati&egrave;res</FONT></H2>
+
+<UL>
+<LI>
+<A HREF="1034-1.htm">1. STATUT DE CE MEMO</A></LI>
+
+<LI>
+<A HREF="1034-2.htm">2. INTRODUCTION</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-2.htm#2.1">2.1. Historique des noms de domaines</A></LI>
+
+<LI>
+<A HREF="1034-2.htm#2.2">2.2. Objectifs de la conception du DNS</A></LI>
+
+<LI>
+<A HREF="1034-2.htm#2.3">2.3. Pr&eacute;suppos&eacute;s concernant l'utilisation</A></LI>
+
+<LI>
+<A HREF="1034-2.htm#2.4">2.4. El&eacute;ments du DNS</A></LI>
+</UL>
+
+<LI>
+<A HREF="1034-3.htm">3. ESPACE DE NOMS DE DOMAINES et ENREGISTREMENTS DE
+RESSOURCES</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-3.htm#3.1">3.1. Sp&eacute;cifications et terminologie des
+Noms de Domaine</A></LI>
+
+<LI>
+<A HREF="1034-3.htm#3.2">3.2. Conseils pour l'administration</A></LI>
+
+<LI>
+<A HREF="1034-3.htm#3.3">3.3. Conseils techniques d'utilisation</A></LI>
+
+<LI>
+<A HREF="1034-3.htm#3.4">3.4. Exemple d'espace de noms</A></LI>
+
+<LI>
+<A HREF="1034-3.htm#3.5">3.5. Syntaxe pr&eacute;f&eacute;rentielle pour
+les noms</A></LI>
+
+<LI>
+<A HREF="1034-3.htm#3.6">3.6. Enregistrements</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-3.htm#3.6.1">3.6.1. Expression des RR sous forme textuelle</A></LI>
+
+<LI>
+<A HREF="1034-3.htm#3.6.2">3.6.2. Alias et expression canonique des noms</A></LI>
+</UL>
+
+<LI>
+<A HREF="1034-3.htm#3.7">3.7. Requ&ecirc;tes</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-3.htm#3.7.1">3.7.1. Requ&ecirc;te Standard</A></LI>
+
+<LI>
+<A HREF="1034-3.htm#3.7.2">3.7.2. R&eacute;tro-requ&ecirc;tes (Optionel)</A></LI>
+</UL>
+
+<LI>
+<A HREF="1034-3.htm#3.8">3.8. Requ&ecirc;tes d'&eacute;tat (Exp&eacute;rimental)</A></LI>
+
+<LI>
+<A HREF="1034-3.htm#3.9">3.9. Requ&ecirc;tes de Fin de Traitement (Obsol&egrave;te)</A></LI>
+</UL>
+
+<LI>
+<A HREF="1034-4.htm#">4. SERVEURS DE NOMS DE DOMAINE</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-4.htm#4.1">4.1. Introduction</A></LI>
+
+<LI>
+<A HREF="1034-4.htm#4.2">4.2. Comment la base de donn&eacute;es est divis&eacute;e
+en zones</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-4.htm#4.2.1">4.2.1. Consid&eacute;rations techniques</A></LI>
+
+<LI>
+<A HREF="1034-4.htm#4.2.2">4.2.2. Consid&eacute;rations en termes d'administration</A></LI>
+</UL>
+
+<LI>
+<A HREF="1034-4.htm#4.3">4.3. Serveur de noms - sp&eacute;cifications internes</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-4.htm#4.3.1">4.3.1. Requ&ecirc;tes et r&eacute;ponses</A></LI>
+
+<LI>
+<A HREF="1034-4.htm#4.3.2">4.3.2. Algorithme</A></LI>
+
+<LI>
+<A HREF="1034-4.htm#4.3.3">4.3.3. M&eacute;taenregistrements</A></LI>
+
+<LI>
+<A HREF="1034-4.htm#4.3.4">4.3.4. Mise en cache de r&eacute;ponses n&eacute;gatives
+(Optionnel)</A></LI>
+
+<LI>
+<A HREF="1034-4.htm#4.3.5">4.3.5. Maintenance et transfert de zones</A></LI>
+</UL>
+</UL>
+
+<LI>
+<A HREF="1034-5.htm">5. RESOLVEURS</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-5.htm#5.1">5.1. Introduction</A></LI>
+
+<LI>
+<A HREF="1034-5.htm#5.2">5.2. Interface r&eacute;solveur-client</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-5.htm#5.2.1">5.2.1. Fonctions typiques</A></LI>
+
+<LI>
+<A HREF="1034-5.htm#5.2.2">5.2.2. Alias</A></LI>
+
+<LI>
+<A HREF="1034-5.htm#5.2.3">5.2.3. Fautes temporaires</A></LI>
+</UL>
+
+<LI>
+<A HREF="1034-5.htm#5.3">5.3. R&eacute;solveurs - sp&eacute;cifications
+internes</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-5.htm#5.3.1">5.3.1. Noyau de r&eacute;solution minimal</A></LI>
+
+<LI>
+<A HREF="1034-5.htm#5.3.2">5.3.2. Ressources</A></LI>
+
+<LI>
+<A HREF="1034-5.htm#5.3.3">5.3.3. Algorithme</A></LI>
+</UL>
+</UL>
+
+<LI>
+<A HREF="1034-6.htm">6. UN SCENARIO</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-6.htm#6.1">6.1. Serveur de nom C.ISI.EDU</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.2">6.2. Exemple de requ&ecirc;te standard</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-6.htm#6.2.1">6.2.1. QNAME=SRI-NIC.ARPA, QTYPE=A</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.2.2">6.2.2. QNAME=SRI-NIC.ARPA, QTYPE=*</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.2.3">6.2.3. QNAME=SRI-NIC.ARPA, QTYPE=MX</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.2.4">6.2.4. QNAME=SRI-NIC.ARPA, QTYPE=NS</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.2.5">6.2.5. QNAME=SIR-NIC.ARPA, QTYPE=A</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.2.6">6.2.6. QNAME=BRL.MIL, QTYPE=A</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.2.7">6.2.7. QNAME=USC-ISIC.ARPA, QTYPE=A</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.2.8">6.2.8. QNAME=USC-ISIC.ARPA, QTYPE=CNAME</A></LI>
+</UL>
+
+<LI>
+<A HREF="1034-6.htm#6.3">6.3. Exemple de r&eacute;solution</A></LI>
+
+<UL>
+<LI>
+<A HREF="1034-6.htm#6.3.1">6.3.1. R&eacute;solution de MX pour ISI.EDU.</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.3.2">6.3.2. Obtenir le nom d'h&ocirc;te &agrave;
+partir de l'adresse 26.6.0.65</A></LI>
+
+<LI>
+<A HREF="1034-6.htm#6.3.3">6.3.3. Obtenir l'adresse de l'h&ocirc;te du
+domaine poneria.ISI.EDU</A></LI>
+</UL>
+</UL>
+
+<LI>
+<A HREF="1034ap1.htm">Appendice 1. REFERENCES et BIBLIOGRAPHIE</A></LI>
+</UL>
+
+</BODY>
+</HTML>

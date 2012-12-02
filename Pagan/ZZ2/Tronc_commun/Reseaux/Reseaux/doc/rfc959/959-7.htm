@@ -1,0 +1,216 @@
+<html><head><title>FTP</title></head>
+<body bgcolor="#dddddd">
+
+<p>RFC: 959<br>
+Statut : Standard<br>
+<p>Remplace RFC: 765 (IEN 149) </p>
+<h1 align="center">File Transfer Protocol (FTP)</h1>
+<h2 align="center">Spécification</h2>
+<p></p><hr><p></p>
+<p>Crédits : J. Postel, J. Reynolds / ISI<br>
+Traduction : <a href="mailto:Valery.Fremaux@eisti.fr">Valéry G. FREMAUX</a> Ingénieur Professeur / <a href="http://www.eisti.fr/">EISTI</a><br>
+Edition originale : Octobre 1985 / Version FR: Février 1997 </p>
+<p align="center"><a href="959-6.htm">Précédent</a> - <a href="959-8.htm">Suite</a> - <a href="959tm.htm">Retour au sommaire</a> </p>
+<p></p><hr><p></p>
+<font color="#000080"><h2>7. SCENARIOS FTP TYPIQUES</h2>
+</font><p>Un utilisateur au port U voulant transférer ou recevoir des fichiers d'un serveur S: </p>
+<p>En général, l'utilisateur communique avec le serveur via la médiation
+d'un processus USER-FTP. Ce qui suit peut être pris comme scénario typique.
+Les "prompts" USER-FTP sont montrés entre parenthèses, '----&gt;' désigne
+une commande de l'utilisateur U vers l'hôte S, et '&lt;----' désigne une
+réponse de l'hôte S à l'utilisateur U. </p><p align="center"><table>
+<tbody><tr>
+<td valign="top">
+<font color="#000080">
+<code>
+COMMANDES LOCALES (Utilisateur)
+</code>
+</font>
+</td>
+<td valign="top">
+<font color="#000080">
+<code>
+ACTION IMPLIQUEE
+</code>
+</font>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<font color="#008000">
+<code>
+ftp (host) multics&lt;CR&gt;
+</code>
+</font>
+</td>
+<td valign="top">
+<font color="#000080">
+<code>
+Connexion à l'hôte S, port L, Etablissement du canal de contrôle
+<br></code></font><font color="#008000">.
+&lt;---- 220 Service ready &lt;CRLF&gt;.
+
+</font>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<font color="#008000">
+<code>
+username Doe &lt;CR&gt;
+</code>
+</font>
+</td>
+<td valign="top">
+	<font color="#008000">
+	<code>
+USER Doe&lt;CRLF&gt;----&gt;
+<br>
+&lt;---- 331 User name ok, need password&lt;CRLF&gt;.
+	</code>
+</font>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<font color="#008000">
+<code>
+password mumble &lt;CR&gt;
+</code>
+</font>
+</td>
+<td valign="top">
+<font color="#008000">
+<code>
+PASS mumble&lt;CRLF&gt;----&gt;
+<br>
+&lt;---- 230 User logged in&lt;CRLF&gt;.
+</code>
+</font>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<font color="#008000">
+<code>
+retrieve (local type) ASCII&lt;CR&gt;
+<br>
+(local pathname) test 1 &lt;CR&gt;
+</code>
+</font>
+</td>
+<td valign="top">
+<font color="#000080">
+<code>
+Le USER-FTP ouvre un fichier local en ASCII.
+</code>
+</font>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<font color="#008000">
+<code>
+(for. pathname) test.pl1&lt;CR&gt;
+<br>
+RETR test.pl1&lt;CRLF&gt; ----&gt;
+</code>
+</font>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td valign="top">
+<font color="#008000">
+<code>
+&lt;---- 150 File status okay; about to open data connection&lt;CRLF&gt;.
+<br></code></font><font color="#000080">
+Le serveur établit le canal de données vers le port U.
+</font><font color="#008000"><br><br>
+&lt;---- 226 Closing data connection, file transfer successful&lt;CRLF&gt;.
+
+</font>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<font color="#008000">
+<code>
+type Image&lt;CR&gt;
+</code>
+</font>
+</td>
+<td valign="top">
+<font color="#008000">
+<code>
+TYPE I&lt;CRLF&gt; ----&gt;
+<br>
+&lt;---- 200 Command OK&lt;CRLF&gt;
+</code>
+</font>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<font color="#008000">
+<code>
+store (local type) image&lt;CR&gt;
+<br>
+(local pathname) file dump&lt;CR&gt; 
+</code>
+</font>
+</td>
+<td valign="top">
+<font color="#000080">
+<code>
+Le USER-FTP ouvre le fichier local sous Image.
+</code>
+</font>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<font color="#008000">
+<code>
+(for.pathname) &gt;udd&gt;cn&gt;fd&lt;CR&gt;
+</code>
+</font>
+</td>
+<td valign="top">
+<font color="#008000">
+<code>
+STOR &gt;udd&gt;cn&gt;fd&lt;CRLF&gt; ----&gt;
+<br>
+&lt;---- 550 Access denied&lt;CRLF&gt;
+	</code>
+	</font>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<font color="#008000">
+<code>
+terminate
+</code>
+</font>
+</td>
+<td valign="top">
+<font color="#008000">
+<code>
+QUIT &lt;CRLF&gt; ----&gt;
+<br></code></font><font color="#000080">
+Le serveur ferme toutes les connexions
+
+</font>
+</td>
+</tr>
+</tbody></table>
+
+
+</p><p></p><hr>
+<p align="center"><a href="959-6.htm">Précédent</a> - <a href="959-8.htm">Suivant</a> - <a href="959tm.htm">Retour au sommaire</a>
+
+</p></body></html>

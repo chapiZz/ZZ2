@@ -1,0 +1,748 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [fr] (WinNT; I) [Netscape]">
+   <TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1034
+<BR>Statut : Standard
+<CENTER>
+<H1>
+DOMAIN NAME SYSTEM</H1></CENTER>
+
+<CENTER>
+<H2>
+Concepts de base</H2></CENTER>
+
+<HR>
+<BR>Cr&eacute;dits : P. Mockapetris, ISI
+<BR>Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry
+G. FREMAUX</A>
+<BR>Edition originale : Novembre 87 / Version FR : Avril 1998
+<BR>Remplace : RFC882, RFC883, RFC973
+<BR>
+<HR>
+<H2>
+<FONT COLOR="#000080">3. ESPACE DE NOMS DE DOMAINES et ENREGISTREMENTS
+DE RESSOURCES</FONT></H2>
+<A NAME="3.1"></A>
+<H3>
+3.1. Sp&eacute;cifications et terminologie des Noms de Domaine</H3>
+L'espace de noms de domaines est une structure arborescente. Chaque noeud
+et feuille de l'arbre correspond &agrave; un ensemble de ressources (qui
+peut &ecirc;tre vide). Le syst&egrave;me de domaines ne fait aucune distinction
+entre l'utilisation des feuilles et de la partie information des noeuds,
+ce m&eacute;mo n'utilisant par la suite que le terme "noeud" pour r&eacute;f&eacute;rencer
+les deux types d'entit&eacute;s.
+<P>Chaque noeud dispose d'un identifiant, d'une longueur de z&eacute;ro
+&agrave; 63 octets. Des noeuds "fr&egrave;res" ne peuvent pas avoir le
+m&ecirc;me identifiant, bien que le m&ecirc;me identifiant puisse se retrouver
+dans deux noeuds distincts (mais sans relation de fratrie). L'identifiant
+nul (c-&agrave;-d., de longueur z&eacute;ro) est r&eacute;serv&eacute;
+pour d&eacute;signer la racine.
+<P>Le nom de domaine d'un noeud est constitu&eacute; de la liste des identifiants
+de tous les noeuds constituant le chemin entre ce noeud et la racine de
+l'arbre. Par convention, les identifiants qui composent un nom de domaine
+seront exprim&eacute;s ou lus de gauche &agrave; droite, du plus sp&eacute;cifique
+(le plus bas, le plus &eacute;loign&eacute; de la racine) au plus globalisant
+(le plus haut, le plus proche de la racine).
+<P>En interne, les programmes manipulant les noms de domaines peuvent les
+repr&eacute;senter comme des s&eacute;quences d'&eacute;tiquettes, chacune
+comportant une octet de longueur suivi d'une cha&icirc;ne d'octets. Comme
+tous les noms de domaines se terminent par la racine, laquelle &eacute;ant
+identifi&eacute;e par une cha&icirc;ne de longueur nulle, ces repr&eacute;sentations
+internes peuvent utiliser l'octet nul pour terminer un nom de domaine (&agrave;
+consid&eacute;rer comme l'octet de longueur du dernier identifiant, qui
+vaut z&eacute;ro).
+<P>Par convention, les noms de domaines peuvent &ecirc;tre stock&eacute;s
+avec une casse arbitraire, mais toute comparaison de noms de domaines pour
+ce qui est des fonctions actuelles sont faites ind&eacute;pendamment de
+la casse, en supposant l'usage du jeu de caract&egrave;res ASCII, et le
+bit de poids fort &agrave; z&eacute;ro dans chque octet. Ceci signifie
+que vous serez libre de cr&eacute;er un noeud d'identifiant "A" ou encore
+"a", mais pas les deux en tant que fr&egrave;res l'un de l'autre ; ces
+deux domaines pourront &ecirc;tre r&eacute;f&eacute;rences par "a" ou "A"
+indistinctement. Cependant, lorsque vous recevez un nom de domaine ou un
+identifiant, il faudra en pr&eacute;server la casse. La raison en est qu'il
+sera peut &ecirc;tre n&eacute;cessaire, dans un futur proche d'&eacute;tendre
+les noms de domaines &agrave; une repr&eacute;sentation binaire compl&egrave;te,
+dans le but d'accueillir de nouveaux services ; les services existants
+devant pouvoir rester inchang&eacute;s.
+<P>Lorsqu'un utilisateur doit entrer un nom de domaine, la longueur de
+chaque identifiant est omise et les identifiants devront &ecirc;tre s&eacute;par&eacute;s
+par des points ("."). Un nom de domaine complet atteignant toujours la
+racine, la forme &eacute;crite exacte de tout domaine enti&egrave;rement
+qualifi&eacute; se termine par un point. Nous utiliserons cette propri&eacute;t&eacute;
+pour distinguer les cas :
+<UL>
+<LI>
+d'une cha&icirc;ne de caract&egrave;res repr&eacute;sentant un nom de domaine
+complet (souvent appel&eacute; "absolu" ou "enti&egrave;rement qualifi&eacute;").
+Par exemple, "poneria.ISI.EDU."</LI>
+
+<BR>&nbsp;
+<LI>
+d'une cha&icirc;ne de caract&egrave;res repr&eacute;sentant les premiers
+identifiants d'un nom de domaine incomplet, et devant &ecirc;tre compl&eacute;t&eacute;
+par l'application locale avec un compl&eacute;ment absolu (expression appel&eacute;e
+"relative"). Par exemple, "poneria", &agrave; utiliser relativement au
+domaine ISI.EDU.</LI>
+</UL>
+Les noms relatifs sont exprim&eacute;s soit par rapport &agrave; une r&eacute;f&eacute;rence
+absolue connue, ou par rapport &agrave; une liste de domaines constituant
+ainsi une liste de recherche. Les noms relatifs existent souvent au niveau
+de l'interface utilisateur, o&ugrave; leur interpr&eacute;tation varie
+d'une impl&eacute;mentation &agrave; l'autre, ainsi que dans les fichiers
+principaux, dans lesquels sont exprim&eacute;es des domaines relativement
+&agrave; un nom de domaine de r&eacute;f&eacute;rence. L'interpr&eacute;tation
+la plus courant utilise la racine "." soit comme l'origine simple soit
+comme l'un des membres d'une liste de recherche, et un nom &agrave; multiple
+identifiants est souvent exprim&eacute; sans le point final par "paresse".
+<P>Pour simplifier les impl&eacute;mentations, le nombre total d'octets
+composant un nom de domaine enti&egrave;rement qualifi&eacute; (c'est &agrave;
+dire la somme de tous les identifiants plus la mention des longueurs d'identifiants)
+est limit&eacute; &agrave; 255.
+<P>Un domaine est identifi&eacute; par un nom de domaine, et consiste de
+la portion de l'espace de domaine situ&eacute;e au niveau et en dessous
+du noeud sp&eacute;cifi&eacute; par le domaine. Un domaine est le sous-domaine
+d'un autre domaine s'il est contenu ans ce dernier. Cette relation peut
+&ecirc;tre v&eacute;rifi&eacute;e en regardant si le nom du sous-domaine
+se termine par le nom du domaine le contenant. Par exemple, A.B.C.D est
+un sous-domaine de B.C.D, C.D, D, et "".&nbsp;<A NAME="3.2"></A>
+<H3>
+3.2. Conseils pour l'administration</H3>
+En mati&egrave;re de politique d'administration, les sp&eacute;cifications
+techniques du DNS n'imposent aucune structure d'arbre particuli&egrave;re
+ni de r&egrave;gles pour le choix des identifiants ; son but est d'&ecirc;tre
+le plus g&eacute;n&eacute;ral possible, et il doit pouvoir servir &agrave;
+toutes sortes d'applications. En particulier, le syst&egrave;me &eacute;tait
+con&ccedil;u de sorte que l'espace de noms n'ait pas n&eacute;cessairement
+&agrave; suivre les limites physiques de la constitution du r&eacute;seau,
+des serveurs de noms, etc. La motivation de ceci ne signifie pas que le
+syst&egrave;me de noms refuse toute notion de s&eacute;mantique, mais plut&ocirc;t
+que le choix d'une s&eacute;mantique implicite puisse rester ouvert pour
+pouvoir s'adapter aux probl&egrave;mes particuliers lorsqu'ils se pr&eacute;senteraient,
+et qu'il reste acceptable que certaines sous parties de l'arbre puisse
+user de s&eacute;mantiques diff&eacute;rentes. Par exemple, le domaine
+IN-ADDR.ARPA est organis&eacute; et distribu&eacute; en r&eacute;seaux
+et adresses d'h&ocirc;tes car son r&ocirc;le est la traduction d'adresses
+compl&egrave;tes d'h&ocirc;tes en noms ; Les domaines NetBIOS [RFC-1001,
+RFC- 1002] sont des domaines plats conform&eacute;ment aux besoins de cette
+application.
+<P>Cependant, nous pouvons donner quelques r&egrave;gles &agrave; suivre
+pour des parties "normales" du domaine de noms qui utilisent le sch&eacute;ma
+r&eacute;seau/h&ocirc;te, ou bo&icirc;tes aux lettres, etc., qui permettent
+de maintenir l'espace de noms uniforme, pr&eacute;serve sa capacit&eacute;
+de croissance, et minimise les probl&egrave;mes lorsque des logiciels sont
+mis &agrave; jour &agrave; partir de tables anciennes. Les premi&egrave;res
+d&eacute;cisions "politiques" concernant les niveaux haut de l'arbre ont
+&eacute;t&eacute; donn&eacute;es dans la RFC-920. La politique actuelle
+pour les niveaux haut sont discut&eacute;es dans la [RFC-1032]. Les conversions
+pour l'espace MILNET sont couvertes dans la [RFC-1031].
+<P>Les domaines de plus bas niveaux qui peuvent &agrave; leur tour &ecirc;tre
+subdivis&eacute;s en zones multiples devront pouvoir proposer des branchements
+vers le haut du domaine de telle sorte que d'&eacute;ventuelles d&eacute;compositions
+puissent se faire sans changement de noms. Les identifiants de noeuds utilisant
+des caract&egrave;res sp&eacute;ciaux, des chiffres en t&ecirc;te, etc.,
+risquent de poser des probl&egrave;mes &agrave; des programmes plus anciens
+bas&eacute;s sur des choix plus restrictifs.&nbsp;<A NAME="3.3"></A>
+<H3>
+3.3. Conseils techniques d'utilisation</H3>
+Avant que le DNS puisse &ecirc;tre utilis&eacute; pour accueillir les informations
+de nommage de quelque cat&eacute;gorie d'objets que ce soit, deux besoins
+doivent &ecirc;tre remplis :
+<UL>
+<LI>
+Une convention pour relier les noms d'objets et les noms de domaines. Ceci
+d&eacute;crit comment l'on acc&egrave;de &agrave; l'information sur un
+objet.</LI>
+
+<LI>
+les types RR et les formats de donn&eacute;es pour la description des objets.</LI>
+</UL>
+Ces r&egrave;gles peuvent &ecirc;tre du plus simple au plus complexe. Tr&egrave;s
+souvent, le concepteur doit prendre en compte les formats existants et
+doit planifier une compatibilit&eacute; ascendante pour les utilisations
+actuelles. Plusieurs conversions et niveaux de conversion peuvent devenir
+n&eacute;cessaires.
+<P>Pour les h&ocirc;tes, la conversion d&eacute;pends de la syntaxe actuelle
+pour les noms d'h&ocirc;tes, elle-m&ecirc;me un sous ensemble de la repr&eacute;sentation
+textuelle courante pour les noms de domaine, ainsi que des formats RR d&eacute;crivant
+les adresses des h&ocirc;tes. Dans la mesure ou nous souhaitons pouvoir
+disposer d'un transcodage inverse fiable depuis les adresses d'h&ocirc;tes
+vers les noms d'h&ocirc;tes, un codage particulier pour les adresses du
+domaine IN-ADDR.ARPA est d&eacute;fini.
+<P>Pour les bo&icirc;tes aux lettres, le transcodage est l&eacute;g&egrave;rement
+plus complexe. L'adresse Mail habituelle&nbsp;<partie-locale>@<domaine-de-mail>
+est transcod&eacute; en nom de domaine par la conversion de la&nbsp;<partie-locale>en
+un identifiant simple (sans tenir compte des points qu'elle contient),
+et en convertissant le&nbsp;<domaine-mail>en un nom de domaine conforme
+&agrave; sa repr&eacute;sentation textuelle g&eacute;n&eacute;rique (des
+points s&eacute;parant les identifiants), l'op&eacute;ration finale consistant
+&agrave; concat&eacute;ner les deux parties pour former un nom de domaine
+unique. Ainsi, la bo&icirc;te aux lettres HOSTMASTER@SRI-NIC.ARPA est repr&eacute;sent&eacute;
+par le nom de domaine HOSTMASTER.SRI-NIC.ARPA. L'appr&eacute;ciation des
+raisons conduisant &agrave; ce design doit aussi prendre en compte le sch&eacute;ma
+des &eacute;changes de courrier [RFC- 974].
+<P>L'utilisateur type n'est pas concern&eacute; par l'&eacute;tablissement
+de ces r&egrave;gles, mais doit n&eacute;anmoins comprendre qu'elles r&eacute;sultent
+de nombreux compromis entre des contraintes de compatibilit&eacute; ascendante
+pour d'anciennes applications toujours en service, des interactions entre
+les diff&eacute;rentes d&eacute;finitions d'objets, et l'incontournable
+urgence qu'il y a &agrave; d&eacute;velopper de nouvelles fonctionnalit&eacute;s
+lorsque de nouvelles r&egrave;gles sont &eacute;tablies. La mani&egrave;re
+dont le DNS est exploit&eacute; pour prendre en compte tel ou tel objet
+est souvent plus importante que les restrictions inh&eacute;rentes au DNS.&nbsp;<A NAME="3.4"></A>
+<H3>
+3.4. Exemple d'espace de noms</H3>
+La figure suivante montre une partie de l'espace de noms de domaines actuel,
+et sert de base d'exemple &agrave; de nombreuses reprises dans cette RFC.
+Notez que cet arbre est un tout petit sous ensemble de l'&eacute;tendue
+r&eacute;elle de l'espace des noms de domaines.
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------+------------------+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EDU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ARPA
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +-----+-----+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; +------+-----+-----+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BRL&nbsp; NOSC&nbsp; DARPA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; IN-ADDR&nbsp; SRI-NIC&nbsp;&nbsp;&nbsp;&nbsp; ACC
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--------+------------------+---------------+--------+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UCI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UDEL&nbsp;&nbsp;&nbsp;&nbsp; YALE
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ISI
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---+---+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCS&nbsp; ACHILLES&nbsp; +--+-----+-----+--------+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; XX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp; C&nbsp;&nbsp; VAXA&nbsp; VENERA Mockapetris</FONT></TT></PRE>
+Dans cet exemple, le domaine racine a trois sous-domaines imm&eacute;diats
+: MIL, EDU, et ARPA. Le domaine LCS.MIT.EDU a un sous domaine imm&eacute;diat
+appel&eacute; XX.LCS.MIT.EDU. Toutes les feuilles sont &eacute;galement
+des domaines.&nbsp;<A NAME="3.5"></A>
+<H3>
+3.5. Syntaxe pr&eacute;f&eacute;rentielle pour les noms</H3>
+Les sp&eacute;cifications du DNS tentent d'&ecirc;tre aussi g&eacute;n&eacute;riques
+que possible pour ce qui concerne les r&egrave;gles de construction des
+noms de domaines. L'id&eacute;e de base est que le nom existant pour un
+objet puisse &ecirc;tre utilis&eacute; pour exprimer un nom de domaine
+avec le minimum de transformation. Cependant, au moment d'assigner un nom
+de domaine &agrave; un objet, l'utilisateur prudent choisira un nom qui
+d'une part respecte les r&egrave;gles de construction du syst&egrave;me
+de domaines et d'autre part respecte les r&egrave;gles inh&eacute;rentes
+&agrave; l'objet &agrave; nommer lui-m&ecirc;me, que ces r&egrave;gles
+aient &eacute;t&eacute; publi&eacute;es ou existent de fa&ccedil;on implicite
+par le fait qu'elles sont utilis&eacute;es par certains programmes.
+<P>Par exemple, pour nommer un domaine de courrier, l'utilisateur devra
+respecter les r&egrave;gles de ce m&eacute;mo ainsi que celles &eacute;tablies
+par la RFC-822. Pour nommer un h&ocirc;te, les anciennes r&egrave;gles
+instaur&eacute;es pour les fichiers HOSTS.TXT d'alors devront &ecirc;tre
+suivies. Ceci permet d'&eacute;viter des probl&egrave;mes lorsque d'anciens
+programmes sont transform&eacute;s pour prendre en compte les noms de domaine.
+<P>La syntaxe suivante diminuera notablement le risque de probl&egrave;mes
+avec toute application utilisant les noms de domaine (ex., mail, TELNET).
+<PRE><TT><FONT COLOR="#008000">&lt;domaine> ::= &lt;sous-domaine> | " "
+&lt;sous-domaine> ::= &lt;identifiant> | &lt;sous-domaine> "." &lt;identifiant>
+&lt;identifiant> ::= &lt;lettre> [ [ &lt;ch-ldh> ] &lt;let-dig> ]
+&lt;ch-ldh> ::= &lt;let-dig-hyp> | &lt;let-dig-hyp> &lt;ch-ldh>
+&lt;let-dig-hyp> ::= &lt;let-dig> | "-"
+&lt;let-dig> ::= &lt;lettre> | &lt;digit>
+
+&lt;lettre> ::= un des 52 caract&egrave;res alphabetiques de "A" &agrave; "Z" (majuscules) ou de
+"a" &agrave; "z" (minuscules)
+
+&lt;digit> ::= un des dix digits de "0" &agrave; "9"</FONT></TT></PRE>
+Notez que, bien que tant les majuscules que les minuscules soient autoris&eacute;es
+dans des noms de domaines, aucune importance n'est accord&eacute;e &agrave;
+la casse. C'est-&agrave;-dire, deux noms lexicographiquement identiques,
+mais &eacute;crit dans une casse diff&eacute;rente seront consid&eacute;r&eacute;s
+comme identiques. Les identifiants doivent suivre les r&egrave;gles d&eacute;finies
+pour les noms d'h&ocirc;tes ARPANET. Ils doivent commencer par une lettre,
+terminer par une lettre ou un digit, et n'avoir &agrave; l'int&eacute;rieur
+que des lettres, des digits, et &eacute;ventuellement le caract&egrave;re
+Hyph&eacute;nation (-). On notera de plus quelques restrictions &agrave;
+propos de la longueur. Un identifiant doit avoir au plus 63 caract&egrave;res.
+Par exemple, les cha&icirc;nes suivantes identifient des h&ocirc;tes d'Internet
+:
+<PRE><TT><FONT COLOR="#008000">A.ISI.EDU&nbsp; XX.LCS.MIT.EDU&nbsp; SRI-NIC.ARPA</FONT></TT></PRE>
+<A NAME="3.6"></A>
+<H3>
+3.6. Enregistrements</H3>
+Un nom de domaine identifie un noeud. A chaque noeud est attribu&eacute;
+un ensemble d'informations sur des ressource, lequel peut &ecirc;tre vide.
+L'ensemble d'informations de ressources associ&eacute; &agrave; un nom
+particulier est compos&eacute; de quatre enregistrements de ressources
+s&eacute;par&eacute;s (RR). L'ordre des RR dans un ensemble n'est pas significatif,
+et ne doit pas n&eacute;cessairement &ecirc;tre pr&eacute;serv&eacute;
+par les serveurs de noms, les r&eacute;solveurs, ou tout autre partie du
+DNS.
+<P>Lorsque nous parlons d'un RR sp&eacute;cifique, nous supposons qu'il
+contient les &eacute;l&eacute;ments suivants :
+<TABLE>
+<TR>
+<TD><FONT COLOR="#000080">owner</FONT></TD>
+
+<TD>le nom de domaine o&ugrave; le RR est trouv&eacute;.</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">Type</FONT></TD>
+
+<TD>une valeur encod&eacute;e sur16 bits sp&eacute;cifiant le type de ressource
+d&eacute;crit par cet enregistrement. Les types se r&eacute;f&egrave;rent
+&agrave; une d&eacute;finition abstraite des ressources.
+<P>Ce m&eacute;mo d&eacute;finit les types suivants :&nbsp;
+<TABLE>
+<TR>
+<TD><FONT COLOR="#000080">A</FONT></TD>
+
+<TD><FONT COLOR="#008000">une adresse d'h&ocirc;te</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">CNAME</FONT></TD>
+
+<TD><FONT COLOR="#008000">le nom canonique d'un alias</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">HINFO</FONT></TD>
+
+<TD><FONT COLOR="#008000">le CPU et le syst&egrave;me d'exploitation (OS)
+d'un h&ocirc;te</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">MX</FONT></TD>
+
+<TD><FONT COLOR="#008000">un sch&eacute;ma d'&eacute;change de courrier
+pour ce domaine. Voir [RFC-974] pour plus de d&eacute;tails.</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">NS</FONT></TD>
+
+<TD><FONT COLOR="#008000">le serveur de noms "autoris&eacute;" pour le
+domaine</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">PTR</FONT></TD>
+
+<TD><FONT COLOR="#008000">un pointeur vers une autre partie de l'espace
+de noms de domaines</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">SOA</FONT></TD>
+
+<TD><FONT COLOR="#008000">le d&eacute;but d'une sph&egrave;re d'autorit&eacute;</FONT></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">class</FONT></TD>
+
+<TD>une valeur encod&eacute;e sur 16 bits identifiant une famille de protocoles
+ou une instance d'un protocole.
+<P>Ce m&eacute;mo d&eacute;finit les classes suivantes :&nbsp;
+<TABLE>
+<TR>
+<TD><FONT COLOR="#000080">IN</FONT></TD>
+
+<TD><FONT COLOR="#008000">le syst&egrave;me Internet</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">CH</FONT></TD>
+
+<TD><FONT COLOR="#008000">le syst&egrave;me Chaotique</FONT></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">TTL</FONT></TD>
+
+<TD>la dur&eacute;e de vie du RR. Cette valeur est repr&eacute;sent&eacute;e
+sous forme d'un entier sur 32 bits et est exprim&eacute;e en secondes,
+et est principalement utilis&eacute;e par les r&eacute;solveurs lorsqu'ils
+m&eacute;morisent temporairement des RR. Le champ TTL d&eacute;finit combien
+de temps un RR peut &ecirc;tre gard&eacute; localement avant de devoir
+&ecirc;tre consid&eacute;r&eacute; comme obsol&egrave;te.</TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">RDATA</FONT></TD>
+
+<TD>le type et parfois les donn&eacute;es d&eacute;pendantes de la classe
+d&eacute;crivant la ressource :
+<TABLE>
+<TR>
+<TD><FONT COLOR="#000080">A</FONT></TD>
+
+<TD><FONT COLOR="#008000">Pour la classe IN, une adresse IP sur 32 bits.
+Pour la classe CH, un nom de domaine suivi d'une adresse octale Chaotique
+sur 16 bits.</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">CNAME</FONT></TD>
+
+<TD><FONT COLOR="#008000">un nom de domaine.</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">MX</FONT></TD>
+
+<TD><FONT COLOR="#008000">une valeur de pr&eacute;f&eacute;rence sur 16
+bits (la plus basse possible) suivie d'un nom d'h&ocirc;te souhaitant servir
+d'&eacute;changeur de courrier pour le domaine de l'owner.</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">NS&nbsp;</FONT></TD>
+
+<TD><FONT COLOR="#008000">un nom d'h&ocirc;te.</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">PTR&nbsp;</FONT></TD>
+
+<TD><FONT COLOR="#008000">un nom de domaine.</FONT></TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">SOA</FONT></TD>
+
+<TD><FONT COLOR="#008000">plusieurs champs.</FONT></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Le nom du propri&eacute;taire (owner) est souvent implicite, plut&ocirc;t
+que formant une partie int&eacute;grante du RR. Par exemple, de nombreux
+serveurs de noms repr&eacute;sentent l'espace de nom en interne sous forme
+d'arbre ou de tableaux associatifs, et pointent les RR &agrave; partir
+des noeuds. Le restant des donn&eacute;es des RR, soit l'en-t&ecirc;te
+fixe (type, classe, TTL) valable pour tous les RR, et la partie variable
+(RDATA) adapt&eacute;e au type de ressource d&eacute;crite, &eacute;tant
+habituellement stock&eacute;e &agrave; l'ext&eacute;rieur de la repr&eacute;sentation
+de la structure de l'espace.
+<P>La signification du champ TTL est la dur&eacute;e limite pendant laquelle
+un RR peut &ecirc;tre conserv&eacute; dans un cache local. Cette limite
+ne s'applique pas aux donn&eacute;es "autoris&eacute;es" stock&eacute;es
+dans les zones ; celles-ci disposent aussi d'une temporisation, mais d&eacute;finie
+par la politique de rafra&icirc;chissement de la zone elle-m&ecirc;me.
+La TTL est d&eacute;finie par l'administrateur pour toute la zone contenant
+cet enregistrement. Alors qu'une valeur faible de la TTL peut &ecirc;tre
+utilis&eacute;e pour diminuer la dur&eacute;e de cache, et qu'une valeur
+de z&eacute;ro emp&ecirc;che tout stockage local, l'analyse r&eacute;elle
+des performances d'Internet sugg&egrave;re que cette valeur soit de l'ordre
+de quelques jours pour un h&ocirc;te type. Lorsque l'on peut anticiper
+sur une modification, la TTL pourra &ecirc;tre r&eacute;duite juste avant
+d'effectuer la modification pour optimiser la consistance de l'information
+au moment du changement, puis &ecirc;tre r&eacute;tablie &agrave; sa valeur
+d'origine apr&egrave;s un certain d&eacute;lai.
+<P>Les donn&eacute;es dans la section RDATA d'un RR est stock&eacute;e
+comme une combinaison de cha&icirc;nes binaires et de noms de domaines.
+Les noms de domaines seront souvent utilis&eacute;s &agrave; titre de "pointeurs"
+sur d'autres structures de donn&eacute;es du DNS.&nbsp;<A NAME="3.6.1"></A>
+<H4>
+3.6.1. Expression des RR sous forme textuelle</H4>
+Les RR sont repr&eacute;sent&eacute;s sous forme binaire dans les paquets
+du protocole DNS, et sont habituellement repr&eacute;sent&eacute;s sous
+une forme fortement compact&eacute;e lorsque stock&eacute;s par un serveur
+de noms ou un r&eacute;solveur. Dans ce document, nous adopterons une notation
+similaire &agrave; celle utilis&eacute;e dans les fichiers principaux de
+fa&ccedil;on a exprimer le contenu des RR. Dans ce format, la plupart des
+RR peuvent &ecirc;tre exprim&eacute;s sur une seule ligne, bien qu'une
+extension sur plusieurs lignes soit possible par l'utilisation de parenth&egrave;ses.
+<P>Au d&eacute;but de la ligne est mentionn&eacute; le propri&eacute;taire
+du RR. Si une ligne commence par un esapce, alors on suppose que le propri&eacute;taire
+de l'enregistrement est le m&ecirc;me que celui du RR pr&eacute;c&eacute;dent.
+Des lignes vides sont aussi souvent ins&eacute;r&eacute;es pour augmenter
+la lisibilit&eacute;.
+<P>Apr&egrave;s le propri&eacute;taire, nous exprimerons la TTL, le type,
+et la classe du RR. Classe et type utilisent les mn&eacute;moniques d&eacute;finis
+ci-avant, la TTL &eacute;tant exprim&eacute;e sous forme d'entier apparaissant
+avant le champ type. De fa&ccedil;on &agrave; &eacute;viter des ambigu&iuml;t&eacute;s
+d'interpr&eacute;tation lors de l'analyse des lignes, les mn&eacute;moniques
+du type et de la classe sont disjoints, la TTL est un entier, et le mn&eacute;monique
+de type appara&icirc;t toujours en dernier. La classe IN et les valeurs
+de la TTL seront souvent omises dans les exemples par souci de clart&eacute;.
+<P>Les donn&eacute;es de ressource ou section RDATA de l'enregistrement
+sont exprim&eacute;es selon la connaissance que nous avons de la repr&eacute;sentation
+classique de ces donn&eacute;es.
+<P>Par exemple, nous exprimerons un RR transport&eacute; par un message
+sous la forme suivante :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10 VENERA.ISI.EDU.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10 VAXA.ISI.EDU.
+&nbsp;&nbsp; VENERA.ISI.EDU. A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.32
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.1.0.52
+&nbsp;&nbsp; VAXA.ISI.EDU.&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.2.0.27
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.33</FONT></TT></PRE>
+Le RR MX a une section RDATA consistant en un entier sur 16 bits suivi
+par un nom de domaine. L'adresse du RR utilise la repr&eacute;sentation
+standard d'une adresse IP sur 32 bits.
+<P>Cet exemple montre donc six RR, r&eacute;partis en groupes de deux RR
+pour chacun des trois noms de domaines.
+<P>De la m&ecirc;me mani&egrave;re nous pourrions voir :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; XX.LCS.MIT.EDU. IN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.44
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MIT.EDU. 2420</FONT></TT></PRE>
+repr&eacute;sentant deux adresses pour l'h&ocirc;te XX.LCS.MIT.EDU, chacune
+d'une classe diff&eacute;rente.&nbsp;<A NAME="3.6.2"></A>
+<H4>
+3.6.2. Alias et expression canonique des noms</H4>
+Dans des syst&egrave;mes existants, les h&ocirc;tes et autres ressources
+peuvent avoir plusieurs noms diff&eacute;rents pour les d&eacute;signer.
+Par exemple, les noms C.ISI.EDU et USC-ISIC.ARPA pointent sur le m&ecirc;me
+h&ocirc;te. De la m&ecirc;me mani&egrave;re, dans le cas de bo&icirc;tes
+aux lettres, de nombreuses organisations font pointer sur la m&ecirc;me
+bo&icirc;te aux lettres de multiples noms; par exemple Mockapetris@C.ISI.EDU,
+Mockapetris@B.ISI.EDU, et PVM@ISI.EDU pointent toutes la m&ecirc;me bo&icirc;te
+aux lettres (bien que l m&eacute;canisme derri&egrave;re tout &ccedil;a
+soit l&eacute;g&egrave;rement plus compliqu&eacute; que cela).
+<P>La plupart de ces syst&egrave;mes manipulent une notion selon laquelle
+l'un de ces noms est dit primaire (ou canonique), et tous les autres sont
+des alias.
+<P>Le syst&egrave;me de domaines dispose d'une telle fonctionnalit&eacute;
+par l'utilisation du nom canonique (CNAME) RR. Un RR CNAME identifie son
+propri&eacute;taire comme &eacute;tant un alias, et sp&eacute;cifie le
+nom canonique correspondant dans la section RDATA du RR. Si un RR CNAME
+est pr&eacute;sent dans un noeud, aucune autre donn&eacute;e ne peut y
+&ecirc;tre inscrite; cette restriction garantit que les donn&eacute;es
+relatives &agrave; un nom canonique et son alias seront toujours identiques.
+Cette r&egrave;gle assure de plus qu'un enregistrement CNAME peut &ecirc;tre
+utilis&eacute; sans n&eacute;cessit&eacute; de consulter un serveur "autoris&eacute;"
+pour obtenir d'autres types de RR.
+<P>Les RR CNAME provoquent des actions particuli&egrave;res dans un processus
+DNS. Lorsqu'un serveur de noms &eacute;choue lorsqu'il cherche un enregistrement
+particulier dans l'ensemble des informations associ&eacute;es au nom de
+domaine, il v&eacute;rifie si la ressource n'est pas un enregistrement
+CNAME avec la bonne classe. Si c'est le cas, le serveur de noms r&eacute;pond
+&agrave; la requ&ecirc;te en retournant l'enregistrement CNAME dans la
+r&eacute;ponse et relance une r&eacute;solution sur le nom de domaine mentionn&eacute;
+dans la section RDATA de l'enregistrement CNAME (donc sur le domaine canonique).
+La seule exception admise pour cette r&egrave;gle est lorsque la requ&ecirc;te
+initiale demande d&eacute;j&agrave; une information de type CNAME, auquel
+cas la redirection n'est pas effectu&eacute;e.
+<P>Par exemple, supposez qu'un serveur de noms traite une requ&ecirc;te
+sur le domaine USC-ISIC.ARPA, pour un type d'information A, et dispose
+des enregistrements suivants :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; USC-ISIC.ARPA&nbsp;&nbsp; IN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CNAME&nbsp;&nbsp; C.ISI.EDU
+&nbsp;&nbsp;&nbsp; C.ISI.EDU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.52</FONT></TT></PRE>
+Les deux RR seraient retourn&eacute;s pour une requ&ecirc;te sur le type
+A, tandis qu'une requ&ecirc;te sur le type CNAME ou * se verrait r&eacute;pondre
+par l'enregistrement CNAME uniquement. Les noms de domaine dans les RR
+pointant sur un autre nom de domaine devra toujours pointer sur un nom
+canonique et jamais sur un alias. Ceci &eacute;vitera une multiplication
+inutile des &eacute;tapes d'indirection. Par exemple, l'adresse &agrave;
+utiliser dans les RR pour pointer sur l'h&ocirc;te ci-dessus serait :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp; 52.0.0.10.IN-ADDR.ARPA&nbsp; IN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PTR&nbsp;&nbsp;&nbsp;&nbsp; C.ISI.EDU</FONT></TT></PRE>
+plut&ocirc;t qu'un pointeur sur USC-ISIC.ARPA. Bien s&ucirc;r, selon le
+principe de robustesse, les logiciels de domaines ne devraient pas &eacute;chouer
+face &agrave; des cha&icirc;nes ou des boucles de CNAME; Les encha&icirc;nement
+de CNAME devront &ecirc;tre suivis et les bouclages de CNAME signal&eacute;es
+par une erreur.&nbsp;<A NAME="3.7"></A>
+<H3>
+3.7. Requ&ecirc;tes</H3>
+Les requ&ecirc;tes sont des messages qui sont envoy&eacute;es &agrave;
+un serveur de noms pour obtenir une r&eacute;ponse. Dans Internet, les
+requ&ecirc;tes sont transport&eacute;es par des datagrammes UDP ou sur
+via des connexions TCP. La r&eacute;ponse du serveur de nom peut soit r&eacute;pondre
+&agrave; la question pos&eacute;e par la requ&ecirc;te, rediriger le requ&eacute;rant
+vers un autre serveur de noms, ou signaler une condition d'erreur.
+<P>En g&eacute;n&eacute;ral, l'utilisateur ne pourra &eacute;mettre lui-m&ecirc;me
+directement des requ&ecirc;tes, mais passera par un r&eacute;solveur qui
+&eacute;mettra une ou plusieurs requ&ecirc;tes vers des serveurs de noms
+et sera en mesure de traiter les conditions d'erreur ou les redirections
+qui pourraient en r&eacute;sulter. Bien s&ucirc;r, les questions possibles
+qui peuvent &ecirc;tre pos&eacute;es dans une requ&ecirc;te doivent correspondre
+au type de service pour lequel le r&eacute;solveur est con&ccedil;u.
+<P>Les requ&ecirc;tes et r&eacute;ponses DNS sont transport&eacute;es dans
+un message de format standardis&eacute;. Le format de message d&eacute;finit
+une en-t&ecirc;te contenant un certain nombre de champs fixes toujours
+pr&eacute;sents, et quatre sections pour transporter les param&egrave;tres
+et les RR.
+<P>Le champ d'en-t&ecirc;te le plus important est un champ de 4 bits appel&eacute;
+"code op&eacute;ration", permettant de distinguer les diff&eacute;rentes
+requ&ecirc;tes. Parmi les 16 valeurs possibles, une (requ&ecirc;te standard)
+fait partie du protocole officiel, deux autres (requ&ecirc;te inverse et
+requ&ecirc;te d'&eacute;tat) sont optionnelles, une autre (fin de traitement)
+est obsol&egrave;te, les autres restant non assign&eacute;es &agrave; l'heure
+actuelle.
+<P>Les quatre sections sont :
+<TABLE>
+<TR>
+<TD><FONT COLOR="#000080">Question</FONT></TD>
+
+<TD>contient le nom de la requ&ecirc;te et ses autres param&egrave;tres.</TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">R&eacute;ponse</FONT></TD>
+
+<TD>contient les RR qui r&eacute;pondent directement &agrave; la requ&ecirc;te.</TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">Autorisation</FONT></TD>
+
+<TD>contient les RR d&eacute;crivant d'autres serveurs "autoris&eacute;s".
+Peut aussi contenir un RR SOA contenant les donn&eacute;es d'autorisation
+dans la section r&eacute;ponse.</TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">Additionnel</FONT></TD>
+
+<TD>contient les RR qui peuvent aider &agrave; exploiter les RR contenus
+dans les autres sections.</TD>
+</TR>
+</TABLE>
+
+<P>Notez que le contenu, (mais pas le format) de ces sections peut varier
+suivant le code op&eacute;ration de l'en-t&ecirc;te.&nbsp;<A NAME="3.7.1"></A>
+<H4>
+3.7.1. Requ&ecirc;te Standard</H4>
+Une requ&ecirc;te standard contient un nom de domaine cible (QNAME), un
+type de requ&ecirc;te (QTYPE), et une classe de requ&ecirc;te (QCLASS)
+et requiert les RR correspondants. Ce type de requ&ecirc;te repr&eacute;sente
+la tr&egrave;s grande majorit&eacute; des requ&ecirc;tes qui peuvent arriver
+&agrave; un DNS et nous les appellerons "requ&ecirc;te" sans autre mention
+qualificative. Les requ&ecirc;tes plus particuli&egrave;res seront explicitement
+qualifi&eacute;es. Les champs QTYPE et QCLASS font chacun 16 bits de long,
+et sont un surensemble des types et classes d&eacute;finies. Le champ QTYPE
+peut contenir :
+<TABLE>
+<TR>
+<TD><FONT COLOR="#000080">&lt;tout type></FONT></TD>
+
+<TD>demande la correspondance sur ce type. (ex., A, PTR).</TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">AXFR</FONT></TD>
+
+<TD>QTYPE sp&eacute;cial pour transfert de zone.</TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">MAILB</FONT></TD>
+
+<TD>demande la correspondance pour toutes les RR de bo&icirc;tes aux lettres
+(ex. MB et MG).</TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">*</FONT></TD>
+
+<TD>demande la correspondance sur tous les types de RR.</TD>
+</TR>
+</TABLE>
+
+<P>Le champ QCLASS peut contenir :
+<TABLE>
+<TR>
+<TD><FONT COLOR="#000080">&lt;toute classe></FONT></TD>
+
+<TD>demande la correspondance sur cette classe uniquement (e., IN, CH).</TD>
+</TR>
+
+<TR>
+<TD><FONT COLOR="#000080">*</FONT></TD>
+
+<TD>demande la correspondance sur toutes les classes de RR.</TD>
+</TR>
+</TABLE>
+
+<P>A partir du nom de domaine cible, du QTYPE, et QCLASS, le serveur de
+noms recherche les RR correspondants. En plus des enregistrements trouv&eacute;s,
+le serveur de noms de domaines peut renvoyer les RR pointant vers un serveur
+de noms d&eacute;tenant l'information demand&eacute;e ainsi que tout RR
+qui peut aider &agrave; l'interpr&eacute;tation des RR renvoy&eacute;s.
+Par exemple, un serveur de noms de domaines ne disposant pas de l'information
+demand&eacute;e peut conna&icirc;tre un autre serveur de nom qui la d&eacute;tient
+; un serveur de noms qui renvoie des RR pertinents peut aussi y adjoindre
+d'autres RR qui relient le nom de domaine vers une adresse.
+<P>Par exemple, un agent de courrier tentant d'envoyer un message dans
+la bo&icirc;te aux lettres Mockapetris@ISI.EDU peut demander &agrave; son
+r&eacute;solveur des informations sur le serveur de courrier de ISI.EDU,
+constituant pour cela la requ&ecirc;te QNAME=ISI.EDU, QTYPE=MX, QCLASS=IN.
+La section r&eacute;ponse renvoy&eacute;e serait dans ce cas :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10 VENERA.ISI.EDU.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10 VAXA.ISI.EDU.</FONT></TT></PRE>
+et la section additionnelle :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; VAXA.ISI.EDU.&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.2.0.27
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.33
+&nbsp;&nbsp;&nbsp; VENERA.ISI.EDU. A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.1.0.52
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.32</FONT></TT></PRE>
+Comme le serveur suppose que si le requ&eacute;rant d&eacute;sire des informations
+sur un &eacute;changeur de courrier, il d&eacute;sirera obtenir les adresses
+de ces &eacute;changeurs peu apr&egrave;s.
+<P>Notez que l'&eacute;criture QCLASS=* n&eacute;cessite une interpr&eacute;tation
+particuli&egrave;re notamment concernant les "autorisations". Dans la mesure
+o&ugrave; un serveur de nom ne conna&icirc;t pas n&eacute;cessairement
+toutes les classes disponibles dans le syst&egrave;me de domaines, il ne
+peut jamais savoir si il est "autoris&eacute;" pour toutes les classes.
+Par voie de cons&eacute;quence, aucune r&eacute;ponse &agrave; une requ&ecirc;te
+QCLASS=* peut se qualifier "d'autoris&eacute;e".&nbsp;<A NAME="3.7.2"></A>
+<H4>
+3.7.2. R&eacute;tro-requ&ecirc;tes (Optionel)</H4>
+Les serveurs de noms peuvent &eacute;galement supporter des requ&ecirc;tes
+inverses ou "r&eacute;tro-requ&ecirc;tes" transcodant une ressource particuli&egrave;re
+en un nom de domaine ou les noms de domaines disposant de cette ressource.
+par exemple, alors qu'une requ&ecirc;te standard peut transcoder un nom
+de domaine en un RR SOA, la r&eacute;tro-requ&ecirc;te correspondante transcodera
+ce RR SOA vers le nom de domaine.
+<P>L'impl&eacute;mentation de ce service est optionnel dans un serveur
+de noms de domaines, bien que tous les serveurs de noms doivent au moins
+&ecirc;tre capable d'identifier une requ&ecirc;te inverse et renvoyer le
+message d'erreur "not-implemented". Le syst&egrave;me de domaines ne peut
+pas garantir le r&eacute;sultat ou l'unicit&eacute; de la r&eacute;ponse
+&agrave; une r&eacute;tro-requ&ecirc;te du fait de son organisation bas&eacute;e
+sur une hi&eacute;rarchie de noms de domaines, et non sur une adresse d'h&ocirc;te
+ou tout autre type de ressource. Les r&eacute;tro-requ&ecirc;tes sont principalement
+utiles pour des fonctions de d&eacute;bogage et la maintenance des bases
+de donn&eacute;es.
+<P>Les r&eacute;ponses &agrave; r&eacute;tro-requ&ecirc;tes ne devront
+pas renvoyer la TTL, et ne doit pas indiquer les cas o&ugrave; le RR identifi&eacute;
+fait partie d'un ensemble corr&eacute;l&eacute; (par exemple, une adresse
+d'un h&ocirc;te disposant de plusieurs adresses). De ce fait, les RR renvoy&eacute;s
+par des r&eacute;tro-requ&ecirc;tes ne doivent jamais &ecirc;tre stock&eacute;s.
+Les r&eacute;tro-requ&ecirc;tes NE sont PAS une m&eacute;thode acceptable
+pour transcoder des adresses d'h&ocirc;tes en noms d'h&ocirc;tes ; utiliser
+plut&ocirc;t le domaine IN-ADDR.ARPA.
+<P>Une discussion d&eacute;taill&eacute;e sur les r&eacute;tro-requ&ecirc;tes
+peut &ecirc;tre consult&eacute;e dans la [RFC-1035].&nbsp;<A NAME="3.8"></A>
+<H3>
+3.8. Requ&ecirc;tes d'&eacute;tat (Exp&eacute;rimental)</H3>
+A d&eacute;finir.&nbsp;<A NAME="3.9"></A>
+<H3>
+3.9. Requ&ecirc;tes de Fin de Traitement (Obsol&egrave;te)</H3>
+Le service optionnel de mention de fin de traitement d&eacute;fini dans
+les RFC 882 et 883 a &eacute;t&eacute; supprim&eacute;. Un service de ce
+type compl&egrave;tement r&eacute;nov&eacute; sera peut &ecirc;tre r&eacute;tabli
+dans le futur, ou bien les codes op&eacute;ration r&eacute;serv&eacute;s
+par cet ancienne fonctionnalit&eacute; seront r&eacute;affect&eacute;s.
+<CENTER>
+<P>
+<HR></CENTER>
+
+</BODY>
+</HTML>

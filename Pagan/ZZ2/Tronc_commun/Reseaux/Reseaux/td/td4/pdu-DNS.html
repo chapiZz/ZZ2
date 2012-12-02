@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+  <TITLE>Format des PDU-DNS</TITLE>
+ <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+<H1>Format des PDU-DNS</H1>
+
+<H3>Format général</H3>
+<BLOCKQUOTE><TABLE BORDER="1" CELLPADDING="3">
+<TR><TD>entête</TD><TD>12 octets</TD></TR>
+<TR><TD>0 ou 1 question (Q)</TD><TD>lg variable</TD></TR>
+<TR><TD>0 ou 1 RR réponses (R)</TD><TD>lg variable</TD></TR>
+<TR><TD>0 ou 1 RR références autorisées (A)</TD><TD>lg variable</TD></TR>
+<TR><TD>0 ou 1 RR informations additionnelles (I)</TD><TD>lg variable</TD></TR>
+</TABLE></BLOCKQUOTE>
+
+<H3>Format de l'entête</H3>
+
+<BLOCKQUOTE><TABLE BORDER="1" CELLPADDING="3">
+<TR><TH>&nbsp;</TH><TH>bits</TH><TH>champ</TH><TH>valeurs</TH></TR>
+<TR><TD ALIGN=center>octets 0-1</TD><TD>&nbsp;</TD><TD>identifier</TD><TD>&nbsp;</TD></TR>
+<TR><TD ALIGN=center ROWSPAN=5>octet 2</TD><TD ALIGN=center>0</TD><TD>type-PDU</TD><TD>0=QUERY<BR>1=ANSWER</TD></TR>
+<TR>	<TD ALIGN=center>2..4</TD><TD>opcode</TD><TD>0=normal<BR>1=inverse<BR>2=état du serveur</TD></TR>
+<TR>	<TD ALIGN=center>5</TD><TD>AA</TD><TD>1=réponse autorisée</TD></TR>
+<TR>	<TD ALIGN=center>6</TD><TD>TC</TD><TD>1=réponse tronquée</TD></TR>
+<TR>	<TD ALIGN=center>7</TD><TD>RD</TD><TD>1=récursion demandée</TD></TR>
+<TR><TD ALIGN=center ROWSPAN=3>octet 3</TD><TD ALIGN=center>0</TD><TD>RA</TD><TD>1=récursion disponible</TD></TR>
+<TR>	<TD ALIGN=center>1..3</TD><TD>Z</TD><TD>0</TD></TR>
+<TR>	<TD ALIGN=center>5..7</TD><TD>rcode</TD>
+		<TD>0=pas d'erreur<BR>1=erreur dans question<BR>2=erreur du serveur<BR>
+		3=nom inexistant<BR>4=réponse impossible<BR>5=refus de réponse
+		</TD>
+</TR>
+<TR><TD>octets 4-5</TD><TD>&nbsp;</TD><TD>nombre de questions</TD><TD>&nbsp;</TD></TR>
+<TR><TD>octets 6-7</TD><TD>&nbsp;</TD><TD>nombre de réponses</TD><TD>&nbsp;</TD></TR>
+<TR><TD>octets 8-9</TD><TD>&nbsp;</TD><TD>nombre de références autorisées</TD><TD>&nbsp;</TD></TR>
+<TR><TD>octets 10-11</TD><TD>&nbsp;</TD><TD>nombre d'informations additionnelles</TD><TD>&nbsp;</TD></TR>
+</TABLE></BLOCKQUOTE>
+
+<H3>Format d'une question</H3>
+<BLOCKQUOTE><TABLE BORDER="1">
+<TR><TD>NAME</TD><TD>nom cherché</TD><TD>lg variable</TD></TR>
+<TR><TD>TYPE</TD><TD><TT>1=A 2=NS 5=CNAME 6=SOA 12=PTR 13=HINFO<BR>15=MX 28=AAAA 255=*</TT></TD><TD>2 octets</TD></TR>
+<TR><TD>CLASS</TD><TD>1=Internet</TD><TD>2 octets</TD></TR>
+</TABLE></BLOCKQUOTE>
+
+<H3>Format d'un RR</H3>
+<BLOCKQUOTE><TABLE BORDER="1">
+<TR><TD>NAME</TD><TD>nom de la ressource</TD><TD>lg variable</TD></TR>
+<TR><TD>TYPE</TD><TD>type de RR</TD><TD>2 octets</TD></TR>
+<TR><TD>CLASS</TD><TD>0=Internet 1=Chaos</TD><TD>2 octets</TD></TR>
+<TR><TD>TTL</TD><TD>durée de validité</TD><TD>2 octets</TD></TR>
+<TR><TD>RDLENGTH</TD><TD>lg du RDATA</TD><TD>2 octets</TD></TR>
+<TR><TD>RDATA</TD><TD>données du RR</TD><TD>lg variable</TD></TR>
+</TABLE></BLOCKQUOTE>
+
+
+
+<HR>
+
+</BODY></HTML>

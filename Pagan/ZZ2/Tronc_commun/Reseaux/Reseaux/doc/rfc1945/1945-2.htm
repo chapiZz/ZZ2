@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+<H2><FONT COLOR="#000088">2. Conventions de notation et Grammaire g&eacute;n&eacute;rique</FONT></H2>
+<A NAME="2-1"></A>
+<H3>2.1 BNF &eacute;tendue</H3>
+<P>Tous les m&eacute;canismes &eacute;voqu&eacute;s sont d&eacute;crits en prose et sous forme Backus-Naur &eacute;tendue (BNF) similaire &agrave; celle utilis&eacute;e dans la RFC 822 [7]. Les d&eacute;veloppeurs devront &ecirc;tre familiaris&eacute;s avec cette notation afin de comprendre cette sp&eacute;cification. La notation Backus-Naur comprend les all&eacute;gations suivantes :
+
+<P><B><CODE>nom = d&eacute;finition</CODE></B>
+<P>Le nom d'une r&egrave;gle est le nom lui-m&ecirc;me (sans "&#060;" ni "&#062;" englobants) et est s&eacute;par&eacute; de sa d&eacute;finition par le symbole "=". Le caract&egrave;re espace n'a de signification que lorsqu'un retrait indique qu'une d&eacute;finition s'&eacute;tend sur plusieurs lignes. Certaines r&egrave;gles de base sont en majuscules, comme SP, LWS, HT, CRLF, DIGIT, ALPHA, etc. Les ouvertures et fermetures "&#060;" et "&#062;" ne sont utilis&eacute;es que lorsqu'une discrimination des r&egrave;gles est indispensable &agrave; l'int&eacute;rieur d'une d&eacute;finition.
+
+<P><B>"literal"</B>
+<P>Un texte litt&eacute;ral est entre doubles guillemets. Sauf mention contraire, la casse du texte n'est pas consid&eacute;r&eacute;e.
+
+<P><B><CODE>r&egrave;gle1 | r&egrave;gle2</CODE></B>
+<P>Les &eacute;l&eacute;ments s&eacute;par&eacute;s par une barre ("I") constituent une alternative, ex., "oui | non" acceptera "oui" ou "non".
+
+<P><B><CODE>(r&egrave;gle1 r&egrave;gle2)</CODE></B>
+<P>Les &eacute;l&eacute;ments &agrave; l'int&eacute;rieur de parenth&egrave;ses sont consid&eacute;r&eacute;s comme un seul &eacute;l&eacute;ment. Ainsi, "(elem (foo | bar) elem)" permet les s&eacute;quence "elem foo elem" et "elem bar elem".
+
+<P><B><CODE>*r&egrave;gle</CODE></B>
+<P>Le caract&egrave;re "*" pr&eacute;c&eacute;dent un &eacute;l&eacute;ment indique sa r&eacute;p&eacute;tition. La forme compl&egrave;te de cette notation est "&#060;n&#062;* &#060;m&#062;element" indiquant au moins &#060;n&#062; et au plus &#060;m&#062; occurrences de "element". Les valeurs par d&eacute;faut sont 0 et "infini". la syntaxe "*(element)" signifie donc tout nombre d'occurrences y compris 0; "1*element" pr&eacute;cise au moins une occurrence; et "1*2element" pr&eacute;cise une ou deux occurrences.
+
+<P><B><CODE>[r&egrave;gle]</CODE></B>
+<P>Les crochets pr&eacute;cisent un &eacute;l&eacute;ment optionnel; "[foo bar]" vaut pour "*1(foo bar)".
+
+<P><B><CODE>Nr&egrave;gle</CODE></B>
+<P>R&eacute;p&eacute;tition pr&eacute;cise: "&#060;n&#062;(element)" est &eacute;quivalente &agrave; "&#060;n&#062;*&#060;n&#062;(element)"; c'est &agrave; dire, exactement &#060;n&#062; occurrences de (element). Ainsi 2DIGIT est un nombre de 2-digits, et 3ALPHA une cha&icirc;ne de 3 caract&egrave;res alphab&eacute;tiques.
+
+<P><B><CODE>#r&egrave;gle</CODE></B>
+<P>Une syntaxe "#" est utilis&eacute;e, comme pour la syntaxe "*", pour d&eacute;finir des listes d'&eacute;l&eacute;ments. La forme compl&egrave;te en est "&#060;n&#062;# &#060;m&#062;element" indiquant au moins &#060;n&#062; et au plus &#060;m&#062; elements, chacun s&eacute;par&eacute; par une ou plusieurs virgules (",") et des espaces optionnels (LWS). Ceci rend la forme des listes tr&egrave;s lisible; une r&egrave;gle du type "( *LWS element *( *LWS "," *LWS element ))" peut &ecirc;tre vue comme "1#element". Lorsque cette construction est utilis&eacute;e, les &eacute;l&eacute;ments vides sont utilis&eacute;s, mais ne contribue pas au comptage des &eacute;l&eacute;ments pr&eacute;sents. De ce fait, "(element), , (element)" est permis, mais compte comme deux &eacute;l&eacute;ments. Toutefois, dans les cas ou un &eacute;l&eacute;ment au moins est requis, cet &eacute;l&eacute;ment doit &ecirc;tre non nul. Les valeurs par d&eacute;faut sont 0 et "infini" et donc "#(element)" vaut pour tous les &eacute;l&eacute;ments y compris 0; "1#element" vaut pour au moins un; et "1#2element" permet un ou deux &eacute;l&eacute;ments.
+
+<P><B><CODE>; commentaire</CODE></B>
+<P>Un point virgule, &agrave; distance d'un texte de r&egrave;gle instaure un d&eacute;but de commentaire qui va jusqu'au bout de la ligne. C'est un moyen pratique d'ins&eacute;rer des remarques ou annotations en cours de sp&eacute;cification.
+
+<P><B><CODE>*LWS implicite</CODE></B>
+<P>La grammaire d&eacute;crite par cette sp&eacute;cification est bas&eacute;e sur le "mot". Sauf mention contraire, tout nombre d'espaces (LWS) peut &ecirc;tre ins&eacute;r&eacute; entre deux mots adjacents ou "token", et entre un "token" et un d&eacute;limiteur (tspecials), sans changer l'interpr&eacute;tation. Il doit exister au moins un d&eacute;limiteur (tspecials) entre deux mots, au risque de les voir interpr&eacute;t&eacute;s comme un seul. Malgr&eacute; tout, les constructions HTTP tendront &agrave; utiliser la "forme commune", certaines impl&eacute;mentations ne savent traiter autre chose que cette forme.
+<A NAME="2-2"></A>
+<H3>2.2 R&egrave;gles de base</H3>
+<P>Les r&egrave;gles de base suivantes seront utilis&eacute;es tout au long de ce document dans les s&eacute;quences de recherche. La table de caract&egrave;res ASCII-US est d&eacute;finie par [17].
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+OCTET       = [toute donn&eacute;e cod&eacute;e sur 8 bits]
+CHAR        = [tout caract&egrave;re ASCII-US (0 &agrave; 127)>
+UPALPHA     = [Tout caract&egrave;re alphab&eacute;tique ASCII-US majuscule "A".."Z"]
+LOALPHA     = [Tout caract&egrave;re alphab&eacute;tique ASCII-US minuscule "a".."z"]
+ALPHA       = UPALPHA | LOALPHA
+DIGIT       = [tout digit ASCII-US "0".."9"]
+CTL         = [Tous caract&egrave;re de contr&ocirc;le ASCII-US (0 &agrave; 31) et DEL (127)]
+CR          = [CR ASCII-US, retour chariot (13)]
+LF          = [LF ASCII-US, saut de ligne (10)]
+SP          = [SP ASCCII-US, espace (32)]
+HT          = [HT ASCII-US, tabulation horizontale (9)]
+&#060;"&#062;         = [double guillemet ASCII-US (34)]
+</PRE></CODE></FONT>
+<P>HTTP/1.0 d&eacute;finit la s&eacute;quence CR LF comme marqueur de fin de ligne pour tous les &eacute;l&eacute;ments except&eacute; le corps de l'entit&eacute; (voir Appendice B pour les tol&eacute;rances). La fin de ligne &agrave; l'int&eacute;rieur d'un corps d'entit&eacute; d&eacute;pend de son m&eacute;dia, comme d&eacute;crit en Section 3.6.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+CRLF        = CR LF</PRE></CODE></FONT>
+
+<P>Les en-t&ecirc;tes HTTP/1.0 peuvent &ecirc;tre r&eacute;parties su plusieurs lignes si chaque nouvelle ligne commence par un espace ou une tabulation horizontale. Une suite d'espace, m&ecirc;me sur plusieurs lignes &eacute;quivaut &agrave; un espace simple.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+LWS		=	[CRLF] 1*( SP | HT )</PRE></CODE></FONT>
+
+<P>Cependant les en-t&ecirc;tes multilignes ne sont pas accept&eacute;es par toutes les applications, et doivent de pr&eacute;f&eacute;rence &ecirc;tre &eacute;vit&eacute;es lors d'un codage HTTP/1.0.
+
+<P>La r&egrave;gle TEXT est utilis&eacute;e pour d&eacute;crire des informations descriptives qui ne sont pas sens&eacute;es &ecirc;tre interpr&eacute;t&eacute;es. Les mots d'un &eacute;l&eacute;ment *TEXT peuvent contenir d'autres caract&egrave;res que ceux de la table ASCII-US stricto sensu.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+TEXT                  = [tout OCTET sauf CTL, hormis LWS qui reste
+                        autoris&eacute;]</PRE></CODE></FONT>
+
+<P>Les r&eacute;cepteurs d'un &eacute;l&eacute;ment TEXT d'une en-t&ecirc;te contenant des octets hors de la table ASCII-US supposeront qu'il s'agit de caract&egrave;res ISO-8859-1.
+
+<P>Les caract&egrave;res hexad&eacute;cimaux peuvent &ecirc;tre utilis&eacute;s dans certaines applications.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+HEX                   = "A" | "B" | "C" | "D" | "E" | "F" | "a" 
+                      | "b" | "c" | "d" | "e" | "f" | DIGIT </PRE></CODE></FONT>
+
+<P>De nombreux champs d'en-t&ecirc;te HTTP/1.0 sont form&eacute;s de mots s&eacute;par&eacute;s par des espaces ou caract&egrave;res sp&eacute;ciaux. Ces caract&egrave;res doivent &ecirc;tre entre guillemets lorsqu'ils sont utilis&eacute;s &agrave; l'int&eacute;rieur d'une valeur.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+mot                   = token | cha&icirc;ne entre guillemets
+
+token                 = 1*[tout CHAR except&eacute; CTLs ou tspecials]
+
+tspecials             = "(" | ")" | "<" | ">" | "@" | "," | ";" | ":" 
+                      | "\" | ["] | "/" | "[" | "]" | "?" | "=" | "{" 
+                      | "}" | SP | HT
+</PRE></CODE></FONT>
+
+<P>Les commentaires pourront &ecirc;tre ins&eacute;r&eacute;s dans les en-t&ecirc;tes HTTP en les entourant de parenth&egrave;ses. Les commentaires ne sont permis que dans les champs contenant le mot "comment" dans leur d&eacute;finition. Dans tous les autres champs, les parenth&egrave;ses sont interpr&eacute;t&eacute;es comme faisant partie de l'expression.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+comment              = "(" *( ctext | comment ) ")"
+ctext                = [tout TEXT except&eacute; "(" et
+                        ")"]</PRE></CODE></FONT>
+
+<P>Une cha&icirc;ne sera interpr&eacute;t&eacute;e comme un seul mot si elle est entre double guillemets.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+quoted-string        = ( &#060;"&#062; *(qdtext) &#060;"&#062; )
+
+qdtext               = [tout CHAR sauf &#060;"&#062; et CTL, hormis LWS qui est accept&eacute;]
+</PRE></CODE></FONT>
+<P>L'utilisation du backslash ("\") comme s&eacute;quence d'&eacute;chappement d'un caract&egrave;re unique n'est pas permis par le protocole HTTP/1.0
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-1.htm">Pr&eacute;c&eacute;dent</A> - <A HREF="1945-3.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+

@@ -1,0 +1,293 @@
+<HTML>
+<TITLE>PPP - RFC 1661 - VF</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<P>RFC: 1661<BR>
+Statut : Standard<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm" TARGET="_top">INDEX FRANCAIS</A>
+<CENTER><H1>POINT TO POINT PROTOCOL - PPP</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER> W. Simpson / Juillet 1994<BR>
+Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry G. FREMAUX</A> Ing&eacute;nieur Professeur / <A HREF="http://www.eisti.fr">EISTI</A><BR>
+Edition originale : Mai 1996 / Version FR: Janvier 1998
+<HR>
+<CENTER>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-03.htm">Précédent</A> - <A HREF="1661-05.htm">Suivant</A><HR>
+</CENTER>
+<A NAME="4"></A>
+<H2>4. L'automate de négociation d'options</H2>
+<P>L'automate à nombre d'états fini est défini par des événements, des actions et des transitions entre états. Les événements incluent la réception de commandes externes telles que Open et Close, la retombée de la temporisation de Reprise, et la réception de paquets via la liaison. Les actions comprennent le démarrage de la temporisation de Reprise et l'émission de paquets vers le correspondant.
+<P>Certains types de paquets -- <I>Configuration-NonAcquittée</I> et <I>Configuration-Rejetée</I>, ou <I>Code-Rejeté</I> et <I>Protocole-Rejeté</I>, ou <I>Requête-Echo</I>, <I>Réponse-Echo</I> et <I>Requête-Elimination</I>  ne sont pas différentiés dans la description de l'automate. Comme ceci sera décrit plus tard, ces paquets correspondent cependant à des usages différents. Ils génèrent cependant toujours des transitions identiques.
+
+<TABLE BORDER=5><TR><TD><B>Evénements</B></TD><TD><B>Actions</B></TD></TR><TR><TD>Up   = couche inférieure prête</TD><TD>tlu = Couche prête</TD></TR><TR><TD> Down = couche inférieure non prête</TD><TD>tld = Couche non prête</TD></TR><TR><TD> Open = commande administrateur Open</TD><TD>tls = Démarrer</TD></TR><TR><TD> Close = commande administrateur Close</TD><TD>tlf = Terminer</TD></TR><TR><TD> TO+  = Temporisation non expirée > 0</TD><TD>irc = Initialiser-Reprise</TD></TR><TR><TD> TO-  = Temporisation expirée</TD><TD>zrc = Réinitialiser-compteur</TD></TR><TR><TD> RCR+ = <I>Requête-Configuration</I>-Reçue (Correcte)</TD><TD>scr = Emission-<I>Requête-Configuration</I></TD></TR><TR><TD> RCR- = <I>Requête-Configuration</I>-Reçue (Incorrecte)</TD><TD></TD></TR><TR><TD> RCA  = <I>Configuration-Acquittée</I>-Reçu</TD><TD>sca = Emission-<I>Configuration-Acquittée</I></TD></TR><TR><TD> RCN  = <I>Configuration-NonAcquittée</I>/Rejetée-Reçu</TD><TD>scn = Emission-<I>Configuration-NonAcquittée</I>/Rejetée</TD></TR><TR><TD> RTR  = <I>Requête-Fermeture</I>-Reçue</TD><TD>str = Emission-<I>Requête-Fermeture</I></TD></TR><TR><TD> RTA  = <I>Fermeture-Acquittée</I>-Reçu</TD><TD>sta = Emission-<I>Fermeture-Acquittée</I></TD></TR><TR><TD> RUC  = Code-Inconnu-Reçu</TD><TD>scj = Emission-<I>Code-Rejeté</I></TD></TR><TR><TD> RXJ+ = <I>Code-Rejeté</I>-Reçu (non critique) ou <I>Protocole-Rejeté</I>-Reçu<BR> RXJ- = <I>Code-Rejeté</I>-Reçu (critique)
+ou <I>Protocole-Rejeté</I>-Reçu</TD><TD></TD></TR><TR><TD> RXR  = <I>Requête-Echo</I>-Reçu</TD><TD>ser = Emission-Echo-Réponse</TD></TR><TR><TD>RRR = <I>Réponse-Echo</I>-Reçu<BR>       ou <I>Requête-Elimination</I>-Reçu</TD><TD></TD></TR></TABLE><A NAME="4.1"></A><H3>4.1.  Table de transition d'états</H3><P>La table complète des transitions d'état est donnée ci-après. Les états sont indiqués horizontalement, et les événements verticalement. Les transitions entre états et les actions sont représentés sous la forme d'un couple action/nouvel-état. Des actions multiples sont séparées par des virgules, et peuvent être exprimées sur plusieurs lignes successives; les actions multiples pourront être implémentées dans n'importe quel ordre. L'état peut être suivi d'une lettre, renvoyant à une note explicative. Le tiret ('-') marque une transition illégale.
+
+<P><CODE><PRE><FONT COLOR="#008800">
+      | Etat
+      |    0         1         2         3         4         5
+Events| Initial   Starting  Closed    Stopped   Closing   Stopping
+------+-----------------------------------------------------------
+ Up   |    2     irc,scr/6     -         -         -         -
+ Down |    -         -         0       tls/1       0         1
+ Open |  tls/1       1     irc,scr/6     3r        5r        5r
+ Close|    0       tlf/0       2         2         4         4
+      |
+  TO+ |    -         -         -         -       str/4     str/5
+  TO- |    -         -         -         -       tlf/2     tlf/3
+      |
+ RCR+ |    -         -       sta/2 irc,scr,sca/8   4         5
+ RCR- |    -         -       sta/2 irc,scr,scn/6   4         5
+ RCA  |    -         -       sta/2     sta/3       4         5
+ RCN  |    -         -       sta/2     sta/3       4         5
+      |
+ RTR  |    -         -       sta/2     sta/3     sta/4     sta/5
+ RTA  |    -         -         2         3       tlf/2     tlf/3
+      |
+ RUC  |    -         -       scj/2     scj/3     scj/4     scj/5
+ RXJ+ |    -         -         2         3         4         5
+ RXJ- |    -         -       tlf/2     tlf/3     tlf/2     tlf/3
+      |
+ RXR  |    -         -         2         3         4         5
+
+      | State
+      |    6         7         8           9
+Events| Req-Sent  Ack-Rcvd  Ack-Sent    Opened
+------+-----------------------------------------
+ Up   |    -         -         -           -
+ Down |    1         1         1         tld/1
+ Open |    6         7         8           9r
+ Close|irc,str/4 irc,str/4 irc,str/4 tld,irc,str/4
+      |
+  TO+ |  scr/6     scr/6     scr/8         -
+  TO- |  tlf/3p    tlf/3p    tlf/3p        -
+      |
+ RCR+ |  sca/8   sca,tlu/9   sca/8   tld,scr,sca/8
+ RCR- |  scn/6     scn/7     scn/6   tld,scr,scn/6
+ RCA  |  irc/7     scr/6x  irc,tlu/9   tld,scr/6x
+ RCN  |irc,scr/6   scr/6x  irc,scr/8   tld,scr/6x
+      |
+ RTR  |  sta/6     sta/6     sta/6   tld,zrc,sta/5
+ RTA  |    6         6         8       tld,scr/6
+      |
+ RUC  |  scj/6     scj/7     scj/8       scj/9
+ RXJ+ |    6         6         8           9
+ RXJ- |  tlf/3     tlf/3     tlf/3   tld,irc,str/5
+      |
+ RXR  |    6         7         8         ser/9</FONT></PRE></CODE>
+
+<P>Les états dans lesquels la temporisation Reprise tourne sont identifiables par la possibilité d'événements TO. Seules les actions Emission-<I>Requête-Configuration</I>, Emission-<I>Requête-Fermeture</I> et Réinitialiser-Compteur démarrent ou redémarrent la temporisation de Reprise. La temporisation est arrêtée lors de toute transition d'un état permettant le comptage de temporisation vers un état ne la permettant pas.
+<P>Les événements et les actions sont implémentées selon une architecture d'échange de messages, plutôt que par gestion de signaux. Si l'on désire qu'une action contrôle certains signaux (par exemple DTR), des actions supplémentaires devront être définies.
+
+<P><CODE><PRE><FONT COLOR="#000088">   [p]   Option passive; voir Arrêté(Stopped).
+   [r]   Option de redémarrage; voir l'événement ouverture.
+   [x]   Connexion croisée; voir l'événement RCA.</FONT></PRE></CODE>
+<A NAME="4.2"></A>
+<H3>4.2. Etats</H3>
+<P>Ce qui suit est une description plus détaillée de chaque état de l'automate.
+<A NAME="4.2.a"></A>
+<H4>Initial</H4>
+<P>Dans l'état Initial, la couche physique est indisponible (Down), et aucune demande d'ouverture n'est intervenue. La temporisation de Reprise ne tourne pas dans l'état Initial.
+<A NAME="4.2.b"></A>
+<H4>Démarrage (Starting)</H4>
+<P>L'état de démarrage est la réponse à une demande d'ouverture par une commande administrateur Open à partir de l'état Initial. Cet état survient dès réception de l'ordre Open, bien que la couche physique ne soit toujours pas disponible (Down). La temporisation de Reprise ne tourne pas dans cet état.
+Dès que la couche physique devient prête (Up), une Requête de Configuration est émise.
+<A NAME="4.2.c"></A>
+<H4>Fermé (Closed)</H4>
+<P>L'état Fermé résulte d'une action de fermeture alors que le lien physique est disponible (Up), mais que le lien n'est pas dans un état opérationnel. La temporisation de Reprise ne tourne pas dans cet état.
+<P>Sur réception d'une <I>Requête-Configuration</I>, un paquet <I>Fermeture-Acquittée</I> est émis. Les paquets <I>Fermeture-Acquittée</I> sont ignorés pour éviter un fonctionnement en boucle.
+<A NAME="4.2.d"></A>
+<H4>Arrêté (Stopped)</H4>
+<P>L'état arrêté (Stopped) est la conséquence d'une fermeture à partir d'un état ouvert du lien. Il est atteint lorsque l'automate attend un événement Down après l'action de fermeture, ou après avoir envoyé un message Emission-<I>Fermeture-Acquittée</I>. La temporisation de Reprise ne court pas dans cet état.
+<P>Lorsqu'un paquet <I>Requête-Configuration</I> est reçu, une réponse appropriée est envoyée. La réception de tout autre paquet entraîne l'émission d'un paquet <I>Fermeture-Acquittée</I>. Ces mêmes paquets <I>Fermeture-Acquittée</I> seront ignorés en réception pour éviter de boucler le protocole.
+
+<P><FONT SIZE=-1><B>Justification :</B>
+L'état arrêté (Stopped) est un état intermédiaire lors de la coupure d'une liaison, l'échec d'une configuration, et d'autres modes d'échec de l'automate. Ces états à priori distincts ont été combinés dans cette étape.</FONT>
+<P>Il existe une concurrence temporelle entre la réponse par l'événement Down (attendu après l'action Terminer de la couche PPP) et l'apparition possible d'un événement <I>Requête-Configuration</I>-Reçue. Lorsqu'une <I>Requête-Configuration</I> arrive avant la chute de ligne (Down), ce dernier événement prévaudra et la ligne reviendra à l'état initial dès sa réception. Ceci protège le protocole contre les attaques par  répétition.
+
+<P><FONT SIZE=-1><B>Option d'implémentation :</B>
+<P>Lorsque le distant ne parvient pas à répondre à une <I>Requête-Configuration</I> locale, l'implémentation POURRA attendre la réception d'une <I>Requête-Configuration</I> distante. Dans ce cas, l'action Terminer ne sera pas effectuée lorsque l'événement TO- survient dans les états Connexion-demandée, Connexion-Acquittée et Acquitement-connexion.</FONT>
+<P>Cette option est utile dans le cas de lignes permanentes dédiées, ou circuits ne disposant pas de signalisation d'état physique de ligne, mais doit être proscrite pour des lignes câblées sur un réseau commuté.
+<A NAME="4.2.e"></A>
+<H4>Fermeture en cours (Closing)</H4>
+<P>En Fermeture, une tentative est faite pour fermer la connexion. Une <I>Requête-Fermeture</I> a été émise et la temporisation de Reprise tourne,  l'acquittement de fermeture n'a pas encore été reçu.
+<P>En réponse à un événement <I>Fermeture-Acquittée</I>-reçu, l'automate passe en état Fermé. 
+<P>Lorsque la temporisation de Reprise expire, une nouvelle <I>Requête-Fermeture</I> est émise, et la temporisation relancée. Lorsque la temporisation a expiré un nombre de fois fixé, l'automate passe alors en état Fermé.
+<A NAME="4.2.f"></A>
+<H4>Arrêt en cours (Stopping)</H4>
+<P>L'état Arrêt en Cours est à l'état Arrêté ce que la Fermeture en Cours est à l'état Fermé. Une <I>Requête-Fermeture</I> a été émise et la temporisation de Reprise tourne, un <I>Fermeture-Acquittée</I> n'a pas encore été reçu.
+
+<P><B>Justification :</B>
+<P>L'état Arrêt en Cours définit parfaitement comment terminer une communication avant de permettre le passage de nouvelles données. Une fois la liaison coupée, une nouvelle configuration peut être demandée par l'état Arrêté ou Démarrage.
+<A NAME="4.2.g"></A>
+<H4>Connexion-demandée (Request-Sent)</H4>
+<P>Dans l'état Connexion-demandée, une configuration peut prendre place pour initialiser la liaison. Un paquet <I>Requête-Configuration</I> a été émis et la temporisation de Reprise est mise en route. Dans cet état, un paquet <I>Configuration-Acquittée</I> n'a ni été reçu, et encore moins émis.
+<A NAME="4.2.h"></A>
+<H4>Connexion-Acquittée (Ack-Received)</H4>
+<P>Dans l'état de Connexion-Acquittée (Ack-Received), un paquet <I>Requête-Configuration</I> a été émis et un <I>Configuration-Acquittée</I> distant reçu. La temporisation de Reprise tourne toujours, dans la mesure où le paquet local <I>Configuration-Acquittée</I> n'a pas été encore envoyé.
+<A NAME="4.2.i"></A>
+<H4>Aquittement-connexion (Ack-Sent)</H4>
+<P>Dans l'état d'Acquittement-Connexion, un paquet de <I>Requête-Configuration</I> et un <I>Configuration-Acquittée</I> ont tous deux été émis, mais le distant n'a toujours pas acquitté à son tour la configuration négociée. La temporisation de Reprise tourne, tant que cette réponse n'est pas parvenue au local.
+<A NAME="4.2.j"></A>
+<H4>Ouvert (Opened)</H4>
+<P>Dans l'état Ouvert, les acquittements de configuration ont été échangés. La temporisation de Reprise s'arrête.
+<P>Lorsque cet état est atteint par l'automate, l'implémentation DEVRAIT émettre vers la couche supérieure un événement Up. A l'inverse, lorsque cet état est quitté, l'implémentation DEVRAIT émettre un signal Down vers la couche supérieure.
+<A NAME="4.3"></A>
+<H3>4.3. Evénements</H3>
+<P>Les transitions et les actions de l'automate sont causés par des événements.
+<A NAME="4.3.a"></A>
+<H4>Up</H4>
+<P>Cet événement survient lorsque la couche basse de protocole est prête à transporter des paquets de données.
+<P>Typiquement, cet événement est généré par un pilote de modem, ou par toute autre interface entre PPP et un gestionnaire de média physique, pour signaler au LCP que la liaison entre dans la phase d'Etablissement.
+<P>Il sera l'occasion pour le LCP de signaler à chaque NCP que la liaison admet désormais un fonctionnement au niveau réseau., l'action Couche-Prête du LCP déclenchera les actions Up de chaque NCP.
+<P>(NdT: cette couche devenant alors la couche inférieure des NCP).
+<A NAME="4.3.b"></A>
+<H4>Down</H4>
+<P>Cet événement survient lorsque la couche basse de protocole n'est plus en mesure de transporter des paquets de données.
+<P>Typiquement, cet événement est généré par un pilote de modem, ou par toute autre interface entre PPP et un gestionnaire de média physique, pour signaler au LCP que la liaison entre dans un état non opérationnel.
+<P>Il sera l'occasion pour le LCP de signaler à chaque NCP que la liaison quitte le fonctionnement au niveau réseau., l'action Couche-non-Prête du LCP déclenchera les actions Down de chaque NCP.
+<A NAME="4.3.c"></A>
+<H4>Ouverture (Open)</H4>
+<P>Cet événement indique que la mise en uvre de la liaison est demandée par l'administrateur humain ou une couche supérieure. Lorsqu'il apparaît, et que la liaison n'est pas déjà dans l'état Ouverte, l'automate essayera d'émettre des paquets de configuration au distant.
+<P>Si l'automate est dans l'impossibilité de commencer cette configuration (la ligne est physiquement indisponible, ou une commande Close précédente n'est pas encore totalement traitée), l'établissement de la nouvelle communication est automatiquement différé.
+<P>Lorsqu'une <I>Requête-Fermeture</I> est reçue, ou tout autre événement qui rend le lien non disponible, l'automate progressera vers un état dans lequel une réouverture de la ligne est possible. Aucune autre intervention de l'administrateur n'est nécessaire.
+
+<P><FONT SIZE=-1><B>Option d'implémentation :</B>
+<P>L'expérience a démontré que les utilisateurs relancent en général une nouvelle commande Open lorsqu'ils désirent renégocier la liaison. Cette action indique en général que les paramètres de la liaison sont à modifier.
+<P>Comme il ne s'agit pas de la sémantique exacte de l'événement d'Ouverture, il est suggéré que l'implémentation lance un événement Down immédiatement suivi d'un événement Up, lorsqu'une commande Open est exécutée alors que l'automate est dans l'un des états Ouvert, Fermeture en Cours, Arrêt en Cours, ou Arrêté. On prendra garde dans ce cas que l'avènement de l'événement Down ne puisse être provoqué par une autre cause.
+<P>La succession d'un Down puis d'un Up va provoquer une renégociation de la liaison, en suivant la progression passant par les états Démarrage et Connexion-demandée. La connexion est ainsi renégociée sans effets de bords notable.</FONT>
+<A NAME="4.3.d"></A>
+<H4>Fermeture (Close)</H4>
+<P>Cet événement indique que la liaison ne doit plus véhiculer de données; en d'autre termes, l'administrateur de réseau (humain ou logiciel) a avisé que la liaison ne doit plus resté en état Ouvert. Lorsque cet événement survient, et la liaison n'est pas déjà Fermée, l'automate va tenter d'interrompre la connexion. Des tentatives ultérieures de reconfiguration de la liaison seront refusées tant qu'un nouvel événement Open n'intervient pas.
+
+<P><FONT SIZE=-1><B>Note d'implémentation :</B>
+<P>Lorsque une authentification échoue, la liaison DEVRAIT être coupée, pour éviter une attaque par répétition et le refus de service aux autres utilisateurs. Comme la liaison est encore administrativement disponible (par définition), ceci pourrait être accompli en simulant une commande Close donnée au LCP, immédiatement suivie d'une commande Open. On prendra garde dans ce cas que l'avènement de l'événement Close ne puisse être provoqué par une autre cause.
+<P>L'événement Close suivi d'un Open provoque une coupure normale de la ligne, progressant depuis l'état Fermeture en Cours vers l'état Arrêt en Cours, l'action Terminer entraîne la déconnexion physique de la ligne. L'automate attend alors la prochaine demande de connexion dans l'état Arrêté ou Démarrage.</FONT>
+<A NAME="4.3.e"></A>
+<H4>Temporisation (TO+,TO-)</H4>
+<P>Cet événement indique l'expiration de la temporisation de Reprise. Cette temporisation sert à quantifier l'attente maximum d'une réponse à une <I>Requête-Configuration</I> et une <I>Requête-Fermeture</I>.
+<P>L'événement TO+ indique que le compteur de Reprise est toujours positif, ce qui provoque la réémission d'un paquet <I>Requête-Configuration</I> ou <I>Requête-Fermeture</I> suivant le cas.
+<P>L'événement TO- indique que le compteur de Reprise est passé à zéro, et aucun paquet de Requête ne doit être réémis dans ce cas.
+<A NAME="4.3.f"></A>
+<H4><I>Requête-Configuration</I>-Reçue (RCR+,RCR-)</H4>
+<P>Cet événement survient lorsqu'un paquet <I>Requête-Configuration</I> distant est reçu. Cette <I>Requête-Configuration</I> indique que le distant souhaite ouvrir une communication et peut y spécifier des options de configuration. Le paquet <I>Requête-Configuration</I> est présenté en détail plus loin.
+<P>L'événement RCR+ indique que la <I>Requête-Configuration</I> est légitime, et déclenche la transmission d'un paquet <I>Configuration-Acquittée</I>.
+<P>L'événement RCR- indique que la <I>Requête-Configuration</I> n'est pas légitime, ou acceptable, et déclenche la transmission d'un paquet <I>Configuration-Rejetée</I> ou <I>Configuration-NonAcquittée</I>.
+
+<P><FONT SIZE=-1><B>Note d'implémentation :</B>
+<P>Ces événements peuvent survenir sur une connexion ouverte. L'implémentation DEVRA être préparé à renégocier  immédiatement les options de configuration.</FONT>
+<A NAME="4.3.g"></A>
+<H4>Acquitement-Configuration-Reçue (RCA)</H4>
+<P>Cet événement survient lorsqu'un paquet <I>Configuration-Acquittée</I> distant est reçu. Ce paquet est une réponse positive à une <I>Requête-Configuration</I>. Un paquet hors contexte ou invalide pour une autre raison est ignoré.
+
+<P><FONT SIZE=-1><B>Note d'implémentation :</B>
+<P>Dans la mesure ou des paquets conformes ont déjà été reçus avant que les états Acquitement-Configuration-Reçu ou Ouvert, il reste très peu de chances qu'un paquet non conforme arrive dans cette phase. Comme il est spécifié, tout paquet d'acquittement/non-acquittement/Rejet invalide est ignoré, et n'affecte pas les transitions de l'automate.
+<P>Cependant, il n'est pas impossible qu'un paquet pourtant correct arrive accidentellement pendant un état transitoire. Souvent, cela résultera d'une imperfection de l'implémentation. Au pire, ce cas POURRAIT être enregistré dans le rapport d'erreurs.</FONT>
+<A NAME="4.3.h"></A>
+<H4><I>Configuration-NonAcquittée</I>/Rejetée-Reçue (RCN)</H4>
+<P>Cet événement survient lorsqu'un paquet distant <I>Configuration-NonAcquittée</I> ou <I>Configuration-Rejetée</I> est reçu. Les paquets <I>Configuration-NonAcquittée</I> et <I>Configuration-Rejetée</I> constituent les réponses négatives à une <I>Requête-Configuration</I>. Un paquet hors contexte ou invalide pour une autre raison est ignoré.
+
+<P><FONT SIZE=-1><B>Note d'implémentation :</B>
+<P>Bien que les événements <I>Configuration-NonAcquittée</I> et <I>Configuration-Rejetée</I> cause les mêmes transitions d'état dans l'automate, ces paquets ont des effets différents quant aux options de configurations envoyées par la <I>Requête-Configuration</I> résultante.</FONT>
+<A NAME="4.3.i"></A>
+<H4><I>Requête-Fermeture</I>-Reçue (RTR)</H4>
+<P>Cet événement survient lorsqu'une <I>Requête-Fermeture</I> est arrivée du distant. La <I>Requête-Fermeture</I> indique que le distant souhaite suspendre la communication.
+
+<P><FONT SIZE=-1><B>Note d'implémentation :</B>
+<P>Cet événement n'a pas la même signification que la commande Close (voir ci-avant), qui impose l'émission d'une commande d'ouverture par l'administrateur local pour répondre à des sollicitations d'ouverture. L'implémentation DOIT se préparer à recevoir une nouvelle <I>Requête-Configuration</I> sans aucune autre intervention de l'administrateur local.</FONT>
+<A NAME="4.3.j"></A>
+<H4>Acquittement-Fermeture-Reçue (RTA)</H4>
+<P>Cet événement signifie qu'un paquet <I>Fermeture-Acquittée</I> a été reçu du distant. Ce paquet est dans la plupart des cas une réponse à une <I>Requête-Fermeture</I> antérieure. Ce paquet peut aussi indiquer que le distant est dans l'état Fermé ou Arrêté, et sert dans ce cas à la resynchronisation de la configuration de la liaison.
+<A NAME="4.3.k"></A>
+<H4>Code-Inconnu-Reçu (RUC)</H4>
+<P>Cet événement est lancé lorsqu'un paquet reçu du distant ne peut être interprété. Un paquet <I>Code-Rejeté</I> est renvoyé en réponse.
+<A NAME="4.3.l"></A>
+<H4><I>Code-Rejeté</I>-Reçu, <I>Protocole-Rejeté</I>-Reçu (RXJ+,RXJ-)</H4>
+<P>Cet événement signifie qu'un paquet <I>Code-Rejeté</I> ou <I>Protocole-Rejeté</I> a été reçu du distant.
+<P>L'événement RXJ+ intervient lorsque la valeur est acceptable selon le point de vue du LCP, comme pour le rejet d'un code d'extension valide, ou le rejet d'un protocole NCP. Ces événements sont dans le contexte d'in fonctionnement normal. L'implémentation DOIT arrêter d'émettre un tel type de paquet.
+<P>L'événement RXJ- intervient lorsque la valeur rejetée a une signification critique, comme le rejet d'un code de configuration, ou le rejet du protocole LCP! Cet événement indique la présence d'une erreur fatale qui provoque la fin forcée de la communication.
+<A NAME="4.3.m"></A>
+<H4><I>Requête-Echo</I>-Reçu, <I>Réponse-Echo</I>-Reçu, <I>Requête-Elimination</I>-Reçu. (RXR)</H4>
+<P>Cet événement survient lorsqu'un paquet <I>Requête-Echo</I>, <I>Réponse-Echo</I> ou <I>Requête-Elimination</I> est reçu du distant. Le paquet <I>Réponse-Echo</I> est une réponse à un paquet <I>Requête-Echo</I>. Il n'y a pas de réponse à fournir à un paquet <I>Réponse-Echo</I> ou <I>Requête-Elimination</I>.
+<A NAME="4.4"></A>
+<H3>4.4. Actions</H3>
+<P>Les actions dans l'automate sont déclenchées par les événements et signifie typiquement la transmission de paquets et/ou le départ ou l'arrêt de la temporisation de Reprise.
+<A NAME="4.4.a"></A>
+<H4>Evénement-Illégal (-)</H4>
+<P>Cette action indique un événement non conforme à une implémentation correcte. L'implémentation affiche une erreur interne, laquelle devrait être signalée et archivée. Aucune transition n'est initiée, et l'implémentation NE DOIT ni se bloquer, ni être réinitialisée.
+<A NAME="4.4.b"></A>
+<H4>Ouvrir (tlu)</H4>
+<P>Cette action indique aux couches supérieures que l'automate entre dans l'état Ouvert. Typiquement, cette action est menée par le LCP pour lancer un événement Up vers un NCP, un protocole d'Authentification, ou le protocole de mesure de Qualité de Liaison, ou POURRAIT être menée par un NCP pour indiquer que la liaison et prête à faire transiter des données réseau.
+<A NAME="4.4.c"></A>
+<H4>Fermer (tld)</H4>
+<P>Cette action indique aux couches supérieures que l'automate quitte l'état Ouvert. Typiquement, cette action est menée par le LCP pour signaler la fermeture de ligne à un NCP, un protocole d'Authentification, ou le protocole de mesure de Qualité de Liaison, ou POURRAIT être menée par un NCP pour indiquer que la liaison n'est plus en mesure de faire transiter des données réseau.
+<A NAME="4.4.d"></A>
+<H4>Démarrer (tls)</H4>
+<P>Cette action indique aux couches inférieures que l'automate entre dans l'état Démarrage, et requiert la mise en route de celles-ci pour l'établissement de la liaison. La couche inférieure DEVRAIT répondre par un événement Up lorsque celle-ci s'est établie.
+<P>Les résultats de cette action dépendent fortement de l'implémentation.
+<A NAME="4.4.e"></A>
+<H4>Terminer (tlf)</H4>
+<P>Cette action indique aux couches inférieures que l'automate entre dans l'état Initial, Fermé ou Arrêté, et que le niveau de protocole inférieur n'est plus nécessaire. La couche inférieure DEVRAIT répondre par un événement Down lorsque les opérations de clôture de la couche inférieure sont achevées.
+<P>Typiquement, cette action DEVRAIT être menée par le LCP pour avancer vers la phase Link Dead, ou par un NCP pour indiquer au LCP que la liaison peut être coupée dès qu'il ne restera plus de NCP ouvert.
+<P>Les résultats de cette action dépendent fortement de l'implémentation.
+<A NAME="4.4.f"></A>
+<H4>Init-Compteur-Reprise (irc)</H4>
+<P>Cette action initialise le compteur de Reprise à la valeur appropriée (Max-Fermeture ou Max-Configuration). Le compteur est décrémenté à chaque transmission, y compris à la première.
+
+<P><FONT SIZE=-1><B>Note d'implémentation :</B>
+<P>En plus d'initialiser le compteur de Reprise, l'implémentation  DOIT réinitialiser la temporisation d'attente à sa valeur initiale.</FONT>
+<A NAME="4.4.g"></A>
+<H4>Zero-Compteur-Reprise (zrc)</H4>
+<P>Met le compteur de Reprise à zéro.
+
+<P><FONT SIZE=-1><B>Note d'implémentation :</B>
+<P>Cette action permet au FSA de faire une pause avant de passer à l'état final visé, permettant ainsi au trafic restant d'être traité par le distant. En plus de mettre le compteur de Reprise à zéro, l'implémentation DOIT initialiser la temporisation de Reprise à une valeur appropriée.</FONT>
+<A NAME="4.4.h"></A>
+<H4>Emission-<I>Requête-Configuration</I> (scr)</H4>
+<P>Un paquet <I>Requête-Configuration</I> est émis. Il indique le désir d'établir une communication selon un ensemble d'Options de Configuration spécifié. La temporisation de Reprise est démarrée lorsque ce paquet est émis, afin de se prémunir contre une perte de celui-ci. Le compteur de Reprise est décrémenté chaque fois qu'une <I>Requête-Configuration</I> est envoyée.
+<A NAME="4.4.i"></A>
+<H4>Emission-<I>Configuration-Acquittée</I> (sca)</H4>
+<P>Un paquet <I>Configuration-Acquittée</I> est émis. Il acquitte la réception d'une <I>Requête-Configuration</I> et de son ensemble d'Options de Configuration, jugées alors acceptables.
+<A NAME="4.4.j"></A>
+<H4>Emission-<I>Configuration-NonAcquittée</I> (scn)</H4>
+<P>Un paquet <I>Configuration-NonAcquittée</I> ou <I>Configuration-Rejetée</I> est émis, selon le cas. Cette réponse négative rend compte de la réception d'une <I>Requête-Configuration</I> correcte mais dans laquelle certaines  Options de Configuration sont incorrectes.
+Les paquets <P><I>Configuration-NonAcquittée</I> sont utilisés pour refuser une valeur d'Option de Configuration, et pour en suggérer une autre, acceptable par l'appelé. Les paquets <I>Configuration-Rejetée</I> sont utilisés pour refuser toute négociation sur les Options de Configuration, en principe parce que l'option demandée est inconnue ou non implémentée. Les conditions d'utilisation des paquets <I>Configuration-NonAcquittée</I> plutôt que <I>Configuration-Rejetée</I> sont décrits plus avant dans le chapitre détaillant les formats de paquets LCP.
+<A NAME="4.4.k"></A>
+<H4>Emision-<I>Requête-Fermeture</I> (str)</H4>
+<P>Un paquet <I>Requête-Fermeture</I> est émis. Il indique le désir de clore une connexion. La temporisation de Reprise est démarrée lorsque la <I>Requête-Fermeture</I> est envoyée, pour se prémunir des pertes d'un tel paquet. Le compteur de Reprise est décrémenté à chaque émission de <I>Requête-Fermeture</I>.
+<A NAME="4.4.l"></A>
+<H4>Emission-<I>Fermeture-Acquittée</I> (sta)</H4>
+<P>Un paquet <I>Fermeture-Acquittée</I> est émis. Il rend compte de la réception d'un paquet <I>Requête-Fermeture</I> ou peut aussi servir à la synchronisation des automates.
+<A NAME="4.4.m"></A>
+<H4>Emission-<I>Code-Rejeté</I> (scj)</H4>
+<P>Un paquet <I>Code-Rejeté</I> est transmis. Il indique la réception d'un paquet non interprétable.
+<A NAME="4.4.n"></A>
+<H4>Emission-<I>Réponse-Echo</I> (ser)</H4>
+<P>Un paquet <I>Réponse-Echo</I> est transmis. Il accuse réception d'un paquet <I>Requête-Echo</I>.
+<A NAME="4.5"></A>
+<H3>4.5.  Elimination de rebouclages</H3>
+<P>Le protocole est conçu de sorte à ne laisser que peu de chances à l'établissement d'une boucle protocolaire lors de la négociation d'Options de Configuration. Cependant, le protocole NE garantit PAS qu'une boucle ne puisse résulter d'une séquence particulière. Comme pour toute négociation, il n'est pas impossible de tomber sur le cas de deux implémentations de PPP aux stratégies contradictoires et pour lesquelles la négociation ne converge jamais. Il sera alors possible de changer de stratégie de négociation pour obtenir la convergence, mais cette pratique consommera nécessairement un certain temps. Les développeurs doivent garder à l'esprit ce problème et DEVRAIENT ajouter des mécanismes de détection de boucle ou un autre étage de temporisation.
+<A NAME="4.6"></A>
+<H3>4.6.  Compteurs et Temporisations</H3>
+<A NAME="4.6.a"></A>
+<H4>Temporisation de Reprise</H4>
+<P>L'automate utilise une temporisation spéciale. La temporisation de Reprise est utilisée pour donner un cadre temporel aux échanges de paquets <I>Requête-Configuration</I> et <I>Requête-Fermeture</I>. L'expiration de la temporisation de Reprise constitue un événement TO, et provoque la retransmission de la Requête correspondante. La durée de la temporisation DOIT être configurable, mais POURRA avoir une valeur par défaut de trois (3) secondes.
+
+<P><FONT SIZE=-1><B>Note d'implémentation :</B>
+<P>La temporisation de Reprise DEVRAIT être adaptative selon la vitesse de transmission de la liaison. La  valeur par défaut est donnée pour des liaisons lentes (2400 à 9600  bauds), et dans le cas de lignes commutées à basculement lent (lignes téléphoniques). Des lignes plus rapides, ou à commutation rapide, POURRAIENT bénéficier de délais d'attente inférieurs.
+<P>Plutôt qu'utiliser une valeur constante, la temporisation de Reprise POURRAIT être d'abord fixée à une valeur faible puis être augmentée progressivement jusqu'à sa valeur finale théorique selon une progression géométrique de facteur 2 (doublement pour chaque nouvelle valeur). La valeur initiale DEVRAIT être suffisamment grande en rapport à la taille des paquets, au moins deux fois le temps d'aller-retour d'un paquet à la vitesse de transmission nominale de la ligne, avec au moins une marge supplémentaire de 100 millisecondes pour donner au distant le temps de traiter le paquet avant de répondre. Certains circuits ajouteront une marge supplémentaire de 200 millisecondes pour un transfert "satellite". Les temps d'aller-retour pour des modems opérant à 14400 bauds sont mesurés entre environ 160 à plus de 600 millisecondes.</FONT>
+<A NAME="4.6.b"></A>
+<H4>Max-Fermeture</H4>
+<P>Un compteur de Reprise au moins doit traiter les paquets <I>Requête-Fermeture</I>. Max-Fermeture indique le nombre de paquets <I>Requête-Fermeture</I> émis et n'ayant pas reçu de paquet <I>Fermeture-Acquittée</I> avant qu'il ait pu être établi que le distant n'est plus en état de répondre. Max-Fermeture DOIT être configurable, mais DEVRAIT proposer une valeur par défaut de deux (2) émissions.
+<A NAME="4.6.c"></A>
+<H4>Max-Configuration</H4>
+<P>Il est recommandé d'effectuer un compte similaire des paquets <I>Requête-Configuration</I>. Max-Configuration indique le nombre de paquets <I>Requête-Configuration</I> émis sans avoir reçu de paquet <I>Configuration-Acquittée</I>, <I>Configuration-NonAcquittée</I> ou <I>Configuration-Rejetée</I> valides avant qu'il ait pu être établi que le distant n'est plus en état de répondre. Max-Configuration DOIT être configurable, mais DEVRAIT proposer une valeur par défaut de dix (10) émissions.
+<A NAME="4.6.d"></A>
+<H4>Max-Echec</H4>
+<P>Un comptage des émissions de <I>Configuration-NonAcquittée</I> est nécessaire. Max-Echec donne le nombre de paquets <I>Configuration-NonAcquittée</I> émis sans avoir émis de <I>Configuration-Acquittée</I> et avant de pouvoir déterminer que les configurations ne convergent pas vers un accord probable. Tout nouveau paquet <I>Configuration-NonAcquittée</I> destiné au distant doit être converti en paquets <I>Configuration-Rejetée</I>, et les options souhaitées par le local ne sont plus transmises. Max-Echec DOIT être configurable, mais DEVRAIT proposer une valeur par défaut de cinq (5) émissions.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-03.htm">Précédent</A> - <A HREF="1661-05.htm">Suivant</A></BODY></HTML>
+

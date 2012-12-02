@@ -1,0 +1,110 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">1. Introduction</FONT></H2>
+<A NAME="1-1"></A>
+<H3>1.1 Objectif</H3>
+<P>L'Hypertext Transfer Protocol (HTTP) est un protocole de niveau application suffisamment l&eacute;ger et rapide, pour la transmission de documents distribu&eacute;s et multim&eacute;dia &agrave; travers un syst&egrave;me d'information multi-utilisateurs. HTTP &agrave; &eacute;t&eacute; utilis&eacute; &agrave; l'initiative du Word-Wide Web d&egrave;s 1990. Cette sp&eacute;cification d&eacute;crit les fonctionnalit&eacute;s le plus souvent rencontr&eacute;es dans les impl&eacute;mentation "client/serveur HTTP/1.0". Elle est divis&eacute;e en deux section. Les fonctions usuellement exploit&eacute;es de HTTP sont d&eacute;crites dans le corps de ce document. Les autres fonctions, moins utilis&eacute;es sont list&eacute;es dans l'annexe D.
+<P>Les syst&egrave;mes d'information pratiques n&eacute;cessitent des fonctions plus &eacute;volu&eacute;es que la simple r&eacute;cup&eacute;ration de donn&eacute;es, parmi lesquelles on trouve la possibilit&eacute; d'effectuer des recherches, les fonctions de remise &agrave; jour, et d'annotation. HTTP permet d'utiliser un ensemble non exhaustif de m&eacute;thodes pour d&eacute;finir l'objet d'une requ&ecirc;te. Il s'appuie essentiellement sur la normalisation des Uniform Resource Identifier (URI) [2], soit sous forme de "site" (URL) [4] ou de noms (URN) [16], pour indiquer l'objet sur lequel porte la m&eacute;thode. Les messages sont transmis sous une forme similaire &agrave; celle de la messagerie &eacute;lectronique (Mail) [7] et des extensions Multipurpose Internet Mail Extensions (MIME) [5]. HTTP est aussi un protocole e communication g&eacute;n&eacute;rique entre des "utilisateurs" et des routeurs/proxies vers d'autres protocoles, tels que SMTP [12],
+NNTP [11], FTP [14], Gopher [1], et WAIS [8], permettant une acc&egrave;s de base &agrave; des ressources hyperm&eacute;dia, et simplifiant l'impl&eacute;mentation d'interfaces utilisateur.
+<A NAME="1-2"></A>
+<H3>1.2 Terminologie</H3>
+<P>Cette sp&eacute;cification utilise un certain nombre de termes pour d&eacute;signer les participants et les objets d'une communication HTTP.
+<P><B>Connexion</B>
+<P>Un circuit virtuel s'appuyant sur une couche de transport pour la communication d'information entre deux applications.
+
+<P><B>Message</B>
+<P>L'unit&eacute; de base d'une communication HTTP, consistant en une s&eacute;quence structur&eacute;e d'octets d&eacute;finie &agrave; la Section 4 et transmis via la connexion.
+
+<P><B>Requ&ecirc;te</B>
+<P>Un message de requ&ecirc;te HTTP (d&eacute;fini en Section 5).
+
+<P><B>R&eacute;ponse</B>
+<P>Un message de r&eacute;ponse HTTP (d&eacute;fini en Section 6).
+
+<P><B>Ressource</B>
+<P>Un service ou objet du r&eacute;seau pouvant &ecirc;tre identifi&eacute; par une URI (Section 3.2).
+
+<P><B>Entit&eacute;</B>
+<P>Une repr&eacute;sentation particuli&egrave;re de donn&eacute;es, ou la r&eacute;ponse d'une ressource de type service, incluse dans une requ&ecirc;te ou une r&eacute;ponse. Une entit&eacute; repr&eacute;sente une m&eacute;tainformation sous la forme d'une en-t&ecirc;te et d'un contenu sous la forme d'un corps, ou "body".
+
+<P><B>Client</B>
+<P>Un programme applicatif dont la fonction principale est d'&eacute;mettre des requ&ecirc;tes.
+
+<P><B>Utilisateur</B>
+<P>Le client qui a &eacute;mis la requ&ecirc;te. Celui-ci peut &ecirc;tre un navigateur, un &eacute;diteur, un "spiders" (robot d'exploration), ou autre utilitaire.
+
+<P><B>Utilisateur final</B>
+<P>L'utilisateur humain pilotant le programme utilisateur.
+<P><B>Serveur</B>
+<P>Un programme applicatif acceptant des connexions dans le but traiter des requ&ecirc;tes en d&eacute;livrant une r&eacute;ponse.
+
+<P><B>Serveur origine</B>
+<P>Le serveur dans laquelle se situe physiquement une ressource.
+
+<P><B>Proxy</B>
+<P>Un programme interm&eacute;diaire qui cumule les fonctions de serveur et de client. Les requ&ecirc;tes sont soit trait&eacute;es en interne ou r&eacute;percut&eacute;es, &eacute;ventuellement converties, sur d'autres serveurs. Un proxy doit interpr&eacute;ter, puis reconstituer un message avant de le r&eacute;emettre. Les proxies sont souvent utilis&eacute;s comme portes d'acc&egrave;s c&ocirc;t&eacute; utilisateur &agrave; des r&eacute;seaux prot&eacute;g&eacute;s par un "firewall" ou comme interm&eacute;diaire pour convertir des protocoles non support&eacute;s par l'utilisateur.
+
+<P><B>Gateway ou routeur</B>
+<P>Un serveur jouant le r&ocirc;le d'interm&eacute;diaire pour d'autres serveurs. Contrairement &agrave; un Proxy, un routeur re&ccedil;oit les requ&ecirc;tes comme s'il &eacute;tait le serveur origine pour la ressource; le client n'&eacute;tant pas n&eacute;cessairement conscient de "communiquer" avec un routeur. Les routeurs sont souvent utilis&eacute;s comme porte d'acc&egrave;s c&ocirc;t&eacute; serveur d'un r&eacute;seau prot&eacute;g&eacute; par "firewall" et comme convertisseur de protocole pour acc&eacute;der &agrave; es ressources h&eacute;berg&eacute;es sur des syst&egrave;mes non-HTTP.
+
+<P><B>Tunnel</B>
+<P>Un tunnel est un programme applicatif servant de relais "transparent" entre deux connexions. Une fois actif, cet &eacute;l&eacute;ment n'est plus consid&eacute;r&eacute; comme faisant partie de la connexion HTTP, bien qu'il soi issu d'une requ&ecirc;te HTTP. Le tunnel cesse d'exister lorsque les deux sens de la connexion ont &eacute;t&eacute; ferm&eacute;s. Les tunnels sont utilis&eacute;s lorsqu'une "porte" est n&eacute;cessaire et que l'interm&eacute;diaire ne peut, ou ne doit pouvoir interpr&eacute;ter la communication.
+
+<P><B>Cache</B>
+<P>Un espace de stockage local destin&eacute; &agrave; enregistrer les r&eacute;ponses et le sous-syst&egrave;me contr&ocirc;lant ces enregistrements, leur relecture et leur effacement. Un cache enregistre des r&eacute;ponses dans le but de diminuer le temps d'acc&egrave;s et la charge du r&eacute;seau lors de requ&ecirc;tes identiques ult&eacute;rieures. Tout client ou serveur peut impl&eacute;menter un cache, bien que le serveur ne puisse exploiter ce cache, faisant office de tunnel.
+
+<P>Un programme pouvant aussi bien &ecirc;tre serveur que client; l'utilisation que nous ferons de ces termes s'appliquera &agrave; la situation qu'&agrave; le programme vis &agrave; vis d'une connexion particuli&egrave;re, plut&ocirc;t qu'&agrave; ses possibilit&eacute;s effectives. De m&ecirc;me tout serveur peut &ecirc;tre &agrave; la fois serveur origine, proxy, routeur, ou tunnel, changeant alors de comportement en fonction des requ&ecirc;tes re&ccedil;ues.
+<A NAME="1-3"></A>
+<H3>1.3 Fonctionnement global</H3>
+<P>Le protocole HTTP est bas&eacute; sur un paradigme requ&ecirc;te/r&eacute;ponse. Un client &eacute;tablit une connexion vers un serveur et lui envoie une requ&ecirc;te sous la forme d'une m&eacute;thode, d'une URI, du num&eacute;ro de version, suivi d'un message de type MIME contenant les modificateurs de la requ&ecirc;te, les informations sur le client, et &eacute;ventuellement un corps. Le serveur r&eacute;pond par une ligne d'&eacute;tat, incluant la version de protocole et un message de succ&egrave;s ou d'erreur, suivi d'un message de type MIME contenant l'information sur le serveur, metainformation, et le corps &eacute;ventuel.
+<P>La plupart des communications HTTP sont initi&eacute;es par un utilisateur et consistent en une requ&ecirc;te devant &ecirc;tre appliqu&eacute;e (il s'agit d'une m&eacute;thode) &agrave; une ressource sur son serveur origine. Dans le cas le plus simple, ceci peut &ecirc;tre r&eacute;alis&eacute; par une connexion simple (v) entre l'utilisateur (UA) et le serveur origine (O).
+
+<P><CODE><PRE>
+       Requ&ecirc;te ------------------------>
+    UA -------------------v------------------- O
+       <----------------------- R&eacute;ponse
+</PRE></CODE>
+<P>Une situation plus complexe peut appara&icirc;tre lorsque un ou plusieurs interm&eacute;diaires sont pr&eacute;sents dans la cha&icirc;ne de communication. On trouvera trois types d'interm&eacute;diaires: les proxy, les routeurs, et les tunnels. Un proxy est un agent actif, recevant les requ&ecirc;tes destin&eacute;es &agrave; une URI dans sa forme absolue, recomposant tout ou partie du message, et r&eacute;&eacute;mettant la requ&ecirc;te transform&eacute;e &agrave; destination de l'URI. Un serveur est un agent actif, agissant en tant que "surcouche" par rapport &agrave; d'autres serveurs et si n&eacute;cessaire, traduisant le protocole &agrave; destination et en provenance du serveur vis&eacute;. Un tunnel est un agent passif ne servant que de relais entre deux parties d'une m&ecirc;me connexion, et de ce fait sans modifier le message; les tunnels sont utilis&eacute;s lorsque le message doit traverser un interm&eacute;diaire (comme un "firewall") m&ecirc;me si celui-ci ne peut interpr&eacute;ter le contenu des messages.
+
+<P><CODE><PRE>
+Requ&ecirc;te -------------------------------------->
+    UA -----v----- A -----v----- B -----v----- C -----v----- O
+       <------------------------------------- R&eacute;ponse
+</PRE></CODE>
+<P>La figure ci-dessus montre le cas de trois interm&eacute;diaires (A, B, et C) entre l'utilisateur et le serveur origine. Une requ&ecirc;te ou r&eacute;ponse passant d'un bout &agrave; l'autre doit transiter par quatre connexions. Cette distinction est important car certaines options d'une communication HTTP peuvent ne s'appliquer qu'&agrave; la connexion la plus proche, sans m&ecirc;me passage par un tunnel, et accessible uniquement des extr&eacute;mit&eacute;s, ou au contraire &agrave; toutes les connexions impliqu&eacute;es dans la cha&icirc;ne. Bien que ce sch&eacute;ma soit lin&eacute;aire, chaque participant peut &ecirc;tre engag&eacute; dans plusieurs communications simultan&eacute;es. Par exemple, B peut &ecirc;tre en train de recevoir de nombreuses requ&ecirc;tes de clients autres que A, et &eacute;mettre des requ&ecirc;tes vers d'autres serveurs que C, tout en interpr&eacute;tant les requ&ecirc;tes issues de A.
+<P>Toute partie de communication n'&eacute;tant pas un tunnel doit poss&eacute;der un cache pour le stockage des requ&ecirc;tes. L'int&eacute;r&ecirc;t de cette pratique est que la cha&icirc;ne requ&ecirc;te/r&eacute;ponse peut &ecirc;tre consid&eacute;rablement raccourcie si l'un des interm&eacute;diaires dispose d&eacute;j&agrave; d'une instance de la ressource dans son cache. Le diagramme suivant montre le cas o&ugrave; B dispose dans son cache d'une copie d'une r&eacute;ponse pr&eacute;c&eacute;demment envoy&eacute;e par O (via C) et r&eacute;pond &agrave; une requ&ecirc;te identique de UA (&agrave; noter que dans cet exemple, ni UA ni A ne disposent de cette m&ecirc;me r&eacute;ponse en cache).
+
+<P><CODE><PRE>
+       Requ&ecirc;te ---------->
+    UA -----v----- A -----v----- B - - - - - - C - - - - - - O
+       <--------- R&eacute;ponse
+</PRE></CODE>
+<P>Toutes les r&eacute;ponses ne peuvent &ecirc;tre "cach&eacute;es", et certaines requ&ecirc;tes peuvent utiliser des modificateurs induisant un comportement particulier du cache. Certaines applications HTTP/1.0 utilisent des heuristiques pour d&eacute;crire ce qui est ou non "cachable", mais ces r&egrave;gles ne sont pas standardis&eacute;es.
+<P>Sur Internet, les communications HTTP s'appuient principalement sur le protocole de connexion TCP/IP. Le port utilis&eacute; par d&eacute;faut est le port TCP 80 [15], d'autres ports pouvant &ecirc;tre utilis&eacute;s. Ceci n'exclut pas que HTTP puisse &ecirc;tre impl&eacute;ment&eacute; au dessus d'un autre protocole d'Internet, ou sur d'autres types de r&eacute;seau. HTTP n&eacute;cessite seulement un transport fiabilis&eacute;; tout protocole garantissant la s&eacute;curit&eacute; de transmission peut &ecirc;tre utilis&eacute; pour supporter HTTP, la place qu'occupent les donn&eacute;es des requ&ecirc;tes et r&eacute;ponses HTTP/1.0 dans les unit&eacute;s de transmission de ces protocoles restant en dehors du contexte de ce document.
+<P>Except&eacute; pour des applications exp&eacute;rimentales, la pratique courante sp&eacute;cifie qu'une connexion doit &ecirc;tre initi&eacute;e par un client avant transmission de la requ&ecirc;te, et referm&eacute;e par le serveur apr&egrave;s d&eacute;livrance de la r&eacute;ponse. Les deux c&ocirc;t&eacute;s, client et serveur, doivent &ecirc;tre pr&eacute;par&eacute;s &agrave; ce que la connexion soit coup&eacute;e pr&eacute;matur&eacute;ment, suite &agrave; une action de l'utilisateur, une temporisation automatique, ou une faute logicielle, et doivent apporter une r&eacute;ponse pr&eacute;visible &agrave; cette situation. Dans tous les cas, la fermeture d'une connexion qu'elle qu'en soit la raison est assimilable &agrave; la conclusion de la requ&ecirc;te, quel que soit l'&eacute;tat.
+<A NAME="1-4"></A>
+<H3>1.4 HTTP et MIME</H3>
+<P>HTTP/1.0 exploite un grand nombre d'impl&eacute;mentation pr&eacute;vues pour les MIME, tels que d&eacute;finis dans la RFC 1521 [5]. L'appendice C d&eacute;crit comment HTTP l'utilisation des "Internet Media Types" typiquement utilis&eacute;s par la messagerie &eacute;lectronique, et indique les diff&eacute;rences de comportement.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-0.htm">Pr&eacute;c&eacute;dent</A>  - <A HREF="1945-2.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+
+

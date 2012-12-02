@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">5. Requêtes</FONT></H2>
+<P>Une requête d'un client vers un serveur inclue, dans sa première ligne, la méthode appliquée à la ressource, l'identificateur de cette ressource, et la version de protocole courante. Afin d'assurer la compatibilité descendante avec la version plus limitée HTTP/0.9 du protocole, deux formats seront valides pour exprimer une requête:
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Request               = Requête_simple | Requête_complète
+
+Simple-Request        = "GET" SP URI-visée CRLF
+
+Requête_complète      = Ligne-requête           ; <A HREF="1945-5.htm#5-1">Section 5.1</A>
+                      *( En-tête_générale       ; <A HREF="1945-4.htm#4-3">Section 4.3</A>
+                      | En-tête_requête         ; <A HREF="1945-5.htm#5-2">Section 5.2</A>
+                      | En-tête_entité )        ; <A HREF="1945-7.htm#7-1">Section 7.1</A>
+                        CRLF
+                       [ Corps-entité ]         ; <A HREF="1945-7.htm#7-2">Section 7.2</A> </PRE></CODE></FONT>
+
+<P>Si un serveur HTTP/1.0 reçoit une requête simple, il devra répondre par une réponse simple HTTP/0.9. Un client HTTP/1.0 capable de recevoir une réponse_complète ne doit jamais générer de requête_simple.
+<A NAME="5-1"></A>
+<H3>5.1 Ligne de requête</H3>
+<P>La ligne de requête commence par un nom de requête, suivie de l'URI visée, du numéro de version de protocole, et termine enfin par CRLF. Ces éléments sont séparés par des espaces. Aucun CR ni LF n'est autorisé excepté la séquence finale CRLF.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Ligne_requête      = Méthode SP URI-visée SP Version-HTTP CRLF</PRE></CODE></FONT>
+
+<P>Notez que la différence entre une ligne de requête_simple et de requête_complète ne réside que dans la présence du numéro de version HTTP, et dans la possibilité d'appeler d'autres méthodes que GET.
+<A NAME="5-1-1"></A>
+<H4>5.1.1 Méthodes</H4>
+<P>La méthode indiquée en tête de ligne est destinée à être appliquée à l'URI cible. Son nom dépend de la casse.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Méthode           = "GET"                    ; <A HREF="1945-8.htm#8-1">Section 8.1</A>
+                  | "HEAD"                   ; <A HREF="1945-8.htm#8-2">Section 8.2</A>
+                  | "POST"                   ; <A HREF="1945-8.htm#8-3">Section 8.3</A>
+                  | <I>nom_de_méthode</I></PRE></CODE></FONT>
+
+<P>La liste de méthodes que peut accepter une ressource est dynamique; Le client est avisé de la disponibilité de la méthode émise par le code de retour du message de réponse. Les serveurs renverront le code 501 (non implémenté) si la méthode est inconnue, ou non implémentée.
+<P>Les méthodes habituellement employées par les applications HTTP/1.0 sont décrites en détail en Section 8.
+<A NAME="5-1-2"></A>
+<H4>5.1.2 URI-visée (Request-URI)</H4>
+<P>L'URI visée est l'URI identifiant la ressource réseau à laquelle doit être appliquée la méthode.
+
+<P><FONT COLOR="#448844"><CODE><PRE>URI-visée      = URIabsolue | chem_abs</PRE></CODE></FONT>
+
+<P>Ces deux options dépendent de la méthode appelée.
+
+<P>Seule l'option URIabsolue est permise lorsque la requête est envoyée à un proxy. Le proxy devra retransmettre la requête, et servir d'intermédiaire pour la réponse. Si la requête est GET ou HEAD et la réponse présente dans le cache du proxy, celui-ci pourra utiliser cette réponse directement, si les conditions restrictives de "date d'expiration " dans l'en-tête sont remplies. Notez que le proxy peut à son tour retransmettre la requête vers un autre proxy, ou directement vers le serveur origine. Afin d'éviter qu'une requête ne boucle, un proxy doit reconnaitre tous sesnoms de serveurs, y compris alias, variations locales, et les adresses IP numériques. Voici un exemple de ligne de requête:
+
+<P><CODE><CENTER>GET http://www.w3.org/pub/WWW/TheProject.html HTTP/1.0</CENTER></CODE>
+
+<P>La forme d'URI-visée la plus commune est celle qui identifie une ressource sur son serveur origine ou un routeur. Dans ce cas, seul le chemin absolu chem_abs est transmis (Cf. <A HREF="1945-3.htm#3-2-1">Section 3.2.1</A>, chem_abs). Par exemple, un client souhaitant récupérer la ressource ci-dessus directement à partir de son serveur origine créera une connexion TCP sur le port 80 du host "www.w3.org" et émettra la ligne de commande:
+
+<P><CODE><CENTER>GET /pub/WWW/TheProject.html HTTP/1.0</CENTER></CODE>
+
+<P>suivi du reste de la requête complète. Notez qe le chemin absolu ne peut être vide; si la ressource se trouve dans la racine (pas de chemin d'accès) le chemin spécifié devra comporter au moins le caractère slash ("/").
+<P>L'URI-visée est transmise sous forme d'une chaîne encodée, dans laquelle certains caractères apparaîtront comme une séquence d'échappement "% HEX HEX" telle que définie par la RFC 1738 [4]. Le serveur origine devra décoder cette chaîne afin d'accéder correctement à la ressource.
+<A NAME="5-2"></A>
+<H3>5.2 En-tête de requête</H3>
+<P>Les champs d'en-tête de requête permettent de la transmission d'informations complémentaires sur la requête, et le client lui-même. Ces champs agissent comme "modificateurs" de la requête, utilisant une sémantique identique à celle des paramètres passés par un appel d'une méthode de langage de programmation de haut niveau.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Request-Header          = Authorization                 ; <A HREF="1945-10.htm#10-2">Section 10.2</A>
+                        | From                          ; <A HREF="1945-10.htm#10-8">Section 10.8</A>
+                        | If-modified-since             ; <A HREF="1945-10.htm#10-9">Section 10.9</A>
+                        | Referer                       ; <A HREF="1945-10.htm#10-13">Section 10.13</A>
+                        | User-agent                    ; <A HREF="1945-10.htm#10-15">Section 10.15</A> </PRE></CODE></FONT>
+
+<P>Des nouveaux noms de champs d'en-tête_requête ne peuvent être introduits que dans le cadre d'un changement de version du protocole. Cependant, de nouveaux champs ou champs expérimentaux peuvent utiliser la sémantique de champs d'en-tête_requête, à partir du moment ou les deux extrémités de la communication sont d'accord pour le faire. Tout champ non reconnu sera considéré comme un champ d'en-tête_entité.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-4.htm">Pr&eacute;c&eacute;dent</A> - <A HREF="1945-6.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+

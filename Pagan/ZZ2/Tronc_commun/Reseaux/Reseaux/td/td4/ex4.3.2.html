@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+	<TITLE>Etude du DNS - exemple 4.3.2</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+	<style type="text/css">
+		dt, dd, pre {font-family:monospace; font-size:small; font-weight:bold}
+		dt {color:blue}
+	</style>
+</HEAD>
+
+<BODY BGCOLOR="white">
+<dl>
+<dt><a name="1"></a>host -r -v hexalis.fr</dt>
+	<dd><pre>www.hexalis.fr A record currently not present</pre></dd>
+</dl>
+<dl>
+<dt><a name="2"></a>host -r -v www.hexalis.fr</dt>
+	<dd><pre>Query about www.hexalis.fr for record types A
+Trying www.hexalis.fr ...
+Query failed, 0 answers, status: no error
+Authority information:
+.                       83307   IN      NS      g.root-servers.net
+.                       83307   IN      NS      h.root-servers.net
+.                       83307   IN      NS      i.root-servers.net
+.                       83307   IN      NS      j.root-servers.net
+.                       83307   IN      NS      k.root-servers.net
+.                       83307   IN      NS      l.root-servers.net
+.                       83307   IN      NS      m.root-servers.net
+.                       83307   IN      NS      a.root-servers.net
+.                       83307   IN      NS      b.root-servers.net
+.                       83307   IN      NS      c.root-servers.net
+.                       83307   IN      NS      d.root-servers.net
+.                       83307   IN      NS      e.root-servers.net
+.                       83307   IN      NS      f.root-servers.net
+Additional information:
+g.root-servers.net      83864   IN      A       192.112.36.4
+h.root-servers.net      83864   IN      A       128.63.2.53
+i.root-servers.net      83864   IN      A       192.36.148.17
+j.root-servers.net      84625   IN      A       198.41.0.10
+k.root-servers.net      84625   IN      A       193.0.14.129
+l.root-servers.net      84625   IN      A       198.32.64.12
+m.root-servers.net      84625   IN      A       202.12.27.33
+a.root-servers.net      83864   IN      A       198.41.0.4
+b.root-servers.net      83864   IN      A       128.9.0.107
+c.root-servers.net      83864   IN      A       192.33.4.12
+d.root-servers.net      83864   IN      A       128.8.10.90
+e.root-servers.net      83864   IN      A       192.203.230.10
+f.root-servers.net      83864   IN      A       192.5.5.241
+www.hexalis.fr A record currently not present</pre></dd>
+</dl>
+<dl>
+<dt><a name="3">host -r -v --server=m.root-servers.net www.hexalis.fr</dt>
+	<dd><pre>Server: m.root-servers.net
+Address: 202.12.27.33
+
+Query about www.hexalis.fr for record types A
+Trying www.hexalis.fr ...
+Query failed, 0 answers, status: no error
+Authority information:
+fr                      172800  IN      NS      DNS.CS.WISC.EDU
+fr                      172800  IN      NS      NS1.NIC.fr
+fr                      172800  IN      NS      NS3.NIC.fr
+fr                      172800  IN      NS      DNS.INRIA.fr
+fr                      172800  IN      NS      NS2.NIC.fr
+fr                      172800  IN      NS      NS.EU.NET
+fr                      172800  IN      NS      DNS.PRINCETON.EDU
+fr                      172800  IN      NS      NS-EXT.VIX.COM
+Additional information:
+DNS.CS.WISC.EDU         172800  IN      A       128.105.2.10
+NS1.NIC.fr              172800  IN      A       192.93.0.1
+NS3.NIC.fr              172800  IN      A       192.134.0.49
+DNS.INRIA.fr            172800  IN      A       193.51.208.13
+NS2.NIC.fr              172800  IN      A       192.93.0.4
+NS.EU.NET               172800  IN      A       192.16.202.11
+DNS.PRINCETON.EDU       172800  IN      A       128.112.129.15
+NS-EXT.VIX.COM          172800  IN      A       204.152.184.64
+www.hexalis.fr A record currently not present at m.root-servers.net</pre></dd>
+</dl>
+<dl>
+<dt><a name="4">host -r -v --server=NS3.NIC.fr www.hexalis.fr</dt>
+	<dd><pre>Server: NS3.NIC.fr
+Address: 192.134.0.49
+
+Query about www.hexalis.fr for record types A
+Trying www.hexalis.fr ...
+Query failed, 0 answers, status: no error
+Authority information:
+hexalis.fr              345600  IN      NS      ns.sky.fr
+hexalis.fr              345600  IN      NS      ns2.sky.fr
+Additional information:
+ns.sky.fr               345600  IN      A       194.6.128.3
+ns2.sky.fr              345600  IN      A       194.6.128.4
+www.hexalis.fr A record currently not present at NS3.NIC.fr</pre></dd>
+</dl>
+<dl>
+<dt><a name="5">host -r  --server=ns.sky.fr www.hexalis.fr</dt>
+	<dd><pre>www.hexalis.fr          A       195.115.170.163</pre></dd>
+</dl>
+
+</BODY>
+</HTML>

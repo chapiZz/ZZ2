@@ -1,0 +1,236 @@
+ati0
+5600
+OK
+
+ati1
+7354
+OK
+
+ati2
+OK
+
+ati3
+U.S.Robotics x2 Winmodem Voice RS Rev. 1.41.005
+
+OK
+ati4
+U.S.Robotics x2 Winmodem Voice Settings...
+
+   B0  E1  F1  L2  M1  Q0  V1  X1  Y0
+   BAUD=115200 PARITY=N  WORDLEN=8
+   DIAL=TONE   ON HOOK   CID=0
+
+   &A1  &C1  &D2  &G2  &H0  &I0  &K1
+   &M4  &N0  &P1  &R1  &S0  &T3  &U0  &Y1
+
+   S00=000  S01=000  S02=043  S03=013  S04=010  S05=008  S06=008
+   S07=085  S08=002  S09=006  S10=007  S11=070  S12=050  S13=000
+   S15=000  S16=000  S18=000  S19=000  S21=010  S22=017  S23=019
+   S25=020  S27=017  S28=008  S29=020  S30=000  S31=128  S32=002
+   S33=000  S34=000  S35=000  S36=014  S38=000  S41=000
+
+   LAST DIALED #:
+
+OK
+
+ati5
+U.S.Robotics x2 Winmodem Voice NVRAM Settings...
+
+  Template Y0
+
+   DIAL=TONE   B0  E1  F1  L2  M1  Q0  V1  X5
+   BAUD=9600    PARITY=E  WORDLEN=7
+
+   &A3  &C1  &D2  &G2  &H1  &I0  &K1
+   &M4  &N0  &P1  &R2  &S0  &T5  &U0  &Y1
+
+   S00=000  S02=043  S03=013  S04=010  S05=008  S06=008  S07=085
+   S08=002  S09=006  S10=007  S11=070  S12=050  S13=000  S15=000
+   S19=000  S21=010  S22=017  S23=019  S25=020  S27=017  S28=008
+   S29=020  S30=000  S31=128  S32=002  S33=000  S34=000  S35=000
+   S36=014  S38=000  S40=000  S41=000
+
+  Template Y1
+
+   DIAL=TONE   B0  E1  F1  L2  M1  Q0  V1  X5
+   BAUD=9600    PARITY=E  WORDLEN=7
+
+   &A3  &C1  &D2  &G2  &H2  &I2  &K1
+   &M4  &N0  &P1  &R1  &S0  &T5  &U0  &Y1
+
+   S00=000  S02=043  S03=013  S04=010  S05=008  S06=008  S07=085
+   S08=002  S09=006  S10=007  S11=070  S12=050  S13=000  S15=000
+   S19=000  S21=010  S22=017  S23=019  S25=020  S27=017  S28=008
+   S29=020  S30=000  S31=128  S32=002  S33=000  S34=000  S35=000
+   S36=014  S38=000  S40=000  S41=000
+
+   STORED PHONE #0:
+                #1:
+                #2:
+                #3:
+OK
+
+ati6
+U.S.Robotics x2 Winmodem Voice Link Diagnostics...
+
+Chars sent                    0      Chars Received                0
+Chars lost                    0
+Octets sent                   0      Octets Received               0
+Blocks sent                   0      Blocks Received               0
+Blocks resent                 0
+
+Retrains Requested            0      Retrains Granted              0
+REJs Received                 0      Blers                         0
+Link Timeouts                 0      Link Naks                     0
+
+Data Compression       NONE
+Equalization           Long
+Fallback               Disabled
+Last Call              00:00:00
+
+No Connection
+OK
+
+ati7
+Configuration Profile...
+
+Product type           France Internal
+Options                V32bis,V.34+,X2
+Fax Options            Class 1/Class 2.0
+Voice Options          Speakerphone,TAD
+DSP Freq               46.0Mhz
+DSP Ram                32k
+
+VXD date               07/17/97
+VXD rev                1.41.005
+OK
+
+ati8
+Black List Numbers              Tries Delays
+21                              0001  0
+
+OK
+-----------------------------------------------------------------
+ati4
+
+B0  réponse en ITU-T V25
+E1  écho local des commandes activé
+F1  écho local des données désactivé
+L2  haut-parleur au niveau moyen
+M1  haut-parleur actif de la numérotation à la détection de porteuse
+Q0  affichage des codes résultat
+V1  codes résultat en mode textuel
+X1  jeu de codes résultat n°1
+Y0  réinitialisation sur profil 0
+
+BAUD=115200 &B0 débit jonction = celle définie pour le port série
+    PARITY=N
+    WORDLEN=8
+DIAL=TONE   T   numérotation par fréquences
+ON HOOK     H0  raccroché
+    CID=0
+
+&A1 jeu de codes résultat ARQ activé
+&C1 signal CD actif (indique la présence ou l'absence de la porteuse) 
+&D2 fonctionnement normal du signal DTR
+&G2 tonalité de garde à 188 Hz
+&H0 pas de contrôle de flux ETTD->ETCD
+&I0 pas de contrôle de flux logiciel ETCD->ETTD
+&K1 activation automatique de la compression de données
+&M4 correction d'erreur ARQ si elle est possible
+&N0 débit de connexion variable (ànégocié avec l'autre modem)
+&P1 durée des impulsions de numérotation selon UK et Commonwealth
+&R1 pas de contrôle de flux matériel ETCD->ETTD
+&S0 forcer le signal DSR à présent
+&T3 test par bouclage numérique local
+&U0 
+&Y1 efface les données non envoyées, envoi d'un break
+
+   S00=000  réponse manuelle
+   S01=000  pas d'appel entrant
+   S02=043  echappement par +++
+   S03=013  code RC
+   S04=010  code LF
+   S05=008  code Backspace
+   S06=008  durée attente avant numérotation (secondes)
+   S07=085  durée attente porteuse (secondes)
+   S08=002  durée de la pause "," (secondes)
+   S09=006  durée minimum de la porteuse à envoyer (dixièmes de secondes)
+   S10=007  durée en perte de porteuse et raccrochage (dixièmes de secondes)
+   S11=070  durées pour la numérotation par fréquences (millisecondes)
+   S12=050  durée du délai de garde de l'échappement (cinquantièmes de secondes)
+   S13=000  bit
+            0   0   pas de réinitialisation en cas de perte de DTR
+            1   0   tampon d'émission non-ARQ à 1.5 Ko  (0->128o)
+            2   0   la touche backspace n'efface pas le caractère précédent
+            3   0   pas 'appel automatique à la detection de DTR
+            4   0   pas d'appel automatique à la mise sous tension
+            5   0   réservé
+            6   0   MNP niveau 3 activé
+            7   0   ne pas connecter sur touche d'échappement)
+   S15=000  bit
+            0   0   ARQ/MNP V22 actif
+            1   0   ARQ/MNP V22bis actif
+            2   0   ARQ/MNP V32* actif
+            3   0   handshake MNP actif
+            4   0   MNP niveau 4 actif
+            5   0   MNP niveau 3 actif
+            6   0   pas d'incompatibilité avec MNP
+            7   0   V42 actif
+   S16=000  bit
+            0   0   réservé
+            1   0   pas de test de numérotation en fréquences
+            2-7 0   réservé
+   S18=000  horloge de test inactive
+   S19=000  pas de raccrochage en cas d'inactivité
+   S21=010  durée des bereaks (en 10 millisecondes)
+   S22=017  code de Xon
+   S23=019  code de Xoff
+   S25=020  durée mini de la perte de DTR (centièmes de seconde)
+   S27=017  bit
+            0   1   V21 pour appels à 300 bps
+            1   1   modulation en treillis V32 active
+            2   1   modulation V32 inactive
+            3   0   tonalité de réponse à 2100 Hz active
+            4   1   repli en V23 actif
+            5   0   V32 actif
+            6   0   réservé
+            7   0   mode incompatibilité inactif (affiche CONNECT 9600 à la 
+                    place de certains autres) 
+   S28=008  durées des tonalités de réponse V32 (dixièmes de seconde)
+   S29=020  attente avant réponse de repli en V21 (dixièmes de seconde)
+   S30=000  réservé
+   S31=128  réservé
+   S32=002  bit
+            0   0   indicateur d'appel V8 inactif
+            1   1   V8 actif
+            2   0   réservé
+            3   0   V34 actif
+            4   0   support 33.6 Kbps actif
+            5-7 0   réservé
+   S33=000  bit
+            0   0   débit symbolique 2400 actif
+            1   0   débit symbolique 2743 actif
+            2   0   débit symbolique 2800 actif
+            3   0   débit symbolique 3000 actif
+            4   0   débit symbolique 3200 actif
+            5   0   débit symbolique 3400 actif
+            6   0   réservé
+            7   0   mise en forme active
+   S34=000  bit
+            0   0   encodage treillis  8S-2D actif
+            1   0   encodage treillis 16S-4D actif
+            2   0   encodage treillis 32S-2D actif
+            3   0   encodage treillis 64S-4D actif
+            4   0   encodage non linéaire actif
+            5   0   déviation de niveau TX actif
+            6   0   fonction pre-emphasis active
+            7   0   fonction pre-codage active
+   S35=000  réservé
+   S36=014  réservé
+   S38=000  vider le buffer d'émission et raccrocher dès que DTR tombe
+   S41=000  
+
+   LAST DIALED #:
+
+OK

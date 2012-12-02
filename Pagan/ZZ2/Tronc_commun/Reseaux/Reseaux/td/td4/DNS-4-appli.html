@@ -1,0 +1,184 @@
+<HTML>
+<HEAD>
+ <TITLE>Etude du DNS - (4) L'application d'interrogation</TITLE>
+ <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="white">
+<H1>Etude de l'application DNS</H1>
+<P ALIGN="RIGHT"><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>
+<!--#config timefmt="%b %Y"--><!--#flastmod virtual="$DOCUMENT_URI" --></I></P>
+
+<H2>4 - L'application d'interrogation</H2>
+
+<H3>4.1 - Schéma général</H3>
+
+	<BLOCKQUOTE>
+	<P>L'application DNS (<SPAN CLASS="etranger">Domain Name Service</SPAN>) livre des 
+	extraits de la base à des utilisateurs, en réponse à leurs interrogations.<BR>
+	La couche DNS est composée de 2 types d'entités-DNS, qui échangent des PDU-DNS
+	en utilisant la couche UDP :</P>
+		<UL>
+		<LI><P>des <B>clients-DNS</B>, ou <B>résolveurs</B>, qui reçoivent 
+			les questions des utilisateurs installés dans le même système,
+			dialoguent avec les serveurs-DNS (par des PDU-DNS) pour en obtenir des réponses
+			qu'ils livrent aux utilisateurs.<br/ >
+			(Par exemple, les processus <tt>host</tt> lancés dans les
+			exercices précédents sont des utilisateurs du service-DNS.)</P></LI>
+		<LI>des <B>serveurs-DNS</B>, qui disposent de copies maîtres et/ou esclaves de
+			zones, dont ils extraient les réponses aux questions reçues.<BR>
+			Dans le cas où un serveur-DNS ne trouve pas l'information cherchée dans
+			les copies de zones dont il dispose, il peut demander à "son" résolveur
+			de poser la question à d'autres serveurs-DNS (mode récursif).</LI>
+		</UL>
+		
+	<CENTER><IMG SRC="DNS-organisation.png" ALT="couche DNS" WIDTH="643" HEIGHT="387"></CENTER>
+	</BLOCKQUOTE>
+
+<H3>4.2 - Les serveurs-DNS</H3>
+
+	<BLOCKQUOTE>
+	<P>Un serveur-DNS est lié au port <B>UDP/53</B> dans le système où il est 
+	implanté.</P>
+	<p>Plusieurs implémentations existent, une des plus connues est BIND
+		(<i>Berkeley Internet Name Domain</i>) est installée sur 
+		<tt>custsv</tt>.<br />
+	La configuration du serveur-DNS BIND est définie par le fichier 
+		<tt>/etc/named/named.conf</tt> ou <tt>/etc/bind/named.conf</tt> 
+		(<a href="named.conf">copie de custsv</a> ou <a href="named2.conf">
+copie de sp.isima.fr</a>),
+		dont les paramètres sont expliqués dans le
+		<a href="BIND/config.html"><i>BIND Configuration File Guide</i></a>.
+	</p>Autres fichiers intéressants que l'on trouve dans le fichier <i>named.conf</i> de sp.isima.fr : <tt><a href="DNS_ISIMA/isima.db">isima.db</a>, <a href="DNS_ISIMA/isima.rev">isima.rev</a>, <a href="DNS_ISIMA/isima.local">isima.local</a>, <a href="DNS_ISIMA/isima.ca">isima.ca</a></tt>.
+	<hr>
+	<p><SPAN CLASS="exercice">Exercice 4.2-1</SPAN> :</p>
+		<ul>
+		<li>Quelles sont les zones que maintient le serveur-DNS de <b>sp</b> ?</li>
+		<li>De quel type est chacune de ces zones ?</li>
+		<li>Examiner les fichiers correspondants.</li>
+		</ul>
+	<hr>
+	Lorsque le serveur-DNS n'a pas l'information qu'un client-DNS lui demande, 
+	il peut propager la question 
+		<ul>
+		<li><p>auprès d'un serveur-DNS qui possède une copie maître ou 
+			esclave de la zone dans laquelle se trouve la réponse, 
+			s'il connait un tel serveur-DNS,</p></li>
+		<li><p>ou bien auprès d'un serveur-DNS-racine (liste dans 
+			<tt>/etc/bind/db.root</tt> [<a href="db.root">copie</a>]), 
+			qui lui renverra la liste des RR-NS de la zone.<br/ >
+			Il pourra ensuite propager la question l'un de ces serveurs-DNS
+			si le résolveur le demande (voir <a href="4.3.2">§4.3.2</a>).</p></li>
+		</ul>
+	Après avoir obtenu une réponse, il la
+	mémorise dans une <B>zone-cache</B> les informations reçues.	Ainsi il enrichit sa propre connaissance, et ainsi peut répondre plus tard à partir de son cache.
+	Cependant, s'il répond à une question à partir de ce cache, la réponse est
+	dite "<B>non autorisée</B>" (<SPAN CLASS="etranger">non authoritative</SPAN>).
+
+	<hr>
+	<p><SPAN CLASS="exercice">Exercice 4.2-2</SPAN> : 
+		réponse autorisée et réponse non autorisée<br/ >
+	(avec l'option <tt>-d</tt>, la commande <tt>host</tt> indique s'il la réponse
+	vient d'une copie de zone ou d'un cache)</p>
+		<ul>
+		<li><p>Examiner la différence entre les commandes<br/ >
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<tt class="commande">host -d -a www.isima.fr</tt>  <br/ >
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;et 
+			<tt class="commande">host -d -a --server=sp.isima.fr www.isima.fr</tt></p></li>
+		<li><dl>
+			<dt>Les réponses données pour les questions suivantes sont-elles
+			autorisées ou non ?<dt>
+				<dd><tt>custsv.univ-bpclermont.fr</tt></dd>
+				<dd><tt>www.ifma.fr</tt></dd>
+				<dd>etc...</dd>
+			</dl></li>
+		<li><p>Comment faut-il poser la question pour avoir une réponse autorisée ?</p></li>
+		</ul>
+	<hr>
+	</BLOCKQUOTE>
+
+<H3>4.3 - Les résolveurs</H3>
+<h4>4.3.1 - Configuration : à quel serveur-DNS s'adresser ?</h4>
+	<BLOCKQUOTE>
+	<P>Les résolveurs sont implantés dans les fonctions <TT>gethostbyname</TT> et
+	<TT>gethostbyaddr</TT>, généralement installées dans une bibliothèque partagée
+	(<TT>libc.so</TT> pour la plupart des Unix).</P>
+	<P>Un résolveur est configuré pour adresser les questions soumises par un 
+	utilisateur (par exemple <tt>host</tt>) à une liste d'au moins un serveur-DNS.<BR>
+	Chaque serveur-DNS de la liste est désigné par la seule adresse-IP du système dans lequel il
+	est installé; cette adresse est complétée par UDP/53.</P>
+		<UL>
+		<LI>Unix : fichier <TT>/etc/resolv.conf</TT></LI>
+		<LI>Microsoft : Paramètres, Panneau de configuration, Réseau, TCP, Propriétés, onglet DNS</LI>
+		</UL>
+	<P>Le résolveur s'adresse d'abord au 1<SUP>er</SUP> serveur-DNS de la liste.<BR>
+	Si la réponse n'arrive dans l'échéance prévue (4 secondes), il s'adresse au 2<SUP>ème</SUP>,
+	s'il y en a un,
+	puis au suivant...</P>
+	<HR>
+	<DL>
+	<DT><SPAN CLASS="exercice">Exercice 4.3.1</SPAN></DT>
+		<DD>Quelle est la liste des serveurs-DNS du
+	résolveur de <b>fc.isima.fr</b> ? de <b>etud</b> ?</DD>
+	</DL>
+
+	
+	<HR>
+	</BLOCKQUOTE>
+
+<h4>4.3.2 - Et pour aller chercher l'information à la source...</h4>
+	<BLOCKQUOTE>
+	Un résolveur peut laisser au serveur-DNS la totalité de la recherche (<B>mode récursif</B>)
+	ou bien organiser lui-même la recherche de serveur en serveur (<B>mode itératif</b> ou <b>non récursif</B>).
+	<HR>
+	<p><SPAN CLASS="exercice">Exercice 4.3.2</SPAN> : 
+	et si le résolveur était inintelligent...<br/ >
+	(l'option <tt>-r</tt> de la commande <tt>host</tt> indique au résolveur
+	de demander au serveur-DNS de ne pas propager la question auprès des autres
+	serveurs-DNS)</p>
+		<ul style="list-style:none">
+		<li>
+			<dl>
+			<dt>exemple : recherche de <tt>www.hexalis.fr</tt></dt>
+				<dd>
+					<ol>
+					<li><p><tt class="commande">host -r www.hexalis.fr</tt><br/ >
+						ne donne pas de réponse 
+						(<a href="ex4.3.2.html#1">voir</a>)</p></li>
+					<li><p><tt class="commande">host -r -v www.hexalis.fr</tt><br/ >
+						donne la liste des serveurs-DNS susceptibles de connaître la réponse 
+						(<a href="ex4.3.2.html#2">voir</a>)</p></li>
+					<li><p>On pose la question à un de ces serveurs, jusqu'à obtenir la 
+						liste des serveurs possédant une copie de la zone cherchée. <br/ >
+						<tt class="commande">host -r -v --server=m.root-servers.net www.hexalis.fr</tt> (<a href="ex4.3.2.html#3">voir</a>)<br/ >
+						<tt class="commande">host -r -v --server=NS3.NIC.fr www.hexalis.fr</tt> (<a href="ex4.3.2.html#4">voir</a>)<br/ >
+						On obtient la liste des serveurs-DNS possédant une copie de la zone <tt>hexalis.fr</tt>,
+						par exemple <tt>ns.sky.fr</tt> </p></li>
+					<li><p>On pose la question à un de ces serveur <br/ >
+						<tt class="commande">host -r --server=ns.sky.fr www.hexalis.fr</tt> 
+						(<a href="ex4.3.2.html#5">voir</a>)<br/ >
+						On obtient enfin la réponse !</p></li>
+					</ol>
+				</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+			<dt>Effectuer cette opération pour les noms suivants</dt>
+				<dd><tt>www.inetech.fr</tt></dd>
+				<dd><tt>www.ncd.com</tt></dd>
+				<dd><tt>www.tahiti-manava.pf</tt></dd>
+				<dd><tt>www.mazda.jp</tt></dd>
+				<dd>etc...</dd>
+			</dl>
+		</ul>
+
+	</BLOCKQUOTE>
+
+<P ALIGN=right><A HREF="DNS-5-PDU.html">Suite...<IMG SRC="../../images/ArrowRight.gif" ALT="suite" WIDTH="20" HEIGHT="20" BORDER="0"></A></P>
+<HR>
+
+
+</BODY>
+</HTML>

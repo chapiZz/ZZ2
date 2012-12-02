@@ -1,0 +1,84 @@
+<html><head><title>FTP</title></head>
+<body bgcolor="#dddddd">
+<p>RFC: 959<br>
+Statut : Standard<br>
+</p><center><h1>File Transfer Protocol (FTP)</h1>
+<h2>Spécification</h2>
+<hr>
+</center>Crédits : J. Postel, J. Reynolds / ISI<br>
+Traduction : <a href="mailto:Valery.Fremaux@eisti.fr">Valéry G. FREMAUX</a> Ingénieur Professeur / <a href="http://www.eisti.fr/">EISTI</a><br>
+Edition originale : Octobre 1985 / Version FR: Février 1997
+<hr>
+<i>
+<p><b>Note du Traducteur : </b></p>
+
+<p>Le texte suivant est la traduction intégrale de la spécification FTP,
+telle qu'éditée par les auteurs originaux du protocole, sans ajouts, commentaires,
+ni omissions. Ce document a valeur normative, selon la procédure courante
+d'enregistrement des documents au sein du W3C.</p></i>
+<p><b><i>Statut de ce Mémo</i></b>
+</p><p align="justify">Ce mémo est la spécification officielle du Protocole de Transfert de Fichiers (FTP). La distribution de ce mémo est illimitée. 
+</p><p align="justify">Les nouvelles commandes optionnelles suivantes sont inclues dans la présente édition de la spécification:
+</p><p align="justify">CDUP (Change to Parent Directory), SMNT (Structure
+Mount), STOU (Store Unique), RMD (Remove Directory), MKD (Make Directory),
+PWD (Print Directory), et SYST (System). </p><p align="justify">Notez que cette spécification est compatible avec la précédente édition. 
+</p><h2><font color="#000088">TABLE DES MATIERES</font></h2>
+<ul>
+<li><a href="959-1.htm">1. INTRODUCTION </a>
+</li><li><a href="959-2.htm">2. VUE D'ENSEMBLE</a> 
+<ul>
+<li><a href="959-1.htm#2.1">2.1. Historique</a>
+</li><li><a href="959-2.htm#2.2">2.2. Terminologie</a>
+</li><li><a href="959-2.htm#2.3">2.3. Le modèle FTP</a>
+</li></ul>
+</li><li><a href="959-3.htm">3. FONCTIONS DE TRANSFERT DE DONNEES</a>
+<ul>
+<li><a href="959-3.htm#3.1">3.1. Représentation des données et stokage</a>
+<ul>
+<li><a href="959-3.htm#3.1.1">3.1.1. Types de données</a>
+</li><li><a href="959-3.htm#3.1.2">3.1.2. Structures de données</a>
+</li></ul>
+</li><li><a href="959-3.htm#3.2">3.2. Etablissement du canal de données</a>
+</li><li><a href="959-3.htm#3.3">3.3. Gestion du canal de données</a>
+</li><li><a href="959-3.htm#3.4">3.4. Modes de transmission</a>
+<ul>
+<li><a href="959-3.htm#3.4.1">3.4.1. Mode flux</a>
+</li><li><a href="959-3.htm#3.4.2">3.4.2. Mode bloc</a>
+</li><li><a href="959-3.htm#3.4.3">3.4.3. Mode compressé</a>
+</li></ul>
+</li><li><a href="959-3.htm#3.5">3.5. Récupération d'erreur et reprise de transmission</a>
+</li></ul>
+
+</li><li><a href="959-4.htm">4. FONCTIONS DE TRANFERT DE FICHIERS</a>
+<ul>
+<li><a href="959-4.htm#4.1">4.1. Commandes FTP</a>
+<ul>
+<li><a href="959-4.htm#4.1.1">4.1.1. Commandes de contrôle d'accès</a>
+</li><li><a href="959-4.htm#4.1.2">4.1.2. Commandes de paramétrage du transfert</a>
+</li><li><a href="959-4.htm#4.1.3">4.1.3. Commandes de service FTP</a>
+</li></ul>
+</li><li><a href="959-4.htm#4.2">4.2. Réponses FTP</a>
+<ul>
+<li><a href="959-4.htm#4.2.1">4.2.1 Codes de réponse par groupes de fonctions</a>
+</li><li><a href="959-4.htm#4.2.2">4.2.2 Codes de réponse par ordre numérique</a>
+</li></ul></li></ul>
+</li><li><a href="959-5.htm">5. SPECIFICATIONS DECLARATIVES</a>
+<ul>
+<li><a href="959-5.htm#5.1">5.1. Implémentation minimale</a>
+</li><li><a href="959-5.htm#5.2">5.2. Connexions</a>
+</li><li><a href="959-5.htm#5.3">5.3. Commandes</a>
+<ul>
+<li><a href="959-5.htm#5.3.1">5.3.1. Commandes FTP : Syntaxe</a>
+</li><li><a href="959-5.htm#5.3.2">5.3.2. Arguments de commandes FTP : Syntaxe</a>
+</li></ul>
+</li><li><a href="959-5.htm#5.4">5.4. Séquencement des commandes et réponses</a>
+</li></ul>
+</li><li><a href="959-6.htm">6. DIAGRAMMES D'ETAT</a>
+</li><li><a href="959-7.htm">7. SCENARIOS FTP TYPIQUE</a>
+</li><li><a href="959-8.htm">8. ETABLISSEMENT DE LA CONNEXION</a>
+</li><li><a href="959ap1.htm">APPENDICE I - STRUCTURE DE PAGE</a>
+</li><li><a href="959ap2.htm">APPENDICE II - COMMANDES DE REPERTOIRE</a>
+</li><li><a href="959ap3.htm">APPENDICE III - RFC à propos de FTP</a>
+</li><li><a href="959ref.htm">REFERENCES</a>
+</li></ul>
+</body></html>

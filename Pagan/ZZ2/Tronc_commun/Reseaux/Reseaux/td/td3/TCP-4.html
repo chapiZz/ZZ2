@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+ <TITLE>Etude d'un protocole fiable : TCP (4)</TITLE>
+ <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY>
+<H1>Etude d'un protocole fiable : TCP</H1>
+<P ALIGN=right>
+<I><A HREF="mailto:laurenco@isima.fr">Patrice Laurencot</A>
+<!--#config timefmt="%d/%m/%Y"--><!--#flastmod  virtual="$DOCUMENT_URI" --></I></P>
+
+<H2>4 - Contrôle de flux</H2>
+<HR>
+
+<BLOCKQUOTE>
+	
+	<P>Le contrôle de flux est le mécanisme par lequel un destinataire contrôle le
+	rythme d'émission d'un expéditeur de données.<BR>
+	C'est pour éviter que des PDU de données soient envoyées alors que le destinataire
+	n'est pas en état de les recevoir ou de mémoriser les octets dans son buffer de
+	réception.</P>
+	
+	<P>Le protocole TCP inclus un mécanisme de contrôle de flux :</P>
+	<UL>
+	<LI><P>	Chaque entité-TCP qui émet une PDU-TCP indique dans le champ <TT>win</TT> combien il reste de place dans son buffer 
+		de réception.<BR>
+		Elle annonce ainsi sa capacité de réception.</P></LI>
+	<LI><P>Une entité-TCP n'émet pas de PDU de données contenant plus d'octets de données qu'il n'y a de place dans le buffer 
+		de réception du destinataire.</P></LI>
+	</UL>
+
+	<DL>
+	<DT><BR><SPAN CLASS="exercice">Exercice 7</SPAN></DT>
+		<DD>Etudier l'évolution du champ <TT>win</TT> dans les PDU-TCP échangées entre les TSAP <TT>193.54.51.253/5278</TT> et 
+			<TT>193.54.51.1:23</TT> dans le fichier <A HREF="../TRACES/complet.html"><TT>complet.html</TT></A><BR>
+			Commenter.</DD>
+	</DL>
+
+</BLOCKQUOTE>
+
+
+
+<P ALIGN=right><A HREF="TCP-5.html">Suite...<IMG SRC="./ArrowRight.gif" ALT="suite" WIDTH="20" HEIGHT="20" BORDER="0"></A></P>
+<HR>
+
+</BODY>
+</HTML>

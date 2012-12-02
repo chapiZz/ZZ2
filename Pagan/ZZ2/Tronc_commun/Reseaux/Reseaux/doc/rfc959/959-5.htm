@@ -1,0 +1,400 @@
+<html><head><title>FTP</title></head>
+<body bgcolor="#dddddd">
+
+<p>RFC: 959<br>
+Statut : Standard<br>
+</p><p>Remplace RFC: 765 (IEN 149) 
+</p><h1 align="center">File Transfer Protocol (FTP)</h1>
+<h2 align="center">Spécification</h2>
+<p></p><hr>
+<p>Crédits : J. Postel, J. Reynolds / ISI<br>
+Traduction : <a href="mailto:Valery.Fremaux@eisti.fr">Valéry G. FREMAUX</a> Ingénieur Professeur / <a href="http://www.eisti.fr/">EISTI</a><br>
+Edition originale : Octobre 1985 / Version FR: Février 1997 
+</p><p align="center"><a href="959-4.htm">Précédent</a> - <a href="959-6.htm">Suite</a> - <a href="959tm.htm">Retour au sommaire</a>
+</p><p></p><hr>
+
+<h2><font color="#000080">5. SPECIFICATIONS DECLARATIVES</font></h2>
+
+<h3><a name="5.1">5.1. IMPLEMENTATION MINIMALE</a></h3>
+
+<p>Afin de rendre FTP exploitable sans multiplication de messages d'erreur
+inutiles, une implémentation minimale à assurer par tous serveurs est définie
+ci-après :  </p><p><code><font color="#000080">TYPE</font><font color="#008000"> - ASCII Non-print
+</font></code></p><p><font color="#008000"><font color="#000080">MODE</font><font color="#008000"> - Flux
+</font></font></p><p><font color="#008000"><font color="#008000">     </font><font color="#000080">STRUCTURE</font><font color="#008000"> - Fichier, Enregistrement
+</font></font></p><p><font color="#008000"><font color="#008000">     </font><font color="#000080">COMMANDES</font><font color="#008000"> - USER, QUIT, PORT,
+</font></font></p><p><font color="#008000"><font color="#008000">          TYPE, MODE, STRU, pour les valeurs par défaut
+</font></font></p><p><font color="#008000"><font color="#008000">          RETR, STOR,
+</font></font></p><p><font color="#008000"><font color="#008000">          NOOP.</font>
+
+</font></p><p><font color="#008000">Les paramètres par défaut pour le transfert de données sont :
+
+</font></p><p><font color="#008000"><font color="#000080">TYPE</font><font color="#008000"> - ASCII Non-print</font>
+</font></p><p><font color="#008000"><font color="#000080">MODE</font><font color="#008000"> - Stream</font>
+</font></p><p><font color="#008000"><font color="#000080">STRU</font><font color="#008000"> - File</font>
+
+</font></p><p><font color="#008000">Tous les hôtes doivent accepter les paramètres ci-dessus comme paramètres par défaut standards.
+
+</font></p><h3><font color="#008000"><a name="5.2">5.2. CONNEXIONS</a></font></h3>
+
+<p><font color="#008000">L'interpréteur de protocole serveur "écoute" sur
+le Port L. L'utilisateur, ou son interpréteur de protocole doit prendre l'initiative
+de l'établissement de la connexion bidirectionnelle du canal de contrôle.
+Les processus SERVER- et USER- doivent suivre les conventions du protocole
+Telnet spécifiées dans le ARPA-Internet Protocol Handbook [1]. Les serveurs
+n'ont aucune obligation de fournir un moyen d'éditer la ligne de commande.
+Cette édition, si nécessaire, peut être déléguée au processus utilisateur.
+La connexion de contrôle pourra être coupée par le serveur sur demande de
+l'utilisateur, après conclusion de toutes les transmissions de commandes
+et réponses associées.  </font></p><p><font color="#008000">Le USER-DTP doit "écouter" le Port de
+données spécifié; celui-ci peut être le port standard (U) ou le port donnée
+par une commande PORT. Le serveur peut lui-même établir la connexion du canal
+de données entre son port de données standard (L-1) et le port utilisateur
+spécifié. Le port utilisé, et le sens de transfert seront déterminés par
+la nature de la commande de service FTP à exécuter. </font></p><p><font color="#008000">Notez que toutes les implémentations
+FTP doivent pouvoir piloter des transferts sur le port de données par défaut,
+alors que seuls les USER-PI peuvent provoquer l'usage des ports non standard. 
+ </font></p><p><font color="#008000"> Lorsque des données doivent être transmises
+entre deux serveurs, A et B (voir Figure 2), le USER-PI de C établit un canal
+de contrôle avec chacun des SERVER-PI de A et respectivement de B. L'un des
+serveurs, disons A, reçoit une commande PASV lui indiquant "d'écouter" son
+port de données plutôt que tenter une connexion lorsqu'il reçoit un ordre
+de transfert. Lorsque le USER-PI reçoit l'acquittement de cette commande
+PASV, qui inclut l'identité et le port du serveur "écouté", le USER-PI envoie
+la référence au port A au serveur B par une commande PORT; une réponse est
+attendue. Le USER-PI émet alors les commandes de service FTP correspondantes
+à A et à B. Le serveur B établit la connexion de données et le transfert
+commence. La séquence de commandes est montrée ci-dessous (les messages sont
+explicités selon un synchronisme vertical, la disposition horizontale restant
+asynchrone) :  </font></p><p><font color="#008000"><font color="#000080"><code></code></font></font></p><pre><font color="#008000"><font color="#000080">     USER-PI - Serveur A        USER-PI - Serveur B
+     -------------------        -------------------
+</font></font></pre>
+<font color="#008000"><font color="#008000"><pre>     
+     C-&gt;A : Connect                      C-&gt;B : Connect
+     C-&gt;A : PASV
+     A-&gt;C : 227 Entering Passive Mode. A1,A2,A3,A4,a1,a2
+                                        C-&gt;B : PORT A1,A2,A3,A4,a1,a2
+                                        B-&gt;C : 200 Okay
+     C-&gt;A : STOR                        C-&gt;B : RETR
+                B-&gt;A : Connect to HOST-A, PORT-a
+ 
+</pre></font>
+
+</font><p align="center"><font color="#008000">Figure 3
+
+</font></p><p><font color="#008000">La connexion de données peut être fermée
+par le serveur sous les conditions décrites à la Section traitant  de l'Etablissement
+de la Connexion de Données. Si la fermeture du canal de données survient
+après un transfert pour lequel la fermeture du canal ne correspond pas à
+une nécessité de signaler une fin-de-fichier (EOF), le serveur peut en prendre
+l'initiative immédiate. Il n'est pas permis d'accepter une nouvelle commande
+de transfert dans ce cas car le processus utilisateur ne pourra tester l'état
+de la connexion de données  pour se mettre en écoute sur celle-ci (il l'a
+déjà fait une fois, et n'a pas à priori de moyen de savoir que la connexion
+est refermée, par contre, un utilisateur doit nécessairement pouvoir se mettre
+en écoute d'un canal de données "fermé" AVANT d'envoyer une commande de transfert).
+Pour éviter un blocage en ce point, le serveur renvoie une réponse (226)
+après avoir fermé le canal de données (ou, si le canal est laissé ouvert,
+une réponse "transfert terminé" (250)). Le USER-PI devra attendre une de
+ces deux réponses avant de relancer une commande de transfert  </font></p><p><font color="#008000">Chaque fois qu'un utilisateur ou un
+serveur s'aperçoit que le canal de données a été fermé à l'autre bout, il
+devra le plus rapidement possible vider les tampons associés à ce canal,
+et refermer son propre côté de ce dernier.  </font></p><h3><font color="#008000"><a name="5.3">5.3. COMMANDES</a></font></h3>
+
+<p><font color="#008000">Les commandes sont des chaînes de caractères conformes
+au protocole Telnet transmises sur des canaux de contrôle tel que le décrit
+la Section traitant des Commandes FTP. Les fonctions et sémantique des commandes
+sont décrites dans la Section traitant des Commandes de Contrôle d'Accès,
+Commandes de Paramétrage de Transfert, Commandes de Service FTP, et Commandes
+Diverses. La syntaxe des commandes est précisée ci-après.  </font></p><p><font color="#008000">Toute commande commence par un code
+de commande suivi d'un champ d'argument. Le code de commande est composé
+d'au plus quatre caractères alphabétiques. Il ne doit pas être tenu compte
+de la casse dans un code de commande FTP. Ainsi, toutes les combinaisons
+suivantes se réfèrent à la commande de téléchargement :  </font></p><p><font color="#008000"><font> COLOR="#008000"&gt;<code> RETR  Retr  retr  ReTr  rETr</code></font>
+
+</font></p><p><font color="#008000">Ceci s'applique à tous les symboles utilisés
+pour donner les codes de valeurs des arguments, comme "A" ou "a" pour le
+TYPE ASCII. Le code de commande et les arguments doivent être séparés l'un
+l'autre par un Espace.  </font></p><p><font color="#008000">Le champ d'argument est une chaîne de
+longueur variable terminée par la séquence &lt;CRLF&gt; en représentation
+NVT-ASCII, ou la séquence de fin-de-ligne correspondante si un autre langage
+a été négocié pour la transmission. Il doit être noté ici que le serveur
+doit attendre la réception de cette séquence avant d'exécuter une quelconque
+action. </font></p><p><font color="#008000">La syntaxe est explicitée ci-dessous
+en NVT-ASCII. Tous les caractères du champ d'arguments sont des caractères
+ASCII incluant toute représentation décimale d'entiers en ASCII. Les crochets
+indiquent un argument optionnel. Si cette option n'est pas explicite, la
+valeur par défaut est considérée.  </font></p><h4><font color="#008000"><a name="5.3.1">5.3.1. COMMANDES FTP</a></font></h4>
+
+<p><font color="#008000">Les commandes FTP sont spécifiées ci-dessous :
+
+</font></p><p><font color="#008000"><font color="#008000"><code><pre>      USER &lt;SP&gt; &lt;nom d'utilisateur&gt; &lt;CRLF&gt;
+      PASS &lt;SP&gt; &lt;mot de passe&gt; &lt;CRLF&gt;
+      ACCT &lt;SP&gt; &lt;compte utilisateur&gt; &lt;CRLF&gt;
+      CWD &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      CDUP &lt;CRLF&gt;
+      SMNT &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      QUIT &lt;CRLF&gt;
+      REIN &lt;CRLF&gt;
+      PORT &lt;SP&gt; &lt;port&gt; &lt;CRLF&gt;
+      PASV &lt;CRLF&gt;
+      TYPE &lt;SP&gt; &lt;code type&gt; &lt;CRLF&gt;
+      STRU &lt;SP&gt; &lt;code structure&gt; &lt;CRLF&gt;
+      MODE &lt;SP&gt; &lt;code mode&gt; &lt;CRLF&gt;
+      RETR &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      STOR &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      STOU &lt;CRLF&gt;
+      APPE &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      ALLO &lt;SP&gt; &lt;entier décimal&gt;
+        [&lt;SP&gt; R &lt;SP&gt; &lt;entier décimal&gt;] &lt;CRLF&gt;
+      REST &lt;SP&gt; &lt;marqueur&gt; &lt;CRLF&gt;
+      RNFR &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      RNTO &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      ABOR &lt;CRLF&gt;
+      DELE &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      RMD &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      MKD &lt;SP&gt; &lt;chemin d'accès&gt; &lt;CRLF&gt;
+      PWD &lt;CRLF&gt;
+      LIST [&lt;SP&gt; &lt;chemin d'accès&gt;] &lt;CRLF&gt;
+      NLST [&lt;SP&gt; &lt;chemin d'accès&gt;] &lt;CRLF&gt;
+      SITE &lt;SP&gt; &lt;chaîne&gt; &lt;CRLF&gt;
+      SYST &lt;CRLF&gt;
+      STAT [&lt;SP&gt; &lt;chemin d'accès&gt;] &lt;CRLF&gt;
+      HELP [&lt;SP&gt; &lt;chaîne&gt;] &lt;CRLF&gt;
+      NOOP &lt;CRLF&gt;
+</pre></code></font>
+
+</font></p><h4><font color="#008000"><a name="5.3.2">5.3.2. ARGUMENTS DE COMMANDES FTP</a></font></h4>
+
+<p><font color="#008000">Syntaxe des champs d'arguments ci-avant (notation BNF si applicable) :
+ 
+</font></p><p><font color="#008000"><font color="#008000"><code>
+      &lt;nom d'utilisateur&gt; ::= &lt;chaîne&gt;
+      &lt;mot de passe&gt; ::= &lt;chaîne&gt;
+      &lt;compte utilisateur&gt; ::= &lt;chaîne&gt;
+      &lt;chaîne&gt; ::= &lt;char&gt; | &lt;char&gt;&lt;chaîne&gt;
+      &lt;char&gt; ::= tout caractère ASCII de code 0 à 128 sauf &lt;CR&gt; et &lt;LF&gt;
+      &lt;marqueur&gt; ::= &lt;pr-chaîne&gt;
+      &lt;pr-chaîne&gt; ::= &lt;pr-char&gt; | &lt;pr-char&gt;&lt;pr-chaîne&gt;
+      &lt;pr-char&gt; ::= caractères imprimables, codes ASCII de 33 à 126
+      &lt;taille d'octet&gt; ::= &lt;nombre&gt;
+      &lt;port&gt; ::= &lt;adresse hôte&gt;,&lt;numéro port&gt;
+      &lt;adresse hôte&gt; ::= &lt;nombre&gt;,&lt;nombre&gt;,&lt;nombre&gt;,&lt;nombre&gt;
+      &lt;numéro port&gt; ::= &lt;nombre&gt;,&lt;nombre&gt;
+      &lt;nombre&gt; ::= tout entier décimal entre 1 et 255
+      &lt;code format&gt; ::= N | T | C
+      &lt;type-code&gt; ::= A [&lt;sp&gt; &lt;code format&gt;]
+             | E [&lt;sp&gt; &lt;code format&gt;]
+             | I
+             | L &lt;sp&gt; &lt;taille d'octet&gt;
+      &lt;code structure&gt; ::= F | R | P
+      &lt;code mode&gt; ::= S | B | C
+      &lt;chemin d'accès&gt; ::= &lt;chaîne&gt;
+      &lt;entier décimal&gt; ::= tout entier décimal codé en ASCII
+</code></font>
+
+</font></p><h3><font color="#008000"><a name="5.4">5.4. SEQUENCEMENT DES COMMANDES ET REPONSES</a></font></h3>
+
+<p><font color="#008000">La communication entre l'utilisateur et le serveur
+est prévue pour autoriser un dialogue bidirectionnel. A ce titre, l'utilisateur
+émet une commande FTP à laquelle le serveur répond par une première réponse
+rapide provisoire. L'utilisateur devra attendre cette réponse, positive ou
+négative, avant de pouvoir émettre une autre commande.  </font></p><p><font color="#008000">Certaines commandes nécessitent l'attente
+d'une deuxième réponse. Ces réponses peuvent, par exemple, donner un état
+d'avancement ou de conclusion d'un transfert de fichier ou signaler la fermeture
+du canal de données. Ce sont des réponses secondaires à des commandes de
+transfert de fichier.  </font></p><p><font color="#008000"> Un groupe important de réponses est
+celui qui contient les réponses d'information suite à la conclusion d'une
+connexion. En des circonstances normales, un serveur émettra une réponse
+de code 220, "attente d'entrée", lorsque la connexion est établie. L'utilisateur
+devra attendre cette réponse d'état avant d'émettre toute commande. Si les
+serveur n'est pas immédiatement en état de recevoir des commandes, il émettra
+une réponse de code 120 "service retardé" immédiatement après l'établissement
+de la connexion, puis une réponse de code 220 dès qu'il est en état de recevoir.
+L'utilisateur est averti de ce temps d'attente, et pourra choisir de maintenir
+la connexion.  </font></p><p><font color="#008000"><b><i>Réponses spontanées</i></b>
+
+</font></p><p><font color="#008000">Parfois, "le système" a spontanément
+un message à émettre vers l'utilisateur (en général à tous les utilisateurs
+connectés).Par exemple, "Arrêt du système dans 15 minutes". FTP ne propose
+pas de mécanisme particulier pour émettre spontanément un message du serveur
+vers l'utilisateur. Il est recommandé d'empiler cette réponse au niveau du
+SERVER-PI et de délivrer cette information lors de l'émission d'une réponse
+classique ultérieure (par exemple en constituant une réponse multilignes). 
+ </font></p><p><font color="#008000">La table ci-après liste les réponses
+positives et négatives pour chaque commande. Il est demandé un respect strict
+des codes de réponse dans les situations indiquées; le texte émis par le
+serveur est libre, bien que son sens général et l'indication sur l'action
+à exécuter dusse rester explicite, dans le contexte, et univoque.  </font></p><p><font color="#008000"><b><i>Séquences de Commandes Réponses</i></b>
+
+</font></p><p><font color="#008000">Dans cette section sont présentées les
+séquences usuelles de commandes-réponses. Chaque commande est listée avec
+toutes ses réponses possibles; les groupes de commandes sont listés ensembles.
+Les réponses provisoires sont listées en premier, puis les réponses définitives
+positives et négatives, enfin, les réponses intermédiaires avec les reste
+des réponses suivantes de la séquence. Ces listes sont à la base des diagrammes
+d'états, présentés plus en avant.  </font></p><p><font color="#008000"><b><i>Etablissement de connexion</i></b>
+
+</font></p><p><font color="#008000"><font color="#008000"><code><pre>        120
+        220
+        220
+        421</pre></code></font>
+</font></p><p><font color="#008000"><b><i>Ouverture de session</i></b>
+</font></p><p><font color="#008000"><font color="#008000"><code></code></font></font></p><pre><font color="#008000"><font color="#008000">        USER
+         230
+         530
+         500, 501, 421
+         331, 332
+        PASS
+         230
+         202
+         530
+         500, 501, 503, 421
+         332
+        ACCT
+         230
+         202
+         530
+         500, 501, 503, 421
+        CWD
+         250
+         500, 501, 502, 421, 530, 550
+        CDUP
+         200
+         500, 501, 502, 421, 530, 550
+        SMNT
+         202, 250
+         500, 501, 502, 421, 530, 550</font></font></pre>
+
+<p><font color="#008000"><b><i>Fermeture de session</i></b>
+
+</font></p><p><font color="#008000"><font color="#008000"><code><pre>        REIN
+         120
+         220
+         220
+         421
+         500, 502
+        QUIT
+         221
+         500</pre></code></font>
+
+</font></p><p><font color="#008000"><b><i>Paramètres de transfert</i></b>
+
+</font></p><p><font color="#008000"><font color="#008000"><code><pre>        PORT
+         200
+         500, 501, 421, 530
+        PASV
+         227
+         500, 501, 502, 421, 530
+        MODE
+         200
+         500, 501, 504, 421, 530
+        TYPE
+         200
+         500, 501, 504, 421, 530
+        STRU
+         200
+         500, 501, 504, 421, 530</pre></code></font>
+
+</font></p><p><font color="#008000"><b><i>Commandes de service fichiers</i></b>
+
+</font></p><p><font color="#008000"><font color="#008000"><code><pre>        ALLO
+         200
+         202
+         500, 501, 504, 421, 530
+        REST
+         500, 501, 502, 421, 530
+         350
+        STOR
+         125, 150
+         (110)
+         226, 250
+         425, 426, 451, 551, 552
+         532, 450, 452, 553
+         500, 501, 421, 530
+        STOU
+         125, 150
+         (110)
+         226, 250
+         425, 426, 451, 551, 552
+         532, 450, 452, 553
+         500, 501, 421, 530
+        RETR
+         125, 150
+         (110)
+         226, 250
+         425, 426, 451
+         450, 550
+         500, 501, 421, 530
+        LIST
+         125, 150
+         226, 250
+         425, 426, 451
+         450
+         500, 501, 502, 421, 530
+        NLST
+         125, 150
+         226, 250
+         425, 426, 451
+         450
+         500, 501, 502, 421, 530
+        APPE
+          125, 150
+          (110)
+          226, 250
+          425, 426, 451, 551, 552
+          532, 450, 550, 452, 553
+          500, 501, 502, 421, 530
+         RNFR
+          450, 550
+          500, 501, 502, 421, 530
+          350
+         RNTO
+          250
+          532, 553
+          500, 501, 502, 503, 421, 530
+         DELE
+          250
+          450, 550
+          500, 501, 502, 421, 530
+         RMD
+          250
+          500, 501, 502, 421, 530, 550
+         MKD
+          257
+          500, 501, 502, 421, 530, 550
+         PWD
+          257
+          500, 501, 502, 421, 550
+         ABOR
+          225, 226
+          500, 501, 502, 421</pre></code></font>
+
+</font></p><p><font color="#008000"><b><i>Commandes d'information</i></b>
+
+</font></p><p><font color="#008000"><font color="#008000"><code><pre>         SYST
+          215
+          500, 501, 502, 421
+         STAT
+          211, 212, 213
+          450
+          500, 501, 502, 421, 530
+         HELP
+          211, 214
+          500, 501, 502, 421</pre></code></font>
+
+</font></p><p><font color="#008000"><b><i>Commandes diverses</i></b>
+
+</font></p><p><font color="#008000"><font color="#008000"><code><pre>         SITE
+          200
+          202
+          500, 501, 530
+         NOOP
+          200
+          500, 421
+</pre></code></font>
+
+</font></p><p></p><hr>
+<p align="center"><font color="#008000"><a href="959-4.htm">Précédent</a> - <a href="959-6.htm">Suivant</a> - <a href="959tm.htm">Retour au sommaire</a>
+
+</font></p></body></html>

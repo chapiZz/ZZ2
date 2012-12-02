@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+	<TITLE>Etude du DNS - (1) contexte</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+    <style TYPE="text/css">
+        .histoire {text-align:center; color:green; font-weight:bold}
+    </style>
+</HEAD>
+
+<BODY BGCOLOR="white">
+<H1>Etude de l'application DNS 
+	<I STYLE="font-size:smaller; font-weight:normal">(Domain Name Service)</I></H1>
+<P ALIGN="RIGHT"><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude 
+	Vialatte</A><BR>
+	<!--#config timefmt="%b %Y"--><!--#flastmod virtual="$DOCUMENT_URI" --></I></P>
+
+<H2><A NAME="as-h2-199150">1 - Le contexte de l'application</A></H2>
+
+	<BLOCKQUOTE>
+	<P>Chaque système raccordé à l'Internet est identifié par un 
+	identificateur unique (pas d'homonyme) qui seul permet de
+	communiquer avec lui, c'est son <B>adresse-IP</B>. </P>
+	<P>Cet identificateur de 32 bits est "confortable" pour les programmes 
+	(et les programmeurs), mais difficile à mémoriser et à manipuler 
+	pour les personnes. Aussi un autre identificateur a-t-il été ajouté pour 
+	faciliter la désignation des systèmes par les personnes : 
+	le <B>nom de système</B>.<BR>
+	Comme il n'y a pas de formule pour faire la correspondance entre le nom et 
+	l'adresse-IP d'un système, elle doit être
+	obtenue à l'aide une table ou <B>annuaire</B>.</P>
+
+	<HR>
+    <p class="histoire">au début : une table par système (le fichier 
+	<tt>hosts</tt>)</p>
+
+	<P>Aux débuts de l'Internet, le nombre de systèmes raccordés était très 
+	petit (4 systèmes en 1969, 213 en 1981).<br/ >
+	Une simple table
+	mémorisée dans un fichier de chaque système, et une procédure de recherche 
+	par balayage étaient suffisantes. <br/ >
+	C'est le fichier
+	<B>hosts</B> (Unix : <TT>/etc/hosts</TT>, Microsoft : 
+	<TT>C:\WINDOWS\HOSTS.TXT</TT>).</P>
+
+	<DL>
+	<DT><SPAN CLASS="exercice">Exercice 1-1</SPAN></DT>
+		<DD>Combien y a-t-il de systèmes nommés dans les fichiers <TT>hosts</TT> des systèmes <b>fc.isima.fr</b> 
+		et <b>etud</b> ?<br/ >
+		(par la commande : <tt class="commande">more /etc/hosts</tt> exécutée sur chaque système)</DD>
+	</DL>
+    <p>MAIS une modification (nouveau système, changement de nom ou 
+	d'adresse-IP...) nécessite d'effectuer la modification
+	dans la table de chaque système, et ce n'est pas viable au-delà de 
+	quelques sytèmes.</p>
+        <!--<blockquote>Remarque : 
+        Le même type de problème se produit pour d'autres ensembles 
+		d'information dites "d'administration".
+        </blockquote>-->
+    <p>Deux
+ solutions ont été élaborées au cours des années 80 et sont 
+	encore très utilisées :
+        <ul>
+        <li>le <b>NIS</b>, orienté sur le partage 
+			d'informations 
+			d'administration entre les 
+            systèmes d'une organisation,</li>
+        <li>le <b>DNS</b>, orienté sur les seules informations de 
+		traduction nom&lt;--&gt;adresse-IP des systèmes.</li>
+        </ul>
+    </p>
+
+	<HR>
+    <p class="histoire"><span style="font-size:large">NIS</span> : le 
+	MEME ensemble d'informations d'administration <br>pour TOUS les systèmes 
+	d'UNE organisation</p>
+
+	<P>NIS (<SPAN CLASS="etranger">Network Information Service</SPAN>)
+	a été spécifié par Sun Microsystems. <BR>
+	Ce service permet de gérer de manière centralisée des 
+	informations d'administration
+     de systèmes, identiques pour tout un groupe de systèmes, 
+	en particulier l'annuaire des noms de systèmes du groupe.</P>
+
+	<HR>
+    <p class="histoire"><span style="font-size:large">DNS</span> : un annuaire 
+		mondial des systèmes</a>
+	<p>Avec l'explosion de l'Internet, le nombre de systèmes désignés par
+		un nom grandit très fortement (source : 
+		<A HREF="http://www.isc.org/ds/">http://www.isc.org/ds/</A>) :</p>
+	<CENTER><IMG src="hosts.png"></CENTER>	
+	<p>Un tel nombre de systèmes rend impossible le maintien à jour de 
+		ces tables, même pour les seuls systèmes qui ont un nom "officiel" 
+		(72 millions en juillet 2000, 109 millions en janvier 2001, 
+		147 millions en janvier 2002), car :</p>
+		<UL>
+		<LI>la taille de l'annuaire est trop grande pour l'installer sur 
+			chaque système, ou même sur un système par organisation,</LI>
+		<LI>le taux de mise à jour est grand (plus de 37 millions d'ajouts en 
+			2000, un peu plus en 2001, soit plus d'un par seconde)</br>
+			(ce qui entraine qu'il serait impossible d'avoir une copie complète
+			à jour),</LI>
+		<LI>la méthode de nommage "plat" implique que chaque système ait un 
+			nom différent, et même en utilisant tous les dictionnaires, c'est 
+			difficile...</LI>
+		</UL>
+	<P>Ces considérations 
+		(<A HREF="../../doc/rfc1034/1034-2.htm">RFC1034-Intro</A>) ont amené à 
+		la conception du DNS (<SPAN CLASS="etranger">Domain Name 
+		System</SPAN>), qui :</P>
+		<UL>
+		<LI>spécifie un <b>espace de nommage</b> (comment construire et 
+		organiser les noms pour permettre un très grand nombre de noms 
+		différents ?),</LI>
+		<LI>spécifie la <b>forme de l'annuaire</b>, les contraintes de 
+		disponibilité et sa mise à jour,</LI>
+		<LI>spécifie une <b>application d'interrogation</b>.</LI>
+		</UL>
+	</BLOCKQUOTE>
+<hr>
+<p class="histoire">le futur proche : LDAP</a>
+    <blockquote>
+	<p>D'autres propositons de spécifications d'annuaire ont été élaborées
+		(<b>X500</b> de l'ITU-T, trop lourd, et <b>NIS+</b> du Sun),
+		mais actuellement, la solution qui semble la plus "adoptée" est 
+		<b>LDAP</b> (<i>Lightweight Directory Access Protocol</i>), 
+		spécifié par l'IETF.<br/>
+		Microsoft s'est inspiré de LDAP pour bâtir <b>Active Directory</b>.</p>
+    <p>LDAP propose une organisation d'informations structurée en 
+		arborescence hiérarchique dans laquelle
+        l'administrateur de l'annuaire peut ajouter des classes d'objets.</p>
+    <p><a href="http://www.cru.fr/ldap/">Tout sur LDAP</a> 
+	(au Comité Réseau des Universités, 
+	<a href="http://www.cru.fr/">http://www.cru.fr</a>), mais commencer par le 
+    <a href="http://www-sop.inria.fr/semir/personnel/Laurent.Mirtain/ldap-livre.html">tutoriel</a>...</p>
+    </blockquote>
+
+<P ALIGN=right><A HREF="DNS-2-espace_de_noms.html">Suite...<IMG SRC="../../images/ArrowRight.gif" ALT="suite" WIDTH="20" HEIGHT="20" BORDER="0"></A></P>
+<HR>
+
+</BODY>
+</HTML>

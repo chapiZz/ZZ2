@@ -1,0 +1,182 @@
+<html><head><title>FTP</title></head>
+<body bgcolor="#dddddd">
+
+<p>RFC: 959<br>
+Statut : Standard<br>
+</p><p>Remplace RFC: 765 (IEN 149) 
+</p><h1 align="center">File Transfer Protocol (FTP)</h1>
+<h2 align="center">Spécification</h2>
+<p></p><hr>
+<p>Crédits : J. Postel, J. Reynolds / ISI<br>
+Traduction : <a href="mailto:Valery.Fremaux@eisti.fr">Valéry G. FREMAUX</a> Ingénieur Professeur / <a href="http://www.eisti.fr/">EISTI</a><br>
+Edition originale : Octobre 1985 / Version FR: Février 1997 
+</p><p align="center"><a href="959-5.htm">Précédent</a> - <a href="959-7.htm">Suite</a> - <a href="959tm.htm">Retour au sommaire</a>
+</p><p></p><hr>
+
+<h2><font color="#000080">6.  DIAGRAMMES D'ETAT</font></h2>
+<p><font color="#000080">Cette section présente les diagrammes d'états
+pour une implémentation basique de FTP. Seul le premier digit des codes de
+réponse est considéré. Un diagramme d'état est associé à un groupe de commandes
+FTP ou à une séquence de commandes.  </font></p><p><font color="#000080">Le regroupement des commandes a été
+opéré lors de la construction du modèle de chaque commande  par association
+des commandes qui répondaient au même modèle structurel.  </font></p><p><font color="#000080">Pour chaque commande, ou séquence de
+commandes, trois issues sont possibles: succès S (Success), Echec F (Failure),
+et erreur E (Error).  </font></p><p><font color="#000080">Dans les diagrammes ci-dessous, nous
+avons utilisé le symbole B pour "begin" (début), et le symbole W pour "wait
+for reply" (attente de réponse).  </font></p><p><font color="#000080">Le diagramme suivant présente le fonctionnement de la plus grande partie des commandes FTP :
+
+</font></p><p><font color="#000080"><font color="#008000"><code><pre>  
+                               1,3    +---+
+                          -----------&gt;| E |
+                         |            +---+
+                         |
+      +---+    cmd    +---+    2      +---+
+      | B |----------&gt;| W |----------&gt;| S |
+      +---+           +---+           +---+
+                         |
+                         |     4,5    +---+
+                          -----------&gt;| F |
+                                      +---+
+</pre></code></font>
+
+</font></p><p><font color="#000080">Ce diagramme propose le modèle pour les commandes :
+
+</font></p><p><font color="#000080">ABOR, ALLO, DELE, CWD, CDUP, SMNT, HELP, MODE, NOOP, PASV, QUIT, SITE, PORT, SYST, STAT, RMD, MKD, PWD, STRU, et TYPE.
+
+</font></p><p><font color="#000080">Un autre groupe important de commande répond au schéma suivant légèrement différent :
+
+
+</font></p><p><font color="#000080"><font color="#008000"><code><pre>  
+                               3      +---+
+                          -----------&gt;| E |
+                         |            +---+
+                         |
+      +---+    cmd    +---+    2      +---+
+      | B |----------&gt;| W |----------&gt;| S |
+      +---+       ---&gt;+---+           +---+
+                 |     | |
+                 |     | |     4,5    +---+
+                 |  1  |  -----------&gt;| F |
+                  -----               +---+
+</pre></code></font>
+
+</font></p><p><font color="#000080">Ce diagramme propose le modèle pour les commandes :
+
+</font></p><p><font color="#000080">APPE, LIST, NLST, REIN, RETR, STOR, et STOU.
+ 
+</font></p><p><font color="#000080">Notez que ce second modèle pourrait servir
+à représenter les commandes du premier groupe, La seule différence est que
+dans le premier groupe, les réponses de la classe 100 ne sont pas attendues
+et de ce fait sont traitées comme une erreur, tandis que le second groupe
+peut attendre (et parfois nécessiter) une réponse de classe 100. Une réponse
+au plus de classe 100 est autorisée par commande. </font></p><p><font color="#000080">Les diagrammes restants donnent un modèle
+pour des séquences de commandes, une des plus simples est la séquence conduisant
+au renommage d'un fichier :   </font></p><p><font color="#000080"><font color="#008000"><code><pre>  
+      +---+   RNFR    +---+    1,2    +---+
+      | B |----------&gt;| W |----------&gt;| E |
+      +---+           +---+        --&gt;+---+
+                       | |        |
+                3      | | 4,5    |
+         --------------  ------   |
+        |                      |  |   +---+
+        |               -------------&gt;| S |
+        |              |   1,3 |  |   +---+
+        |             2|  --------
+        |              | |     |
+        V              | |     |
+      +---+   RNTO    +---+ 4,5 -----&gt;+---+
+      |   |----------&gt;| W |----------&gt;| F |
+      +---+           +---+           +---+
+</pre></code></font>
+
+</font></p><p><font color="#000080">Le diagramme suivant propose un modèle simple pour une commande de reprise :
+ 
+
+</font></p><p><font color="#000080"><font color="#008000"><code><pre>  
+      +---+   REST    +---+    1,2    +---+
+      | B |----------&gt;| W |----------&gt;| E |
+      +---+           +---+        --&gt;+---+
+                       | |        |
+                3      | | 4,5    |
+         --------------  ------   |
+        |                      |  |   +---+
+        |               -------------&gt;| S |
+        |              |   3   |  |   +---+
+        |             2|  --------
+        |              | |     |
+        V              | |     |
+      +---+   cmd     +---+ 4,5 -----&gt;+---+
+      |   |----------&gt;| W |----------&gt;| F |
+      +---+        --&gt;+---+           +---+
+                   |      |
+                   |  1   |
+                   --------
+</pre></code></font>
+
+</font></p><p><font color="#000080">Dans lequel "cmd" est APPE, STOR, ou RETR.
+
+</font></p><p><font color="#000080">Nous avons noté que ces deux diagrammes
+apparaissent comme très similaires. La commande de reprise diffère de celle
+de renommage dans le seul traitement des réponses de classe 100 du second
+étage, tandis que le second groupe attend (et parfois impose) une commande
+de classe 100. Souvenez vous qu'une seule commande de classe 100 est permise
+pour une commande donnée.  </font></p><p><font color="#000080">Le diagramme le plus complexe est pour l'ouverture d'une session (Login):
+
+</font></p><p><font color="#000080"><font color="#008000"><code><pre>  
+                            1
+      +---+   USER    +---+-------------&gt;+---+
+      | B |----------&gt;| W | 2       ----&gt;| E |
+      +---+           +---+------  |  --&gt;+---+
+                       | |       | | |
+                     3 | | 4,5   | | |
+         --------------   -----  | | |
+        |                      | | | |
+        |                      | | | |
+        |                 ---------  |
+        |               1|     | |   |
+        V                |     | |   |
+      +---+   PASS    +---+ 2  |  ------&gt;+---+
+      |   |----------&gt;| W |-------------&gt;| S |
+      +---+           +---+   ----------&gt;+---+
+                       | |   | |     |
+                     3 | |4,5| |     |
+         --------------   --------   |
+        |                    | |  |  |
+        |                    | |  |  |
+        |                 -----------
+        |             1,3|   | |  |
+        V                |  2| |  |
+      +---+   ACCT    +---+--  |   -----&gt;+---+
+      |   |----------&gt;| W | 4,5 --------&gt;| F |
+      +---+           +---+-------------&gt;+---+
+</pre></code></font>
+
+</font></p><p><font color="#000080">Enfin, nous présenterons un diagramme
+généralisé qui peut être utilisé comme modèle universel d'un échange de commandes
+et réponses :  </font></p><p><font color="#000080"><font color="#008000"><code><pre>  
+               ------------------------------------
+              |                                    |
+      Begin   |                                    |
+        |     V                                    |
+        |   +---+  cmd   +---+ 2         +---+     |
+         --&gt;|   |-------&gt;|   |----------&gt;|   |     |
+            |   |        | W |           | S |-----|
+         --&gt;|   |     --&gt;|   |-----      |   |     |
+        |   +---+    |   +---+ 4,5 |     +---+     |
+        |     |      |    | |      |               |
+        |     |      |   1| |3     |     +---+     |
+        |     |      |    | |      |     |   |     |
+        |     |       ----  |       ----&gt;| F |-----
+        |     |             |            |   |
+        |     |             |            +---+
+         -------------------
+              |
+              |
+              V
+             End
+</pre></code></font>
+
+</font></p><p></p><hr>
+<p align="center"><font color="#000080"><a href="959-5.htm">Précédent</a> - <a href="959-7.htm">Suivant</a> - <a href="959tm.htm">Retour au sommaire</a>
+
+</font></p></h2></body></html>

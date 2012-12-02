@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">12. S&eacute;curit&eacute;</FONT></H2>
+<P>Cette section est une information &agrave; destination des d&eacute;veloppeurs d'applications, h&eacute;bergeurs de donn&eacute;es, et des utilisateurs, concernant les limites de s&eacute;curisation atteintes par HTTP/1.0 tel que d&eacute;crit dans ce document. La discussion suivante ne pr&eacute;tend pas apporter de solution op&eacute;rationnelle aux d&eacute;fauts qui y sont r&eacute;v&eacute;l&eacute;s, bien que quelques suggestions y soient faites pour r&eacute;duire le risque informatique.
+<A NAME="12-1"></A>
+<H3>12.1 Authentification des clients</H3>
+<P>Comme le mentionne la <A HREF="1945-11.htm#11-1">Section 11.1</A>, le mod&egrave;le d'authentification "de base" n'est pas une m&eacute;thode infaillible pour pr&eacute;venir des acc&egrave;s non autoris&eacute;s. Il ne peut non plus emp&ecirc;cher la transmission du corps d'entit&eacute; "en clair" sur le r&eacute;seau physique utilis&eacute; comme porteuse. HTTP/1.0 n'interdit aucunement l'emploi d'autres mod&egrave;les, ou autres m&eacute;canismes de protection afin d'accro&icirc;tre la s&eacute;curit&eacute; de transmission.
+<A NAME="12-2"></A>
+<H3>12.2 M&eacute;thodes s&ucirc;res</H3>
+<P>Les &eacute;diteurs de logiciels clients doivent garder &agrave; l'esprit que leur application repr&eacute;sente l'utilisateur dans ses interactions avec Internet, et doivent de ce fait s'assurer que l'utilisateur sera averti de toute action que l'application peut entamer, et susceptible d'avoir un r&eacute;sultat inattendu, tant pour eux que pour les tiers.
+<P>En particulier, il a &eacute;t&eacute; &eacute;tabli par convention que les m&eacute;thodes GET et HEAD ne peuvent signifier autre chose qu'une demande de r&eacute;cup&eacute;ration de ressource. Ces m&eacute;thodes peuvent &ecirc;tre consid&eacute;r&eacute;es comme "s&ucirc;res". Ceci laisse la possibilit&eacute; aux clients d'impl&eacute;menter d'autres m&eacute;thodes (ex. POST) sous une forme sp&eacute;cifique, mais toujours &agrave; condition que l'utilisateur puisse &ecirc;tre averti qu'une action peu s&ucirc;re ou potentiellement non conforme est requise.
+<P>Naturellement, il n'est pas possible de garantir que le serveur n'aura pas "d'effets de bord" lorsqu'il traite une requ&ecirc;te GET; en fait, certaines ressources dynamiques tirent avantage de cette possibilit&eacute;. La seule distinction de taille est que l'utilisateur qui &eacute;met une requ&ecirc;te s&ucirc;re de type GET n'a pas "dans l'intention" de provoquer ces effets de bord. Il ne peut donc en &ecirc;tre tenu pour responsable.
+<A NAME="12-3"></A>
+<H3>12.3 Abus de l'information Server Log Information</H3>
+<P>Un serveur a toute possibilit&eacute; de stocker des donn&eacute;es personnelles contenues dans les requ&ecirc;tes telles qu'adresses et mod&egrave;les d'acc&egrave;s ou en d&eacute;duire et archiver des conclusions personnelles sur les go&ucirc;ts, les tendances ou les centres d'int&eacute;r&ecirc;t des utilisateurs. Ces informations sont par nature typiquement confidentielles et peuvent tomber sous le coup de la loi dans certains pays (NdT: typiquement dans le cadre de la loi "informatique et libert&eacute;s", dans la mesure o&ugrave; un archivage syst&eacute;matique et une interpr&eacute;tation "sociologique" nominative sont r&eacute;alis&eacute;s). Les personnes utilisant le protocole HTTP pour diffuser des donn&eacute;es ont la responsabilit&eacute; de s'assurer que toute information re&ccedil;ue pouvant identifier et classifier les visiteurs ne puissent &ecirc;tre communiqu&eacute;e sans l'accord de ces derniers.
+<A NAME="12-4"></A>
+<H3>12.4 Transfert d'information sensible</H3>
+<P>Comme tout protocole de transmission de donn&eacute;e de base, HTTP ne peut contr&ocirc;ler la nature des informations transmises. Il n'est pas non plus possible &agrave; priori de d&eacute;terminer la "sensibilit&eacute;" de certaines portions de donn&eacute;es transmises dans le cadre d'une requ&ecirc;te quelle qu'elle soit. C'est pourquoi les applications devront prendre en charge la plus grande part du contr&ocirc;le de ces informations en lieu et place du diffuseur. Trois champs d'en-t&ecirc;te sont particuli&egrave;rement concern&eacute;s par cette notion: Server, Referer et From.
+<P>R&eacute;v&eacute;ler la version exacte du logiciel serveur peut rendre celui-ci vuln&eacute;rable aux attaques si le logiciel est r&eacute;put&eacute; avoir des faiblesses en termes de s&eacute;curit&eacute;. Le renseignement du champ Server doit de ce fait rester optionnel, et ne doit pas forc&eacute;ment &ecirc;tre syst&eacute;matique.
+<P>Le champ Referer autorise l'&eacute;tude d'un certain nombre d'informations &agrave; propos de la requ&ecirc;te et permet de "remonter" une cha&icirc;ne de liens. Bien que cette fonction soit tr&egrave;s utile, il est possible n&eacute;anmoins d'en abuser si les informations sur l'utilisateur ne sont pas dissoci&eacute;es de celles contenues dans le Referer. M&ecirc;me lorsque ces informations "personnelles" sont enlev&eacute;es, le champ Referer peut parfois indiquer l'URI d'un document priv&eacute; dont la publication n'est pas souhaitable.
+<P>L'information &eacute;mise dans le champ From peut entrer en conflit avec la d&eacute;fense des droits priv&eacute;s, ou peut diminuer le degr&eacute; de s&eacute;curit&eacute; du serveur dans lequel la ressource est &eacute;mise de ce fait, toute impl&eacute;mentation devra laisser la possibilit&eacute; &agrave; l'utilisateur d'&eacute;mettre, ne pas &eacute;mettre, ou modifier les donn&eacute;es dans ce champ. L'utilisateur devra &ecirc;tre en mesure de configurer une valeur "par d&eacute;faut" ou une "pr&eacute;f&eacute;rence utilisateur" pour les donn&eacute;es dans ce champ.
+<P>Nous sugg&eacute;rons, mais n'imposons pas, qu'un interrupteur graphique soit impl&eacute;ment&eacute; sur l'interface utilisateur pour permettre ou interdire l'envoi des informations From et Referer.
+<A NAME="12-5"></A>
+<H3>12.5 Attaques sur les Fichiers et R&eacute;pertoires</H3>
+<P>Les impl&eacute;mentations des serveurs origine HTTP devront veiller &agrave; restreindre la transmission des documents demand&eacute;s par une requ&ecirc;te HTTP aux seuls documents autoris&eacute;s par l'administration syst&egrave;me. Si un serveur HTTP traduit les URI HTTP directement en appels syst&egrave;me de fichiers, le serveur devra veiller &agrave; ne pas livrer de documents destin&eacute;s &agrave; autre chose qu'un client HTTP. Par exemple, Unix, Microsoft Windows, et d'autres syst&egrave;mes d'exploitation utilisent ".." comme acc&egrave;s symbolique au r&eacute;pertoire de niveau sup&eacute;rieur. Sur un tel syst&egrave;me, un serveur HTTP doit refuser une telle construction dans l'URI-vis&eacute;e, interdisant ainsi l'acc&egrave;s potentiel &agrave; des donn&eacute;es qui ne sont pas sens&eacute;es &ecirc;tre diffus&eacute;es par un serveur HTTP. De m&ecirc;me, tous les fichiers &agrave; usage interne au serveur (fichiers de contr&ocirc;le d'acc&egrave;s, de configuration, et codes script) doivent &ecirc;tre prot&eacute;g&eacute;s contre toute diffusion, dans la mesure o&ugrave; ils peuvent contenir des informations essentielles et confidentielles. L'exp&eacute;rience a montr&eacute; que des imperfections mineures du logiciel serveur ont pu conduire &agrave; un r&eacute;el risque en terme de s&eacute;curit&eacute;.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-11.htm">Pr&eacute;c&eacute;dent</A> - <A HREF="1945-13.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+
+

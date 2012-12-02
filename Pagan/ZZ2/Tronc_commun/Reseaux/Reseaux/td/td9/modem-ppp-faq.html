@@ -1,0 +1,2885 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Modem PPP FAQ</TITLE>
+   <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+   <META NAME="keywords" CONTENT="guide configuration modem protocole ppp linux windows macintosh mac internet acces documentation france francais">
+</HEAD>
+<BODY BGCOLOR="#f0f0f0">
+
+
+
+
+<CENTER><P> <b>(Laurent Sint&egrave;s)</b></P></CENTER>
+
+<CENTER><P> <A HREF="mailto:sintes@nfrance.com">sintes@nfrance.com</A></center>
+
+
+<hr>
+
+
+<H3 ALIGN=CENTER>Nouvelle version entièrement revue et corrigée<BR>
+(v2.1 ; 27 F&eacute;vrier 1997) </H3>
+
+<P>
+<BR>
+
+
+<PRE>
+
+Archive-name: fr/faq-modems-ppp/
+Author: sintes@nfrance.com (Laurent Sintes)
+Version: v 2.1 1997/02/27
+Periodicity: 14 days
+
+News Groups: fr.network.modems ; fr.network.divers ; fr.usenet.reponses
+WWW-Archive-Name : http://nfrance.com/intmodem.html
+FTP-Archive-Name: ftp://ftp.univ-lyon1.fr/pub/faq/by-name/fr/faq-modems-ppp
+
+
+SUMMARY - SUJET ABORDES
+-------   ----- -------
+
+Ce document traite de la configuration de la couche TCP-IP / PPP pour
+l'acc&egrave;s &agrave; l'Internet par modem et effectue une presentation du reseau
+numeris (RNIS).
+
+La plupart des plateformes y sont abord&eacute;es. Macintosh, MS Windows (3.XX et
+95), Amiga, Linux, FreeBSD.
+
+Il se subdivise en quatre grandes parties.
+
+* Dans un premier temps, nous nous efforcerons d'aborder les principales
+g&eacute;n&eacute;ralit&eacute;s sur les modems, les &eacute;l&eacute;ments &agrave; prendre en compte dans le choix
+d'un mat&eacute;riel, le port s&eacute;rie, l'Uart, les protocoles de compression et de
+correction d'erreur, etc...
+
+* La deuxi&egrave;me partie traite de la configuration de la couche logicielle pour
+l'acc&egrave;s &agrave; Internet. Comment configurer Trumpet Winsock, Windows 95, FreePPP,
+Linux, les principaux pi&egrave;ges &agrave; &eacute;viter, les probl&egrave;mes pouvant survenir,
+etc...
+
+* La troisi&egrave;me partie constitue un cours sur la configuration d'un modem,
+avec exemple, ainsi que les diff&eacute;rents &eacute;l&eacute;ments &agrave; prendre en compte. Vous y
+trouverez la r&eacute;ponse &agrave; bon nombre de questions que vous vous posez,
+notamment si vous &ecirc;u;tes d&eacute;butant sur ce domaine. Ce cours n'est pas acc&egrave;s sur
+Internet &agrave; proprement parler, vous trouverez, par exemple, des &eacute;l&eacute;ments de
+configuration pour l'acc&egrave;s au minitel, des informations pr&eacute;cises sur les
+modems Olitec, Usr et Cr&eacute;atix, le c&acirc;u;blage du central t&eacute;l&eacute;phonique de votre
+entreprise pour permettre les liaisons modems. Etc...
+
+
+***NOUVEAU***
+* La quatrieme partie traite de l'utilisation de numeris (RNIS).
+Il s'agit d'un texte ecrit par Stephane Bortzmeyer dont j'assurerai
+la maintenance et la mise a jour au fur et a mesure des besoins et des
+&eacute;volutions technologiques.
+***
+
+* En dernier lieu, l'annexe donne la liste comment&eacute;e des principales
+commandes Hayes, les fameux num&eacute;ros br&ucirc;u;l&eacute;s, une cinquantaine de cha&icirc;u;nes
+d'initialisation pour les modems les plus courants du march&eacute;, une liste de
+constructeurs de modems pr&eacute;sents sur Internet ainsi qu'une bibliographie.
+
+En esp&eacute;rant que ce document vous sera utile.
+
+
+
+NOTE PRELIMINAIRE
+-------
+
+Les chapitres nouveaux par rapport a la version 1.xx sont signales par
+&lt;nouveau&gt; (original non ?) les principaux remaniements l'etant par &lt;###&gt;).
+
+Toutes suggestions et ajouts de votre part sont vivement encourages et seront
+pris en compte (de preference par mail, mais je lis fr.network.modems de toute
+facon). C'est en grande partie grace a vous que je pourrais continuer a
+ameliorer ce document et je vous en remercie d'avance.
+
+Par contre, je me m'engage pas a repondre a toutes les demandes de support
+technique que je recois par mail, celles-ci etant assez nombreuses et, pour la
+plupart, trouvant leur reponse dans le present texte. En particulier, je ne
+repondrai par mail a aucune question du type : quelle chaine d'initialisation
+me conseillez-vous pour mon modem Alpha version 3.05 de chez Unimodem. Je vous
+prie de m'en excuser.
+
+----------
+
+        
+
+<A HREF="#0">INTRODUCTION</A>
+* <A HREF="#01">Remerciements</A>
+* <A HREF="#02">Interne, externe ou PCMCIA - quelques generalites</A>
+* <A HREF="#03">D'ou les principaux problemes de connexion viennent-ils ?</A>
+* <A HREF="#04">A propos des vitesses de transmission</A>
+* <A HREF="#05">Vitesse ligne (DCE)  vitesse terminale (DTE) et protocole V42 et V42bis</A>
+* <A HREF="#06">A propos de l'Uart (Compatibles PC)</A>
+* <A HREF="#07">Le port serie du Macintosh</A>
+* <A HREF="#08">Mac-Modem : le bon cable &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#09">A propos du cable RTS + CTS</A>
+* <A HREF="#010">A propos de la compatibilite PC - MAC</A>
+
+<A HREF="#1">CONFIGURATION MATERIELLE ET COUCHE LOGICIELLE</A>
+* <A HREF="#11">Le driver de ports de Windows</A>
+* <A HREF="#12">Le panneau de controle &quot;ports&quot; (Windows)</A>
+* <A HREF="#13">Configuration de Trumpet Winsock (windows)</A>
+* <A HREF="#14">Configuration de Windows 95 (quelques rappels)</A>
+* <A HREF="#15">Tampons Fifo et optimisation du system.ini (windows)</A>
+* <A HREF="#16">Comment eviter les OverRuns sous Wfwg 3.11 &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#17">Quelques informations sur MS DOS &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#18">Mac PPP (ou FreePPP) et Mac TCP</A>
+* <A HREF="#19">Et sur systeme 7.5.3 ?</A>
+* <A HREF="#110">UNIX : Generalites, Linux, FreeBSD &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#111">Amiga</A>
+* <A HREF="#112">Configuration du Bios</A>
+
+<A HREF="#2">CONFIGURATION DU MODEM</A>
+* <A HREF="#21">La structure d'une commande AT</A>
+* <A HREF="#22">Qu'est-ce qu'une chaine d'INIT ?</A>
+* <A HREF="#23">Configuration par defaut - configuration courante</A>
+* <A HREF="#24">Ou se trouve ma chaine d'INIT ?</A>
+* <A HREF="#25">Comment construire une chaine d'init optimisee : une methode simple et
+  exemples</A>
+* <A HREF="#26">Je n'ai pas le bon driver windows 95</A>
+* <A HREF="#27">Comment modifier et optimiser mon driver windows 95 ?</A>
+* <A HREF="#28">Quelques reponses en VRAC</A>
+* <A HREF="#29">Tout (ou presque) sur l'Olitec</A>
+* <A HREF="#210">Quelques informations sur les USR &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#211">Une info sur les Creatix &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#212">Modem et central telephonique</A>
+
+<A HREF="#3">RNIS ET INTERNET</A>
+* <A HREF="#31">Qu'est-ce que RNIS ? Et Num&eacute;ris ?</A>
+* <A HREF="#32">Combien &ccedil;a co&ucirc;u;te ?</A>
+* <A HREF="#33">Que faut-il comme mat&eacute;riel et/ou logiciel ?</A>
+* <A HREF="#34">Est-ce vraiment int&eacute;ressant ?</A>
+* <A HREF="#35">Et le reste ? X2, ADSL, c&acirc;u;ble ?</A>
+
+<A HREF="#9">ANNEXES</A> :
+* <A HREF="#91">Liste commentee principale commandes Hayes</A>
+* <A HREF="#92">Tester sa ligne avec le 36440000 (source : France Telecom)</A>
+* <A HREF="#93">Les numeros brules : quelques exemples de brulage off</A>
+* <A HREF="#94">Quelques chaines d'initialisation</A>
+* <A HREF="#95">Bibliographie</A>
+* <A HREF="#96">Quelques constructeurs de modems sur le net.</A>
+* <A HREF="#97">Auteur et Copyright</A>
+
+
+<A NAME="0"></A>---------------------------------------------------
+SECTION 1 : INTRODUCTION - Le modem d'un point de vue hardware
+___________________________________________________
+
+Plan de la section :
+* <A HREF="#01">Remerciements</A>
+* <A HREF="#02">Interne, externe ou PCMCIA - quelques generalites</A>
+* <A HREF="#03">D'ou les principaux problemes de connexion viennent-ils ?</A>
+* <A HREF="#04">A propos des vitesses de transmission</A>
+* <A HREF="#05">Vitesse ligne (DCE)  vitesse terminale (DTE) et protocole V42 et V42bis</A>
+* <A HREF="#06">A propos de l'Uart (Compatibles PC)</A>
+* <A HREF="#07">Le port serie du Macintosh</A>
+* <A HREF="#08">Mac-Modem : le bon cable &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#09">A propos du cable RTS + CTS</A>
+* <A HREF="#010">A propos de la compatibilite PC - MAC</A>
+
+
+<A NAME="01"></A>* Remerciements
+  -------------
+  
+Cette Faq a ete ecrite grace a la collaboration de nombreux beta-lecteurs
+que je tiens a remercier, et en particulier :
+    - Stephane Bortzmeyer pour ses nombreuses remarques constructives,
+    notamment ce qui concerne Linux et ses apports de toute sorte,
+    notamment la partie RNIS.
+    - Philippe Delaunay
+    - Jean-Yves Bernier pour ses avis precieux sur la partie Macintosh.
+    - Stephane Marzloff
+    - Jean-Louis Alibert
+    - Olivier Cahagne
+    - Philippe Young
+    - Johann Girard-Cheron pour les paragraphes concernant Amiga.
+    - Sylvain Nierveze pour le paragraphe concernant FreeBSD
+    - Sebastien Willemijns (sw@mail.dotcom.fr) qui a ecrit une Faq
+    analogue destinee aux BBS et dont j'ai repris plusieurs parties avec son
+    accord.
+    - Pascal Petit
+    - Jean Pierre Kuypers
+    - Christophe Causer
+    - Siebering Clement
+    - Dominique Othello
+    - Stephane Gibier
+    - Jacques Christ
+
+Toutes remarques et suggestions peuvent m'etre adressees a
+sintes@nfrance.com.
+
+* <A NAME="02"></A>Interne, externe ou PCMCIA - quelques generalites
+  -------  ------- -- ------   -------- -----------
+
+L'installation d'un modem interne (sous forme de carte d'extension)
+necessite la presence d'un connecteur d'extension libre sur la carte mere.
+Il est donc indispensable, avant tout achat de ce type de s'assurer de la
+presence d'un tel connecteur.
+
+L'installation d'un modem de type externe (sous forme de boitier) necessite
+la presence d'un connecteur serie male libre a l'arriere de l'unite
+centrale. On peut remedier a cette absence eventuelle en achetant une carte
+d'extension entree/sortie (PC). Sur Macintosh, le modem externe se place
+sur le connecteur serie mini-din 8 portant le sigle &quot;telephone&quot; ou son
+homologue portant le sigle &quot;imprimante&quot;.
+
+Les modems repondant au standard PCMCIA (format carte de credit)
+s'integrent dans un connecteur special prevu a cet effet. Ils sont
+essentiellement reserves aux ordinateurs de type portable.
+
+D'une maniere generale preferez toujours un modem externe a un modem
+interne, et ceci pour diverses raisons :
+
+    - un modem externe est facilement transportable d'un ordinateur a un autre.
+    
+    - la configuration d'un modem interne peut poser un certain nombre de
+    problemes techniques (conflits d'IRQ (PC), etc...)
+    
+    - En cas de probleme avec un modem interne (tres frequent), numero brule
+    par exemple, ce n'est pas le modem lui-meme qu'il faut eteindre et rallumer
+    mais le bouton reset de votre unite centrale qu'il faut presser.
+    
+    - La presence de diodes de signalisation sur le modem externe est un outil
+    de deboguage indispensable. Ces diodes permettent la visualisation de
+    l'etat de connexion, du signal CD, voire de l'affichage numerique de la
+    vitesse, etc... et sont une aide facilitant grandement le diagnostic en cas
+    de probleme (et il y en a toujours). Parfois meme, avec un modem interne,
+    on peut mettre plusieurs minutes avant de s'apercevoir que la connexion
+    s'est rompue.
+
+<A NAME="03"></A>* D'ou les principaux problemes de connexion viennent-ils ?
+  ---- --- ---------- --------- -- --------- -------- ---
+
+(toutes machines)
+    - Numero de passerelle incorrecte
+    - Probleme de configuration du port serie
+    - Chaine d'initialisation du modem non optimisee
+    - Conflit entre le driver PPP et le driver Fax
+    - Cable de liaison entre modem et micro-ordinateur de mauvaise qualite ou
+    ne gerant pas le controle de flux hardware (RTS + CTS)
+    - Mauvaise qualite de la ligne telephonique
+    - Utilisation d'un modem non agree sur un central France Telecom pourvu
+    de limitateur d'intensite (du au fait que les modems non agrees ont une
+    inpedance de 300 ohms contre 600 ohms pour les agrees).
+    - Temps de prise en compte du signal DTR trop faible.
+    Generalement s25=20 regle le probleme (20ms ou lieu de 5) 
+
+(windows)
+    - System.ini non optimise
+    - Taille des paquets transmis trop importante (tcp mss et valeurs
+    associees)
+
+(Macintosh)
+    - Conflit d'extension ; notamment entre PPP et certains drivers de
+    fax.(sous forme d'extension) ou d'impression. Notamment l'extension Olifax
+    pose probleme.
+
+Ces points sont detailles plus loin.
+
+<A NAME="04"></A>* A propos des vitesses de transmission
+  - ------ --- -------- -- ------------
+
+La vitesse de transmission d'un modem s'exprime generalement en b/s (bits
+par seconde).
+
+Ne pas confondre baud et b/s (bit/s)
+Le baud (Bd) est le nombre de changements significatifs d'un signal
+par seconde. 
+Ces changements significatifs constituent la modulation. Si cette
+modulation est bivalente, la vitesse de modulation (en Bd) est egale
+au debit binaire (en bit/s). C'est par exemple le cas du modem du
+Minitel, mais certainement pas celui d'un modem rapide.
+
+Exprime en d'autres termes, le baud mesure la rapidite de modulation,
+c'est-a-dire la cadence a laquelle le modem peut changer sa modulation. Le
+debit binaire n'est egal a la rapidite de modulation que pour les modems
+anciens qui ne transmettent qu'un bit a la fois (V21, V23). Les modems
+recents utilisent des modulations qui codent plusieurs bits a la fois, et
+leur debit binaire en bps est superieur a leur rapidite de modulation en
+bauds. Seul le debit binaire en bps reflete la performance du modem.
+
+&lt;###&gt;
+    Quelques precisions mathematiques :
+    En effet le baud mesure le nombre d'etats significatifs transmis par 
+    seconde. Grace a des algorithmes complexes de modulations combinant la
+    modulation  de phase et d'amplitude nous avons la relation suivante:
+
+        D (debit binaire en bits/seconde)=R (rapidite de modulation en baud)log
+        en base 2 V (valence du signal).
+
+    V: nombre d'etats signicatifs que peut prendre le signal. Exemple: si un
+    systeme permet de differencier une tension de 0v et 1v la valence du signal
+    est 2. Si il permet de distinguer +2 +1 -1 -2 alors la valence du signal 
+    est de 4.
+    Nous voyons que souvent la valence est une puissance de deux d'ou la
+    relation:
+
+        D = R logbase2 2puissance n.
+
+    Ainsi si nous avons un debit binaire de 28800 bits/secondes et si nous 
+    adoptons une modulation sur 1 bit il impossible de passer le signal sur une
+    ligne RTC. 
+    Le theoreme de Nyquist, dit (en simplifiant) qu'on ne peut pas transmettre
+    plus de 2f signaux independants par seconde a travers un circuit de bande
+    passante f.
+    Donc, a travers une ligne telephonique de bande 300/3400 Hz (soit 3100
+    Hz), on ne peut pas utiliser une vitesse de modulation superieure a
+    6200 Bd sans provoquer de l'interference intersymboles. (en fait, a
+    cause de la distorsion de phase, on ne peut guere depasser 3500 Bd).
+    Le theoreme de Shannon intervient pour limiter le debit binaire
+    C en faisant intervenir le rapport signal/bruit (S/N) en plus de la
+    bande passante W. Il dit:
+        Cmax = W log2 (1+S/N).
+    On voit que la limite de Shannon est maintenant presque atteinte avec
+    les modems a 33600 bit/s puisque le rapport signal/bruit des lignes ne
+    depasse guere 35 dB.
+
+
+Ne pas confondre bps (bits par seconde) et Bytes par seconde (un Byte est
+egal a un octet, c'est-a-dire un groupe de 8 bits).
+
+    Petite note : l'abreviation bps, bien qu'etant largement employee
+    dans ce document et comme me le fait remarquer a juste titre
+    Jacques Christ, est un abus de langage. L'abreviation officielle
+    de l'UIT est &quot;bit/s&quot;. L'ISO tolere aussi &quot;b/s&quot;
+
+
+Ne pas confondre bps (bits par seconde) et cps (caracteres par seconde) :
+pour transmettre un caractere, il faut (en simplifiant) 10 bits (8 bits de
+donnees, 1 bit de stop, 1 bit de start). D'une maniere approximative, on
+peut donc calculer la vitesse en cps en divisant la vitesse en bps par 10
+(en mode normal).
+Dans le cas d'une liaison V42, les bits de starts et de stop sont remplaces
+par des delimiteurs de paquets.
+
+Debit en bps et norme ccitt associee :
+V23 : 75/1200 en appel ou 1200/75 en reponse
+V21 : 300/300 bps
+V22 : 1200/1200 bps
+V22bis : 2400/2400 bps
+V32 : 9600/9600 bps
+V32bis : 14400/14000 bps
+v34 : 28800/28800 bps
+VFC : 28800/28800 bps
+
+V27ter : 4800/4800 bps -&gt; telecopie
+V29 : 9600/9600 bps -&gt; telecopie rapide
+V42 : protocole de correction d'erreurs
+V42bis : protocole de compression de donnees.
+
+A noter que le VFC n'est pas une norme CCITT. Comme il est deja difficile
+de faire communiquer deux modems CCITT il nous semble sage d'oublier ces
+derniers.
+
+Pour l'Internet, on choisira de preference un modem integrant les normes
+V32bis (au minimum), v34, ou VFC ainsi que les protocoles V42 et V42bis de
+correction d'erreurs et de compression de donnees, car meme si l'on compte
+se cantonner a l'e-mail et aux news, l'economie que permettra un V34 sur la
+facture telephonique sera toujours appreciee. Si l'on compte utiliser en
+outre le modem pour faire de l'emulation Minitel ou fax, on verifiera qu'il
+integre les normes V23 ou v29.
+
+<A NAME="05"></A>* Vitesse ligne (DCE)  vitesse terminale (DTE) et protocole V42bis :
+  ------- ----- -----  ------- --------- ----- -- --------- ------
+
+Attention a ne pas confondre la vitesse DCE (Data Communication Equipement)
+ou vitesse de ligne entre les deux modems, avec la vitesse terminale (Data
+Terminal Equipment) ou vitesse de jonction entre modem et ordinateur. La
+premiere est determinee par le type de votre modem (V32bis, V34), tandis
+que la seconde, appelee aussi &quot;port speed&quot; est en general configurable par
+logiciel (voir plus loin). Choisissez toujours une vitesse de jonction
+superieure a la vitesse de transmission en ligne.
+
+L'utilisation du protocole de compression de donnees V42bis peut encore
+elever le debit de la jonction modem-ordinateur, en theorie d'un facteur 4.
+Vous ne profiterez pleinement du benefice de la compression que si vous
+reglez la vitesse de jonction a quatre fois la vitesse ligne, ce qui peut
+exceder les capacites d'entrees/sortie de votre ordinateur. (voir plus
+loin).
+
+Quelle vitesse puis-je donc reellement atteindre &lt;###&gt;
+
+    L'emballage de votre modem precise, en gros caracteres, vitesse de
+    transmission jusqu'a 115Kbps (kilo bits par seconde), que cela
+    signifie-t-il ?
+Tout simplement que votre modem est de type V34 (28800bps) associant la
+norme de compression de donnees V42bis, et en aucun cas que vous allez
+pouvoir atteindre des vitesses de transmission aussi elevees.
+
+En effet, si le rendement maximum theorique de la compression de donnees
+est effectivement  de 1/4 , permettant ainsi des vitesses DTE de 28800bps*4
+= 115Kbps (pour un modem v34), il s'agit bien la, soulignons le, d'un taux
+de compression theorique sur des fichiers de type texte non compresses et
+dans des conditions parfaitement optimales.
+En pratique, la plupart des fichiers proposes en FTP sont deja compresses
+et donc peu ou pas de compression possible. Sur des fichiers de type texte
+(.rtf, .hqx, .txt, etc...) on peut arriver en moyenne a un rapport de
+compression de 1/2 voire 1/2.5, ce qui n'est deja pas si mal.
+Mesure maintenant en ko/s, et avec un modem 28800 bps, un taux effectif de
+transfert de 3Ko/s sur des fichiers compresses ou de 6Ko/s sur des fichiers
+de type texte peut etre considere comme un maximum (diviser par deux pour
+un modem 14400bps).
+Et encore, ceci implique, comme nous allons le voir, un port serie rapide,
+un cable de liaison permettant le controle de flux RTS + CTS,
+l'optimisation du system.ini (sur windows), de la chaine d'initialisation
+du modem, une excellente qualite de liaison telephonique, une bande
+passante de qualite de la part de votre provider et ne peut etre realise
+qu'a certaines heures.
+
+<A NAME="06"></A>* A propos de l'Uart (PC)
+  - ------ -- ------  --
+
+Une bonne configuration du port serie est primordiale pour la qualite de la
+liaison PPP. Le port serie ne doit en aucun cas etre configure dans la
+couche logicielle a une vitesse superieure a ses capacites hardware, sous peine
+d'erreurs ralentissant considerablement la connexion, voire meme de 
+deconnexions inopinees.
+
+L'UART (Universal Asynchronous  Receiver Transmitter) est un controleur
+d'entrees sorties qui permet la gestion des ports series du PC. Il se
+presente sous la forme d'un composant a 40 broches sur la carte serie. Il y
+en a trois principaux types : 
+    - le 8250 qui permet une vitesse du port serie de 19200bps max.
+    - le 16450 qui permet une vitesse du port serie reelle comprise entre 38400
+    et 57600 bps en fonction de la puissance du processeur.
+    - le 16550 qui permet une vitesse du port serie de 115kbps max grace
+    essentiellement a la gestion de 2 tampons Fifo (16 bytes en entree ; 16
+    bytes en sortie).
+    
+
+Il est tres important de souligner que ces vitesses de transmission sont des
+vitesses maximum pratiques, qui n'ont donc rien a voir avec un maximum
+theorique. Elles peuvent varier notamment en fonction du type de systeme
+d'exploitation que vous utilisez, de sa capacite au multitache preemptif, de 
+son optimisation, de la qualite de la ligne telephonique. Ces vitesses sont 
+donnees a titre indicatif et ne sont donc en aucun cas a prendre &quot;a la lettre&quot;. 
+
+Certains vous diront meme qu'un Uart 16450 permet d'atteindre la meme vitesse
+qu'un Uart 16550. C'est a la fois vrai et faux. Vrai dans la mesure ou l'Uart
+16550 ne se distingue que la presence de tampons Fifo, il n'y a donc pas de
+difference de rapidite au niveau du port proprement dit ; faux dans la mesure
+ou les deux buffers Fifo du 16550 permettent d'eliminer la plupart des erreurs
+de port, amenant un gain considerable d'efficacite globale.
+
+Si vous  depassez ces vitesses vous risquez de frequentes ComOverruns erreurs,
+ayant un poids extremement negatif sur le rendement global de votre liaison.
+
+Avec un Uart 8250, difficile de depasser une vitesse terminale de 19200bps 
+; donc impossible de se connecter en V34 (28800bps) ou VFC ; si vous
+utilisez un modem 14400bps, vous devrez peut-etre meme invalider la compression
+de donnees dans la chaine d'initialisation de votre modem. Si vous utilisez un
+modem V34 (28800bps), vous devrez forcer la liaison en V32 bis soit 14400 bps
+(par la commande Hayes B10) et invalider *eventuellement* la compression de
+donnees.
+
+Avec un Uart 16450, et suivant la puissance de votre machine, vous pouvez
+regler votre port serie entre 38400 et 57600bps (486DX2 et superieur) ; Si
+vous utilisez un modem V34 (28800bps), il est possible que vous ayez besoin
+d'invalider la compression de donnees pour eviter des bourrages.
+
+Avec un Uart 16550, par contre, on peut atteindre une vitesse serie de
+115Kbps, et donc beneficier pleinement d'une connexion en V34 ou VFC et des
+protocoles de correction d'erreurs et compression de donnees V42 et V42bis.
+
+Le parametrage de la config en fonction du type d'Uart utilise est decrit
+plus loin.
+
+Pour connaitre le type d'UART utilise par votre PC sans demontage, 
+
+    - Sur MSDOS, executer le programme MSD.EXE puis choisir ComPort.
+    
+    - Sur WINDOWS95  Vous devez vous rendre au panneau de configuration puis 
+   cliquer sur modem, selectionner modem, puis cliquer sur diagnostique.
+    
+    - Sur Linux, utiliser 'setserial' qui detecte en general votre Uart.
+    # setserial/dev/ttyS0
+    /dev/ttySO, UART: 16550A, Port: 0x03f8, IRQ: 4
+    
+Il peut arriver que MSD.EXE confonde un Uart 8250 avec un Uart 16450 meme
+s'il detecte sans probleme la presence d'un 16550. Le plus simple reste
+toujours de consulter le manuel de son ordinateur ou d'enlever le capot
+pour dissiper tout doute a ce sujet. La reference du composant est
+generalement inscrite sur l'Uart.
+
+&lt;###&gt;
+Si vous desirez integrer un Uart 16550, diverses solutions sont possibles :
+- Changer de carte controleur ou de carte serie (cout : environ 130F)
+- Ajouter une carte serie avec un Uart 16550A
+- Changer simplement l'Uart sur votre carte serie (operation delicate mais
+extremement economique (environ 20F dans tout bon magasin d'electronique)).
+Notons que quelques (rares ?) boutiques d'electronique effectuent l'operation
+gracieusement. Amenez leur simplement votre carte controleur ou serie.
+&lt;###&gt;
+
+Si vous devez changer d'Uart, exigez le composant NS16550AFN (100 a 150F)
+et non un de ses clones (par exemple le WD16550).
+
+<A NAME="07"></A>* Le port serie du Macintosh
+  -- ---- ----- -- ---------
+
+Bien que fonctionnant de maniere legerement differente que sur le PC, le
+port serie du Macintosh peut limiter la vitesse DTE de la jonction.
+
+Si vous possedez un Macintosh AV ou un PowerMacintosh, pas de probleme :
+vous pouvez beneficier d'une vitesse DTE de 115Kbps, et donc de maniere
+simultanee d'une connexion en V34 et des protocoles de correction d'erreurs
+et de compression de donnees V42 et V42bis.
+
+Avec les autres types de Macintosh, la vitesse du port serie plafonne entre
+38400 bps et 57600 bps (certains ports serie plafonnent theoriquement a
+57600bps mais ne fonctionnent pas correctement au-dessus de 38400bps).
+Donc, si votre port serie plafonne a 38400bps, et que vous utilisez un
+modem V34, il est possible que vous deviez invalider la compression de
+donnees dans la chaine d'initialisation de votre modem, ceci pour eviter
+d'eventuels bourrages. Il n'y a pas de regles systematiques a ce niveau.
+Tout depend essentiellement de la qualite du modem utilise. Essayez
+toujours, dans un premier temps, de parametrer la compression de donnees
+dans la chaine d'initialisation de votre modem et invalidez-la en cas de
+probleme. 
+
+Enfin, certains Macintosh tres anciens (68000) et certains PowerBook ne
+permettent pas une vitesse DTE superieure a 19200 bps ; donc impossible de
+se connecter a plus de 14400 bps (DCE). Vous devez donc invalider la
+compression de donnees dans la chaine d'initialisation du modem, et forcer
+la connexion en V32b (commande Hayes B10).
+
+Il n'y a malheureusement pas de programme livre en standard avec le systeme
+d'exploitation, a l'instar de MSD.EXE du Dos, permettant de connaitre la
+performance du port serie sans demontage. En cas de doute, vous pouvez vous
+reporter a votre manuel, au site d'Apple (www.apple.com), ou utiliser un
+shareware tel que MacCheck
+(ftp://ftp.pasteur.fr/pub/Mac/Utils/MacCheck_.sea).
+
+<A NAME="08"></A>* Mac-Modem - Le bon cable &lt;###&gt;&lt;NOUVEAU&gt;
+  --- -----   -- --- -----
+
+Le port serie du Macintosh pose un probleme particulier ; il est ainsi fait
+qu'il n'y a malheureusement pas la place de tout cabler. Le choix d'un cablage
+depend donc intrinsequement de ce que l'on veut faire du modem ainsi que des
+logiciels et outils de communication utilises.
+
+Schema du port serie du Macintosh :
+
+           Pin   Name                     Function
+            
+           1     HSKo       Output handshake (Zilog 8530 DTR pin)
+
+           2     HSKi/Clock Input handshake or external clock
+                            (depending on 8530 mode)
+           3     TxD-       Transmit data (minus)
+           4     SG         Signal ground
+           5     RxD-       Receive data (minus)
+           6     TxD+       Transmit data (plus)
+
+           7     GPi        General purpose input (not on Mac Plus or
+                            earlier machines)
+           8     RxD+       Receive data (plus)
+
+Il n'y a pas si longtemps, une grande majorite des acheteurs de modems s'en
+servaient quasi-exclusivement pour de l'emulation de minitel, du fax ou de la
+transmission de donnees a faible vitesse (2400bps). Le hardware handshake etait
+alors considere comme inutile par les fabricants, Xon + Xoff pouvant, dans ces
+conditions, parfaitement suffire.
+
+Fort heureusement, on constate une nette evolution de la part des 
+constructeurs.
+De plus en plus, les modems sont vendus avec des cables corrects, c'est-a-dire
+permettant le controle de flux par RTS + CTS.
+
+La documentation de FreePPP est d'ailleurs parfaitement claire a ce sujet :
+n'utilisez pas de controle de flux par Xon-Xoff.
+En effet, Pour Internet et les BBS a haute vitesse, le hardware handshake est
+quasiment indispensable. Sinon, impossible d'uploader avec Zmodem par exemple,
+meme si l'on arrive tant bien que mal a downloader.
+
+Il existe au moins 4 types de branchements possibles, permettant tous le
+controle de flux hardware. Ils ont tous leurs avantages et leurs inconvenients.
+
+Le cablage recommande par Apple fonctionne correctement, mais son defaut est
+qu'il ne permet pas la gestion du signal DTR.
+Si vous utilisez un tel type de cablage, vous devez rajouter &amp;d0 dans la chaine
+d'initialisation du modem pour eviter une deconnexion a la premiere tentative
+d'utiliser RTS, avec l'inconvenient que le modem ne verra pas la fermeture de
+la connexion (la chute du signal DTR etant souvent la meilleure solution pour
+indiquer la fin de la communication et ordonner la deconnexion).
+Heureusement, FreePPP gere tres bien l'echo PPP LCP. Par consequent, si vous
+n'avez pas regle l'&quot;echo intervall&quot; sur off, vous serez neanmoins prevenu de la
+deconnexion par un message : ppp lcp echo failure. N'oubliez pas egalement de
+cocher l'option 'raccrocher a la fermeture'.
+
+Schema de cablage recommande par Apple
+
+ Macintosh (DTE)                           Modem (DCE)
+                    DIN-8                                    DB-25
+
+                Pin  Signal                               Signal  Pin
+                 1    HSKo   ----------------------+----   RTS     4
+                                                   '----   DTR    20
+
+                 2    HSKi   ---------------------------   CTS     5
+                 3    TxD-   ---------------------------   TxD     2
+
+                 4    GND    ----+----------------------   GND     7
+                 8    RxD+   ----'
+
+                 5    RxD-   ---------------------------   RxD     3
+                 6    TxD+   (nc)                    
+                 7    GPi    ---------------------------   DCD     8
+
+                    shield   ---------------------------   shield
+
+Voici maintenant un exemple de cablage alternatif qui fonctionne assez bien du
+moins jusqu'a 38400 bps (DTE) au moins et peut etre 57600 et evite l'ajout de
+&amp;d0 dans la chaine d'intialisation. Le probleme reste neanmoins que tous les
+softs n'en permettent pas une bonne gestion. Il faut donc utiliser l'outil de
+communication adequat.
+
+                Macintosh (DTE)                           Modem (DCE)
+                    DIN-8                                    DB-25
+
+                Pin  Signal                               Signal  Pin
+                 1    HSKo   ---------------------------   RTS     4
+                 2    HSKi   ---------------------------   CTS     5
+                 3    TxD-   ---------------------------   TxD     2
+                 4    GND    ---------------------------   GND     7
+                 5    RxD-   ---------------------------   RxD     3
+                 6    TxD+   ---------------------------   DSR     6
+                 7    GPi    ---------------------------   DTR    20 
+                 8    RxD+   ---------------------------   GND     7  
+
+Mini-bibliographie :
+
+http://www.mich.com/~eddy/works/MacSerialCabling.html
+Macintosh serial port cabling information
+(Tres bien ; assez bonnes explications ; mais pas tout a fait completes)
+
+ftp://ftp.ibp.fr/pub/doc/faqs/macintosh/comm-faq/part1.gz
+La faq de comp.sys.mac.com (partie 1)
+(Un peu laconique - du moins sur ce point precis - mais incontournable ;
+complete bien la premiere URL).
+
+<A NAME="09"></A>* A propos du cable RTS + CTS
+  - ------ -- ----- --- - ---
+
+La qualite du cable utilise pour relier le port serie du Mac ou du Pc au
+modem est primordiale, surtout si vous desirez utiliser la correction
+d'erreur ou la compression de donnees. Outre la bonne qualite du brochage,
+il vous faut vous assurer imperativement que votre cable permet le controle
+de flux hardware (RTS + CTS).
+Pour cela, reportez-vous a la notice d'utilisation de votre modem. Si rien
+n'est signale sur la notice, et dans la plupart des cas, il existe un moyen
+logiciel simple de determiner le type de cable : apres avoir indique dans
+votre configuration (Mac PPP ou Trumpet et panneau de controle ports)
+controle hardware (ou RTS + CTS) et force ce type de controle par la
+commande Hayes &amp;k3 (voir plus loin) vous obtiendrez, si votre cable ne
+permet pas de gerer le controle de flux hardware, un message d'erreur du
+type : Modem introuvable, ou bien votre modem refusera tout simplement de
+numeroter ou de se connecter.
+
+    IMPORTANT : S'il se trouve que votre modem externe n'est pas equipe de ce
+    fameux cable, et en attendant de le remplacer (cout 100 a 150F) ne
+    choisissez en aucun cas le controle de flux Xon + Xoff (controle de flux
+    logiciel). Mais desactivez  tout controle de flux, correction d'erreurs et
+    compression de donnees dans la couche logicielle et la chaine d'init du
+    modem (&amp;K0 &amp;Q6).
+    
+    
+&lt;###&gt;
+Note : il est plutot rare qu'un cable PC-MAC ne gere par le controle de flux
+hardware, sauf defectuosite du brochage par exemple ou quelques cas
+particuliers. Ce probleme est plutot specifique aux cables modems -&gt; macintosh
+comme decrit dans la precedente section.
+
+Sachez neanmoins que les cables defectueux existent. 
+Ce n'est pas un legende :-&gt;
+
+<A NAME="010"></A>* A propos de la compatibilite PC - MAC
+  - ------ -- -- ------------- --   ---
+
+Les modems internes ne sont compatibles qu'avec la machine qui leur est
+destine.
+
+Par contre, un des avantages du modem externe est sa compatibilite
+multi-machines. Seul le type de cable et les logiciels (souvent de qualite
+moyenne) eventuellement livres avec ce dernier peuvent differer d'une
+machine a une autre. Le cout du changement de ce cable s'eleve a 130F
+environ (ceci pour un cable de qualite optimale, bien sur). Cependant, il
+existe maintenant, dans les magasins specialises en connectique, des
+adaptateurs (compter environ 50F).
+Pour l'Internet, les logiciels fournis avec le modem ne sont pas un critere
+determinant. Vous trouverez tout ce qu'il faut en &quot;freeware&quot;, parfois en
+&quot;shareware&quot;
+
+
+
+<A NAME="1"></A>_________________________________________________________
+SECTION 2 : CONFIGURATION MATERIELLE ET COUCHE LOGICIELLE
+_________________________________________________________
+
+Plan de la section :
+
+* <A HREF="#11">Le driver de ports de Windows</A>
+* <A HREF="#12">Le panneau de controle &quot;ports&quot; (Windows)</A>
+* <A HREF="#13">Configuration de Trumpet Winsock (windows)</A>
+* <A HREF="#14">Configuration de Windows 95 (quelques rappels)</A>
+* <A HREF="#15">Tampons Fifo et optimisation du system.ini (windows)</A>
+* <A HREF="#16">Comment eviter les OverRuns sous Wfwg 3.11 &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#17">Quelques informations sur MS DOS &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#18">Mac PPP (ou FreePPP) et Mac TCP</A>
+* <A HREF="#19">Et sur systeme 7.5.3 ?</A>
+* <A HREF="#110">UNIX : Generalites, Linux, FreeBSD &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#111">Amiga</A>
+* <A HREF="#112">Configuration du Bios</A>
+
+
+
+<A NAME="11"></A>* Le driver de ports de Windows
+  -- ------ -- ----- -- -------
+
+Le driver de ports de Windows (\windows\system\com.drv), notamment sur la
+version 3.1., n'est pas optimise pour permettre une gestion correcte des
+deux tampons Fifo de l'Uart 16550. 
+
+&lt;###&gt;
+Attention a ne pas confondre W 3.11 avec Windows For Workgroup 3.11, bien
+meilleur et pour lequel le driver n'est pas a changer. De meme pour Windows 95.
+(Cybercom.drv fonctionne en 16 bits, alors que Windows 95 fonctionne en 32
+bits.)
+
+Si vous possedez un Uart 16550, il est preferable d'utiliser le Freeware
+Cybercom.drv (en telechargement sur le reseau,
+http://metro.turnpike.net/L/llarrow/cybercom.zip par exemple). 
+
+Le driver WFXCOMM.DRV (ftp://serv1.cl.msu.edu/pub/mswindows/utils/wfxcomm.zip)
+fonctionne egalement tres correctement.
+
+<A NAME="12"></A>* Le panneau de controle &quot;ports&quot; (windows)
+  -- ------- -- -------- ------- ---------
+
+Dans le cadre d'une connexion via Trumpet sur Windows, il n'est absolument
+necessaire de parametrer le panneau de controle &quot;ports&quot; que si vous avez
+choisi l'option &quot;use control panel setting&quot; du menu dialler de Trumpet
+Winsock.
+Il est cependant vivement souhaitable de le parametrer dans tous les cas.
+
+Les reglages sont les suivants :
+    - Donnees : 8 ; parite : sans ; stop 1 (dans 99% des cas).
+    - Controle de flux  : RTS + CTS si vous utilisez un tel cable (voir plus
+    haut) ; aucun sinon ; ne JAMAIS utiliser Xon + Xoff.
+    - Vitesse du port serie : pour permettre la compression de donnees, elle
+    doit etre configuree a une vitesse egale a 4 fois (idealement, sinon au
+    moins 2 fois) la vitesse DCE (vitesse du modem) soit 57600bps pour un modem
+    14400bps ; 115kbps pour un modem 28800bps dans la limite, bien sur, de la
+    vitesse autorisee par le type d'Uart que vous utilisez (voir plus haut).
+    Ainsi, par exemple, avec un Uart 8250 vous ne pouvez configurer le port
+    serie qu'a 19200bps, meme avec un modem v34 !!
+
+<A NAME="13"></A>* Configuration de Trumpet Winsock (windows)
+  ------------- -- ------- ------- ---------
+
+Principaux parametrages de la commande setup de menu file :
+
+    - IP Adress, Default Gateway, Name Server : demandez ces renseignements a
+    votre fournisseur
+    - TCP MSS : c'est la taille maximum des paquets transmis. Idealement 1024
+    avec PPP 512 pour Slip, 128 pour CSLIP.
+    - MTU : en general TCP MSS + 40 ; on peut monter jusqu'a 1500 avec PPP.
+    - TCP RWIN : 2048 en PPP ; 848 en SLIP.(TCC MSS x 2, 3 ou 4)
+    
+    RFC 1548 pour les details du TCP MSS, MTU, etc...
+    
+En cas de probleme, essayer de diminuer le TCP MSS et les valeurs
+associees.
+
+    - SLIP Port : c'est le numero de port de communication que vous utilisez.
+    - Baud Rate : c'est la vitesse DTE ; meme calcul que pour determiner la
+    vitesse du panneau de controle ports, voir plus haut (vitesse DTE * 4 dans
+    la limite des capacites de l'Uart utilise).
+    - Hardware Handshake : a cocher uniquement si vous utilisez un cable gerant
+    le controle de flux hardware (RTS + CTS)
+    - Online status detection : c'est le systeme de detection utilise par votre
+    modem.
+
+Options complementaires (Options du menu Dialler)
+    - Slip inactivity timeout : s'exprime en minutes. Delai de deconnexion
+    automatique sans aucune operation de votre part.
+    - Use control panel setting : dans 99% des cas la connexion se fait en 8N1
+    (8 bits, sans parite, 1 bit de stop), ce sont d'ailleurs les options
+    pre-definies de Trumpet Winsock. Dans le cas exceptionnel ou votre
+    fournisseur requiert 1 connexion en 7 bits (7 bits, parite paire, stop 1),
+    choisissez cette option et parametrez votre panneau de controle ports en
+    consequence.
+
+<A NAME="14"></A>* Configuration de Windows 95 (quelques rappels)
+  ------------- -- ------- --  -------- -------
+
+Il vous faut installer les produits suivants :
+    - Clients reseaux Microsoft
+    - Protocole TCP/IP Microsoft
+    - Carte d'acces distant Microsoft
+    (Poste de travail / Panneau de configuration / Reseau / Ajouter Protocole
+    Microsoft - TCP-IP, Microsoft Carte d'acces distant - meme en l'absence de
+    carte ethernet).
+
+- Configuration protocole TCP/IP Microsoft :
+    -- Adresse IP : votre adresse IP ou obtenir automatiquement une adresse IP
+    si vous n'en avez pas de fixe
+    -- Passerelle : demandez ce renseignement a votre fournisseur
+    -- Liens : desactiver
+
+- Carte d'acces distant :
+    -- (proprietes) : choisir pilote NDIS mode etendu
+    -- liens : cocher TCP/IP
+
+- Poste de travail - acces reseau a distance
+    -- Choisir nouvelle connexion
+    -- Choisir votre modem dans la liste ou modem Hayes dans le cas ou votre
+    modem n'y figure pas. Il faudra alors editer eventuellement le driver.
+    Voir dans le chapitre : &quot;je n'ai pas le bon driver Windows 95&quot;
+    -- Vitesse de transfert (option configurer) : la aussi c'est la vitesse DTE
+    (port serie) et non la vitesse du modem. Meme principe de calcul que pour
+    Trumpet Winsock, voir plus haut.
+    -- Onglet options : seule l'option Afficher l'etat du modem doit etre
+    active (en regle generale)
+    -- Parametrez ensuite le numero de telephone de votre provider.
+    -- Valider la creation avec Terminer.
+
+- Type de serveur (option Proprietes)
+    -- En general PPP
+    -- Cocher TCP/IP (protocoles reseaux)
+    
+    -- Specifier les adresses IP, serveurs de noms et adresses DNS.
+    
+    
+$ NOTE IMPORTANTE : &lt;###&gt;
+
+Il est possible de personnaliser sa chaine d'init sous Windows 95 sans modifier
+les fichiers du modem. Dans les dialogues de configuration modem, onglet
+&quot;connexion&quot; bouton &quot;avancees&quot; il existe un champ &quot;parametres supplementaires&quot;
+permettant d'entrer des commandes particulieres qui seront envoyees au modem
+apres les chaines d'init standard. Cette action peut etre facilement visualisee
+si l'on demande un fichier journal pour le modem (fichier modemlog dans le
+repertoire Windows).
+    
+NB : le serveur de France Pratique
+http://www.pratique.fr/net/softs/docs/win95/ donne quelques renseignements
+interessants sur la configuration de windows 95.
+
+<A NAME="15"></A>* Tampons Fifo et optimisation du system.ini (windows et windows 95)
+  ------- ---- -- ------------ -- ----------  ------- -- ------- --
+
+Si vous utilisez un Uart 16550 et comptez profiter pleinement des
+possibilites de ses deux tampons FIFO, il faudra rajouter, dans le
+system.ini (section 386enh)
+
+(cas du cybercomm.drv - solution preferable a la suivante, a mon avis)
+    comm.drv=cybercom.drv
+    COMxFIFO=1
+    ComxTXSize=8
+    ComxRXSize=8
+    MinTimeSlice=20
+    WinTimeSlice=100,50
+    Com1Buffer=1024
+
+(cas du WFXCOMM.DRV)
+    comm.drv=WFXCOMM.DRV
+    ComxTXSize=8
+    ComxRXSize=8
+    MinTimeSlice=20
+    WinTimeSlice=100,50
+    Com1Buffer=1024
+
+x designant le port de communication utilise par votre modem.
+
+Il peut etre egalement interessant, quel que soit l'Uart utilise (sauf
+8250), d'optimiser le system.ini en reglant sur 256 octets la taille du
+buffer de communication. Pour cela, remplacer 128 par un multiple de 128
+dans la ligne COMxBUFFER=128 de la section 386enh de votre system.ini (256,
+512 ou 1024 selon la puissance de votre processeur), x designant bien
+entendu le numero du port de communication sur lequel fonctionne votre
+modem. Si cette ligne n'existe pas, il peut etre interessant de la creer.
+
+Correction d'un bug sur windows 3.0 :
+rajouter dans votre system.ini (section 386enh)
+    COM1Base=03F8h
+    COM2Base=02F8h
+    COM3Base=03E8h
+    COM4Base=02E8h
+    Puis :
+    ComIRQSharing=True (le cas echeant)
+
+<A NAME="16"></A>* Comment eviter les OverRuns sous Wfwg 3.11 (contribution de Stephane Gibier)
+  ------- ------ --- -------- ---- ---- ----
+
+&lt;###&gt;&lt;NOUVEAU&gt;
+
+Attention, si vous n'utilisez par Wfwg mais W3.11 ou version anterieure,
+n'oubliez pas de remplacer votre driver par le freeware cybercom.drv comme
+decrit dans la presente faq.
+
+Malgre tout le soin qui a ete apporte a la conception des drivers de
+communication sous Windows, plusieurs facteurs peuvent etre a l'origine des
+OverRuns que l'on peut rencontrer frequemment sous Trumpet Winsock par
+exemple. 
+
+- L'activation du cache en ecriture de SmartDrv. Il suffit de le desactiver
+avec le parametre /X.
+
+- Dans le meme ordre, l'acces 32bfa (Acces Fichiers 32 bits) gere par defaut
+un mode &quot;Stagge d Write&quot; comme SmartDrv (delai en ecriture). Il est possible
+de forcer l'ecriture sur les disques en indiquant dans la section [Vcache]
+de SYSTEM.INI le parametre ForceLazzyOff=&lt;Disques&gt; (ex: ForceLazzyOff=CDEF
+pour desactiver l'ecriture differee sur les disques C,D,E et F).
+
+- Une ouverture du port serie trop grande : 115 200 bps est a mon avis
+trop grand pour un V34. 57 600 bps represente un bon compromis etant donne
+le taux de compression moyen de 2:1. On peut tenter de remonter a 115 200
+bps mais il sera hors de questions de lancer plusieurs applications en
+meme temps. Du coup, dans cette situation, il est preferable de ne rien
+toucher, ni meme la souris !
+
+- Le paragraphe qui precede ne concerne bien sur que l'Uart 16550. Rappelons
+qu'avec un Uart 16450 38400 bps semble etre un maximum.
+
+- Un driver video mal ecrit ou monopolisant trop de temps CPU. C'est
+notamment le cas des drivers S3 en PCI. J'ai pu eviter tous les OverRuns en
+mettant dans la section [Display] de SYSTEM.INI le parametre
+bus-throttle=on. Ce truc a marche du premier coup et est valable
+vraisemblablement pour tous les chipsets S3.
+
+- Pour les autres chipsets, il peut etre bon de verifier si le driver video
+n'est pas en cause, en remettant temporairement le driver generique VGA de
+Microsoft. Si les OverRuns disparaissent, il est souhaitable de rechercher
+un nouveau driver ou de se renseigner aupres du constructeur si il n'existe
+pas un parametre similaire a celui des chipset S3 (bus-throttle).
+
+- Mettre le parametre Com?RxTrigger=8 dans la section [386enh] de SYSTEM.INI
+avec ? designant le port 16550 du modem. Si cela ne marche toujours pas,
+baisser a 4. Les valeurs possibles sont 1,4,8,14.
+
+<A NAME="17"></A>* Quelques informations sur MS-DOS &lt;###&gt;&lt;NOUVEAU&gt;
+  -------- ------------ --- ------
+  
+Bien que s'ecartant legerement du cadre de cette faq, voici quelques
+informations sur MS DOS, tres rapides :
+
+- Problemes d'erreurs de telechargement :
+
+Ils proviennent souvent de programmes residents, notamment certains drivers
+souris, ou le cache en ecriture de Smartdrv (desactivable avec le parametre
+/X). Cette liste n'est evidemment pas limitative.
+
+Ne jamais utiliser un programme de communication DOS dans une fenetre
+Windows.
+
+<A NAME="18"></A>* Mac PPP, Free PPP et Mac TCP (Macintosh) &lt;###&gt;
+  --- ---  ---- --- -- --- --- -----------
+
+Sur Macintosh, il y a deux composant a configurer : MacTCP (tableau de
+bord) et FreePPP (extension PPP et tableau de bord Config PPP). Ces
+logiciels fonctionnent parfaitement sur systeme 7.1.
+
+Si votre fournisseur vous a procure un kit de connexion Mac, il y a de
+fortes chances qu'il comporte des copies preconfigurees de MacTCP et
+MacPPP. La presence du tableau de bord AdminTCP, bien que facultative, est
+en outre tres fortement conseillee pour eviter des problemes.
+
+Configuration de Mac PPP ou de FreePPP (tableau de bord config PPP)
+    - Port name : le port serie auquel est raccorde votre modem (modem ou
+    imprimante)
+    - IdleTimeout : temps de deconnexion automatique si pas d'activite
+    - Echo Interval : Intervalle d'echo ; personnellement, je preconise 20
+    secondes. En cas de probleme et en attendant de trouver d'ou vient le
+    probleme vous pouvez essayer temporairement de le mettre sur off, mais
+    cette solution n'est absolument pas puriste (verifiez plutot les conflits
+    d'extension).
+    - Terminal Windows : en general, choisissez non (connexion en mode
+    emulation de terminal)
+    - Hangup on close : oui (deconnexion quand vous cliquez &quot;close&quot;)
+    - QuietMode : en general, choisissez oui
+
+Puis cliquez sur &quot;config&quot;
+    - Port speed : c'est la vitesse du port serie. Elle se configure de la meme
+    maniere que le &quot;baud rate&quot; de Trumpet Winsock. Vitesse modem (DCE) x 4 dans
+    la limite des capacites du port serie, soit 115Kbps pour un modem 28800bps
+    (v34) ou 57600bps pour un modem 14400bps (v32bis). Attention de ne pas
+    exceder les capacites physiques de votre port serie (voir chapitre &quot;le port
+    serie du Macintosh) et a desactiver *eventuellement* la compression de
+    donnees si ce dernier plafonne a 38400bps et que vous utilisez un modem
+    V34. (en cas de probleme seulement)
+    - Flow Control : choisissez RTS / CTS si vous possedez un tel cable. None
+    dans le cas suivant (et rajoutez alors &amp;k0 dans la chaine d'init du modem).
+    Ne JAMAIS choisir Xon + Xoff.
+    - Tone/Pulse dial : type de numerotation vocale ou decimale
+    - Phone num : numero d'acces telephonique de votre fournisseur
+    - Modem init : chaine d'initialisation du modem = voir plus loin
+    - Connect script : c'est le script de connexion, specifique a votre
+    fournisseur. Un script typique est :
+        wait : login
+        out : votre nom &lt;cr&gt;
+        wait : password
+        out : votre mot de passe &lt;cr&gt;
+        (annex : ppp) - nb : l'annexe n'est pas toujours utilise.
+        
+Plus d'infos dans la doc de FreePPP en francais  
+ftp://ftp.sri.ucl.ac.be/pub/MacPPP/macpppF.txt.new 
+
+Pensez egalement a consulter la Faq de fr.comp.sys.mac. 
+
+Q : y-a-til quelqu'un qui a essaye la derniere version de PPP (FreePPP 2.5) 
+avec un modem PCMCIA et sys 7.5.3 ? &lt;###&gt;
+
+R : (C. Causer) : pour ceux qui ont le meme probleme que moi, la solution est
+de renommer dans le fichier &quot;Mise a jour systeme 7.5.2.&quot; la ressource Str# d'id
+-16762, la chaine &quot;emplacement superieur de la carte PC&quot;, par une autre chaine
+de moins de 32 caracteres ! de meme pour la carte inferieure. 
+Ceci a cause du fait que PPP sauve une chaine de 32 caracteres pour le port
+utilise dans ces preferences ! donc il ne trouve jamais le bon port puisqu'il
+tronque la fin.
+C'est un patch temporaire en attendant que ceux qui font PPP reglent le
+probleme.
+
+Il ne vous reste plus qu'a vous soucier de l'optimisation de la chaine
+d'initialisation de votre modem.
+
+<A NAME="19"></A>* Et sur systeme 7.5.3 ?
+  -- --- ------- -----
+
+Pour fonctionner de maniere optimisee, le systeme 7.5.3. requiert
+l'utilisation du couple Open Transport + Free PPP.
+
+La configuration de Free PPP est a peu pres identique a celle de Mac PPP.
+Plus d'informations au sujet d'Open Transport lors des prochaines versions
+de cette faq.
+
+[DERNIERE MINUTE : En attendant jetez donc un petit coup d'oeil sur
+http://www.imag.fr/IMAG/PPP/FreePPP.html. Une excellente synth&egrave;se
+par Gilles Kuntz sur la configuration de FreePPP et OpenTransport]
+
+<A NAME="110"></A>* Unix (Linux, FreeBSD) &lt;###&gt;&lt;NOUVEAU&gt;
+  ---- ----------------
+  
+Ce chapitre est un bref rappel de ce qu'il vous faut savoir pour configurer
+votre systeme Linux ou FreeBSD pour l'acces a l'Internet par Modem sur protoco-
+le PPP. Il ne dispense donc pas de la lecture de la bibliographie qui figure en
+annexe mais se veut surtout un aide memoire auquel vous pouvez vous referer
+pour verifier que vous n'avez rien oublie d'important.
+
+Cela suppose que votre noyau a ete compile avec les options ad-hoc pour les
+supports TCP-IP et PPP ; que vous desirez vous connecter a un vrai fournisseur
+de connectivite Internet (i.e pas un quelconque service en ligne proprietaire);
+que votre fournisseur fournit un service PPP (pour des raisons de compacticite,
+la configuration d'un client SLIP n'est pas abordee).
+
+  
+Les fichiers de configuration communs aux deux systemes
+--- -------- -- ------------- ------- --- ---- --------
+
+Le fichier /etc/resolv.conf donne le nom du ou des serveurs DNS a interroger
+(generalement un serveur primaire et un serveur secondaire). Sa structure est
+assez simple.
+
+    Exemple pour compuserve :
+    #/etc/resolv.conf
+    domain compuserve.com
+    nameserver 149.174.211.5
+    nameserver 149.174.213.5
+    
+    
+Le fichier /etc/host.conf indiquera au systeme que vous utilisez le DNS pour
+resoudre les adresses IP.
+
+    Exemple
+    #/etc/host.conf
+    order hosts bind
+    multi on
+    #l'argument multi on n'est valable que pour Linux, non pour FreeBSD
+    
+La premiere ligne indique comment resoudre les adresses IP. Dans cet exemple,
+on utilise d'abord le fichier /etc/hosts puis le DNS. 
+Multi on indique que les hotes cites dans /etc/hosts sont autorises a posseder
+plusieurs adresses IP (multi off dans le cas contraire)
+
+Notons qu'il n'est pas utile de faire tourner le demon named (serveur DNS) sur
+votre machine, car celle-ci est client DNS et non serveur. Cependant, si vous
+souhaitez economisez du traffic DNS, vous pouvez configurer votre serveur DNS
+local en 'cache only&quot; (voir man named pour les details). Vous pouvez egalement
+rajouter les adresses IP des machines que vous utilisez frequemment au fichier
+/etc/hosts (voir plus bas).
+
+Le fichier /etc/hosts contient les informations concernant le loopback
+(localhost) ainsi que le nom et l'adresse IP de votre machine .
+
+    Exemple
+    #/etc/hosts
+    127.0.0.1       loopback localhost
+    mon_adresse_IP  mamachine.monprovider.fr    mamachine
+    #peuvent suivre une liste de machine que vous utilisez frequemment :
+    #adresse IP     FQDN                        Alias
+    
+
+Linux &lt;###&gt;
+-----
+
+N'oubliez pas de consulter le &quot;Serial HOWTO&quot;, le &quot;PPP HOWTO&quot; et la manuel de
+pppd. Le net2HOWTO et le guide administration reseau sous Linux de Olaf Kirch,
+traduit en francais par Rene Cougnenc sont egalement a lire. Si vous debutez
+sur Linux, commencez par l'excellent guide du Rootard.
+
+Si vous souhaitez gagner du temps vous pouvez utiliser un programme tel que
+netconfig pour degrossir la configuration puis modifier vos fichiers de
+configuration comme indique dans ce document. Si vous avez de la chance et un
+peu d'intuition, tout fonctionnera correctement du premier coup.
+
+Note : le programme netconfig (ou un programme equivalent) vous posera quelques
+questions simples, comme le nom de votre machine (choisissez-en un qui vous
+plaise, mais surtout qui ne soit pas deja attribue a une autre machine sur le
+meme domaine), le type de connexion a Internet que vous avez, vous proposera de
+construire le fichier sendmail.cf (tant bien que mal, plutot mal que bien
+d'ailleurs mais vous pourrez utiliser ulterieurement le Kit Jussieu). 
+N'accordez pas une trop grande confiance a ce type de programme, ils ne sont 
+la que pour degrossir.
+
+N'oubliez pas de verifier si 'setserial' a bien configure le port. Essayez-le
+en autoconfig d'abord. Generalement, cette operation se fait dans le script
+/etc/rc.serial ou /etc/rc.d/rc.serial qui est execute automatiquement au
+demarrage
+(il est souvent appele par le script /etc/rc.d/rc.S)
+
+    #/etc/rc.d/rc.serial ou etc/rc.serial
+    #detection des interruptions
+    setserial -W /dev/cua*
+    #configuration des ports
+    setserial /dev/cua0 auto_irq skip_test autoconfig
+    setserial /dev/cua1 auto_irq skip_test autoconfig
+    # etc...
+    #mise en service du controle de flux par RTS CTS
+    #(fortement conseille)
+    stty crtscts &lt; /dev/cua0
+    #configuration d'un port serie rapide
+    #(surtout dans le cas d'un UART 16550A)
+    setserial /dev/cua0 spd_vhi
+    #affiche la configuration
+    echo votre configuration serie
+    setserial -bg /dev/cua*
+    
+    
+Man setserial ; man stty pour les details
+(vous devrez indiquer le type d'Uart ou l'interruption utilisee si
+setserial ne detecte pas bien votre configuration).
+
+La vitesse du port serie est donnee sur la ligne de commande de pppd.
+Elle doit etre inferieure ou egale a celle affichee par 'setserial'
+(voir exemple plus loin)
+
+pppd fonctionnant en arriere-plan, vous pouvez utiliser les codes de
+retour de chat (a partir de la version 1.9) et les scripts 'ip-up' et
+'ip-down' pour remonter les informations.
+(etc/ppp/ip-up et etc/ppp/ip-down sont executes automatiquement par pppd)
+
+Les scripts rc.inet1 et rc.inet2
+--- ------- -------- -- --------
+
+Generalement situes dans le repertoire /etc ou /etc/rc.d, ils sont executes
+au demarrage de votre machine. Ils sont generalement appeles par le script
+/etc/r.d/rc.M.
+
+    #/etc/rc.d/rc.inet1 ou /etc/rc.inet1
+    #configuration du loopback
+    /sbin/ifconfig lo 127.0.0.1
+    /sbin/route add 127.0.0.1
+    
+Dans la plupart des cas de connexion PPP par modem, seules ces deux lignes
+sont utiles. Vous pouvez donc commenter les autres lignes.
+
+Le fichier rc.inet2 qui lance le SuperServer Inetd et autres demons, n'est pas
+detaille ici. Il est generalement installe automatiquement si vous utilisez
+une distribution binaire. Commentez les lignes qui ne vous sont pas utiles.
+
+Le script de demarrage de pppd (/usr/sbin/ppp-on)
+-- ------ -- --------- -- ----  ----------------
+
+Meme si vous pouvez lancer pppd par une ligne de commande manuelle, il est
+neanmoins conseille d'ecrire un script de demarrage de pppd, generalement
+/usr/sbin/ppp-on. 
+
+Bien que cela ne soit pas obligatoire, j'ai choisi pour des raisons didactiques
+de faire figurer dans cet exemple la plupart des options de pppd dans le 
+fichier /etc/ppp/options. Les options peuvent aussi figurer dans la ligne
+de commande.
+Cependant, la presence d'un fichier /etc/ppp/options, meme vide, est
+indispensable.
+
+    #/usr/sbin/ppp-on
+    exec pppd connect '/usr/sbin/chat -v \
+    &quot;&quot; &quot;AT&amp;F&amp;K3&quot; OK ADTD00112233 CONNECT &quot;&quot; ogin: mon_login ssword:
+mon_password' \
+    /dev/cua0 38400
+    
+man chat ; man pppd pour les details.
+
+Dans cet exemple nous lancons la connexion avec chat. On envoit la chaine
+&lt;AT&amp;F&amp;K3&gt; au modem ; on attend la reponses &lt;OK&gt; ; on envoit alors la chaine
+&lt;ATDT00112233&gt; au modem ; on attend alors la chaine &lt;CONNECT&gt; (le modem doit
+etre en mode verbeux, generalement atv1) ; les deux &quot; indiquent : n'envoyer
+rien, continuer a attendre. On attend la chaine ogin etc...
+
+Astuce : pour construire votre script de connexion, utilisez un programme tel
+que minicom et notez bien les differentes chaines a attendre et a envoyer.
+
+Le fichier d'options de ppp :
+(bien entendu, les lignes precedes par # sont de simples commentaires)
+
+    #/etc/ppp/options
+    -detach
+    debug
+    #active le controle de flux par rts + cts ;
+    #quasiment indispensable.
+    #la chaine d'init du modem doit correspondre
+    crtscts
+    #on utilise un modem pour se connecter
+    modem
+    #ordonne a pppd de rajouter une route par defaut.
+    defaultroute
+    asyncmap 0
+    lock
+    #(si vous voulez utilisez un netmask particulier)
+    #(la plupart du temps pppd devine le netmask)
+    netmask mask
+    #en cas de probleme vous pouvez jouer sur les valeurs du MTU et MRU
+    #ces valeurs fonctionnent bien dans la plupart des cas
+    #je les prefere aux valeurs par defaut
+    #voir RFC 1548 pour les details
+    mru 296
+    mtu 1088
+    #si votre adresse IP est adressee dynamiquement
+    #pour que pppd n'essaie pas de la deviner d'apres votre fichier
+    #/etc/hosts
+    noipdefault
+    #le cas echeant
+    domaine nom_du_domaine
+    usehostname
+    #si vous souhaitez utiliser l'echo ppp lcp
+    lcp-echo interval 40    #en secondes
+    lcp-echo-failure   3    #nombre de demandes d'echo echouees avt deconnexion
+    
+    
+Le fichier /etc/syslog.conf
+-- ------- ----------------
+
+Permet de rediriger les messages d'avertissement ou d'erreur. Par exemple vous
+pouvez rajouter :
+
+    #/etc/syslog.conf
+    #les messages sortent a l'ecran et sur un fichier
+    daemon,local2,debug                     /etc/ppp/ppp-log
+    daemon,local2,debug                     /dev/console
+    
+Tres pratique pour le debugage :-)
+    
+    
+    
+Verifier que tout fonctionne bien
+-------- --- ---- ---------- ----
+
+- Pinger l'adresse locale.
+
+C'est la premiere etape. Vous devez pinger l'adresse locale avant de lancer
+pppd.
+Cela vous permet de verifier que votre noyau a ete correctement compile avec 
+les support TCP-IP et que les programmes ifconfig et route sont bien
+compatibles avec la version de votre noyau.
+
+Pour cela tapez simplement la commande ping localhost :
+
+    PING localhost (127.0.0.1) : 56 data bytes
+    64 bytes from 127.0.0.1: icmp_seq 0 ttl=32 time=1ms
+    64 bytes from 127.0.0.1: icmp_seq 1 ttl=32 time=1ms
+    (...)
+    &lt;ctrl&gt;c
+    ---
+    2 packets transmitted, 2 pak received, 0% lost
+    
+Si cela ne fonctionne pas, verifiez que votre fichier rc.inet1 ne comporte pas
+d'erreur.
+
+Vous pouvez a present lancer pppd (en tapant simplement, dans notre exemple,
+ppp-on - en supposant que vous ayez /usr/sbin dans votre path, bien evidemment)
+
+- Verifier la configuration du DNS.
+
+Maintenant que vous etes connecte vous pouvez verifier la configuration du DNS.
+nslookup permet d'interroger le serveur de noms (declare dans /etc/resolv.conf).
+
+Essayez trois ou quatre nslookup sur des sites connus.
+
+    nslookup josephine.sis.pasteur.fr
+    le dns doit vous renvoyer l'adresse IP
+    nslookup adresse_ip
+    le dns doit vous renvoyer le nom de la machine
+    
+man nslookup pour les details.
+
+- Verifier la connexion (extrait de la PPP-HOWTO)
+
+Tout d'abord, tapez /sbin/ifconfig, vous devez obtenir quelque chose comme ce
+qui suit, ce qui compte est la partie ppp0:
+
+       lo    Link encap Local Loopback
+         inet addr 127.0.0.1  Bcast 127.255.255.255  Mask 255.0.0.0
+         UP LOOPBACK RUNNING  MTU 2000  Metric 1
+         RX packets 0 errors 0 dropped 0 overrun 0
+         TX packets 0 errors 0 dropped 0 overrun 0
+
+       ppp0  Link encap Point-Point Protocol
+         inet addr 192.76.32.2  P-t-P 129.67.1.165  Mask 255.255.255.0
+         UP POINTOPOINT RUNNING  MTU 1500  Metric 1
+         RX packets 33 errors 0 dropped 0 overrun 0
+         TX packets 42 errors 0 dropped 0 overrun 0
+
+Vous aurez l'etat du lien PPP, et les adresses IP etablies lors de la
+negociation. Verifiez les routes par la commande route ou netstat -r, et
+essayez trois ou quatre ping.
+
+-- Un exemple ?
+
+Vous trouverez un exemple complet de configuration d'un client PPP sur la page
+web de Patrick Queutey.
+
+http://www.club-internet.fr/perso/queutey/Linux/config_ppp.html
+
+Cette mini-documentation s'arrete la. Vous etes maintenant sur le reseau
+Internet.
+Felicitations.
+
+* FreeBSD (par Sylvain Nierveze) &lt;###&gt;&lt;NOUVEAU&gt;
+  -------  --- ------- -------
+
+Ce paragraphe donne quelques details sur la configuration de PPP sous FreeBSD
+2.1.0 et 2.1.5. Je donne egalement un exemple complet de configuration pour se
+connecter en PPP a Compuserve.
+
+L'implementation de PPP sous FreeBSD est double :
+    - l'implementation originelle est incluse dans le noyau (demon pppd). Cela
+    rend PPP difficile a deboguer, et plus difficile a configurer.
+    - l'implementation au niveau de l'utilisateur : user-ppp, connu egalement
+    sous le nom de iijppp.
+
+La methode preferee pour utiliser PPP est d'employer iijppp au lieu de pppd, et
+c'est cette methode qui est detaillee dans le reste de cette partie.
+
+- Configuration du noyau pour utiliser iijppp
+
+il est necessaire d'ajouter dans le fichier de configuration du noyau la ligne
+suivante :
+    #/sys/i386/conf (extrait)
+    pseudo-device   tun 1
+
+Ensuite, reconfigurez, recompilez et reinstallez votre noyau. Relancez la
+machine. (A noter: le noyau 'GENERIC' contient le 'tunnel' driver par defaut,
+cependant il est fortement recommande de compiler votre noyau vous-meme afin
+d'economiser de la memoire, en enlevant les drivers qui ne vous interessent 
+pas).
+
+- Creation du fichier d'acces au driver :
+
+pour cela, creez le fichier /dev/tun0 s'il n'existe pas deja :
+    cd /dev
+    ./MAKEDEV tun0
+    
+
+- Configuration du DNS :
+
+Voir partie 1 : unix, generalites.
+
+Verifiez que le fichier /etc/sysconfig contient bien la ligne :
+    #/etc/sysconfig
+    namedflags=&quot;NO&quot;
+
+- configuration de PPP
+
+avec iijppp, le fichier de configuration de PPP est /etc/ppp/ppp.conf.
+Dans ce fichier, vous precisez :
+    - quel device de modem utiliser
+    - a quelle vitesse
+    - quel est le numero de telephone de votre prestataire Internet
+    - quelle est la sequence de login
+
+Un exemple est donne avec la configuration de Compuserve.
+
+Par ailleurs, il est possible de declencher certaines commandes juste apres que
+la connection PPP soit realisee (IPCP correctement negocie) . Le fichier dans
+lequel vous pouvez inclure ces commandes est /etc/ppp/ppp.linkup. 
+Par exemple, dans ce fichier, vous pouvez definir que vous ajoutez une route 
+par defaut entre votre machine et le serveur PPP du provider.
+
+Enfin,il est possible de restreindre l'acces a iijppp (programme /usr/sbin/ppp)
+a certains utilisateurs, ceux-ci devant employer un mot de passe pour pouvoir
+etablir la connection PPP. Le fichier /etc/ppp/ppp.secret est utilise pour cela.
+
+- Autres elements de configuration :
+
+Il est necessaire de modifier le fichier /etc/sysconfig afin de donner un nom a
+votre machine, de definir les arguments pour le lancement de sendmail et autres
+programmes reseau.
+
+Pour donner un nom a votre machine : verifiez que vous avez bien une ligne du
+genre dans /etc/sysconfig :
+
+    #/etc/sysconfig
+    hostname=myname.myprovider.dom 
+
+Si vous voulez utiliser sendmail pour envoyer du courrier lorsque votre
+connexion est active, assurez-vous  que le fichier /etc/sysconfig contient la
+ligne suivante :
+
+    #/etc/sysconfig
+    sendmail_flags=&quot;-bd&quot; 
+
+qui indique a sendmail d'etre lance en mode demon, mais de stocker le mail dans
+la file d'attente. Lorsque la connexion est active, vous pouvez lancer la
+commande : &quot;sendmail -q&quot; pour purger la file d'attente (il est egalement
+possible  de mettre cette commande dans /etc/ppp/ppp.linkup).
+
+- Utilisation du programme 'ppp'
+
+Ce programme permet de lancer et d'arreter la connection ppp avec le provider.
+Il permet egalement d'obtenir des statistiques concernant l'utilisation de la
+liaison pendant la connexion. (voir exemple d'utilisation ci-dessous)
+
+* Exemple : connexion avec Compuserve
+
+Tout d'abord, il a fallu que je recompile un noyau pour inclure le  tunnel
+driver.
+Pour cela j'ai ajoute la ligne :
+    #/sys/i386/conf/PENELOPE
+    pseudo-device tun0 1
+    (PENELOPE est le nom de mon fichier de configuration du noyau).
+    
+Apres, j'ai lance :
+    config PENELOPE
+    cd ../../compile/PENELOPE
+    make
+    make install
+
+et j'ai redemarre le PC, puis j'ai verifie que le fichier /etc/tun0 est bien
+present:
+
+    crw-------  1 uucp  dialer   52,   0 Sep  7 13:18 /dev/tun0
+
+Ensuite pour configurer le DNS, j'ai modifie le fichier /etc/resolv.conf de
+sorte
+qu'il contienne :
+    #/etc/resolv.conf
+    domain compuserve.com
+    nameserver 149.174.211.5
+    nameserver 149.174.213.5
+
+puis le fichier /etc/host.conf qui contient :
+    #/etc/host.conf
+    # utiliser le fichier /etc/hosts puis DNS
+    hosts bind
+
+Et voila! le DNS est configure.
+
+Apres vient la configuration de PPP en tant que telle.
+Mon fichier /etc/ppp/ppp.conf contient :
+
+    1 default:
+    2  set device /dev/cuaa1
+    3  set speed 38400
+    4  set debug phase chat lcp
+    5  disable lqr
+    6  deny lqr
+    7  set dial &quot;ABORT BUSY ABORT NO\\sCARRIER TIMEOUT 5 \&quot;\&quot; ATE1Q0 OK-AT-OK
+            
+\\dATDT\\T TIMEOUT 40 CONNECT&quot;
+    #
+    # Compuserve
+    8 cis:
+    9  set phone 47080708
+    10  set login &quot;TIMEOUT 5 ame:-\\r\\r-ame: CIS ID: mon,userid/GO:PPPCONNECT
+    word: MONMOTDEPASSE&quot;
+    11  set timeout 120
+
+Les numeros de ligne sont la pour l'explication, ils ne doivent
+evidemment pas etre presents dans le fichier.
+
+1: configuration par defaut
+
+2: definition du port de communication a utiliser pour le modem. cuaa1 est le
+COM2 de MS-DOS, cuaa0 est COM1.
+   
+3: vitesse de la transmission du modem
+
+4: options de debug. PPP envoie les messages de debug dans le fichier
+/var/log/ppp.log. 'phase' concerne la periode jusqu'a la numerotation, 'chat'
+la phase de dialogue entre les deux modems pour examiner quels qu'est ce qui
+est demande par le serveur distant, et qu'est ce que mon PC envoie en reponse.
+   
+7: definit quelles sont les messages envoyes par mon modem indiquant que la
+connexion ne peut aboutir (ABORT BUSY ABORT NO\\sCARRIER), definit le TIMEOUT
+pendant l'etablissement de la numerotation (TIMEOUT 5), la sequence d'init
+(ATE1Q0 OK-AT-OK), et ce qu'on doit envoyer au modem pour numeroter (ATDT\\T -
+\\T contient en fait le numero de telephone), puis le TIMEOUT pendant la
+connexion entre les modems (TIMEOUT 40 CONNECT).
+
+8: configuration concernant le provider (CIS)
+
+9: son numero de telephone
+
+10: le 'chat script' : on attend 'ame:' pendant 5 secondes, si ca n'arrive pas,
+on envoie un retour charriot deux fois de suite,puis on attend 'ame:' pendant 5
+secondes encore. Lorsqu'on a recu 'ame:', on envoit 'CIS', puis on attend 'ID:'.
+On envoit le userid Compuserve suivi de /GO:PPPCONNECT, puis on attend 'word:'
+et on envoie le mot de passe correspondant au userid.
+
+11: definit le timeout pour les paquets IP pendant la connexion.
+
+Dans ce fichier, on indique pas les adresses IP utilisees car elles sont
+affectees dynamiquement par le provider (ce qui est le cas le plus frequent).
+
+Le fichier /etc/ppp/ppp.linkup contient :
+
+    #/etc/ppp/ppp.linkup
+    # Ajout d'une route statique par defaut vers le provider
+    MYADDR:
+    add 0 0 HISADDR
+    #NOTA : il est possible d'inserer cette commande directement dans
+    #le fichier /etc/ppp/ppp.conf au lieu du fichier ppp.linkup. Le resultat
+    #est le meme.
+    
+
+Comment se passe la connexion ? Voici un exemple 'reel' :
+
+# on appelle ppp. On veut se connecter au provider tel qu'il est defini dans
+/etc/ppp/ppp.conf (bloc 'cis:').
+    sn@penelope:~ &gt; ppp cis  
+    User Process PPP. Written by Toshiharu OHNO.
+    Log level is 0b
+    
+# ces deux warnings indiquent que je peux utiliser ppp sans etre root
+    Warning: No password entry for this host in ppp.secret
+    Warning: All manipulation is allowed by anyone in the world
+    Using interface: tun0
+    Interactive mode
+    ppp ON penelope&gt; dial       # on appelle le provider
+    dial OK!
+    login OK!
+    ppp ON penelope&gt; Packet mode.   # on est connecte en PPP
+    
+# Remarquer que lorsqu'on est connecte, PPP est indique au lieu de 'ppp'
+# dans le prompt.
+
+    PPP ON penelope&gt; show ipcp  # quelques statistiques
+    IPCP [Opend]
+     his side: x.y.z.t, 2d0f00  # l'adresse IP du serveur
+     my  side: a.b.c.d, 2d0f00  # mon adresse IP (dynamique)
+    connected: 114 seconds, idle: 26 secs
+
+    PPP ON penelope&gt; close      # Ca suffit. On ferme !
+    ppp ON penelope&gt; quit       # retour au shell
+    sn@penelope:~ &gt;
+
+Pendant la connexion, on peut evidemment utiliser tous les programmes Internet
+que l'on souhaite. Je vous laisse decouvrir le contenu du fichier
+/var/log/ppp.log,  auquel il peut etre tres utile de jeter un oeil, surtout 
+quand  ca ne fonctionne pas bien :-)
+
+- quelques remarques 
+
+User PPP consomme plus de CPU. Il bloque un tty (ou une fenetre terminal).
+
+Par ailleurs, la sequence de chat-script depend beaucoup de votre provider.
+Dans le cas de Compuserve, elle est un peu 'speciale' ..
+
+Certains points ne sont pas abordes:
+    - configuration de iijppp pour utiliser des adresses IP statiques
+    - configuration de iijppp en 'dial on demand' (c'est a dire quand il 
+    y a des paquets a transmettre, on appelle le provider, et quand
+    on a depasse un certain temps d'inactivite, on coupe la connexion)
+    - configuration de l'authentification (PAP ou CHAP)
+    - configuration de ppp en mode noyau
+
+- Ou trouver de la documentation ?
+
+sur votre systeme: quelques pages de manuels meritent d'etre lues (elles sont
+beaucoup plus completes que ce paragraphe) :
+ppp(8) : manpage de iijppp
+chat(8) : manpage pour creer des chat-scripts (du type de l'entree
+'login:' dans /etc/ppp/ppp.conf)
+
+Le 'FreeBSD Handbook' contient egalement une description tres detaillee des
+etapes a suivre pour configurer iijppp. Pour le consulter, j'utilise lynx :
+lynx /usr/share/doc/handbook/handbook.html, rubrique 11.1.
+
+sur Internet : le site officiel de Chuck contient surement  une version du
+handbook mise a jour : &lt;URL:http://www.freebsd.org/&gt;.
+
+<A NAME="111"></A>* Amiga
+  -----
+
+(Merci a Johann Girard-Cheron (sammy@centre.net) qui a ecrit les
+quelques lignes qui suivent. Vous pouvez le contacter par e-mail pour tout
+renseignement complementaire au recevoir sa faq &quot;Amiga et Internet pour les
+nuls&quot;.)
+
+IL faut bien evidement avoir installe une pile TCP/IP (genre AmiTCP) pour
+utiliser PPP. Au plus simple : tout est explique dans le fichier
+How2UsePPP.lha en DP (CD Aminet ou miroirs). Pour des problemes supplemen-
+taires : RTFM =  ppp.guide
+
+En resume : Copier le contenu des repertoires Env, devs de l'archive vers
+leurs equivalentsdans votre HD. Ne copier evidement que le device qui cor-
+respond a votre processeur. Le contenu du repertoire bin va dans AmiTCP:bin/
+
+Ne pas oublier de modifier le fichier texte qui vous sert de Dialscript
+en fonction des reponses a donner aux questions precises de votre provider
+(Login: ; Password: ..)
+Modifier le fichier ppp0.config (dans ENV:) pour lui donner le nom
+exact de ce Dialscript. (ex: &quot;DialupScript.ppp&quot;)
+Un petit tour dans ppp.guide pour suivre les modifications a faire selon
+votre version d'AmiTCP, et ca doit marcher ;-)
+
+Au passage : ppp est shareware. Les 15 malheureux dollars (75 Frs)
+sont tout a fait justifie vu le boulot de l'auteur d'autant que la version
+enregistree est plus rapide de 30-40%. PAP et CHAP sont accessibles que
+15 min en version non enregistree.
+
+Pour les allergiques a tout ce qui est dit ci-dessus, il vous reste la
+possibilite d'installer ppp via un kit Internet. A ce jour, @NET est
+le kit le plus simple (via Installer) et qui marche bien.
+
+<A NAME="112"></A>* Configuration du Bios (PC)
+  ------------- -- ----  --
+
+Certains Bios anciens ne detectent pas les ports com3 et com4.
+Pour resoudre ce probleme creer un fichier texte nomme setcom.scr contenant
+la ligne suivante :
+
+    E40 : 0 : F8 03 F8 02 E8 03 E8 02 Q
+    Puis rajouter dans l'autoexec.bat : debug &lt; setcom.scr
+
+
+cette partie comprend les sections 3, 4 et 5.
+        
+<A NAME="2"></A>__________________________________
+SECTION 3 : CONFIGURATION DU MODEM
+__________________________________
+
+Plan de la section :
+
+* <A HREF="#21">La structure d'une commande AT</A>
+* <A HREF="#22">Qu'est-ce qu'une chaine d'INIT ?</A>
+* <A HREF="#23">Configuration par defaut - configuration courante</A>
+* <A HREF="#24">Ou se trouve ma chaine d'INIT ?</A>
+* <A HREF="#25">Comment construire une chaine d'init optimisee : une methode simple et
+  exemples</A>
+* <A HREF="#26">Je n'ai pas le bon driver windows 95</A>
+* <A HREF="#27">Comment modifier et optimiser mon driver windows 95 ?</A>
+* <A HREF="#28">Quelques reponses en VRAC</A>
+* <A HREF="#29">Tout (ou presque) sur l'Olitec</A>
+* <A HREF="#210">Quelques informations sur les USR &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#211">Une info sur les Creatix &lt;###&gt;&lt;NOUVEAU&gt;</A>
+* <A HREF="#212">Modem et central telephonique</A>
+
+
+<A NAME="21"></A>* La structure d'une commande AT
+  -- --------- ----- -------- --
+
+(AVERTISSEMENT important : les commandes AT ne forment pas une vraie norme.
+Il s'agit d'un jeu de commandes que le constructeur Hayes a defini pour ses
+propres besoins et que les autres constructeurs ont plus ou moins copie.
+Toutes les commandes Hayes, bien que le langage tende a se generaliser, ne
+fonctionnent pas de la meme facon sur tous les modems. Ne jamais oublier de
+consulter la documentation de son modem.
+
+Par ailleurs, les commandes d'init sont a manipuler avec precaution :
+Ainsi, l'utilisation d'une commande Hayes risque-t-elle de rester sans
+effet si elle n'est pas couplee avec une ou des autres. Par exemple, la
+commande Hayes &amp;Q5 (mode securite, avec correction d'erreurs et compression
+de donnees) sera sans effet si elle est associee a la commande &amp;K0
+(controle de flux desactive) car il faut bien sur definir le type de
+controle de flux pour que la correction d'erreurs et la compression de
+donnees puissent se faire.)
+
+Une commande AT est une commande envoyee a votre modem. Vous pouvez
+l'envoyer soit a partir du Dos en utilisant par exemple l'excellent
+programme ATPLUS, soit a partir d'un simple emulateur de terminal, comme
+Terminal de Windows ou MacTell sur Macintosh (vous pouvez aussi utiliser la
+fenetre de Terminal de FreePPP).
+Chaque commande AT doit etre suivie d'un retour chariot. Le modem repond par
+&quot;Ok&quot; ou &quot;error&quot; s'il ne comprend pas la commande.
+Par exemple, si vous tapez, en mode emulation de terminal la commande ATL3
+suivie d'un retour chariot, vous augmentez le niveau de haut parleur au
+maximum. Avec la commande AT&amp;S0 vous forcez le signal DSR.
+Il n'est pas necessaire de taper les commandes les unes a la suite des
+autres. Par exemple au lieu de taper : ATL3 suivi d'un retour chariot puis
+AT&amp;S0 suivi d'un autre retour chariot, vous pouvez taper simplement ATL3&amp;S0
+(ou AT&amp;S0L3, peu importe). Minuscules ou Majuscules, peu importe. Les 0
+(zero) sont toujours optionnels.
+
+<A NAME="23"></A>* Configuration par defaut - Configuration courante &lt;###&gt;&lt;NOUVEAU&gt;
+  ------------- --- ------   ------------- --------
+  
+La configuration par defaut est celle stockee en memoire morte de votre modem.
+Elle est renvoyee par la commande at&amp;f. Certains modems presentent meme
+plusieurs configuration par defaut, renvoyees respectivement par les commandes
+at&amp;f1 ; at&amp;f2.
+
+Pour visualiser la configuration par defaut, tapez simplement at&amp;f&amp;v ou 
+at&amp;f1&amp;v, at&amp;f2&amp;v, etc...
+
+La configuration courante, quant a elle, designe la configuration de votre 
+modem a un instant precis. Vous pouvez la visualiser avec la commande at&amp;v.
+
+Astuce : Avec at&amp;v/ le modem renvoie en outre quelques informations
+supplementaires, comme l'ouverture du port serie.
+
+---- Exercice ----
+
+Pour bien comprendre, tapez a partir d'un emulateur de terminal les commandes
+suivantes :
+
+at&amp;f&amp;v
+notez le resultat
+
+at&amp;v
+notez le resultat
+il est identique
+
+at&amp;K2&amp;v5s95=47
+at&amp;v
+notez le resultat et comparez.
+
+La configuration utilisateur :
+Outre la configuration par defaut, restauree par at&amp;f, la plupart des modems
+permettent la creation de configuration utilisateur. Ceci est extremement
+pratique, puisque cela vous evite de memoriser ou frapper une longue chaine
+d'initialisation.
+
+Pour sauver la configuration configuration courante dans une configuration
+utilisateur 0 ou 1 : at&amp;w0 ou at&amp;w1
+
+Pour restaurer la configuration utilisateur 0 ou 1 : atz ou atz1.
+
+<A NAME="22"></A>* Qu'est-ce qu'une chaine d'INIT ?
+  ------ -- -- --- ------ ------
+
+Une chaine d'init est une suite de commande AT (par exemple :
+AT&amp;F&amp;K3&amp;D0%E1) destinee a configurer votre modem de facon optimale pour la
+connexion. Elle s'etablit en fonction de votre configuration materielle
+(type de modem, type d'Uart, type de cable utilise, etc...) et du type de
+modem utilise par votre correspondant.
+
+    L'optimisation de la chaine d'init est absolument primordiale pour le bon
+    deroulement d'une connexion. 
+    
+    
+    
+<A NAME="24"></A>* Ou se trouve ma chaine d'INIT ?
+  -- -- ------ -- ------ ------
+
+    - Sur MacPPP, ouvrez le tableau de bord config PPP puis cliquez sur le
+    bouton &quot;config&quot;
+    
+    - Sur FreePPP : Onglet General, Modem Setup, le programme vous permet de
+    choisir entre :
+        -- manuel : vous entrez donc manuellement la chaine
+        d'initialisation
+        -- automatique : autodetection du modem et choix de la chaine
+        en fonction de la base de donnee de FreePPP.
+
+    - Avec Trumpet Winsock, il faut editer le fichier LOGIN.CMD avec la
+    commande Edit Scripts du menu Dialler. Puis modifier (en general) la ligne
+    $modemsetup=
+
+    - Avec Windows 95, les choses ne sont pas forcement aussi simples.  Si vous
+    possedez le driver adequat pour votre modem, pas de souci. Windows 95 edite
+    la chaine d'initialisation en utilisant les donnees contenues dans un
+    fichier texte a l'extension .INF. Dans le cas contraire, reportez-vous a la
+    section &quot;comment modifier et optimiser mon driver Windows 95&quot;.
+    ou essayez l'URL : http://www.alterego.fr/drivers.htm
+
+    - Sur Linux, vous la definissez dans le script chat ou dip qui sert a vous
+    connecter. Consulter leurs pages de manuel. Exemple avec chat :
+    chat ' &quot;&quot;at OK at&amp;f&amp;k3 OK adt9999 CONNECT &quot;&quot; '
+
+<A NAME="25"></A>* Comment construire une chaine d'init optimisee : une methode simple et
+  ------- ---------- --- ------ ------ ---------   --- ------- ------ --
+exemples
+--------
+
+Attention : cette methode ne fonctionnera parfaitement que sur un modem
+compatible 100% Hayes, ce qui est heureusement le cas de la plupart des
+modems du marche.
+
+La premiere etape dans la construction d'une chaine d'init est la
+connaissance du parametrage par defaut de votre modem. Pour cela tapez a
+partir d'un simple emulateur de terminal la commande AT&amp;F&amp;V suivie d'un
+retour chariot (ou reportez-vous au manuel de votre modem).
+
+Le modem renvoie alors sa configuration par defaut (restauree par at&amp;f).
+Par exemple,  un Olitec 14400 renvoie :
+
+    ACTIVE PROFILE:
+    B00 E1 L2 M1 Q0 T V1 X4 &amp;A0 &amp;C1 &amp;D2 &amp;K0 &amp;Q5 &amp;R1 &amp;S0 &amp;X0 %C3 &amp;Y1
+    S00:000 S01:000 S02:043 S03:013 S04:010 S05:008 S06:006 S07:060 S08:002
+    S09:006
+    S10:014 S11:070 S12:020 S18:000 S25:005 S26:001 S36:007 S37:000 S38:020
+    S44:020
+    OK
+
+Notez bien tous ces parametres ou faites une sortie imprimante.
+
+Il ne reste plus qu'a determiner ce qui dans cette liste de parametres par
+defaut, ne convient pas a votre configuration. La premiere question qui
+vient a l'esprit est bien sur : quels sont les parametres qui conviennent a
+ma configuration :
+
+Si vous avez bien compris tout ce precede, vous conviendrez qu'il n'existe pas
+de regle absolue. Tout cela est fonction de votre configuration et de vos choix
+personnels.
+
+Parametres communs (preconises) :
+     V0 &amp;C1 S95=47 S7=60 B0 S25 = 20
+     
+    (voir signfications en annexe. En resume - V0 : mess. numeriques ; &amp;C1 :
+    signal CD en fonct. normal ; B0 : auto-mode ; S25=20 : temps mini. d'etat
+    off du signal DTR avt sa prise en compte)
+
+A ces parametres on rajoute :
+    a - La vitesse du port serie permet la compression de donnees ; le cable
+    permet le controle de flux hardware : &amp;K3 &amp;Q5
+    b - Le cable ne permet pas le controle de flux hardware : &amp;k0 &amp;Q6 (quel que
+    soit l'Uart)
+    c - Le cable permet le controle de flux hardware mais la qualite du port
+    serie ne permet pas la compression de donnees : &amp;k3 &amp;Q5 %C0 (cas rare) 
+    d - Uart 8250 : B10
+    
+    (voir significations en annexe - en resume : &amp;K3 : controle RTS CTS ; &amp;K0 :
+    aucun controle de flux ; &amp;Q5 : mode securite ; &amp;Q6 : mode normal - %C0 :
+    compression desactivee).
+
+Si votre modem n'etait pas compatible Hayes, recherchez dans votre manuel
+la correspondance entre les parametres preconises ci-dessus (en langage
+Hayes,voir annexe) et ceux du langage de votre modem. Pour cela se referer
+a la liste des principales commandes Hayes. Le reste de la methode ne varie
+pas. Meme si votre modem est compatible Hayes, il est toujours utile de
+verifier la correspondance entre les commandes Hayes indiquees ici et
+celles de votre modem.
+
+(NB : si votre logiciel de connexion n'exige pas que les messages du modem
+soient envoyes sous forme numerique -notamment sur Macintosh -, vous pouvez
+remplacer avantageusement le parametre V0 par le parametre V1 ; le modem
+enverra alors les messages sous forme litterale, ce qui permet d'eviter une
+mauvaise interpretation des codes resultats par votre logiciel et donc un
+affichage faux de la vitesse de connexion par exemple - sans incidence sur
+le bon fonctionnement).
+
+UN EXEMPLE : 
+    Votre modem Olitec 14400 est equipe d'un cable gerant le controle de flux
+    hardware et d'un Uart rapide de type 16550. 
+    Les parametres d'initialisation ideaux peuvent etre : V0 &amp;C1 S25=20 S95=47
+    S7=60 B0 &amp;K3 &amp;Q5 
+    Mais la configuration par defaut de votre Olitec 14400 comporte deja &amp;C1
+    S7=60 B0 &amp;Q5 ; ces parametres seront simplement restaures par AT&amp;F
+    Votre chaine d'initialisation sera donc : AT&amp;F&amp;K3VOS25=20S95=47
+
+UNE VARIANTE :
+Certains modems proposent, outre une initialisation at&amp;f (reset
+configuration 0), une autre configuration par defaut at&amp;f1 (reset
+configuration 1) souvent plus proche de l'optimum. La methode
+d'optimisation de la chaine se deroule bien entendu de la meme maniere
+(at&amp;f1&amp;v depuis un emulateur de terminal quelconque ; confrontation entre
+la configuration f1 ainsi obtenue et les parametres desires ; 
+etablissement de la chaine).
+
+ATTENTION
+    1 - La chaine d'intialisation ne doit pas depasser en general 40
+    caracteres.
+    2 - ATZ restaure la configuration utilisateur numero 0 que vous avez
+    eventuellement stockee par la commande AT&amp;W0. Ceci est pratique
+    notamment lorsque il est necessaire d'entrer une longue serie de commande
+    pour initialiser votre modem, la chaine d'init ne devant pas depasser 40
+    caracteres.
+    3 - Ne pas utiliser une chaine du type ATZ&amp;K3 ; en effet, dans le cas le
+    modem recoit ATZ, emet 2 bips, s'initialise en configuration utilisateur
+    n*0 et ignore souvent la suite de la chaine (dans l'exemple &amp;K3 est ignore,
+    seul ATZ est actif).
+
+<A NAME="26"></A>* Je n'ai pas le bon driver windows 95
+  -- ---- --- -- --- ------ ------- --
+
+Bill Gates n'a pas elu votre modem, qui fonctionne pourtant parfaitement, a
+la cour des grands. Ce n'est pas pour autant que vous devez le jeter. Si
+c'est un modem compatible Hayes, choisissez un driver de modem compatible
+Hayes. Il a de grandes chances de fonctionner alors convenablement.
+Eventuellement, en cas de deconnexions inopinees (observees notamment avec
+l'Olitec) vous pouvez y rajouter s25=20 (voir comment a la section
+suivante).
+
+On me signale l'existence d'une page http://www.alterego.fr/drivers.htm
+comportant de nombreux liens vers les pages &quot;driver&quot; des constructeurs
+de modems. Le driver que vous cherchez s'y trouve peut-&ecirc;u;tre.
+
+<A NAME="27"></A>* Comment modifier et optimiser mon driver windows 95 ? &lt;###&gt;
+  ------- -------- -- --------- --- ------ ------- --
+
+Windows 95 tire la chaine d'initialisation de votre modem d'un fichier
+texte a l'extension .INF.
+Dans un premier temps, editez le fichier modemlog.txt.
+Supposons qu'a la troisieme ligne vous trouviez : Modem inf path :
+MDMHAYES.INF
+(ce fichier n'existe que si la cas &quot;enregistrer un fichier journal&quot; dans
+&lt;proprietes du modems&gt;/connexion avancee est cochee.
+Et a la quatrieme ligne : Modem inf section : M1811
+Vous en deduisez que la chaine d'initialisation de votre modem se trouve
+dans le fichier MDMHAYES.INF a la section M1811. Il ne vous reste plus qu'a
+l'editer (a l'aide de l'Edit du MS-DOS par exemple) et a modifier votre
+chaine d'initialisation.
+
+Bien souvent, il suffit de rajouter S25=20, c'est-a-dire augmenter le temps
+minimum d'etat off du signal DTR avant sa prise en compte (surtout en cas
+de deconnexion inopinee avec un rapport du type &quot;Hardware hangup by
+lowering DTR). 
+
+--- Rappel ---
+
+Il est possible de personnaliser sa chaine d'init sous Windows 95 sans modifier
+les fichiers du modem. Dans les dialogues de configuration modem, onglet
+&quot;connexion&quot; bouton &quot;avancees&quot; il existe un champ &quot;parametres supplementaires&quot;
+permettant d'entrer des commandes particulieres qui seront envoyees au modem
+apres les chaines d'init standard. Cette action peut etre facilement visualisee
+si l'on demande un fichier journal pour le modem (fichier modemlog dans le
+repertoire
+Windows).
+
+---------------
+
+$$$ Un autre exemple de modification de driver Windows 95 : &lt;###&gt;
+(Us Robotics Sportwer)
+
+Cela necessite des manipulations dans la base de registre a l'aide de regedit,
+mais, si on prend la precaution de sauvegarder la base de registration, il sera
+toujours possible de la restorer en bootant sous DOS.
+
+Les parametres modem se trouvent dans :
+
+HKEY_LOCAL_MACHINES\System\CurentControlSet\Services\Class\Modem\
+puis 0000\ pour le premier modem installe, 0001\ et ainsi de suite pour les
+suivants. En continuant dans l'arborescence, on trouve la section Init qui
+comprend deux chaines 1 et 2 pouvant etre modifiee.
+
+Certains fichiers *.inf de modem de provenance US et non agree ne comprennent
+pas la possibilite V23 (Minitel) bien que le modem supporte ce mode.
+
+Toujours dans la meme arborescence de regedit :
+HKEY_LOCAL_MACHINES\System\CurentControlSet\Services\Class\Modem\0000\Settings
+on trouve les commandes Hayes des differentes modulations possibles, 
+par exemple :
+
+Modulation_Bell     &quot;B1&quot;
+Modulation_CCITT    &quot;B0&quot;
+
+Si la ligne :
+
+Modulation_CCITT_V23    &quot;&quot;
+
+n'existe pas il faut la creer (clic droit puis nouvelle chaine) et mettre entre
+les guillemets la chaine Hayes qui permet la modulation V23, par exemple :
+
+Modulation_CCITT_V23    &quot;S34=8&quot;
+
+pour les US Robotics Sporster 14400 et 28800
+
+<A NAME="28"></A>* Quelques reponses en VRAC :
+  -------- -------- -- ----
+
+- Comment parametrer son modem pour l'emulation Minitel (V23)
+    Tout d'abord, votre modem doit savoir emuler la norme V23.
+    Ensuite, votre logiciel de communication doit etre parametre ainsi  : 7bits
+    ; parite paire ; stop 1. Controle aucun (clavier : standard ;
+    eventuellement : compatibilite Pad-X3 desactivee)
+    Votre chaine d'initialisation doit comprendre au minimum : &amp;k0 (controle de
+    flux desactive) ; &amp;q6 (mode normal asynchrone sans bufferisation ni
+    correction). B2 (mode v23, si votre modem possede cette commande).
+
+- Mon modem raccroche en recevant la sequence d'echappement +++ contenue a
+l'interieur d'un document.
+    Essayer de rajouter s12=20 dans la chaine d'initialisation.
+
+- Je me connecte a 24000, 26000, mais jamais a 28.800
+    En general ce probleme n'est pas du a la chaine d'intialisation ni au port
+    serie, mais est typique d'une liaison telephonique de mauvaise qualite
+    (distance, probleme d'autocom, etc...). Verifiez votre ligne telephonique.
+    Eventuellement, vous pouvez jouer sur la valeur du registre S91 (niveau
+    d'emission en mode Data).
+
+- Souvent, la connexion se rompt sans raison apparente : 
+    Voir le chapitre sur la cause des principaux problemes de connexion au
+    debut de cette faq.
+    Ce probleme est souvent du a une chute monentanee du signal DTR (provoquee
+    par certaines applications ou une defaillance du port serie). La solution
+    est de jouer sur la valeur du registre S25 (s25=20 par exemple), permettant
+    ainsi d'augmenter le temps minimum d'etat off du signal DTR avant sa prise
+    en compte. Si ce temps minimum n'est pas parametrable sur votre modem, la
+    solution radicale est d'ignorer le signal DTR (&amp;D0), mais ce n'est qu'une
+    solution &quot;bricolage&quot; de dernier recours.
+
+- Conflit d'IRQ
+    Si vous souhaitez voir ce sujet traite lors des prochaines versions,
+    envoyez-moi un e-mail pour me le signaler.
+    
+- Le signal d'appel
+
+    (Merci a Jean-Francois Vilarem)
+
+    Le signal d'appel de France Telecom, est responsable de deconnexions
+    inopinees. Seule solution : le desactiver avant la connexion Internet
+    (decrocher, composer #43#, et raccrocher) et le reactiver apres (decrocher,
+    composer *43# et raccrocher). Cette operation n'est pas facturee par France
+    Telecom.
+
+    Cela peut se faire automatiquement. Exemple avec linux :
+
+    Linux : dans le script du numeroteur chat
+    AT&amp;F2...DT#43#,!12345678
+
+    ,   une pause dans l'execution (defaut 2 secondes valeur du registre S8)
+    !   raccroche - attention cette commande ne fonctionne pas toujours.
+    12345678 le numero appele
+
+    Linux : script de deconnexion contient (entre autres)
+    /usr/sbin/chat -f /etc/ppp/restaure_appel &lt; /dev/cua1 &gt; /dev/cua1
+    le contenu du script /etc/ppp/restaure_appel (droits 755) est
+
+    &quot;&quot; ATDT*43#,;  OK ATH OK
+
+    Avec trumpet modifier les fichiers login.cmd et bye.cmd ; sur Macintosh, il
+    faut modifier les fichiers ressource de macPPP.
+
+Cette rubrique sera completee lors des prochaines versions de cette Faq. Si
+vous avez des idees, e-mailez moi.
+
+<A NAME="29"></A>* Tout (ou presque) sur l'Olitec
+  ----  -- -------  --- --------
+
+a - A propos du cable
+    - ------ -- -----
+
+    a - Macintosh
+    Certains Olitec livres avant Novembre 1995  etaient livres avec un
+    cable ne permettant pas le controle de flux Hardware (RTS + CTS).
+
+    b - PC
+    Les Olitec ont toujours ete livres avec un cable permettant le controle
+    de flux hardware (rts / cts). Cependant, vous n'etes jamais a l'abri d'une
+    defaillance du brochage du cable, bien entendu.
+
+b - A propos de l'Eprom
+     - ------ -- -------
+     
+La derniere version de l'EPROM a ce jour (17/04/96) est la 3.17s.
+Le numero de version est renvoye par les command ati
+
+L'EPROM fonctionne correctement a partir de la version 3.10 pour le modem
+poche 28800 et 3.12 pour la carte 28800 interne.
+
+Lisez les paragraphes qui suivent avant d'incriminer l'EPROM. Votre probleme
+ne vient pas forcement de la.
+
+En tout etat de cause, il est inutile de demander son remplacement (effectue
+gracieusement par Olitec) si votre modem fonctionne correctement.
+(eh oui, cette question a vraiment ete posee :-)
+
+c - Configuration par defaut
+      ------------- --- ------
+La configuration par defaut de l'Olitec (renvoyee par AT&amp;V) varie selon les
+modeles. A noter que :
+
+    - Les versions anterieures a la 3.16 n'ont pas &amp;k3 (controle de flux RTS
+    CTS) dans la configuration usine at&amp;f mais &amp;k0 --&gt; controle de flux
+    desactive ; c'est une cause frequente de problemes lorsqu'on utilise une
+    chaine minimale de type at&amp;f. Ce probleme a disparu a partir de la version
+    3.16. NB : il est bien sur inutile de changer d'EPROM pour si peu alors
+    qu'il suffit de rajouter &amp;k3 dans la chaine d'init...
+
+    - il n'y a pas  de configuration usine at&amp;f1. 
+    at&amp;f et at&amp;f1 donneront donc le meme resultat.
+
+    - le registre s25 relatif au temps minimum d'etat off du signal DTR avant 
+    sa prise en compte est fixe par defaut a 50ms (s25=005) ; ce temps est
+    trop court. C'est une seconde source de probleme (deconnexions inopinees).
+    Plusieurs tests ont montre que 200ms (s25=020) etaient un ideal.
+
+d - Chaines d'init recommandees
+     ------- ------ ------------
+     
+Il n'y a pas de chaine d'intialisation miracle. Voici cependant des chaines
+minimales qui fonctionnent correctement dans la plupart des cas de figure.
+Reportez vous a la rubrique suivante en cas de probleme avec ces chaines.
+     
+    a - Macintosh
+        a1 - avec un cable gerant RTS / CTS : at&amp;f&amp;k3s25=20
+        a2 - avec un cable ne gerant pas RTS / CTS : at&amp;f&amp;k&amp;q6s25=20
+        (attention : ceci est une chaine d'init de &quot;depannage&quot; provisoire en
+        attendant le remplacement du cable).
+
+    b - PC (tous OS)
+        at&amp;f&amp;k3s25=20
+
+e - Trucs et astuces
+    ----- -- -------
+
+- Brulage off, a rajouter dans la chaine de numerotation : %X4
+
+- Deconnexion inopinee lors de la reception de la sequence 'plus plus plus'
+dans un fichier : 
+        *augmenter la valeur du registre s12 relatif au temps de garde minimum
+        avant et apres la sequence d'echappement. Par exemple : s12=30 (a
+        rajouter dans la chaine d'init) 
+        *en desespoir de cause et de facon provisoire pour recuperer un fichier
+        &quot;a probleme&quot; changer le code ascii du caractere d'echappement 
+        (registre S2)
+
+- Auto-Mode v34 -&gt; ATB20 ; Auto-Mode VFC -&gt; ATB21 ; a rajouter dans la
+chaine d'init selon le modem en face.
+
+- Auto-retrain : %e1 -&gt; a rajouter dans la chaine d'init si le modem distant
+(fournisseur) gere l'auto-retrain ; il autorise le modem a changer de debit
+en cas de degradation de la qualite de la transmission.
+
+- Autres astuces en cas de probleme : 
+    *jouer sur la valeur du registre s91 (niveau d'emission en mode data)
+    *rajouter deux ou trois virgules apres la numerotation
+    *couper les hauts parleurs (sic) par la commande m0
+    
+- Windows 95 : telecharger la version amelioree du driver Olitec sur le site
+de Stephane Surbanov (http://www.planete.net/~surbanov/)
+
+f - Quelques rappels
+     -------- -------
+     
+Adresse du site web Olitec : http://www.olitec.com/ --&gt; en francais
+
+Adresse des services apres vente : savmac@olitec.com ; savpc@olitec.com
+
+N'oubliez pas de faire coincider la chaine d'init utilisee avec le
+parametrage de la couche logicielle (mac ppp, trumpet, etc.. notamment au
+niveau du controle de flux). 
+    &amp;K3 : rts+cts encore appele harware handshake ;
+    &amp;k0 : none.
+
+Ne reglez pas votre &quot;baud rate&quot; (encore appele dte ou port speed) a une
+vitesse superieure aux capacites de votre port serie
+
+N'oubliez pas qu'il y a un risque de conflit majeur si vous utilisez
+l'extension Olifax (sur Macintosh) livree avec le modem Olitec.
+
+g - Derniere minute    &lt;###&gt;
+    -------- ------
+    
+Il vous est desormais possible d'upgrader votre modem Olitec V34 en modem 33600
+bps. Cout de l'operation, 180F, prise en charge par l'atelier Olitec Nancy,
+retour sous 8 jours. Les delais semblent parfaitement bien respectes. Consultez
+Olitec pour les details.
+
+Attention cependant, si les trois premiers chiffres du numero de serie
+(etiquette collee au dos ou a l'interieur du produit) de votre modem sont
+inferieurs ou egaux a 535, l'operation vous coutera plus chere : 430F TTC.
+
+Netscape Navigator 2 en version francaise sur CDROM est offert par Olitec
+avec l'operation.
+
+<A NAME="210"></A>* Quelques infos sur les USR &lt;###&gt;&lt;NOUVEAU&gt;
+  -------- ----- --- --- ---
+(merci a Sebastien Willemijns)
+  
+Chaine d'init recommandee : AT&amp;FS34=8S40=2.
+Semble bien fonctionner dans la plupart des cas.
+
+- Les premiers modeles &quot;voice&quot; (serie &quot;vi&quot;) (boite couleur noire) ont un
+probleme de detection fax/modem/voice. USR echange le composant electronique
+(eprom) defaillant gracieusement.
+Notez que le probleme n'affecte pas les connexions sur les BBS ou Providers
+d'acces Internet.
+
+- Les premiers modeles qui ne sont pas de la serie precedemment citee (boite
+blanche pour les modems externes) ont des problemes d'accrochage de porteuse
+avec des modems non-USR (bog dans le protocole V42 de correction d'erreur), la
+chaine ATS27=38 permet de reparer temporairement le bug. La aussi, l'echange de
+l'eprom est gratuite.
+
+- Certains modems &quot;Voice&quot; ou &quot;Vi&quot; proposent des connexion 33600 bps,
+contrairement a ce qui est ecrit sur la boite. Bonne nouvelle :-)
+
+- USR propose d'upgrader votre modem 28800 en 33600. L'operation est payante.
+
+- Courrier : certains rajoutent ATS27=38S54=1 a la chaine precedente pour mieux
+accrocher les VFC. Denis clement propose ATS54=64S56=32&amp;Y3.
+
+- Pour les Sporster 33600, M. de Contades rajoute ATS56=0.
+
+<A NAME="211"></A>* Une info sur les modems Creatix
+  --- ---- --- --- ------ -------
+  
+Certains modems SG2834 de Creatix sont livres avec une Eprom V1.2 et ils ont la
+facheuse tendance de ne plus accepter les commandes Hayes apres quelques jours
+de fonctionnement. La version 1.46 de l'Eprom regle ce probleme.
+
+Notons egalement que la version 1.51 de l'EPROM permet d'upgrader les
+SG2834 classiques vers le v34+.
+Creatix semble ne pas vouloir diffuser cette information a ceux qui en
+possedent un, pour ma part j'en ai upgrade 7 sans aucun probleme...
+
+
+
+<A NAME="212"></A>* Modem et central telephonique
+  ----- -- ------- ------------
+  
+2 problemes frequents :
+
+a - No Dialtone (pas de tonalite d'invitation a numeroter - 
+440 Hz)
+
+Une solution consiste alors a numeroter en aveugle grace
+a la commande haye appropriee (generalement ATX3 ou ATX2) .
+
+b- Le modem ne tient pas la ligne plus de quelques minutes
+  
+Il s'agit vraisemblablent d'un central qui limite l'intensite sur la
+ligne..
+
+En effet un materiel non agree possede un resistance en continu de 300 ohms,
+contre 600 ohms pour un modele agree. 
+Par contre en alternatif les impedances sont egales entre les non-agrees et
+les agrees (600ohms).
+
+montage A faire:   ------+-----/////////-----+--------
+                         |       R           |
+                         |                   |
+                         |                   |
+                         +-----| |-----------+
+                                C
+
+R=330ohms 3W
+C=4.7uF---10uF  150V non polarise!
+
+Ce montage doit etre en serie dans la ligne telephonique, (couper un fil,
+mettre le montage entre les deux bouts coupes).
+
+remarque: on peut avoir des difficulte a trouver du 4.7uF 150V non
+polarise, il est toujours possible d'utiliser a l place 2*10uF/63V polarises
+qu'il faudra alors monter tete beche.
+
+par exemple    ------||-----||------
+                    +  -   -  +
+
+l'important etant que 2 polarites identiques se &quot;regardent&quot;.
+
+
+<A NAME="3"></A>______________________________
+SECTION 4 : RNIS ET INTERNET 
+______________________________
+
+
+[texte &eacute;crit par St&eacute;phane Bortzmeyer et que je mettrai &agrave; jour
+au f&ucirc;u;r et &agrave; mesure des besoins et des &eacute;volutions technologiques]
+
+Plan de la section
+
+* <A HREF="#31">Qu'est-ce que RNIS ? Et Num&eacute;ris ?</A>
+* <A HREF="#32">Combien &ccedil;a co&ucirc;u;te ?</A>
+* <A HREF="#33">Que faut-il comme mat&eacute;riel et/ou logiciel ?</A>
+* <A HREF="#34">Est-ce vraiment int&eacute;ressant ?</A>
+* <A HREF="#35">Et le reste ? X2, ADSL, c&acirc;u;ble ?</A>
+
+
+Ce court texte a pour but de r&eacute;sumer la question de la connexion &agrave; 
+Internet via RNIS (alias ISDN, alias Num&eacute;ris). Comme c'est ce que je 
+connais, on parle surtout de la situation fran&ccedil;aise mais des ajouts pour 
+d'autres pays francophones sont les bienvenus. Quelques avertissements :
+
+- je ne travaille pas &agrave; France-T&eacute;l&eacute;com,
+- les choses &eacute;voluent vite et ce document n'est donc plus &agrave; jour,
+- ce document est d&eacute;lib&eacute;rement court et ne peut pas tout contenir,
+- je fais &ccedil;a gratos mais je ne donne pas de consultations priv&eacute;es 
+gratuitement.
+
+
+<A NAME="31"></A>* Qu'est-ce que RNIS ? Et Num&eacute;ris ?
+  --------- --- ---- - -- ------- -
+
+RNIS est l'abr&eacute;viation de &quot;R&eacute;seau Num&eacute;rique &agrave; Int&eacute;gration de Services&quot;. 
+En anglais ISDN (&quot;Integrated Services Digital Network&quot;). France-T&eacute;l&eacute;com 
+(FT) a choisi de le vendre sous un nom commercial distinct, Num&eacute;ris. Le 
+service se nomme Swissnet en Suisse.
+
+En gros, RNIS est simplement l'utilisation de technologies num&eacute;riques 
+(et non plus analogiques) sur les c&acirc;u;bles du r&eacute;seau t&eacute;lephonique. Dans un 
+pays comme la France, il y a belle lurette que l'essentiel de 
+l'int&eacute;rieur du r&eacute;seau est num&eacute;rique et que le seul bastion analogique 
+restait la ligne du central de FT &agrave; l'abonn&eacute;. Avec RNIS, cette ligne 
+passe en num&eacute;rique ce qui permet *th&eacute;oriquement* :
+- l'int&eacute;gration plus facile et plus propre de nouveaux services (genre 
+signal d'appel),
+- des d&eacute;bits sup&eacute;rieurs pour les transferts de donn&eacute;es (fax, r&eacute;seaux 
+informatiques, etc).
+
+L'acc&egrave;s de base &agrave; RNIS vous procure deux canaux dits &quot;B&quot;, chacun filant 
+&agrave; 64 kb/s (plus un canal &quot;D&quot; que nous oublierons).  Cela permet par 
+exemple deux conversations t&eacute;l&eacute;phoniques simultan&eacute;es ou un appel 
+t&eacute;l&eacute;phonique et une connexion RNIS.
+
+
+<A NAME="32"></A>* Combien &ccedil;a co&ucirc;u;te ?
+  ------- -- ----- -
+
+Avertissement important : compte-tenu du monopole des 
+t&eacute;l&eacute;communications, le seul op&eacute;rateur vendant des acc&egrave;s RNIS en France 
+est France-T&eacute;l&eacute;com. Leurs tarifs peuvent &eacute;voluer et je ne suis pas leur 
+repr&eacute;sentant commercial. Il faut donc leur poser la question 
+directement. (Note : la plupart de ceux et celles qui l'ont fait 
+trouvent qu'il est tr&egrave;s difficile d'obtenir une r&eacute;ponse pr&eacute;cise et 
+exacte des services commerciaux de FT.) (FT a un serveur Web, 
+&lt;http://www.francetelecom.fr/vfrance/sommaire.htm&gt; et 
+&lt;http://www.francetelecom.fr/vfrance/aubureau/numeris.htm&gt;.)
+
+Le co&ucirc;u;t se d&eacute;compose en (les prix donn&eacute;s sont valables en janvier 1997) :
+- co&ucirc;u;t d'installation (675 F HT),
+- &eacute;ventuellement co&ucirc;u;ts de c&acirc;u;blage, pouvant &ecirc;u;tre assur&eacute;s par une autre 
+entreprise que FT ou par vous-m&ecirc;u;me (de 0 &agrave; 1 000 F HT),
+- abonnement (150 F HT par mois pour Num&eacute;ris ordinaire, 165 F HT pour 
+Num&eacute;ris Duo). En comparant ces prix avec ceux du t&eacute;l&eacute;phone ordinaire, 
+nettement plus bas, (RTC = &quot;R&eacute;seau T&eacute;l&eacute;phonique Commut&eacute;&quot; ou t&eacute;l&eacute;phone 
+analogique), attention au fait que ce sont des prix mensuels et que la 
+facture tombe tous les deux mois.
+- consommation (a priori identique au RTC en local).
+
+Si vous utilisez RNIS pour acc&eacute;der &agrave; un fournisseur d'acc&egrave;s Internet 
+(FAI), pensez que les tarifs RNIS de ceux-ci sont sup&eacute;rieurs &agrave; ceux 
+qu'ils demandent pour le RTC. Sur le choix d'un FAI, consulter le 
+travail de l'Association des Utilisateurs d'Internet (AUI) en 
+&lt;http://www.aui.fr/Groupes/GT-IUD/choix-fai.html&gt;.
+
+
+<A NAME="33"></A>* Que faut-il comme mat&eacute;riel et/ou logiciel ?
+  --- ---- -- ----- -------- ----- --------
+
+Pour le t&eacute;l&eacute;phone, il vous faudra un t&eacute;l&eacute;phone num&eacute;rique (rare et cher) 
+sauf si vous disposez d'un convertisseur analogique/num&eacute;rique. Celui-ci 
+est fourni par FT pour Num&eacute;ris Duo. Il peut se trouver sur certains 
+&eacute;quipements informatiques (en g&eacute;n&eacute;ral, il se nomme &quot;prise POTS&quot;, du 
+sigle anglophone &quot;Plain Old Telephone System&quot;).
+
+Pour le fax, m&ecirc;u;me chose.
+
+Pour le ou les ordinateurs, il va vous falloir, soit un adaptateur (TA), 
+soit un routeur.
+
+L'adaptateur (TA = &quot;Terminal Adapter&quot;) est un petit bo&icirc;u;tier externe 
+(attention &agrave; la vitesse du port s&eacute;rie) ou une carte interne qui peut 
+parler les protocoles RNIS. Il est souvent nomm&eacute;, &agrave; tort, &quot;modem RNIS&quot;. 
+Il dessert un seul ordinateur (celui-ci peut, avec certains logiciels, 
+en faire ensuite b&eacute;n&eacute;ficier d'autres machines du m&ecirc;u;me r&eacute;seau local). 
+Certains adaptateurs se font passer pour des modems (ils parlent Hayes) 
+et marchent alors avec n'importe quel logiciel de communication. En 
+g&eacute;n&eacute;ral, vous ne pouvez pas utiliser toutes les fonctions de RNIS avec 
+ces &eacute;quipements. D'autres n&eacute;cessitent des logiciels sp&eacute;ciaux mais 
+permettent d'utiliser RNIS plus &agrave; fond.
+Certains TA sont &eacute;galement modem analogiques dans le m&ecirc;u;me bo&icirc;u;tier.
+
+Exemples d'adaptateur : Motorola BitSurfr, Sagem ISDN Geoport, etc. Ils 
+co&ucirc;u;tent en France de 1 000 &agrave; 3 000 F.
+
+Le routeur est une petite bo&icirc;u;te, &eacute;quip&eacute;e d'une prise RNIS et d'une prise 
+pour le r&eacute;seau local (en g&eacute;n&eacute;ral Ethernet). Il est typiquement plus cher 
+que le TA (de 3 000 &agrave; 20 000 F), parfois plus simple &agrave; configurer et 
+permet de desservir plusieurs machines.
+
+Exemples de routeurs : Cisco 25xx ou 7xx, Ascend Pipeline, Motorola 
+Vanguard, Farallon Netopia, etc.
+
+
+<A NAME="34"></A>* Est-ce vraiment int&eacute;ressant ?
+  --- -- -------- -----------
+
+Cela d&eacute;pend &eacute;norm&eacute;ment de ce que vous faites. 
+
+Si vous transf&eacute;rez tous les jours le m&ecirc;u;me gros fichier (journal avec son 
+imprimeur, par exemple), le fait que le RNIS soit plus rapide et co&ucirc;u;te 
+le m&ecirc;u;me prix &agrave; la minute peut &ecirc;u;tre rentable (il faut que le fichier soit 
+assez gros pour faire avaler le prix plus &eacute;lev&eacute; de l'abonnement).
+
+Si vous vous connectez &agrave; Internet, notez que les performances en 
+chargement de pages Web d&eacute;pendent de toute la cha&icirc;u;ne entre vous et le 
+serveur. celle-ci est souvent plus lente que votre modem analogique 
+actuel. Dans ce cas, RNIS n'aura que peu ou pas d'int&eacute;r&ecirc;u;t. (Cela 
+affectera d'ailleurs aussi le c&acirc;u;ble ou d'autres moyens d'acc&egrave;s pr&eacute;tendus 
+rapides.)
+
+On peut noter plusieurs autres points de diff&eacute;rence entre RNIS et 
+l'actuel RTC :
+
+- l'&eacute;tablissement de la connexion est beaucoup plus rapide en RNIS,
+- celle-ci est en g&eacute;neral plus stable,
+- il existe beaucoup plus de comp&eacute;tences et d'expertise en modems RTC 
+qu'en &eacute;quipements RNIS.
+
+Bref, gardez votre sang-froid avant d'acheter, RNIS n'est nullement 
+obligatoire si on ne veut pas passer pour un cyber-plouc.
+
+
+<A NAME="35"></A>* Et le reste ? X2, ADSL, c&acirc;u;ble ?
+  -- -- ----- - -- -----  ----- -
+
+D'autres technologies pr&eacute;tendent fournir des acc&egrave;s Internet plus rapides 
+qu'avec l'actuel r&eacute;seau t&eacute;l&eacute;phonique ordinaire.
+
+Toutes ont en commun l'inconv&eacute;nient d'&ecirc;u;tre asym&eacute;triques : consid&eacute;r&eacute; 
+comme un simple consommateur, vous &ecirc;u;tes suppos&eacute; avoir beaucoup plus &agrave; 
+&eacute;couter qu'&agrave; parler. (RNIS est sym&eacute;trique.)
+
+Comme RNIS, toutes souffrent du fait que le goulet d'&eacute;tranglement d'une 
+liaison Internet est souvent loin de chez vous.
+
+&Agrave; l'heure actuelle, ces technologies sont peu au point et/ou pas 
+standardis&eacute;es.
+
+
+Pour en savoir plus :
+
+Voir la partie bibliographique.
+
+
+<A NAME="9"></A>-----------------------------------------
+SECTION 5 : ANNEXES :
+_________________________________________
+
+Plan de la section
+
+* <A HREF="#91">Liste commentee principale commandes Hayes</A>
+* <A HREF="#92">Tester sa ligne avec le 36440000 (source : France Telecom)</A>
+* <A HREF="#93">Les numeros brules : quelques exemples de brulage off</A>
+* <A HREF="#94">Quelques chaines d'initialisation</A>
+* <A HREF="#95">Bibliographie</A>
+* <A HREF="#96">Quelques constructeurs de modems sur le net.</A>
+* <A HREF="#97">Auteur et Copyright</A>
+
+
+
+
+<A NAME="91"></A>* Liste commentee principales commandes Hayes
+  ----- --------- ----------- --------- -----
+
+A : Connexion en mode reponse manuelle
+
+B0 : mode automatique
+B2 : mode V23
+B8 : mode v22bis
+B9 : mode V32 9600 ou V32bis 9600
+B10 : mode v32bis 14400
+B18 : automode v32 4800 a 9600
+B19 : automode v32bis 4800 a 14400
+B20 : automode v34 14400 a 28800
+B21 : automode VFC 14400 a 28800
+
+DP : numerotation en decimale suivie d'une procedure de connexion appel
+DT : numerotation en frequences vocales suivie d'une procedure de connexion
+    appel (ex : atdt 40404040, le mode prend la ligne, compose le 40404040 en
+    decimal et attend la porteuse du modem distant).
+
+E0 : pas d'echo des caracteres (en mode commande)
+E1 : echo des caracteres
+
+H0 : raccroche la ligne (en mode connexion il faut envoyer +++ATH0 - +++
+    pour passer le modem en mode commande ; ATH0 pour raccrocher).
+
+I : renvoie des informations sur le type de modem, etc...
+
+L0 : niveau tres faible du haut parleur du modem
+L1 : niveau faible
+L2 : niveau moyen
+L3 : niveau maximum
+
+MO : haut parleur muet
+M1 : haut parleur actif jusqu'a la connexion, silencieux ensuite.
+M2 : haut parleur constamment actif
+M3 : actif pendant la transition sauf pendant la numerotation.
+
+O : retour en mode communication apres un echappement par +++
+
+Q 0 : les messages d'etat (ring, OK, connect, etc...) sont emis
+Q1 : les messages d'etat ne sont pas emis
+
+Sx = y met la valeur y dans le registre x
+
+V0 : les messages sont emis sous forme numerique
+V1 : forme litterale
+V4 : forme litterale, detaillee
+V5 : forme litterale + numerique
+
+X0 : le modem envoie seulement les messages OK, Connect, Ring, No Carrier
+X1 : XO + connect xxxx bps
+X2 : X1 + no dialtone
+X3 : X2 + busy
+X4 : tous les messages
+
+Z : reset configuration utilisateur 0 sauvegardee par la commande &amp;w0
+Z1 : reset configuratio utilisateur 1.
+
+&amp;C0 : force le signal CD
+&amp;C1 : Signal CD en fonctionnement normal.
+
+&amp;D0 : ignore le signal DTR
+&amp;D1 : la baisse du signal provoque le retour en mode commande
+&amp;D2 : la chute du signal provoque une deconnexion
+&amp;D3 : la chute du signal provoque un reset modem
+NB : Le registre S25 est souvent complementaire ; il determine le temps
+    minimum d'etat off du signal DTR avant sa prise en compte
+
+&amp;f : initialisation contexte usine n*0
+&amp;f1 : initialisation contexte usine n*1 propose par certains modems
+    (souvent plus proche d'une configuration optimum a une vitesse rapide).
+
+&amp;K0 : controle de flux desactive. Utile notamment si le cable de liaison ne
+    gere pas le controle de flux RTS + CTS
+&amp;K3 : force le controle de flux RTS + CTS (le cable de liaison port-serie
+    -&gt; modem doit supporter le controle de flux hardware)
+&amp;k4 : controle de flux Xon + Xoff : ne doit pas etre utilise
+&amp;k6 : RTS/CTS + XON+XOFF
+
+&amp;Q0 : mode direct. pas de bufferisation. la vitesse du port serie doit etre
+    strictement identique a la vitesse ligne (DCE).
+&amp;Q5 : asynchrone, bufferisation avec correction d'erreurs (V42) et
+    compression de donnees (V42bis). La vitesse terminale (DTE) ou du port
+    serie doit etre egale a quatre fois la vitesse ligne (DCE) soit 57600bps
+    par ex pour un modem 14400bps.
+&amp;Q6 : asynchrone, bufferisation sans correction d'erreurs ni compression de
+    donnees.
+
+&amp;S0 : signal DSR force
+&amp;S1 : signal DSR en fonctionnement normal
+
+&amp;v : permet de visualiser la configuration du modem et des registres. Si
+    vous avez perdu le mode d'emploi de votre modem, la commande at&amp;f&amp;v permet
+    de visualiser la configuration par defaut de ce dernier.
+
+<A NAME="92"></A>* Tester sa ligne avec le 36440000 (source : France Telecom)
+  ------ -- ----- ---- -- ----  ------   ------ -------
+
+Le 36440000 de France Telecom permet de tester soi-meme sa ligne sans
+connaissance particuliere, sans voltmetre. Son utilisation vous sera
+facture 1 unite telephonique. A noter que j'ai recu plusieurs mail me
+signalant que ce service ne fonctionne pas dans la France entiere.
+
+1 - Composer le 36440000
+2 - Raccrocher et attendre 6 a 7 secondes environ.
+3 - Decrocher a nouveau
+    - Tonalite grave continue : bon isolement de la ligne
+    - Tonalite hachee lente   : fuite a la terre
+    - Tonalite hachee rapide  : fuite entre fils de ligne
+
+4 - Raccrocher, attendre la sonnerie et decrocher de nouveau :
+    - Tonalite grave continue : intensite de la ligne normale - 33 a 50
+                                                            milliamperes
+    - Tonalite hachee lente   : intensite de la ligne trop faible - 
+                                                            &lt;33milliamperes
+    - Tonalite hachee rapide  : intensite de la ligne un peu trop forte - 50 a
+                                                                70 milliamperes
+    - Tonalite irreguliere    : intensite de la ligne beaucoup trop forte - &gt;
+                                                            70 milliamperes
+
+Avant de demander l'intervention de France Telecom, dissimulez
+soigneusement les appareils non agrees qui pourraient etre a votre
+disposition.
+
+<A NAME="93"></A>* Les numeros brules
+  --- ------- ------
+
+Les numeros brules (blacked list) sont la contrepartie de l'agrement France
+Telecom. Vous avez tente de joindre votre provider plus de 3 fois
+consecutives mais le numero etait occupe ; votre modem refuse maintenant
+toute nouvelle tentative de numerotation. Seule solution avouable :
+eteindre le modem, le rallumer, puis recommencer.  S'il s'agit d'un modem
+interne : eteindre l'ordinateur, le rallumer, puis recommencer :)
+
+(Motif officiel invoque par France Telecom : limiter les appels automatises,
+qui consomment beaucoup de ressources reseaux et favorisent l'encombrement des
+lignes telephoniques. Eviter le harcelement des abonnes par de faux numerotes
+repetes automatiquement, souvent a des heures tres tardives (numero appartenant
+anciennement a un BBS, par exemple).
+
+Sauf, bien sur, si vous connaissez la commande non documente (helas)
+permettant de supprimer ces numeros brules (a rajouter dans la chaine
+d'intialisation ou la chaine de numerotation de votre modem). En voici une
+liste partielle, glanee ici ou la sur divers BBS. Merci pour vos
+contributions.
+
+    Aceex 1414 : AT%T1
+    BOCA-144 ultra : ATX2 ou AT*F
+    Creatix 144 : AT*F ou AT%TCB
+    Creatix LC VFast : AT%TCB
+    Elsa Mircolink 28800TL : ATS31=128*W
+    Escom Data Hawk : AT&amp;A0
+    Hayes Optima 28.8 : AT%F0&amp;W
+    Multitech : AT$V4
+    Novafax 14400 et 28800 : AT%TCB
+    Olitec V32Bis et V34  : ATX4 (anciens modeles) ou AT%X2 (nouveaux modeles)
+    Pearl 1414TVH   AT&amp;F
+    Telelink IMS-08 Faxline V.32terbo : AT%U75
+    Telejet-2400 Fax SR : AT*NC99 puis ATZ
+    TKR Terboline : AT*R0
+    US Robotics 14400   ATS34=192 ; ATS39=1 ; ATS40=1
+    US Robotics 14400 Sportster ATS40=7 ; ATS40=7
+    US Robotics Courier DS 14.4 : ATS34=192 ATS39=1 ATS40=1
+    US Robotics DS 16.8 en V.32terbo : Brulage Off: ATS40=2&amp;W
+    Autres US Robotics : ATS40=2
+    USR WoldPort AT%TCP
+    Us WorldPort AT%TCP
+    Attel : AT+N8
+    CPV DeltaFax AT&amp;A0=20
+    Yoriko 14.4 : ATS70=64 
+    
+Essayez aussi, pour la majorite des modems a chip Rockwell's :#
+    AT%TCB
+    AT$NC000
+    AT$NC55
+    AT$NC055
+    
+Et aussi, en vrac#
+    ATS31=128
+    AT%T1
+    AT%U75
+    AT%NC99 puis ATZ
+    AT&amp;D3 + DTR Low
+    AT*R0
+    ATS70=64 ou ATS70=192
+    ATX2 ou AT*F ou AT%X2
+ 
+
+D'autres numeros brules sur http://www.sct.fr/~philb/lesdocs.html
+
+Notons que les &quot;numeros brules&quot; ne constituent pas la seule condition
+d'obtention d'un agrement France Telecom.
+
+Ces derniers exigent en outre le respect de certaines caracteristiques
+techniques, telles que l'impedance, qui doit etre de 600 ohms (les non agrees
+ont souvent une impedance de 300 ohms, ce qui rend tres difficile leur
+utilisation sur un central France Telecom pourvu de limitateur d'intensite.
+
+D'une maniere generale, les modems agrees tiennent mieux la connexion sur une
+ligne telephonique de mauvaise qualite.
+
+Mais il ne faut cependant pas perdre de vue que l'agrement est attribue
+essentiellement selon des criteres essentiellement commerciaux. Donc, a vous de
+choisir :-)
+
+<A NAME="94"></A>* Quelques chaines d'initialisation
+  -------- ------- ----------------
+
+ATTENTION - IMPORTANT : les chaines d'initialisation qui suivent sont
+donnees a titre indicatif et sans garantie Il est toujours preferable de se
+reporter au chapitre &quot;comment construire une chaine d'initialisation&quot; que
+d'utiliser une chaine toute faite. Elles ne sont valables que dans des
+conditions optimum (a savoir cable RTS + CTS ET Port Serie rapide). Le cas
+echeant, voir aussi le chapitre &quot;comment construire une chaine
+d'initialisation&quot;.
+
+Juste deux petits rappels : 
+    - si vous utilisez un cable ne gerant pas le controle de flux RTS CTS,
+    desactivez-le dans la chaine d'initialisation (en general &amp;k0, voir manuel
+    du modem) et desactivez la compression de donnees et la correction
+    d'erreurs (mode normal, bufferisation sans correction ni compression, en
+    general &amp;Q6), ceci en attendant de changer de cable bien sur.
+    - si la vitesse max de votre port serie ne permet pas la compression de
+    donnees, desactivez cette derniere dans la chaine d'initialisation (en
+    general %CO, voir manuel de votre modem)
+
+    Vous pouvez en general rajouter a ces chaine S95=47S7=60S25=20
+
+Aceex 1414 v.32bis AT&amp;F\N3\Q3
+Apple Express Modem AT&amp;F\N3
+Digicom Eagle 9600/Scout Plus AT&amp;F
+Focus 14.4 AT&amp;Q5%C1&amp;C1&amp;K3S36=7
+Global Village PowerPort  AT\J0\N3%C1&amp;C1\V1\Q3
+Hayes Accura 144 AT&amp;F
+Hayes Optima 14400 v.32bis AT&amp;F
+Hayes V-Series/Ultra AT&amp;Q5S36=7&amp;C1&amp;K3
+Intel 14.4 EX AT&amp;F
+Intel 14.4EX AT\N3%C1&amp;C1\Q3
+Intel 96EX AT\N3%C1&amp;C1\Q3
+Macintosh Express Modem AT&amp;F\N3&amp;D0&amp;Q5
+Multitech MT 932 Series AT&amp;F&amp;E4
+Multitech MT1432 Series AT&amp;F&amp;Q1&amp;E11
+Multitech MT1432 ZDX AT&amp;F
+MultiTech MultiModem 224E/V.32          AT&amp;E1&amp;E15&amp;C1&amp;E4$BA0
+Novafax : AT&amp;F+MS&amp;K3&amp;D0E0V1M2S25=0 
+OLITEC V32B ET V34 : AT&amp;F&amp;K3S25=20S95=47
+PSI PowerModem II/IV AT&amp;Q5%C1&amp;C1&amp;K3
+Quicktel Xeba 14.4 AT&amp;F&amp;C1
+Racal ALM 3223 AT&amp;F
+Racal ALM 3226 V.32bis AT&amp;F&amp;C1
+Spectra Pocket Modem 14.4 AT&amp;F
+SpectraCom V.32bis PocketFax AT&amp;Q3S36=7%C1&amp;C1&amp;K3
+Supra 14.4 LC AT&amp;F1
+Supra 2400 V.42bis AT&amp;Q5S36=7%C1&amp;C1&amp;K3
+SupraFAXModem V.32/V.32bis AT&amp;F1&amp;Q5S36=7%C1&amp;C1&amp;K3
+SupraFAXModem v.32bis AT&amp;F1
+SupraFAXModem V.34 AT&amp;F1 
+Telebit QBlazer AT&amp;FS58=2S180=1S190=0
+Telebit QBlazer/T1600/T3000 ATS180=2S190=1S51=252S58=2S68=2
+Telebit WorldBlazer AT&amp;F9X2
+UDS Motorola V.3225L/V.3229L AT&amp;F&amp;C1\Q3
+USRobotics Courier V.34 AT&amp;F1&amp;K3
+USRobotics Courier HST Dual AT&amp;F&amp;C1&amp;D0
+USRobotics Courier V.32 bis/as AT&amp;F&amp;H1&amp;K2
+USRobotics Mac &amp; Fax 14.4 AT&amp;F&amp;H1&amp;R2
+USRobotics Mac &amp; Fax 28.8 V.34 AT&amp;F1
+USRobotics Sportster 14.4 AT&amp;F&amp;H1&amp;C1
+USRobotics Sportster 9600 AT&amp;F&amp;H1
+Zoltrix 14.4 AT&amp;F&amp;C1
+Zoom 14.4 V.32/V.32 bis AT&amp;F&amp;C1
+Zoom 2400 v.42bis AT&amp;Q5%C1W1&amp;C1S36=7&amp;K3
+Zoom V.32/V.32bis AT&amp;Q5S36=7%C1&amp;C1&amp;K3
+Zyxel U-1496 AT&amp;F
+Zyxel V.32bis AT&amp;C1&amp;H3&amp;K3&amp;N0
+
+    Commande V23 (si non documentee sur votre modem). A tester :
+
+    Chip USR ATS34=8 ou ATS27.4=1
+    Chip Zyxel : AT&amp;N12
+    Autres Chips : ATB0 ou ATB1 ou ATB2 ou ATB3 ou ATF3 ou ATS37=7
+
+** D'autres chaines d'initialisation sur http://www.sct.fr/~philb/lesdocs.html
+
+<A NAME="95"></A>* Bibliographie
+  -------------
+
+[NOTE: certaines r&eacute;f&eacute;rences bibliographiques sont dans le corps du
+       texte et ne sont pas n&eacute;cessairement reprises ici. Les ajouts
+       bibliographiques sont d'ailleurs les bienvenus, notamment en
+       ce qui concerne le c&acirc;u;ble]
+
+- &quot;L'indispensable pour Internet, autres reseaux et BBS&quot;, Thierry Platon,
+Editions Marabout (592 pages, tres complet et detaille). 45F.
+
+- &quot;Premier pas avec un modem&quot; - B. Frala, Jean-Paul Mesters, Editions
+Marabout (415 pages, tres bonnes explications techniques ; un seul regret :
+ne rentre pas assez dans les details d'une configuration modem avancee)
+
+- The Navas 28800 Modem FAQ ; la reference :
+http://web.aimnet.com/~jnavas/modem/faq.html
+
+- http://www.yahoo.com/Computers_and_Internet/Hardware/Peripherals/Modems/
+
+- Pour Linux, les HOWTO sont disponibles sur tout site distribuant Linux,
+comme :
+ftp://ftp.loria.fr/pub/linux (tres charge)
+http://www.resus.univ-mrs.fr/Fr/CS/Linux/
+Les HOWTO se trouvent en http://www.resus.univ-mrs.fr/Fr/CS/Linux/Doc.html
+Le Guide du Rootard est en
+http://www.resus.univ-mrs.fr/Fr/CS/Linux/GRL/Intro.html
+Beaucoup de HOWTO sont traduits en francais (/pub/linux/french a l'IBP).
+Enfin la reference est le livre d'Olav Kirch &quot;Linux network administrator's
+guide&quot;, traduit en francais et disponible sur le reseau ou en librairie.
+
+- Pour FreePPP, on se reportera utilement a
+ftp://ftp.sri.ucl.ac.be/pub/
+ainsi qu'&agrave; http://www.imag.fr/IMAG/PPP/FreePPP.html
+
+- Pour Windows 95, on pourra se reporter a
+http://www.pratique.fr/net/softs/docs/win95/
+
+- Pour les numeros brules, quelques exemples de chaine d'intialisation et 
+beaucoup d'autres choses encore, consulter :
+http://www.sct.fr/~philb/lesdocs.html
+
+- Enfin, de nombreux liens sont disponibles sur
+http://www.racal.com/racal/networking.html
+
+- Notons egalement que le serveur de Worldnet propose une documentation
+interessante sur la configuration des logiciels en francais :
+http://www.sct.fr/help/sommaire.htm
+
+- Si vous recherchez un driver W95 pour votre modem essayez
+http://www.alterego.fr/drivers.htm
+
+- Bibliographique concernant RNIS :
+
+    La r&eacute;f&eacute;rence en anglais :
+    http://www.alumni.caltech.edu/~dank/isdn/
+
+    FAQ RNIS :
+    http://web.pasteur.fr/other/computer/FAQ/isdn-faq/ghindex.html
+
+    Les News :
+    En fran&ccedil;ais : fr.network.divers
+    En anglais : comp.dcom.sys.isdn
+
+    Sp&eacute;cifique Linux :
+    http://www.ix.de/ix/linux/linux-isdn.html
+
+    Le Guide Unix parle de RNIS :
+    http://www.alphanet.eu.org/~schaefer/unixguide.html
+
+
+<A NAME="96"></A>* Quelques constructeurs de modems sur le net.
+  -------- ------------- -- ------ --- -- ---
+
+- Multitec@iway.fr (support technique multitec en France)
+- http://www.usr.com/ (US Robotics)
+- http://www.telebit.com/ (Telebit)
+- http://www.supra.com/ (Supra)
+- http://www.olitec.com/ (Olitec)
+- http://www.infoback.tm.fr/ (3X)
+- http://www.usr.fr (uusr france - nouveau)
+- http://www.creatix.com (creatix)
+
+    Enfin The Navas 28800 Modem FAQ :
+    http://web.aimnet.com/~jnavas/modem/faq.html  propose un grand nombre de
+    liens vers des constructeurs de modems sur le net ; je ne les ai pas tous
+    reproduits ici loin s'en faut, pour des raisons de compacticite.
+
+<A NAME="97"></A>* Auteur et Copyright
+  ------ -- ---------
+
+Toutes remarques et suggestions peuvent etre adressees a Laurent Sintes -
+sintes@nfrance.com (Toulouse)
+
+Si vous comptez distribuer ce document par FTP ou WWW, ou placer un pointeur
+vers ce dernier merci de m'adresser un mail pour m'en avertir et m'en
+communiquer l'adresse (sauf mirroirs automatiques bien entendu).
+
+Version 2.1, F&eacute;vrier 1997 - Tous droits reserves.
+
+Article ecrit a titre gratuit pour Usenet. Cet article peut etre diffuse
+sans autorisation prealable sur : les BBS offrant un acces RTC normal et
+sans abonnement ; les sites FTP Anonymes geres par une universite ;  les
+serveurs RTC accessibles sans abonnement.
+
+Son utilisation, exploitation, adaptation traduction, est interdite sans
+consentement ecrit, notamment sur : - support papier ; BBS ou RTC
+accessibles par audiotel ou par abonnement ; service FTP de providers
+d'acces Internet ; serveurs accessibles via Transpac ; CD ROM ; cette liste
+est non limitative.
+Son neanmoins exemptes de cette regle les sites FTP realisant un mirroir
+automatique de toutes les faqs de la hierarchie fr.
+
+Neanmoins, quiconque le desire, services commerciaux y compris, peut placer un
+simple pointeur vers la version HTML de cette faq et ce sans autorisation
+particuliere. La seule condition etant de m'en avertir par e-mail afin que je
+puisse vous prevenir d'une eventuelle delocalisation.
+
+
+
+</PRE>
+
+</BODY>
+</HTML>

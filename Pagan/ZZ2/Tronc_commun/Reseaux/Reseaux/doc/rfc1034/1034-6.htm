@@ -1,0 +1,611 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [fr] (WinNT; I) [Netscape]">
+   <TITLE>1034-5
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+RFC: 1034
+<BR>Statut : Standard
+<CENTER>
+<H1>
+DOMAIN NAME SYSTEM</H1></CENTER>
+
+<CENTER>
+<H2>
+Concepts de base</H2></CENTER>
+
+<HR>
+<BR>Cr&eacute;dits : P. Mockapetris, ISI
+<BR>Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry
+G. FREMAUX</A>
+<BR>Edition originale : Novembre 87 / Version FR : Avril 1998
+<BR>Remplace : RFC882, RFC883, RFC973
+<BR>
+<HR>
+<H2>
+<FONT COLOR="#000080">6. UN SCENARIO</FONT></H2>
+Dans notre espace de domaine "test", supposez que nous souhaitions obtenir
+un contr&ocirc;le administratif autonome pour la racine, et les zones MIL,
+EDU, MIT.EDU et ISI.EDU. Nous d&eacute;finirions des serveurs de noms comme
+suit :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |(C.ISI.EDU,SRI-NIC.ARPA
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | A.ISI.EDU)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------+------------------+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EDU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ARPA
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |(SRI-NIC.ARPA,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |(SRI-NIC.ARPA,&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | A.ISI.EDU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | C.ISI.EDU)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +-----+-----+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; +------+-----+-----+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BRL&nbsp; NOSC&nbsp; DARPA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; IN-ADDR&nbsp; SRI-NIC&nbsp;&nbsp;&nbsp;&nbsp; ACC
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +--------+------------------+---------------+--------+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UCI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MIT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UDEL&nbsp;&nbsp;&nbsp;&nbsp; YALE
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |(XX.LCS.MIT.EDU, ISI
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |ACHILLES.MIT.EDU) |(VAXA.ISI.EDU,VENERA.ISI.EDU,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---+---+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | A.ISI.EDU)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LCS&nbsp;&nbsp; ACHILLES +--+-----+-----+--------+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</FONT></TT></PRE>
+Dans cet exemple, le serveur de noms "autoris&eacute;" est not&eacute;
+entre parenth&egrave;ses au point de l'arbre de domaines &agrave; partir
+duquel il prend le contr&ocirc;le administratif de ce dernier.
+<P>Bien que les serveurs de noms pour la racine soient sur C.ISI.EDU, SRI-NIC.ARPA,
+et A.ISI.EDU. Le domaine MIL est servi par SRI-NIC.ARPA et A.ISI.EDU. Le
+domaine EDU est servi par SRI-NIC.ARPA. et C.ISI.EDU. Notez que les serveurs
+peuvent supporter des zones contigu&euml;s ou disjointes. Dans notre sc&eacute;nario,
+C.ISI.EDU g&egrave;re les zones contigu&euml;s de la racine et du domaine
+EDU. A.ISI.EDU g&egrave;re les zones contigu&euml;s de la racine et du
+domaine MIL, mais g&egrave;re une troisi&egrave;me zone non-contigu&euml;
+aux deux autres, la zone ISI.EDU.&nbsp;<A NAME="6.1"></A>
+<H3>
+6.1. Serveur de nom C.ISI.EDU</H3>
+C.ISI.EDU est un serveur de nom pour les domaines racine, MIL, et EDU pour
+la classe IN, et maintiendra des zones pour ces domaines. Les donn&eacute;es
+de zone pour le domaine racine seraient :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; .&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SOA&nbsp;&nbsp;&nbsp;&nbsp; SRI-NIC.ARPA. HOSTMASTER.SRI-NIC.ARPA. (
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 870611&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;serial
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;refresh every 30 min
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 300&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;retry every 5 min
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 604800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;expire after a week
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 86400)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;minimum of a day
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.ISI.EDU.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C.ISI.EDU.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SRI-NIC.ARPA.
+
+&nbsp;&nbsp;&nbsp; MIL.&nbsp;&nbsp;&nbsp; 86400&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SRI-NIC.ARPA.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 86400&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.ISI.EDU.
+
+&nbsp;&nbsp;&nbsp; EDU.&nbsp;&nbsp;&nbsp; 86400&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SRI-NIC.ARPA.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 86400&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C.ISI.EDU.
+
+&nbsp;&nbsp;&nbsp; SRI-NIC.ARPA.&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.0.0.73
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.51
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 SRI-NIC.ARPA.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HINFO&nbsp;&nbsp; DEC-2060 TOPS20
+
+&nbsp;&nbsp;&nbsp; ACC.ARPA.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.6.0.65
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HINFO&nbsp;&nbsp; PDP-11/70 UNIX
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10 ACC.ARPA.
+
+&nbsp;&nbsp;&nbsp; USC-ISIC.ARPA.&nbsp; CNAME&nbsp;&nbsp; C.ISI.EDU.
+
+&nbsp;&nbsp;&nbsp; 73.0.0.26.IN-ADDR.ARPA.&nbsp; PTR&nbsp;&nbsp;&nbsp; SRI-NIC.ARPA.
+&nbsp;&nbsp;&nbsp; 65.0.6.26.IN-ADDR.ARPA.&nbsp; PTR&nbsp;&nbsp;&nbsp; ACC.ARPA.
+&nbsp;&nbsp;&nbsp; 51.0.0.10.IN-ADDR.ARPA.&nbsp; PTR&nbsp;&nbsp;&nbsp; SRI-NIC.ARPA.
+&nbsp;&nbsp;&nbsp; 52.0.0.10.IN-ADDR.ARPA.&nbsp; PTR&nbsp;&nbsp;&nbsp; C.ISI.EDU.
+&nbsp;&nbsp;&nbsp; 103.0.3.26.IN-ADDR.ARPA. PTR&nbsp;&nbsp;&nbsp; A.ISI.EDU.
+
+&nbsp;&nbsp;&nbsp; A.ISI.EDU. 86400 A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.3.0.103
+&nbsp;&nbsp;&nbsp; C.ISI.EDU. 86400 A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.52</FONT></TT></PRE>
+Ces donn&eacute;es sont repr&eacute;sent&eacute;es comme elles seraient
+&eacute;crites dans un fichier ma&icirc;tre. La plupart des RR sont des
+entr&eacute;es &agrave; une ligne ; la seule exception ci-dessus est le
+RR SOA pour cette zone, qui utilise une "(" pour commencer une d&eacute;finition
+multi-ligne et une ")" pour indiquer la fin du RR multi-ligne. Comme la
+classe de tous les RR d'une zone doit &ecirc;tre identique, seul le premier
+RR d'une zone mentionnera la classe. Lorsqu'un serveur de noms charge une
+zone, il force la dur&eacute;e de vie de tout RR "autoris&eacute;" &agrave;
+la valeur indiqu&eacute;e dans le champ MINIMUM du SOA, ici 86400 secondes,
+soit un jour. Le RR NS indiquant la d&eacute;l&eacute;gation administrative
+pour les domaines MIL et EDU, combin&eacute;s aux RR de "glue" indiquant
+les adresses des h&ocirc;tes de ces serveurs, ne font pas partie des donn&eacute;es
+dites "autoris&eacute;es" de la zone, et de ce fait mentionnent des dur&eacute;es
+de vies explicites.
+<P>Quatre RR sont rattach&eacute;s au noeud racine : le SOA qui d&eacute;crit
+la zone racine et les 3 RR NS qui listent les serveurs de noms pour la
+racine. Les donn&eacute;es dans le RR SOA d&eacute;crivent comment est
+g&eacute;r&eacute;e la zone. Les donn&eacute;es de zone sont maintenues
+sur l'h&ocirc;te SRI-NIC.ARPA, et le responsable de cette zone est joignable
+&agrave; l'adresse HOSTMASTER@SRI-NIC.ARPA. Une des donn&eacute;es clef
+de ce SOA est la dur&eacute;e de vie minimum marqu&eacute;e 86400, qui
+signifie que toutes les donn&eacute;es autoris&eacute;es de cette zone
+sont valides pendant au moins cette dur&eacute;e, mais que des valeurs
+plus grandes peuvent &ecirc;tre explicitement sp&eacute;cifi&eacute;es.
+<P>Les RR NS pour les domaines MIL et EDU marquent la fronti&egrave;re
+entre ce qui est du ressort de la zone racine et ce qui est du ressort
+des sous-domaines MIL et EDU. Notez que dans cet exemple, un zone de niveau
+inf&eacute;rieure se retrouve g&eacute;r&eacute;e par un serveur supportant
+la zone racine.
+<P>Le fichier ma&icirc;tre de la zone EDU devra &ecirc;tre constitu&eacute;
+relativement au point EDU. Les donn&eacute;es de zone pour le domaine EDU
+pourraient &ecirc;tre :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; EDU.&nbsp; IN SOA SRI-NIC.ARPA. HOSTMASTER.SRI-NIC.ARPA. (
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 870729 ;serial
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1800 ;refresh every 30 minutes
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 300 ;retry every 5 minutes
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 604800 ;expire after a week
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 86400 ;minimum of a day
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS SRI-NIC.ARPA.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS C.ISI.EDU.
+
+&nbsp;&nbsp;&nbsp; UCI 172800 NS ICS.UCI
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800 NS ROME.UCI
+&nbsp;&nbsp;&nbsp; ICS.UCI 172800 A 192.5.19.1
+&nbsp;&nbsp;&nbsp; ROME.UCI 172800 A 192.5.19.31
+&nbsp;&nbsp;&nbsp; ISI 172800 NS VAXA.ISI
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800 NS A.ISI
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800 NS VENERA.ISI.EDU.
+&nbsp;&nbsp;&nbsp; VAXA.ISI 172800 A 10.2.0.27
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800 A 128.9.0.33
+&nbsp;&nbsp;&nbsp; VENERA.ISI.EDU. 172800 A 10.1.0.52
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800 A 128.9.0.32
+&nbsp;&nbsp;&nbsp; A.ISI 172800 A 26.3.0.103
+
+&nbsp;&nbsp;&nbsp; UDEL.EDU.&nbsp; 172800 NS LOUIE.UDEL.EDU.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800 NS UMN-REI-UC.ARPA.
+&nbsp;&nbsp;&nbsp; LOUIE.UDEL.EDU. 172800 A 10.0.0.96
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800 A 192.5.39.3
+
+&nbsp;&nbsp;&nbsp; YALE.EDU.&nbsp; 172800 NS YALE.ARPA.
+&nbsp;&nbsp;&nbsp; YALE.EDU.&nbsp; 172800 NS YALE-BULLDOG.ARPA.
+
+&nbsp;&nbsp;&nbsp; MIT.EDU.&nbsp; 43200 NS XX.LCS.MIT.EDU.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 43200 NS ACHILLES.MIT.EDU.
+&nbsp;&nbsp;&nbsp; XX.LCS.MIT.EDU.&nbsp; 43200 A 10.0.0.44
+&nbsp;&nbsp;&nbsp; ACHILLES.MIT.EDU. 43200 A 18.72.0.8</FONT></TT></PRE>
+Notez ici l'utilisation de noms relatifs. Le nom du propri&eacute;taire
+(owner) pour ISI.EDU. est not&eacute; en mode relatif, ainsi que le contenu
+de deux RR relatifs aux serveurs de noms. Les noms de domaines exprim&eacute;s
+en relatif et en absolu peuvent &ecirc;tre librement m&eacute;lang&eacute;s
+dans un fichier ma&icirc;tre.<A NAME="6.2"></A>
+<H3>
+6.2. Exemple de requ&ecirc;te standard</H3>
+Les requ&ecirc;tes et r&eacute;ponses suivantes illustrent le comportement
+d'un serveur de noms. Sauf mention contraire, les requ&ecirc;tes ne demandent
+pas le mode r&eacute;cursif (RD) dans leur en-t&ecirc;te. Notez que les
+r&eacute;ponses &agrave; des requ&ecirc;tes non-r&eacute;cursives d&eacute;pendent
+du serveur de noms contact&eacute;, et non de l'identit&eacute; du requ&eacute;rant.<A NAME="6.2.1"></A>
+<H4>
+6.2.1. QNAME=SRI-NIC.ARPA, QTYPE=A</H4>
+La requ&ecirc;te aurait l'aspect suivant :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=SRI-NIC.ARPA., QCLASS=IN, QTYPE=A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+La r&eacute;ponse de C.ISI.EDU serait :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=SRI-NIC.ARPA., QCLASS=IN, QTYPE=A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | SRI-NIC.ARPA. 86400 IN A 26.0.0.73&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 86400 IN A 10.0.0.51&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+L'en-t&ecirc;te de la r&eacute;ponse ressemble &agrave; celle de la requ&ecirc;te,
+except&eacute; que le bit RESPONSE est marqu&eacute;, indiquant que ce
+message est bel est bien une r&eacute;ponse, et non une requ&ecirc;te,
+le bit R&eacute;ponse Autoris&eacute;e (AUTHORITATIVE ANSWER = AA) est
+marqu&eacute;, indiquant que les adresses donn&eacute;es dans les RR de
+la section r&eacute;ponse sont "autoris&eacute;es". La section question
+de la r&eacute;ponse est une recopie de la section question de la requ&ecirc;te.
+<P>Si la m&ecirc;me requ&ecirc;te avait &eacute;t&eacute; envoy&eacute;e
+&agrave; d'autres serveurs "non autoris&eacute;s" pour le domaine SRI-NIC.ARPA,
+la r&eacute;ponse aurait &eacute;t&eacute; :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY,RESPONSE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=SRI-NIC.ARPA., QCLASS=IN, QTYPE=A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | SRI-NIC.ARPA. 1777 IN A 10.0.0.51&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1777 IN A 26.0.0.73&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Cette r&eacute;ponse est diff&eacute;rente de la pr&eacute;c&eacute;dente
+&agrave; deux titres : l'en-t&ecirc;te ne pr&eacute;sente pas le bit AA
+marqu&eacute;, et les dur&eacute;es de vie sont diff&eacute;rentes. La
+d&eacute;duction peut &ecirc;tre faite que ces donn&eacute;es ne proviennent
+pas d'une zone, mais plut&ocirc;t d'un cache. La diff&eacute;rence de dur&eacute;e
+de vie est alors due &agrave; l'intervention de la dur&eacute;e pass&eacute;e
+de stationnement dans le cache. Les diff&eacute;rences d'ordre dans lequel
+les RR de la section R&eacute;ponse sont pr&eacute;sent&eacute;s n'est
+pas significative.<A NAME="6.2.2"></A>
+<H4>
+6.2.2. QNAME=SRI-NIC.ARPA, QTYPE=*</H4>
+Une requ&ecirc;te similaire &agrave; la pr&eacute;c&eacute;dente, mais
+utilisant un QTYPE "*", recevrait la r&eacute;ponse suivante de la part
+de C.ISI.EDU:
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=SRI-NIC.ARPA., QCLASS=IN, QTYPE=*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | SRI-NIC.ARPA. 86400 IN&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp; 26.0.0.73&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.51&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp; 0 SRI-NIC.ARPA.&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HINFO DEC-2060 TOPS20&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Si une requ&ecirc;te identique &eacute;tait &eacute;mise vers des serveurs
+"non autoris&eacute;s" pour le domaine SRI-NIC.ARPA, la r&eacute;ponse
+aurait &eacute;t&eacute; :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=SRI-NIC.ARPA., QCLASS=IN, QTYPE=*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | SRI-NIC.ARPA. 12345 IN&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.0.0.73&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.51&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+et
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=SRI-NIC.ARPA., QCLASS=IN, QTYPE=*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | SRI-NIC.ARPA. 1290 IN HINFO&nbsp; DEC-2060 TOPS20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Aucune de ces deux r&eacute;ponse ne pr&eacute;sente le bit AA marqu&eacute;,
+et donc aucune des deux ne s'est bas&eacute;e sur des donn&eacute;es "autoris&eacute;es".
+Les diff&eacute;rences de contenu et de dur&eacute;es de vie sugg&egrave;rent
+que les deux serveurs ont enregistr&eacute; les donn&eacute;es dans leur
+cache &agrave; une date diff&eacute;rente, et que le premier serveur &agrave;
+obtenu ces donn&eacute;es suite &agrave; une requ&ecirc;te QTYPE=A, le
+second les ayant obtenues suite &agrave; une requ&ecirc;te HINFO.&nbsp;<A NAME="6.2.3"></A>
+<H4>
+6.2.3. QNAME=SRI-NIC.ARPA, QTYPE=MX</H4>
+Ce type de requ&ecirc;te pourrait &eacute;maner d'un agent de courrier
+&eacute;lectronique essayant de trouver le chemin pour le destinataire
+de courrier HOSTMASTER@SRI-NIC.ARPA. La r&eacute;ponse de C.ISI.EDU serait
+:
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=SRI-NIC.ARPA., QCLASS=IN, QTYPE=MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | SRI-NIC.ARPA. 86400 IN&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 SRI-NIC.ARPA.|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | SRI-NIC.ARPA. 86400 IN&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.0.0.73&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.51&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Cette r&eacute;ponse contient un RR MX dans la section R&eacute;ponse du
+message. La section additionnelle contient les RR d'adresse car le serveur
+de nom &agrave; C.ISI.EDU devine que le requ&eacute;rant aura besoin de
+ces adresses pour exploiter correctement les information transmises dans
+le RR MX.<A NAME="6.2.4"></A>
+<H4>
+6.2.4. QNAME=SRI-NIC.ARPA, QTYPE=NS</H4>
+C.ISI.EDU r&eacute;pondrait &agrave; la requ&ecirc;te par :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=SRI-NIC.ARPA., QCLASS=IN, QTYPE=NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+La seule diff&eacute;rence entre la requ&ecirc;te et la r&eacute;ponse
+est le marquage des bits AA et RESPONSE dans l'en-t&ecirc;te. L'interpr&eacute;tation
+de cette r&eacute;ponse est que le serveur est bien "autoris&eacute;" pour
+le nom en question, lequel existe, mais pour lequel aucun enregistrement
+de type NS n'est disponible.<A NAME="6.2.5"></A>
+<H4>
+6.2.5. QNAME=SIR-NIC.ARPA, QTYPE=A</H4>
+Lorsqu'un utilisateur orthographie mal un nom de domaine, nous pourrons
+voir ce type de requ&ecirc;te. C.ISI.EDU r&eacute;pondrait dans ce cas
+:
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA, RCODE=NE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=SIR-NIC.ARPA., QCLASS=IN, QTYPE=A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | . SOA SRI-NIC.ARPA. HOSTMASTER.SRI-NIC.ARPA.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 870611 1800 300 604800 86400&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Cette r&eacute;ponse indique que le nom demand&eacute; n'existe pas. Cette
+condition est exprim&eacute;e par le code de r&eacute;ponse (RCODE) dans
+l'en-t&ecirc;te.
+<P>Le RR SOA dans la section Autorisation est l'information optionnelle
+&agrave; enregistrer en cas de cache des r&eacute;ponses n&eacute;gatives,
+qui permet au r&eacute;solveur utilisant cette r&eacute;ponse de supposer
+que le nom recherch&eacute; n'existera pas pendant au moins SOA MINIMUM
+(86400) secondes.<A NAME="6.2.6"></A>
+<H4>
+6.2.6. QNAME=BRL.MIL, QTYPE=A</H4>
+Si cette requ&ecirc;te &eacute;tait envoy&eacute;e &agrave; C.ISI.EDU,
+la r&eacute;ponse serait :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=BRL.MIL, QCLASS=IN, QTYPE=A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | MIL.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 86400 IN NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SRI-NIC.ARPA.&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 86400&nbsp;&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | A.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.3.0.103&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | SRI-NIC.ARPA.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.0.0.73&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.51&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Cette r&eacute;ponse affiche une section R&eacute;ponse vide, et n'est
+pas "autoris&eacute;e". Il s'agit donc d'une redirection. Le serveur de
+noms &agrave; C.ISI.EDU, r&eacute;alisant qu'il n'est pas "autoris&eacute;"
+pour le domaine MIL, redirige le requ&eacute;rant vers les serveurs &agrave;
+A.ISI.EDU et SRI-NIC.ARPA, qu'il conna&icirc;t &ecirc;tre autoris&eacute;s
+pour le domaine MIL.<A NAME="6.2.7"></A>
+<H4>
+6.2.7. QNAME=USC-ISIC.ARPA, QTYPE=A</H4>
+La r&eacute;ponse &agrave; cette requ&ecirc;te venant de A.ISI.EDU serait
+:
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=USC-ISIC.ARPA., QCLASS=IN, QTYPE=A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | USC-ISIC.ARPA. 86400 IN CNAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | C.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp; 86400 IN A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.52&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Notez que le bit AA dans l'en-t&ecirc;te garantit que les donn&eacute;es
+correspondantes au QNAME sont autoris&eacute;es, mais ne permet pas d'en
+d&eacute;duire l'&eacute;tat d'autorisation pour les donn&eacute;es concernant
+C.ISI.EDU. Cette r&eacute;ponse compl&egrave;te est possible car A.ISI.EDU
+se trouve &ecirc;tre autoris&eacute; &agrave; la fois pour le domaine ARPA
+ou se trouve USC-ISIC.ARPA et pour le domaine ISI.EDU o&ugrave; l'on trouve
+C.ISI.EDU.
+<P>Si la m&ecirc;me requ&ecirc;te &eacute;tait envoy&eacute;e &agrave;
+C.ISI.EDU, la r&eacute;ponse serait la m&ecirc;me que celle ci-dessus,
+dans le cas o&ugrave; il disposerait de ces adresses en cache, mais pourrait
+aussi prendre la forme :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=USC-ISIC.ARPA., QCLASS=IN, QTYPE=A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | USC-ISIC.ARPA.&nbsp;&nbsp; 86400 IN CNAME&nbsp;&nbsp; C.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800 IN NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VAXA.ISI.EDU.&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VENERA.ISI.EDU. |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | VAXA.ISI.EDU.&nbsp;&nbsp; 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.2.0.27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.33&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | VENERA.ISI.EDU. 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.1.0.52&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | A.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.3.0.103&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Cette r&eacute;ponse contient des donn&eacute;es autoris&eacute;es pour
+l'alias USC-ISIC.ARPA, plus des donn&eacute;es de redirection vers les
+serveurs de noms pour ISI.EDU. Cette sorte de r&eacute;ponse ne serait
+en g&eacute;n&eacute;ral pas celle donn&eacute;e si la requ&ecirc;te visait
+le nom d'h&ocirc;te du serveur de noms lui-m&ecirc;me, mais serait courante
+pour d'autres alias.&nbsp;<A NAME="6.2.8"></A>
+<H4>
+6.2.8. QNAME=USC-ISIC.ARPA, QTYPE=CNAME</H4>
+Si cette requ&ecirc;te est &eacute;mise vers A.ISI.EDU ou C.ISI.EDU, la
+r&eacute;ponse serait :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=USC-ISIC.ARPA., QCLASS=IN, QTYPE=A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | USC-ISIC.ARPA. 86400 IN CNAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Parce que le QTYPE=CNAME, le RR CNAME lui-m&ecirc;me r&eacute;pond &agrave;
+la requ&ecirc;te, et le serveur de nom ne tentera pas de rechercher quoi
+que ce soit d'autre concernant C.ISI.EDU. (Sauf &eacute;ventuellement pour
+renseigner une section additionnelle).&nbsp;<A NAME="6.3"></A>
+<H3>
+6.3. Exemple de r&eacute;solution</H3>
+Les exemples suivants illustrent les op&eacute;rations qu'un r&eacute;solveur
+devra effectuer pour son client. Nous supposons que le r&eacute;solveur
+part avec un cache vide, ce qui pourrait &ecirc;tre le cas apr&egrave;s
+un red&eacute;marrage syst&egrave;me. Nous supposerons de plus que le syst&egrave;me
+n'est pas l'un des h&ocirc;tes marqu&eacute; dans les donn&eacute;es de
+zone et que l'h&ocirc;te est situ&eacute; quelque part sur le r&eacute;seau
+d'adresse 26, et de plus, que sa structure "ceinture de s&eacute;curit&eacute;"
+(SBELT) est constitu&eacute;e comme suit :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; Match count = -1
+&nbsp;&nbsp;&nbsp; SRI-NIC.ARPA.&nbsp;&nbsp; 26.0.0.73&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.0.0.51
+&nbsp;&nbsp;&nbsp; A.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.3.0.103</FONT></TT></PRE>
+Ces informations sp&eacute;cifient les serveurs &agrave; essayer, leurs
+adresses, et un d&eacute;compte de concordance &agrave; -1, qui indique
+que les serveurs ne sont pas "proches" de la cible. Notez que cette valeur
+-1 n'exprime pas une mesure pr&eacute;cise de la "distance", mais juste
+une valeur conventionnelle sur laquelle se basera l'algorithme au d&eacute;part.
+<P>Les exemples suivants illustrent l'utilisation de la m&eacute;thode
+du cache et sa construction, et donc chaque &eacute;tape suppose que la
+requ&ecirc;te de l'&eacute;tape pr&eacute;c&eacute;dente a &eacute;t&eacute;
+r&eacute;solue.&nbsp;<A NAME="6.3.1"></A>
+<H4>
+6.3.1. R&eacute;solution de MX pour ISI.EDU.</H4>
+Supposez que la premi&egrave;re demande au r&eacute;solveur provienne de
+l'agent de courrier local, qui doit &eacute;mettre un message &agrave;
+PVM@ISI.EDU. L'agent de courrier demande alors les RR MX pour le domaine
+ISI.EDU.
+<P>Le r&eacute;solveur va d'abord chercher dans son cache des RR MX RR
+pour ISI.EDU, mais le cache est vide et cela ne r&eacute;sout rien. Le
+r&eacute;solveur va en conclure qu'il doit contacter un serveur de nom
+distant et doit dans un premier temps d&eacute;terminer quel est le meilleur
+serveur &agrave; contacter pour cette requ&ecirc;te. Cette phase recherche
+dans le cache des RR NS pour le domaine ISI.EDU ou l'un de ses p&egrave;res,
+EDU, et la racine. Le cache &eacute;tant vide, ces recherches &eacute;choueront
+de la m&ecirc;me mani&egrave;re. En dernier ressort, le r&eacute;solveur
+va utiliser les informations de la structure SBELT, en les copiant dans
+la structure SLIST.
+<P>Arriv&eacute; &agrave; ce point, le r&eacute;solveur devra choisir l'une
+des trois adresses disponibles et essayer une requ&ecirc;te. Du fait que
+le r&eacute;solveur est sur le r&eacute;seau d'adresse 26, il choisira
+l'une des deux adresses 26.0.0.73 ou 26.3.0.103 en premier. Il &eacute;mettra
+donc une requ&ecirc;te de la forme :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=ISI.EDU., QCLASS=IN, QTYPE=MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation |&nbsp;<empty>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Le r&eacute;solveur attendra pour cette requ&ecirc;te soit une r&eacute;ponse,
+soit la dur&eacute;e d'une temporisation. Si la temporisation d&eacute;clenche,
+il essayera le serveur suivant, ou une adresse diff&eacute;rente pour le
+m&ecirc;me serveur, et enfin en r&eacute;essayant les adresses d&eacute;j&agrave;
+tent&eacute;es. Il pourra donc recevoir une r&eacute;ponse du serveur &agrave;
+SRI-NIC.ARPA:
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=ISI.EDU., QCLASS=IN, QTYPE=MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800 IN NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VAXA.ISI.EDU.&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VENERA.ISI.EDU.|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | VAXA.ISI.EDU.&nbsp;&nbsp; 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.2.0.27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.33&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | VENERA.ISI.EDU. 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10.1.0.52&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.32&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | A.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.3.0.103&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Le r&eacute;solveur s'apercevra alors que la r&eacute;ponse propose une
+redirection vers un serveur plus "proche" d'ISI.EDU que ceux qu'il r&eacute;f&eacute;rence
+dans sa structure SLIST (du fait que trois identifiants correspondent).
+Le r&eacute;solveur enregistrera cette information dans son cache et ajoutera
+ces r&eacute;f&eacute;rences &agrave; sa SLIST :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; Match count = 3
+&nbsp;&nbsp;&nbsp; A.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.3.0.103
+&nbsp;&nbsp;&nbsp; VAXA.ISI.EDU.&nbsp;&nbsp; 10.2.0.27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.33
+&nbsp;&nbsp;&nbsp; VENERA.ISI.EDU. 10.1.0.52&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.32</FONT></TT>
+
+</PRE>
+A.ISI.EDU appara&icirc;t dans cette liste ainsi que le pr&eacute;c&eacute;dent,
+bien qu'il ne s'agisse ici que d'une co&iuml;ncidence. Le r&eacute;solveur
+recommence la transmission de requ&ecirc;tes et attend des nouvelles r&eacute;ponses.
+Le cas &eacute;ch&eacute;ant, il obtient une r&eacute;ponse :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=ISI.EDU., QCLASS=IN, QTYPE=MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX 10 VENERA.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX 20 VAXA.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | VAXA.ISI.EDU.&nbsp;&nbsp; 172800&nbsp; A&nbsp; 10.2.0.27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800&nbsp; A&nbsp; 128.9.0.33&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | VENERA.ISI.EDU. 172800&nbsp; A&nbsp; 10.1.0.52&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 172800&nbsp; A&nbsp; 128.9.0.32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+Le r&eacute;solveur ajoutera cette information &agrave; son cache, et renvoie
+le RR MX obtenu au client.&nbsp;<A NAME="6.3.2&quot;"></A>
+<H4>
+6.3.2. Obtenir le nom d'h&ocirc;te &agrave; partir de l'adresse 26.6.0.65</H4>
+Le r&eacute;solveur va traduire ceci en une requ&ecirc;te sur des RR PTR
+pour le domaine 65.0.6.26.IN-ADDR.ARPA. Cette information n'est pas dans
+le cache, et donc le r&eacute;solveur doit chercher un serveur distant
+auquel la demander. Aucun serveur du cache ne va correspondre, et il faudra
+exploiter les donn&eacute;es de SBELT une fois encore. (Notez que les serveurs
+pour le domaine ISI.EDU sont bien mentionn&eacute;s dans le cache, mais
+ISI.EDU n'est pas un "anc&ecirc;tre" du domaine 65.0.6.26.IN-ADDR.ARPA,
+et donc SBELT sera r&eacute;utilis&eacute;).
+<P>Comme l'information recherch&eacute;e fait partie des donn&eacute;es
+autoris&eacute;es des deux serveurs mentionn&eacute;s dans SBELT, l'un
+d'eux r&eacute;pondra certainement :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; En-t&ecirc;te&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | OPCODE=SQUERY, RESPONSE, AA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Question&nbsp;&nbsp;&nbsp;&nbsp; | QNAME=65.0.6.26.IN-ADDR.ARPA.,QCLASS=IN,QTYPE=PTR |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; R&eacute;ponse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 65.0.6.26.IN-ADDR.ARPA.&nbsp;&nbsp;&nbsp; PTR&nbsp;&nbsp;&nbsp;&nbsp; ACC.ARPA.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Autorisation | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+
+&nbsp;&nbsp;&nbsp; Additionnel&nbsp; | &lt;vide>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +---------------------------------------------------+</FONT></TT></PRE>
+<A NAME="6.3.3"></A>
+<H4>
+6.3.3. Obtenir l'adresse de l'h&ocirc;te du domaine poneria.ISI.EDU</H4>
+Cette requ&ecirc;te se traduira par un requ&ecirc;te sur le type A pour
+le domaine poneria.ISI.EDU. Le r&eacute;solveur ne tentera pas d'exploiter
+une quelconque donn&eacute;e cach&eacute;e pour ce nom, mais trouvera dans
+le cache les RR NS pour le serveur relatif &agrave; la zone ISI.EDU lorsqu'il
+y recherche des adresses de serveurs de noms distants. Avec ces donn&eacute;es,
+il construira une SLIST de la forme :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; Match count = 3
+
+&nbsp;&nbsp;&nbsp; A.ISI.EDU.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26.3.0.103
+&nbsp;&nbsp;&nbsp; VAXA.ISI.EDU.&nbsp;&nbsp; 10.2.0.27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128.9.0.33
+&nbsp;&nbsp;&nbsp; VENERA.ISI.EDU. 10.1.0.52</FONT></TT></PRE>
+A.ISI.EDU est choisi en premier, en suivant le raisonnement que le r&eacute;solveur
+utilise une m&eacute;thode hi&eacute;rarchique pr&eacute;f&eacute;rentielle
+, et du fait qu'A.ISI.EDU est sur le m&ecirc;me r&eacute;seau.
+<P>Un de ces serveurs doit pouvoir r&eacute;pondre &agrave; la requ&ecirc;te.
+<CENTER>
+<P>
+<HR></CENTER>
+
+</BODY>
+</HTML>

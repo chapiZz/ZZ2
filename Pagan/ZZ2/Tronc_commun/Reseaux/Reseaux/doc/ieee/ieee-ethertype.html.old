@@ -1,0 +1,659 @@
+<!DOCTYPE HTML PUBLIC "-//SoftQuad//DTD draft HTML 3.2 + extensions for HoTMetaL PRO 3.0 19960802//EN"
+ "hmpro3.dtd">
+<HTML>
+<HEAD>
+	<TITLE>EtherType Field Public Assignments</TITLE>
+        <LINK HREF="../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<H1>EtherType Field Public Assignments</H1>
+
+
+<P>
+Source IEEE : <A HREF="http://standards.ieee.org/regauth/ethertype/type-pub.html">http://standards.ieee.org/regauth/ethertype/type-pub.html</A><BR>
+Date : 28 july 1999</P>
+<HR>
+
+<PRE>NUMBER ASSIGNED		
+
+0000-05DC   	I	
+EEE802.3 Length Field
+
+0101-01FF		
+Xerox (Experimental)			
+Webster, NY  
+
+0200			
+XEROX PUP				
+Webster, NY
+
+0201			
+Xerox PUP Addr Trans			
+Webster, NY
+
+0400			
+Nixdorf				
+Paderborn West Germany
+
+0600		
+XEROX NS IDP			
+Webster, NY
+
+0660 - 0661		
+DLOG					
+Olching Germany
+
+0800 - 0803		
+Xerox				
+Webster, NY
+
+0804			
+Symbolics Research			
+Cambridge, MA 
+
+0805			
+Xerox					
+Webster, NY
+
+0806			
+Symbolics, Inc.	
+Cambridge, MA 
+
+0807			
+Xerox					
+Webster, NY
+
+0808			
+Xerox (Frame Relay ARP)		
+Webster,NY
+
+0844			
+Planning Research Corp.		
+Bellevue, NE
+
+0888 - 088A		
+Xyplex					
+Concord, MA
+
+0A00			
+Xerox IEEE802.3 PUP		
+Webster, NY
+
+0A01			
+Xerox					
+Webster, NY
+
+1000 - 10FF		
+Xerox					
+Webster, NY
+
+2000 - 207F		
+LRW Systems				
+Stamford, CT
+
+6010 - 6014		
+3Com Corporation			
+Santa Clara, CA
+
+7020 - 7029		
+LRT					
+Reading, Berks, England
+
+8006			
+Nestar
+
+8008			
+AT &amp; T				
+Naperville, IL
+
+8013 - 8016		
+Silicon Graphics			
+Mountain View, CA
+
+8019			
+Apollo Computers		
+Chelmsford, MA
+
+802E			
+Tymshare			
+Cupertino	, CA
+
+802F			
+Tigan, Inc.				
+Palo Alto, CA
+
+8035			
+Stanford University			
+Stanford, CA
+
+8036			
+Aeonic Systems			
+Billerica, MA
+
+8044			
+Planning Research Corp
+
+8046 - 8047		
+AT &amp; T				
+Naperville, IL
+
+8049			
+ExperData				
+Boulogne, France
+
+805B - 805C		
+Stanford University			
+Stanford, CA
+
+805D			
+Evans &amp; Sutherland			
+Salt Lake City, UT
+
+8060			
+Little Machines			
+San Diego, CA
+
+8062			
+Counterpoint Computers		
+San Jose, CA
+
+8065 - 8066		
+University of Mass. at Amherst	
+Amherst, MA
+
+8067			
+Veeco Integrated Automation		
+Dallas, TX
+
+8068			
+General Dynamics			
+Fort Worth, TX
+
+8069			
+AT &amp; T				
+Naperville, IL
+
+806A			
+Autophon				
+Solothurn	 Switzerland
+
+806C			
+ComDesign		
+Goleta, CA
+
+806D			
+Compugraphic Corporation		
+Wilmington, MA
+
+806E - 8077		
+Landmark Graphics Corporation	
+Houston, TX
+
+807A			
+Matra					
+Paris France
+
+807B			
+Dansk Data Elektronik A/S		
+Herlev Denmark
+
+807C			
+University of Michigan		
+Ann Arbor, MI
+
+807D - 8080		
+Vitalink  Communications		
+Mountain View, CA
+
+8081 - 8083		
+Counterpoint Computers		
+San Jose, CA
+
+809B			
+Kinetics				
+Walnut Creek, CA
+
+809C - 809E		
+Datability				
+New York, NY
+
+809F		
+Spider Systems Ltd.			
+Edinburgh, Scotland
+
+80A3			
+Nixdorf Computers			
+Paderborn, West Germany
+
+80A4 - 80B3		
+Siemens Gammasonics, Inc.		
+Des Plaines, IL
+
+80C0 - 80C3		
+Digital Comm. Assoc. Inc.		
+Alpharetta, GA
+
+80C4 - 80C5		
+Banyan Systems, Inc.			
+Westboro, MA
+
+80C6			
+Pacer Software			
+La Jolla, CA
+
+80C7			
+Applitek Corporation			
+Wakefield, MA
+
+80C8 - 80CC		
+Intergraph Corporation		
+Huntsville, AL
+
+80CD - 80CE		
+Harris Corporation			
+Fort Lauderdale, FL
+
+80CF - 80D2		
+Taylor Instrument			
+Rochester	, NY
+
+80D3 - 80D4		
+Rosemount Corporation		
+La Habra, CA
+
+80DD			
+Varian Associates			
+Palo Alto, CA
+
+80DE - 80DF		
+Integrated Solutions			
+San Jose, CA
+
+80E0 - 80E3		
+Allen-Bradley				
+Ann Arbor, MI
+
+80E4 - 80F0		
+Datability				
+New York, NY
+
+80F2			
+Retix					
+Santa Monica, CA
+
+80F3 - 80F5		
+Kinetics				
+Walnut Creek, CA
+
+80F7			
+Apollo Computer			
+Chelmsford, MA
+
+80FF - 8103		
+Wellfleet Communications		
+Bedford, MA
+
+8130			
+Hayes Microcomputer Products Ltd.  
+Ontario  Canada
+formerly (Waterloo Microsystems Inc)
+
+8131			
+VG Laboratory Systems		
+Cheshire  England
+
+8132 - 8136		
+Bridge Communications, Inc.		
+Mountain View, CA
+
+8137 - 8138		
+Novell, Inc.				
+Provo, UT
+
+8139 - 813D		
+KTI					
+San Jose, CA
+
+8148			
+Logicraft, Inc.				
+Nashua, NH
+
+8149			
+Network Computing Devices		
+Palo Alto, CA
+
+814A			
+Alpha Micro				
+Santa Ana, CA
+
+814B			
+Keithley Instruments, Inc.		
+Cleveland, OH
+
+814D - 814E		
+BIIN					
+Hillsboro, OR
+
+814F			
+Technically Elite Concepts, Inc.	
+Torrance, CA
+
+8150			
+Rational Corp.			
+Santa Clara, CA
+
+8151 - 8153		
+Qualcomm, Inc.			
+San Diego, CA
+
+815C - 815E		
+Computer Protocol Pty Ltd.		
+Bentley  Western Australia
+
+8164 - 8166		
+Charles River Data Systems, Inc.	
+Framingham, MA
+
+8167 - 816C		
+Keithley Instruments, Inc.		
+Cleveland	, OH
+
+817D - 818C		
+Protocol Engines Inc.			
+Santa Barbara, CA
+
+818D			
+Motorola Computer X			
+Schaumburg, IL
+
+819A - 81A3		
+Qualcomm, Inc.			
+San Diego, CA
+
+81A4			
+ARAI Bunkichi			
+Yokohama  Japan
+
+81A5 - 81AE 		
+RAD Network Devices		
+Torrance, CA
+
+81B7 - 81B9		
+Xyplex					
+Boxborough MA
+
+81CC - 81D5		
+Apricot Computers			
+Birmingham  England
+
+81D6 - 81DD		
+Artisoft, Inc.				
+Tucson  AZ
+
+81DE - 81E0		
+Hewlett Packard			
+Palo Alto, CA
+
+81E6 - 81EF		
+Polygon, Inc.				
+St. Louis, MO
+
+81F0 - 81F2		
+Comsat Laboratories			
+Clarksburg, MD
+
+81F3 - 81F5		
+Science Applications International Corp. SAIC 	
+Oak Ridge, TN
+
+81F6 - 81F8		
+VG Analytical Ltd.			
+Manchester  England
+
+8203 - 8205		
+Quantum Software Systems, Ltd.	
+Ontario  Canada
+
+8221 - 8222		
+Ascom Banking Systems Ltd.		
+Solothurn  Switzerland
+
+823E - 8240		
+Advanced Encryption Systems, Inc.	
+Santa Clara, CA
+
+8263 - 826A		
+Charles River Data Systems		
+Framingham, MA
+
+827F - 8282		
+Athena Programming, Inc.		
+Hillsboro, OR
+
+829A - 829B		
+Institute for Industrial Information Tech. Ltd. 	
+Swansea	England
+
+829C - 82AB		
+Taurus Controls, Inc.			
+Tualatin, OR
+
+82AC - 838F		
+Walker Richer &amp; Quinn, Inc.		
+Seattle, WA
+
+8390			
+LANSoft, Inc.				
+Provo, UT
+
+8391 - 8693		
+Walker Richer &amp; Quinn, Inc.		
+Seattle, WA
+
+8694 - 869D		
+Idea Courier				
+Tempe, AZ
+
+869E - 86A1		
+Computer Network Technology Corp.
+Maple Grove, MN
+
+86A3 - 86AC		
+Gateway Communications, Inc.	
+Irvine, CA
+
+86DB 			
+SECTRA - Secure Transmission AB	
+Linkoping Sweden
+
+86DE			
+Delta Controls, Inc.			
+British Columbia	Canada
+
+86DF			
+USC-ISI				
+Marina del Rey, CA
+
+86E0 - 86EF		
+Landis &amp; Gyr Powers, Inc.		
+Buffalo Grove, IL
+
+8700 - 8710		
+Motorola, Inc.				
+Schaumburg, IL
+
+8711 - 8720		
+Cray Communications			
+Annapolis Jct, MD
+
+8725 - 8728		
+Phoenix Microsystems		
+Huntsville, AL
+
+8739 - 873C		
+Control Technology, Inc.		
+Knoxville	, TN
+
+8755 - 8759	
+LANSoft Inc.				
+Provo, UT
+
+875A - 875C		
+Norand				
+Cedar Rapids, IA
+
+875D - 8766		
+Univ. of Utah Dept./Computer Science 	
+Salt Lake City, UT
+
+8780 - 8785		
+Symbol Technologies, Inc.		
+San Jose, CA
+
+8804 - 8806		
+Marathon Technologies Corp.		
+Boxborough, MA
+
+880F - 8812		
+Hypercom Network Systems		
+Phoenix, AZ
+
+8813			
+Japan Computer Industry Inc.		
+Osaka Japan
+
+8856 			
+Axis Communications AB		
+Scheelevagen	Sweden
+
+8A96 - 8A97		
+Invisible Software			
+Foster City, CA
+
+9000			
+Xerox					
+Webster, NY
+
+FF00 - FF0F		
+ISC-Bunker Ramo			
+Spokane, WA
+
+884C
+The ATM Forum
+Mountainview  CA
+
+885a			
+Foundry Networks			
+Sunnyvale, CA
+
+885b
+Hewlett-Packard GmbH
+Boeblingen, Germany
+
+885c
+Hewlett-Packard GmbH
+Boeblingen, Germany
+
+885d
+Endocardial Solutions, Inc.
+St. Paul  MN
+
+885e
+Quantum Corporation
+Milpitas  CA 
+
+885f
+Digidesign
+Palo Alto  CA
+
+8860
+AGCS
+Phoenix  AZ 
+
+8861
+Intel
+Hillsboro OR
+
+8862
+Intel
+Hillsboro OR
+
+8863
+UUNET Technologies, Inc.
+Fairfax VA
+
+8864
+UUNET Technologies, Inc.
+Fairfax VA
+
+8865
+Visual Networks
+Rockville MD
+
+8866
+Lucent Technologies
+Naperville IL 
+
+8867
+Lucent Technologies
+Naperville IL 
+
+8868
+NBX Corporation
+Andover  MA
+
+8869
+Broadband Access Systems
+Marlborough  MA
+
+886a
+Electronic Theatre Controls,Inc.
+Middleton  WI
+
+886b
+Bay Networks
+Santa Clara  CA
+
+886c
+Epigram, Inc.
+Sunnyvale  CA
+
+886d
+Intel Corporation 
+Hillsboro OR
+
+886e
+Intel Corporation 
+Hillsboro OR
+
+886f
+Microsoft Corporation
+Redmond  WA 
+
+8870
+Alteon Networks, Inc.
+San Jose  CA 
+
+8871
+Nippon Telegraph &amp; Telephone Corp.
+Tokyo, Japan
+
+8872
+UUNET Technologies
+Purchase, NY
+
+8873
+Crescent Networks, Inc.
+Chelmsford, MA
+
+8874
+Broadcom Corp.
+San Jose, CA
+
+8875
+Adaptive Broadband Corp.
+Sunnyvale, CA 
+
+
+</PRE>
+<P><I>last updated 28 July 1999</I></P></BODY></HTML>

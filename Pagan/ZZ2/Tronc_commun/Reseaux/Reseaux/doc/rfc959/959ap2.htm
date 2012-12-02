@@ -1,0 +1,146 @@
+<html><head><title>FTP</title></head>
+<body bgcolor="#dddddd">
+
+<p>RFC: 959<br>
+Statut : Standard<br>
+</p><p>Remplace RFC: 765 (IEN 149) 
+</p><h1 align="center">File Transfer Protocol (FTP)</h1>
+<h2 align="center">Spécification</h2>
+<p></p><hr>
+<p>Crédits : J. Postel, J. Reynolds / ISI<br>
+Traduction : <a href="mailto:Valery.Fremaux@eisti.fr">Valéry G. FREMAUX</a> Ingénieur Professeur / <a href="http://www.eisti.fr/">EISTI</a><br>
+Edition originale : Octobre 1985 / Version FR: Février 1997 
+</p><p align="center"><a href="959ap1.htm">Précédent</a> - <a href="959ap3.htm">Suite</a> - <a href="959tm.htm">Retour au sommaire</a>
+</p><p></p><hr>
+
+<h2><font color="#000080">APPENDICE II -  COMMANDES DE REPERTOIRE</font></h2>
+
+<p>UNIX disposant d'une structure de répertoires en arbre dont les éléments
+(répertoires) sont simples à manipuler car compris comme des fichiers à part
+entière, il apparaît utile d'étendre les fonctionnalités des serveurs FTP
+sur ce type de plate-forme pour y adjoindre des commandes de manipulation
+de répertoires. Dans la mesure ou d'autres types d'hôtes de l'ARPA-Internet
+disposent aussi de structures de répertoires en arbre (y compris TOPS-20
+et Multics), ces commandes ont été ajoutées sous la forme la plus générique
+possible.   </p><p>Quatre commandes de manipulation de répertoire ont été adjointes à la définition de FTP :
+
+</p><p><b><code>MKD chemin d'accès</code></b>
+
+</p><p>Crée un nouveau répertoire de nom "chemin d'accès".
+
+</p><p><b><code>RMD chemin d'accès</code></b> 
+
+</p><p>Efface le répertoire de nom "chemin d'accès".
+
+</p><p><b><code>PWD</code></b>
+ 
+</p><p>Imprime le nom du répertoire de travail courant. 
+
+</p><p><b><code>CDUP</code></b>
+
+</p><p>Remonte au père du répertoire courant de travail. Le père devient le nouveau répertoire de travail.
+
+</p><p>L'argument "chemin d'accès" devra être créé (ou détruit) au titre
+de sous-répertoire du répertoire courant, sauf si la chaîne "chemin d'accès"
+contient suffisamment d'information pour qu'il en soit fait autrement, ex.,
+"chemin d'accès" est exprimé sous forme absolue (sous UNIX et Multics), ou
+ce chemin ressemble à quelque chose comme "&lt;abso.lute.path&gt;" sous TOPS-20. 
+ </p><p>CODES DE REPONSE
+
+</p><p>La commande CDUP est un cas particulier de la commande CWD, et est
+disponible pour simplifier l'écriture de programmes transférant des arborescences
+complètes entre des systèmes qui notent par une syntaxe différente l'accès
+au répertoire père. Les codes de réponse à une commande CDUP sont identiques
+à ceux obtenus pour une commande CWD.  </p><p>Les codes de réponse à la commande RMD sont identiques à ceux obtenus pour son homologue "fichiers", DELE.
+
+</p><p>Les codes de réponse pour la commande MKD, par contre, sont un peu
+plus compliqués. Un répertoire nouvellement créé sera très fréquemment l'argument
+d'une commande CWD ultérieure. Malheureusement, l'argument passé à la commande
+MKD n'est pas toujours exploitable directement par la commande CWD. C'est
+le cas par exemple, lorsqu'un sous-répertoire est créé sous TOPS-20 en donnant
+juste le nom du sous-répertoire. C'est à dire, la séquence suivante pour
+un serveur FTP tournant sous TOPS-20   </p><p><font color="#008000"><code>MKD MYDIR<br>
+CWD MYDIR</code></font>
+
+</p><p>va échouer. Le nouveau sous-répertoire ne peut en effet être accédé
+qu'en mode "absolu"; ex., si la commande MKD avait été envoyée pour un répertoire
+courant &lt;DFRANKLIN&gt;, l'accès au nouveau sous-répertoire ne peut se
+faire que par la spécification de &lt;DFRANKLIN.MYDIR&gt;. </p><p>Même sous UNIX et Multics, l'argument passé à MKD peut aussi ne pas
+convenir. S'il s'agit d'un chemin "relatif" (c-à-d., un chemin interprété
+à partir du répertoire courant), l'utilisateur devra nécessairement être
+positionné dans ce répertoire initial pour atteindre le sous-répertoire considéré
+par cette expression. Suivant l'application, cela peut se révéler inconfortable.
+Dans tous les cas, ce principe manque de robustesse.  </p><p>Pour résoudre ces problèmes, et sur conclusion positive d'une commande
+MKD, le serveur devrait retourner de préférence la chaîne suivante :  </p><p><font color="#008000"><code>257&lt;espace&gt;"&lt;nom-répertoire&gt;"&lt;espace&gt;&lt;commentaire&gt;</code></font>
+
+</p><p>Le serveur, par là, indique quelle est la chaîne à utiliser pour accéder
+au répertoire nouvellement créé. Le nom de répertoire peut contenir n'importe
+quels caractères; un guillemet dans la chaîne devra être doublé.   </p><p>Par exemple, un utilisateur se branche sur le répertoire /usr/dm, et crée un sous répertoire, appelé "chemin":
+
+</p><p><font color="#008000"><code><pre>         CWD /usr/dm
+         200 directory changed to /usr/dm
+         MKD chemin
+         257 "/usr/dm/chemin" directory created</pre></code></font> 
+
+</p><p> Voici un exemple avec un guillemet "dans le texte" :
+
+</p><p><font color="#008000"><code><pre>         MKD foo"bar
+         257 "/usr/dm/foo""bar" directory created
+         CWD /usr/dm/foo"bar
+         200 directory changed to /usr/dm/foo"bar</pre></code></font>
+
+</p><p>L'existence préalable d'un sous répertoire de même nom est considéré
+comme une erreur, et le serveur doit renvoyer une erreur "access denied". 
+ </p><p><font color="#008000"><code><pre>         CWD /usr/dm
+         200 directory changed to /usr/dm
+         MKD chemin
+         521-"/usr/dm/chemin" directory already exists;
+         521 taking no action.</pre></code></font>
+
+</p><p>Les réponses d'erreur pour MKD sont analogues à son homologue "fichiers",
+STOR. De même, une réponse  "access denied" est donnée si le nom du répertoire
+entre en conflit avec un autre fichier existant pour ce chemin, quel que
+soit son type (ceci est effectivement un problème d'UNIX, mais ne devrait
+pas en être un sous TOPS-20). </p><p>Comme la commande PWD renvoie le même type d'information que la commande
+MKD pour une conclusion positive, le code de réponse positive pour la commande
+PWD utilisera également le code 257.  <b><i></i></b></p><p><b><i>SUBTILITES</i></b>
+
+</p><p> Comme ces commandes seront les plus utiles pour transférer des arborescences
+d'une machine à l'autre, il faudra se rappeler que l'argument donné à MKD
+doit être interprété comme un chemin relatif par rapport au répertoire courant,
+sauf si ce chemin contient suffisamment d'information pour qu'il en soit
+autrement. Voici un exemple hypothétique sur un système TOPS-20 :  </p><p><font color="#008000"><code><pre>         CWD &lt;some.where&gt;
+         200 Working directory changed
+         MKD overrainbow
+         257 "&lt;some.where.overrainbow&gt;" directory created
+         CWD overrainbow
+         431 No such directory
+         CWD &lt;some.where.overrainbow&gt;
+         200 Working directory changed
+ 
+         CWD &lt;some.where&gt;
+         200 Working directory changed to &lt;some.where&gt;
+         MKD &lt;unambiguous&gt;
+         257 "&lt;unambiguous&gt;" directory created
+         CWD &lt;unambiguous&gt;
+</pre></code></font>
+ 
+</p><p>Notez que le premier exemple se termine par la création d'un sous
+répertoire du répertoire courant d'accès. Par contre, l'argument donné dans
+la deuxième création fournit assez d'information au système TOPS-20 pour
+que celui-ci puisse considérer de façon univoque que le répertoire à créer
+doit l'être à partir de la racine. Notez d'ailleurs dans le premier exemple,
+que l'utilisateur à "violé" le protocole en essayant d'accéder directement
+au répertoire nouvellement créé sans utiliser la chaîne retournée par le
+système TOPS-20. Le problème aurait pu être masqué par l'existence d'un répertoire
+&lt;overrainbow&gt; au niveau haut de hiérarchie; ceci est une ambiguïté
+propre à certaines implémentations du système TOPS-20. Des considérations
+similaires s'appliquent à la commande RMD. Le cas est le suivant : sauf là
+où cette manipulation violerait des conventions internes du système pour
+la description de chemins d'accès relatifs et absolus, l'hôte doit traiter
+les arguments des commandes MKD et RMD comme des sous répertoires relatifs.
+La réponse de code 257 à une commande MKD doit toujours renvoyer le chemin
+d'accès absolu nouvellement créé.   </p><p></p><hr>
+<p align="center"><a href="959ap1.htm">Précédent</a> - <a href="959ap3.htm">Suivant</a> - <a href="959tm.htm">Retour au sommaire</a>
+
+</p></body></html>

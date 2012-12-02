@@ -1,0 +1,893 @@
+<HTML>
+<HEAD>
+<TITLE>Orange Book Security Class Requirements</TITLE>
+</HEAD>
+
+<BODY>
+<HR NOSHADE>
+
+<basefont size = 4>
+
+<font size = 5>
+	Orange Book Security Class Delta Requirements
+</font>
+<P>
+
+	The 
+		<A HREF = "ob_glossary_eo.html#orange_book">Orange Book</A> 
+		<A HREF = "ob_glossary_pz.html#security_requirement">security requirements</A> 
+	have been reformulated as a delta (differences only) document for easier comprehension of 
+	differences of functionality from one class to the next. Each higher class adds to or 
+	modifies the 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A> 
+	of the lower class. Text is quoted directly from the document 
+		<A HREF = "http://tecnet0.jcte.jcs.mil:9000/./htdocs/teinfo/directives/soft/
+		ds5200.281.html">TCSEC</A>, 
+	DOD 5200.28-STD.
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_ad.html#discretionary_access_control">Discretionary 
+		Access Control</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "1">
+		1 - C1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall define and control 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	between named 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	and named 
+		<A HREF = "ob_glossary_eo.html#object">objects</A> 
+	(e.g., files and programs) in the 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system">system</A>. 
+	The enforcement mechanism (e.g., self/
+		<A HREF = "ob_glossary_eo.html#group">group</A>
+	/public controls, 
+		<A HREF = "ob_glossary_ad.html#access_control_list">access control lists</A>) 
+	shall allow users to specify and control sharing of those objects by named 
+	individuals or defined groups or both.
+<P>
+
+<DT>
+		<A NAME = "2">
+		2 - C2, B1, B2</A>
+<DD>
+	Modified.<BR>
+	The enforcement mechanism (e.g., self/
+		<A HREF = "ob_glossary_eo.html#group">group</A>
+	/public controls, 
+		<A HREF = "ob_glossary_ad.html#access_control_list">access control lists</A>) 
+	shall allow 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	to specify and control sharing of those 
+		<A HREF = "ob_glossary_eo.html#object">objects</A> 
+	by named individuals, or defined groups of individuals, or by both, and shall provide 
+	controls to limit propagation of 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	rights.
+<P>
+<DD>
+	The 
+		<A HREF = "ob_glossary_ad.html#discretionary_access_control">discretionary 
+		access control</A> 
+	mechanism shall, either by explicit user action or by default, provide that objects 
+	are protected from 
+		<A HREF = "ob_glossary_pz.html#unauthorized">unauthorized</A> 
+	access. These 
+		<A HREF = "ob_glossary_ad.html#access_control">access controls</A> 
+	shall be capable of including or excluding access to the 
+		<A HREF = "ob_glossary_eo.html#granularity">granularity</A> 
+	of a single user. Access 
+		<A HREF = "ob_glossary_pz.html#permission">permission</A> 
+	to an object by users not already possessing access permission shall only be assigned by 
+		<A HREF = "ob_glossary_ad.html#authorized_user">authorized users</A>.
+<P>
+
+<DT>
+		<A NAME = "3">
+		3 - B3, A1</A>
+<DD>
+	Modified.<BR>
+	The enforcement mechanism (e.g., 
+		<A HREF = "ob_glossary_ad.html#access_control_list">access control lists</A>) 
+	shall allow 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	to specify and control sharing of those 
+		<A HREF = "ob_glossary_eo.html#object">objects</A>, 
+	and shall provide controls to limit propagation of 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	rights.
+<P>
+<DD>
+	Modified.<BR>
+	These 
+		<A HREF = "ob_glossary_ad.html#access_control">access controls</A> 
+	shall be capable of specifying, for each named object, a list of named individuals 
+	and a list of 
+		<A HREF = "ob_glossary_eo.html#group">groups</A> 
+	of named individuals with their respective modes of access to that object. Furthermore, 
+	for each such named object, it shall be possible to specify a list of named individuals 
+	and a list of groups of named individuals for which no access to the object is to be given.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_eo.html#object_reuse">Object Reuse</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "4">
+		4 - C2, B1, B2, B3, A1</A>
+<DD>
+	All 
+		<A HREF = "ob_glossary_ad.html#authorization">authorizations</A> 
+	to the information contained within a 
+		<A HREF = "ob_glossary_pz.html#storage_object">storage object</A> 
+	shall be revoked prior to initial assignment, allocation or reallocation to a 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A> 
+	from the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB's</A> 
+	pool of unused storage objects. No information, including 
+		<A HREF = "ob_glossary_eo.html#encryption">encrypted</A> 
+	representations of information, produced by a prior subject's actions is to be 
+		<A HREF = "ob_glossary_ad.html#availability">available</A> 
+	to any subject that obtains 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	to an 
+		<A HREF = "ob_glossary_eo.html#object">object</A> 
+	that has been released back to the 
+		<A HREF = "ob_glossary_pz.html#system">system</A>.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_eo.html#labels">Labels</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "5">
+		5 - B1</A>
+<DD>
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">Sensitivity labels</A> 
+	associated with each 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A> and 
+		<A HREF = "ob_glossary_pz.html#storage_object">storage object</A> 
+	under its control (e.g., process, file, segment, device) shall be maintained by the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>. 
+	These 
+		<A HREF = "ob_glossary_eo.html#labels">labels</A> 
+	shall be used as the basis for 
+		<A HREF = "ob_glossary_eo.html#mandatory_access_control">mandatory access control</A> 
+	decisions. In order to 
+		<A HREF = "ob_glossary_eo.html#import">import</A> 
+	non-labeled data, the TCB shall request and receive from an 
+		<A HREF = "ob_glossary_ad.html#authorized_user">authorized user</A> 
+	the 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A> 
+	of the data, and all such actions shall be 
+		<A HREF = "ob_glossary_ad.html#audit">auditable</A> 
+	by the TCB.
+<P>
+
+<DT>
+		<A NAME = "6">
+		6 - B2, B3, A1</A>
+<DD>
+	Modified.<BR>
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">Sensitivity labels</A> 
+	associated with each 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system_resource">system resource</A> 
+	(e.g., 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A>, 
+		<A HREF = "ob_glossary_pz.html#storage_object">storage object</A>, 
+	ROM) that is directly or indirectly 
+		<A HREF = "ob_glossary_ad.html#access">accessible</A> 
+	by subjects external to the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be maintained by the TCB.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_eo.html#label_integrity">Label Integrity</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "7">
+		7 - B1, B2, B3, A1</A>
+<DD>
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">Sensitivity labels</A> 
+	shall accurately represent 
+		<A HREF = "ob_glossary_pz.html#security_level">security levels</A> 
+	of the specific 
+		<A HREF = "ob_glossary_pz.html#subject">subjects</A> 
+	or 
+		<A HREF = "ob_glossary_eo.html#object">objects</A> 
+	with which they are associated. When 
+		<A HREF = "ob_glossary_eo.html#export">exported</A> 
+	by the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>, 
+	sensitivity labels shall accurately and unambiguously represent the internal 
+		<A HREF = "ob_glossary_eo.html#labels">labels</A> 
+	and shall be associated with the information being exported.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_eo.html#exportation_of_labeled_information">
+		Exportation of Labeled Information</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "8">
+		8 - B1, B2, B3, A1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall designate each 
+		<A HREF = "ob_glossary_ad.html#communications_channel">communication channel</A> 
+	and 
+		<A HREF = "ob_glossary_eo.html#I/O_device">I/O device</A> 
+	as either 
+		<A HREF = "ob_glossary_pz.html#single-level">single-level</A> 
+	or 
+		<A HREF = "ob_glossary_eo.html#multilevel">multilevel</A>. 
+	Any change in this designation shall be done manually and shall be 
+		<A HREF = "ob_glossary_ad.html#audit">auditable</A> 
+	by the TCB. The TCB shall maintain and be able to audit any change in the 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A> 
+	or levels associated with a communication channel or I/O device.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_eo.html#exportation_to_multilevel_devices">
+		Exportation to Multilevel Devices</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "9">
+		9 - B1, B2, B3, A1</A>
+<DD>
+	When the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+		<A HREF = "ob_glossary_eo.html#export">exports</A> 
+	an 
+		<A HREF = "ob_glossary_eo.html#object">object</A> 
+	to a 
+		<A HREF = "ob_glossary_eo.html#multilevel">multilevel</A> 
+		<A HREF = "ob_glossary_eo.html#I/O_device">I/O device</A>, 
+	the 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity label</A> 
+	associated with that object shall also be exported and shall reside on the same physical 
+	medium as the exported information and shall be in the same form (i.e., machine-readable 
+	or human-readable form). When the TCB exports or 
+		<A HREF = "ob_glossary_eo.html#import">imports</A> 
+	an object over a multilevel 
+		<A HREF = "ob_glossary_ad.html#communications_channel">communication channel</A>, 
+	the 
+		<A HREF = "ob_glossary_pz.html#protocol">protocol</A> 
+	used on that 
+		<A HREF = "ob_glossary_ad.html#channel">channel</A> 
+	shall provide for the unambiguous pairing between the sensitivity labels and the associated 
+	information that is sent or received.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_eo.html#exportation_to_single-level_devices">
+		Exportation to Single-Level Devices</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "10">
+		10 - B1, B2, B3, A1</A>
+<DD>
+		<A HREF = "ob_glossary_pz.html#single-level">Single-level</A> 
+		<A HREF = "ob_glossary_eo.html#I/O_device">I/O devices</A> 
+	and single-level 
+		<A HREF = "ob_glossary_ad.html#communications_channel">communication channels</A> 
+	are not required to maintain the 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity labels</A> 
+	of the information they process. However, the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall include a mechanism by which the TCB and an 
+		<A HREF = "ob_glossary_ad.html#authorized_user">authorized user</A> 
+	reliably communicate to designate the single 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A> 
+	of information 
+		<A HREF = "ob_glossary_eo.html#import">imported</A> 
+	or 
+		<A HREF = "ob_glossary_eo.html#export">exported</A> 
+	via single-level communication channels or I/O devices.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_eo.html#labeling_human-readable_output">
+		Labeling Human-Readable Output</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "11">
+		11 - B1, B2, B3, A1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system_administrator">system administrator</A> 
+	shall be able to specify the printable 
+		<A HREF = "ob_glossary_eo.html#labels">label</A> 
+	names associated with 
+		<A HREF = "ob_glossary_eo.html#export">exported</A> 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity labels</A>. 
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall mark the beginning and end of all human-readable, paged, hardcopy output (e.g., 
+	line printer output) with human-readable sensitivity labels that properly (1) represent 
+	the sensitivity of the output. The TCB shall, by default, mark the top and bottom of each 
+	page of human-readable, paged, hardcopy output (e.g., line printer output) with human-readable 
+	sensitivity labels that properly (1) represent the overall sensitivity of the output or that 
+	properly (1) represent the sensitivity of the information on the page. The TCB shall, by 
+	default and in an appropriate manner, mark other forms of human-readable output (e.g., 
+	maps, graphics) with human-readable sensitivity labels that properly (1) represent the 
+	sensitivity of the output. Any override of these marking defaults shall be 
+		<A HREF = "ob_glossary_ad.html#audit">auditable</A> 
+	by the TCB.
+
+<P>
+<DD>
+	(1)  The hierarchical 
+		<A HREF = "ob_glossary_ad.html#classification">classification</A> 
+	component in human-readable sensitivity labels shall be equal to the greatest hierarchical 
+	classification of any of the information in the output that the labels refer to; the 
+	non-hierarchical 
+		<A HREF = "ob_glossary_ad.html#category">category</A> 
+	component shall include all of the non-hierarchical categories of the information in 
+	the output the labels refer to, but no other non-hierarchical categories.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_eo.html#mandatory_access_control">Mandatory Access Control</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "12">
+		12 - B1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall enforce a 
+		<A HREF = "ob_glossary_eo.html#mandatory_access_control">mandatory access control</A> 
+		<A HREF = "ob_glossary_pz.html#policy">policy</A> 
+	over all 
+		<A HREF = "ob_glossary_pz.html#subject">subjects</A> 
+	and 
+		<A HREF = "ob_glossary_pz.html#storage_object">storage objects</A> 
+	under its control (e.g., processes, files, segments, devices). These subjects and 
+		<A HREF = "ob_glossary_eo.html#object">objects</A> 
+	shall be assigned 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity labels</A> 
+	that are a combination of hierarchical 
+		<A HREF = "ob_glossary_ad.html#classification">classification</A> 
+	levels and non-hierarchical 
+		<A HREF = "ob_glossary_ad.html#category">categories</A>, 
+	and the 
+		<A HREF = "ob_glossary_eo.html#labels">labels</A> 
+	shall be used as the basis for mandatory access control decisions. The TCB shall be able to 
+	support two or more such 
+		<A HREF = "ob_glossary_pz.html#security_level">security levels</A>. 
+	(See the Mandatory Access Control guidelines.) The following 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A> 
+	shall hold for all 
+		<A HREF = "ob_glossary_ad.html#access">accesses</A> 
+	between subjects and objects controlled by the TCB: A subject can 
+		<A HREF = "ob_glossary_pz.html#read">read</A> 
+	an object only if the hierarchical classification in the subject's security level is 
+	greater than or equal to the hierarchical classification in the object's security level 
+	and the non-hierarchical categories in the subject's security level include all the 
+	non-hierarchical categories in the object's security level. A subject can 
+		<A HREF = "ob_glossary_pz.html#write">write</A> 
+	an object only if the hierarchical classification in the subject's security level is less 
+	than or equal to the hierarchical classification in the object's security level and all 
+	the non-hierarchical categories in the subject's security level are included in the 
+	non-hierarchical categories in the object's security level. 
+		<A HREF = "ob_glossary_eo.html#identification_and_authentication">Identification and 
+		authentication</A>
+	data shall be used by the TCB to 
+		<A HREF = "ob_glossary_ad.html#authenticate">authenticate</A> 
+	the 
+		<A HREF = "ob_glossary_pz.html#user">user's</A> 
+		<A HREF = "ob_glossary_eo.html#identity">identity</A> 
+	and to ensure that the security level and 
+		<A HREF = "ob_glossary_ad.html#authorization">authorization</A> 
+	of subjects external to the TCB that may be created to act on behalf of the individual user are 
+		<A HREF = "ob_glossary_ad.html#dominate">dominated</A> 
+	by the 
+		<A HREF = "ob_glossary_ad.html#clearance">clearance</A> 
+	and authorization of that user.
+<P>
+
+<DT>
+		<A NAME = "13">
+		13 - B2, B3, A1</A>
+<DD>
+	Modified. <BR>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall enforce a 
+		<A HREF = "ob_glossary_eo.html#mandatory_access_control">mandatory access control</A> 
+		<A HREF = "ob_glossary_pz.html#policy">policy</A> 
+	over all resources (i.e., 
+		<A HREF = "ob_glossary_pz.html#subject">subjects</A>, 
+		<A HREF = "ob_glossary_pz.html#storage_object">storage objects</A>, 
+	and 
+		<A HREF = "ob_glossary_eo.html#I/O_device">I/O devices</A>) 
+	that are directly or indirectly 
+		<A HREF = "ob_glossary_ad.html#access">accessible</A> 
+	by subjects external to the TCB.
+<P>
+<DD>
+	Modified. <BR>
+	The following 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A> 
+	shall hold for all accesses between all 
+		<A HREF = "ob_glossary_pz.html#subject">subjects</A> 
+	external to the TCB and all objects directly or indirectly accessible by these subjects: 
+	A subject can 
+		<A HREF = "ob_glossary_pz.html#read">read</A> 
+	an object only if the hierarchical 
+		<A HREF = "ob_glossary_ad.html#classification">classification</A> 
+	in the subject's 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A> 
+	is greater than or equal to the hierarchical classification in the object's security level 
+	and the non-hierarchical 
+		<A HREF = "ob_glossary_ad.html#category">categories</A> 
+	in the subject's security level include all the non-hierarchical categories in the object's 
+	security level.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#subject_sensitivity_labels">Subject Sensitivity Labels</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "14">
+		14 - B2, B3, A1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall immediately notify a terminal 
+		<A HREF = "ob_glossary_pz.html#user">user</A> 
+	of each change in the 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A> 
+	associated with that user during an interactive session. A terminal user shall be able 
+	to query the TCB as desired for a display of the 
+		<A HREF = "ob_glossary_pz.html#subject">subject's</A> 
+	complete 
+		<A HREF = "ob_glossary_pz.html#sensitivity_label">sensitivity label</A>.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_ad.html#device_label">Device Labels</A>
+</font>
+<P>
+<DL>
+<DT>
+		<A NAME = "15">
+		15 - B2, B3, A1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall support the assignment of minimum and maximum 
+		<A HREF = "ob_glossary_pz.html#security_level">security levels</A> 
+	to all attached physical devices. These security levels shall be used by the TCB to enforce 
+	constraints imposed by the physical environments in which the devices are located.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_eo.html#identification_and_authentication">Identification and 
+		Authentication</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "16">
+		16 - C1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall require 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	to 
+		<A HREF = "ob_glossary_eo.html#identification">identify</A> 
+	themselves to it before beginning to perform any other actions that the TCB is expected to 
+	mediate. Furthermore, the TCB shall use a protected mechanism (e.g., 
+		<A HREF = "ob_glossary_pz.html#password">passwords</A>) 
+	to 
+		<A HREF = "ob_glossary_ad.html#authenticate">authenticate</A> 
+	the user's 
+		<A HREF = "ob_glossary_eo.html#identity">identity</A>. 
+	The TCB shall protect 
+		<A HREF = "ob_glossary_ad.html#authentication">authentication</A> 
+	data so that it cannot be 
+		<A HREF = "ob_glossary_ad.html#access">accessed</A> 
+	by any 
+		<A HREF = "ob_glossary_pz.html#unauthorized">unauthorized</A> 
+	user.
+<P>
+
+<DT>
+		<A NAME = "17">
+		17 - C2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be able to enforce individual 
+		<A HREF = "ob_glossary_ad.html#accountability">accountability</A> 
+	by providing the 
+		<A HREF = "ob_glossary_ad.html#capability">capability</A> 
+	to uniquely 
+		<A HREF = "ob_glossary_eo.html#identification">identify</A> 
+	each individual 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system_user">system user</A>. 
+	The TCB shall also provide the capability of associating this 
+		<A HREF = "ob_glossary_eo.html#identity">identity</A> 
+	with all 
+		<A HREF = "ob_glossary_ad.html#audit">auditable</A> 
+	actions taken by that individual.
+<P>
+
+<DT>
+		<A NAME = "18">
+		18 - B1, B2, B3, A1</A>
+<DD>
+	Modified.<BR>
+	Furthermore, the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall maintain 
+		<A HREF = "ob_glossary_ad.html#authentication">authentication</A> 
+	data that includes information for 
+		<A HREF = "ob_glossary_pz.html#verification">verifying</A> 
+	the 
+		<A HREF = "ob_glossary_eo.html#identity">identity</A> 
+	of individual 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	(e.g., 
+		<A HREF = "ob_glossary_pz.html#password">passwords</A>) 
+	as well as information for determining the 
+		<A HREF = "ob_glossary_ad.html#clearance">clearance</A> 
+	and 
+		<A HREF = "ob_glossary_ad.html#authorization">authorizations</A> 
+	of individual users. This data shall be used by the TCB to 
+		<A HREF = "ob_glossary_ad.html#authenticate">authenticate</A> 
+	the 
+		<A HREF = "ob_glossary_pz.html#user_ID">user's identity</A> 
+	and to ensure that the 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A> 
+	and authorizations of 
+		<A HREF = "ob_glossary_pz.html#subject">subjects</A> 
+	external to the TCB that may be created to act on behalf of the individual user are 
+		<A HREF = "ob_glossary_ad.html#dominate">dominated</A> 
+	by the clearance and authorization of that user.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_ad.html#audit">Audit</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "19">
+		19 - C2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be able to create, maintain, and protect from modification or 
+		<A HREF = "ob_glossary_pz.html#unauthorized">unauthorized</A> 
+		<A HREF = "ob_glossary_ad.html#access">access</A> 
+	or destruction an 
+		<A HREF = "ob_glossary_ad.html#audit_trail">audit trail</A> 
+	of accesses to the 
+		<A HREF = "ob_glossary_eo.html#object">objects</A> 
+	it protects. The 
+		<A HREF = "ob_glossary_ad.html#audit">audit</A> 
+	data shall be protected by the TCB so that 
+		<A HREF = "ob_glossary_pz.html#read">read</A> 
+	access to it is limited to those who are 
+		<A HREF = "ob_glossary_ad.html#authorized">authorized</A> 
+	for audit data. The TCB shall be able to record the following types of 
+		<A HREF = "ob_glossary_eo.html#event">events</A>: 
+	use of 
+		<A HREF = "ob_glossary_eo.html#identification_and_authentication">identification and 
+		authentication</A> 
+	mechanisms, introduction of objects into a 
+		<A HREF = "ob_glossary_pz.html#user">user's</A> 
+	address space (e.g., file open, program initiation), deletion of objects, actions taken 
+	by computer operators and 
+		<A HREF = "ob_glossary_pz.html#system_administrator">system administrators</A> 
+	and/or 
+		<A HREF = "ob_glossary_pz.html#system_security">system security</A> 
+	officers, and other 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	relevant events. For each recorded event, the audit record shall identify: date and time 
+	of the event, user, type of event, and success or failure of the event. For identification/ 
+	authentication events the origin of request (e.g., terminal ID) shall be included in the 
+	audit record. For events that introduce an object into a user's address space and for object 
+	deletion events the audit record shall include the name of the object. The 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+	system administrator shall be able to selectively audit the actions of any one or more 
+	users based on individual 
+		<A HREF = "ob_glossary_eo.html#identity">identity</A>.
+<P>
+
+<DT>
+		<A NAME = "20">
+		20 - B1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall also be able to 
+		<A HREF = "ob_glossary_ad.html#audit">audit</A> 
+	any override of human-readable output markings.
+<P>
+<DD>
+	Modified.<BR>
+	For 
+		<A HREF = "ob_glossary_eo.html#event">events</A> 
+	that introduce an 
+		<A HREF = "ob_glossary_eo.html#object">object</A> 
+	into a 
+		<A HREF = "ob_glossary_pz.html#user">user's</A> 
+	address space and for object deletion events the audit record shall include the name of 
+	the object and the object's 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A>. 
+	The 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system_administrator">system administrator</A> 
+	shall be able to selectively audit the actions of any one or more 
+	users based on individual 
+		<A HREF = "ob_glossary_eo.html#identity">identity</A> 
+	and/or object security level.
+<P>
+
+<DT>
+		<A NAME = "21">
+		21 - B2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be able to 
+		<A HREF = "ob_glossary_ad.html#audit">audit</A> 
+	the identified 
+		<A HREF = "ob_glossary_eo.html#event">events</A> 
+	that may be used in the exploitation of 
+		<A HREF = "ob_glossary_ad.html#covert_storage_channel">covert storage channels</A>.
+<P>
+
+<DT>
+		<A NAME = "22">
+		22 - B3, A1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall contain a mechanism that is able to monitor the occurrence or accumulation of 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+		<A HREF = "ob_glossary_ad.html#audit">auditable</A> 
+		<A HREF = "ob_glossary_eo.html#event">events</A> 
+	that may indicate an imminent violation of 
+		<A HREF = "ob_glossary_pz.html#security_policy">security policy</A>. 
+	This mechanism shall be able to immediately notify the 
+		<A HREF = "ob_glossary_pz.html#security_administrator">security administrator</A> 
+	when thresholds are exceeded and, if the occurrence or accumulation of these security 
+	relevant events continues, the 
+		<A HREF = "ob_glossary_pz.html#system">system</A> 
+	shall take the least disruptive action to terminate the event.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#trusted_path">Trusted Path</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "23">
+		23 - B2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall support a 
+		<A HREF = "ob_glossary_pz.html#trust">trusted</A> 
+	communication path between itself and 
+		<A HREF = "ob_glossary_pz.html#user">user</A> 
+	for initial 
+		<A HREF = "ob_glossary_eo.html#login">login</A> 
+	and 
+		<A HREF = "ob_glossary_ad.html#authentication">authentication</A>. 
+	Communications via this path shall be initiated exclusively by a user.
+<P>
+
+<DT>
+		<A NAME = "24">
+		24 - B3, A1</A>
+<DD>
+	Modified.<BR>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall support a 
+		<A HREF = "ob_glossary_pz.html#trust">trusted</A> 
+	communication path between itself and 
+		<A HREF = "ob_glossary_pz.html#user">users</A> 
+	for use when a positive TCB-to-user connection is required (e.g., 
+		<A HREF = "ob_glossary_eo.html#login">login</A>, 
+	change 
+		<A HREF = "ob_glossary_pz.html#subject">subject</A> 
+		<A HREF = "ob_glossary_pz.html#security_level">security level</A>). 
+	Communications via this 
+		<A HREF = "ob_glossary_pz.html#trusted_path">trusted path</A> 
+	shall be activated exclusively by a user or the TCB and shall be logically isolated and 
+	unmistakably distinguishable from other paths.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#system_architecture">System Architecture</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "25">
+		25 - C1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall maintain a 
+		<A HREF = "ob_glossary_ad.html#domain">domain</A> 
+	for its own execution that protects it from external interference or tampering (e.g., 
+	by modification of its code or data structures). Resources controlled by the TCB may be 
+	a defined subset of the 
+		<A HREF = "ob_glossary_pz.html#subject">subjects</A> 
+	and 
+		<A HREF = "ob_glossary_eo.html#object">objects</A> 
+	in the 
+		<A HREF = "ob_glossary_ad.html#ADP">ADP</A> 
+		<A HREF = "ob_glossary_pz.html#system">system</A>.
+<P>
+
+<DT>
+		<A NAME = "26">
+		26 - C2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall isolate the resources to be protected so that they are subject to the 
+		<A HREF = "ob_glossary_ad.html#access_control">access control</A> 
+	and 
+		<A HREF = "ob_glossary_ad.html#audit">auditing</A> 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A>.
+<P>
+
+<DT>
+		<A NAME = "27">
+		27 - B1</A>
+<DD>
+	Modified.<BR>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall maintain process isolation through the provision of distinct address spaces 
+	under its control.
+<P>
+
+<DT>
+		<A NAME = "28">
+		28 - B2</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be internally structured into well-defined largely independent modules. It shall 
+	make effective use of available hardware to separate those elements that are 
+	protection-critical from those that are not. The TCB modules shall be designed such that 
+	the principle of 
+		<A HREF = "ob_glossary_eo.html#least_privilege">least privilege</A> 
+	is enforced. Features in hardware, such as 
+		<A HREF = "ob_glossary_pz.html#segmentation">segmentation</A>, 
+	shall be used to support logically distinct 
+		<A HREF = "ob_glossary_pz.html#storage_object">storage objects</A> 
+	with  separate attributes (namely: 
+		<A HREF = "ob_glossary_pz.html#read">readable</A>, 
+		<A HREF = "ob_glossary_pz.html#write">writable</A>). 
+	The 
+		<A HREF = "ob_glossary_pz.html#user">user</A> 
+	interface to the TCB shall be completely defined and all elements of the TCB identified.
+<P>
+
+<DT>
+		<A NAME = "29">
+		29 - B3, A1</A>
+<DD>
+	The 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A> 
+	shall be designed and structured to use a complete, conceptually simple protection mechanism 
+	with precisely defined semantics. This mechanism shall play a central role in enforcing the 
+	internal structuring of the TCB and the 
+		<A HREF = "ob_glossary_pz.html#system">system</A>. 
+	The TCB shall incorporate significant use of 
+		<A HREF = "ob_glossary_eo.html#layering">layering</A>, 
+	abstraction and 
+		<A HREF = "ob_glossary_ad.html#data_hiding">data hiding</A>. 
+	Significant system engineering shall be directed toward minimizing the complexity of the TCB 
+	and excluding from the TCB modules that are not protection-critical.
+</DL>
+<P>
+
+<HR NOSHADE>
+<font size = 5>
+		<A HREF = "ob_glossary_pz.html#system_integrity">System Integrity</A>
+</font>
+<P>
+
+<DL>
+<DT>
+		<A NAME = "30">
+		30 - C1, C2, B1, B2, B3, A1</A>
+<DD>
+	Hardware and/or software features shall be provided that can be used to periodically validate 
+	the correct operation of the on-site hardware and firmware elements of the 
+		<A HREF = "ob_glossary_pz.html#trusted_computing_base">TCB</A>.
+</DL>
+<P>
+
+</BODY>
+</HTML>

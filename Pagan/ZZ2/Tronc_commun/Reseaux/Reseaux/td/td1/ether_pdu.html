@@ -1,0 +1,164 @@
+<HTML>
+<HEAD>
+  <TITLE>Format des PDU Ethernet and IEEE 802</TITLE>
+	<LINK HREF="reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+<BODY BGCOLOR=white>
+<H1>Format des PDU Ethernet et IEEE 802.3/IS 8802-3</H1>
+
+<H2>Format général</H2>
+
+<P>Toutes les PDU transmises sur un câble Ethernet ont le format suivant, 
+	que ce soient des PDU-Ethernet ou des PDU-802.3 :</P>
+<BLOCKQUOTE><TABLE BORDER="BORDER" CELLSPACING="0" CELLPADDING="5">
+<TR VALIGN="Top">
+	<TD ALIGN="center" bgcolor="#d0d0d0"><TT>synchro</TT></TD>
+	<TD ALIGN="center"><TT>destination</TT><BR>(6)</TD>
+	<TD ALIGN="center"><TT>&nbsp;&nbsp;source&nbsp;&nbsp;&nbsp;</TT><BR>(6)</TD>
+	<TD ALIGN="center"><TT>type/lg</TT><BR>(2)</TD>
+	<TD ALIGN="center"><TT>données</TT><BR>(&lt;1500)</TD>
+	<TD ALIGN="center"><TT>bourrage</TT><BR>(&lt;46)</TD>
+	<TD ALIGN="center" bgcolor="#d0d0d0"><TT>contrôle</TT><BR>(4)</TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+
+<P>Les champs <TT>destination</TT> et <TT>source</TT> contiennent une adresse 
+MAC de 48 bits (6 octets).<BR>
+Chaque équipement est doté d'une carte Ethernet, dans laquelle 
+est gravée son adresse individuelle.<BR>
+Les 3 premiers octets d'une adresse individuelle identifient le fabricant de 
+la carte Ethernet par son <B>OUI</B> (<I>Organizationally Unique 
+Identifier</I>) (<A HREF="../../doc/ieee/ieee-oui.html">liste des OUI</A>).<br>
+Une adresse de groupe est identifiée dans la 
+<a href="../../doc/rfc1700/rfc1700-ethernet_multicast_addresses.html">liste des groupes</a> 
+de la RFC-1700.</P>
+
+<P>Le champ <TT>données</TT> contient une PDU d'un protocole de couche 
+supérieure.<BR>
+Dans une PDU-Ethernet-II, la couche supérieure est identifiée par le code 
+contenu dans le champ <TT><B>type</B></TT></P>
+
+<P>Le <TT>bourrage</TT> est nécessaire pour que les "petites" PDU 
+atteignent la longueur minimum.<BR>
+La longueur totale des champs <TT>données</TT> et <TT>bourrage</TT> 
+est comprise entre 46 et 1500 octets.</P>
+
+<P>Le champ <TT>type/lg</TT> dépend de la PDU 
+(<A HREF="#Ethernet-II">Ethernet II</A> ou 
+<A HREF="#IEEE-802.3">IEEE 802.3/IS 8802-3</A>).</P>
+<HR>
+
+<A NAME="Ethernet-II"></A>
+<H2>Ethernet II</H2>
+
+<P>Ce protocole a été élaboré avant que l'OSI n'intègre les réseaux locaux; 
+les piles bâties sur cette couche n'ont pas de couche LLC.<BR>
+La valeur du champ <TT>type</TT> indique à quel protocole appartient la PDU 
+contenue dans le champ <TT>donnée</TT> 
+(<A HREF="../../doc/rfc1700/rfc1700-ether_types.html">liste des valeurs</A> du champ 
+<TT>type</TT>).</P>
+<HR>
+
+<A NAME="IEEE-802.3"></A>
+<H2>IEEE 802.3/IS 8802-3</H2>
+
+<P>Ce protocole suppose que la couche supérieure est la couche LLC, spécifiée 
+par l'IEEE dans la norme 802.2.<BR>
+Le champ <TT>type/lg</TT> contient la longueur de la PDU. Sa valeur est 
+comprise entre 1 et 1500 (5dc<SUB>16</SUB>)<BR>
+Le champ <TT>données</TT> contient une PDU-802.2 qui a le format suivant :</P>
+<BLOCKQUOTE><TABLE BORDER="BORDER" CELLSPACING="0" CELLPADDING="5">
+<TR>
+	<TD ALIGN="center"><TT>DSAP<BR>(1)</TT></TD>
+	<TD ALIGN="center"><TT>SSAP<BR>(1)</TT></TD>
+	<TD ALIGN="center"><TT>U<BR>(1)</TT></TD>
+	<TD ALIGN="center"><TT>OUI<BR>(3)</TT></TD>
+	<TD ALIGN="center"><TT>donnée<BR></TT></TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+
+<P><TT>DSAP</TT> et <TT>SSAP</TT> sont les adresses (7 bits) des SAP de la 
+couche LLC (802.2).<BR>
+<TT>U</TT> est le champ commande/réponse.<BR>
+La valeur du champ <TT>OUI</TT> (<I>Organisation Unique Identifier</I>) 
+indique à quel protocole appartient la PDU transportée 
+dans le champ <TT>donnée</TT> (<A HREF="../../doc/ieee/ieee-oui.html">liste des OUI</A>).</P>
+<HR>
+
+<H2>IEEE 802.3/802.2 extension SNAP 
+(<I STYLE="font-size:smaller">Sub-Network Access Protocol</I>)</H2>
+
+<P>Le plan d'adressage de la couche IEEE 802.2 étant trop limité (7 bits pour 
+les SAP), l'IEEE a normalisé l'extension SNAP. Les PDU-802.2 ont le format 
+suivant :</P>
+<BLOCKQUOTE><TABLE BORDER="BORDER" CELLSPACING="0" CELLPADDING="5">
+<TR VALIGN="Top">
+	<TD ALIGN=center VALIGN=middle ROWSPAN=2><TT>AA</TT></TD>
+	<TD ALIGN=center VALIGN=middle ROWSPAN=2><TT>AA</TT></TD>
+	<TD ALIGN=center VALIGN=middle ROWSPAN=2><TT>03</TT></TD>
+	<TD ALIGN="center"><TT>OUI<BR>(3)</TT>&nbsp;</TD>
+	<TD ALIGN="center">&nbsp;selon OUI<BR>(n)</TT></TD>
+	<TD ALIGN="center"><TT>donnée</TT>&nbsp;</TD>
+</TR>
+<TR VALIGN="Top">
+	<TD ALIGN="center"><TT>000000<BR>(3)</TT>&nbsp;</TD>
+	<TD ALIGN="center">&nbsp;<TT>etype<BR>(2)</TT></TD>
+	<TD ALIGN="center"><TT>donnée</TT>&nbsp;</TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+
+<P>La valeur du champ <TT>etype</TT> indique à quel protocole appartient la 
+PDU transportée dans le champ donnée.<BR>
+Les valeurs du champ <TT>etype</TT> dépendent de l'organisation désignée par 
+le champ <TT>OUI</TT>.<BR>
+Dans le cas où <TT>OUI=0</TT>, les valeurs sont les m&ecirc;mes que pour le 
+champ <TT>type</TT> du protocole 
+<A HREF="#Ethernet-II">Ethernet II</A> 
+(<A HREF="../../doc/rfc1700/rfc1700-ether_types.html">liste de valeurs</A> du champ 
+<TT>type</TT> des PDU-Ethernet-II).</P>
+<HR>
+
+<H2>Ethernet-Novell</H2>
+
+<P>Lorsque Novell a spécifié son protocole <B>IPX</B>, IEEE 802.3 existait, 
+mais pas IEEE 802.2.</P>
+
+<P>La PDU IEEE 802.3 contient une PDU-IPX dans son champ <TT>donnée</TT> 
+(au lieu des <TT>DSAP</TT> et <TT>SSAP</TT>). <BR>
+Pour éviter les problèmes lorsque sur un câble doivent coexister des PDU-IEEE 
+802.3 contenant des PDU-IEEE 802.2 
+et des PDU-IEEE 802.3 contenant des PDU-IPX, le 1<SUP>er</SUP> champ de la 
+PDU-IPX (normalement un code de contrôle) est 
+forcé à &nbsp;la valeur <TT>FFFF</TT>.</P>
+<HR>
+
+<H1>Exemple d'interprétation de PDU-MAC</H1>
+
+<P ALIGN=Right>Note : tous les octets sont notés par 2 chiffres en base 16<BR>
+Note : les champs <TT>synchro</TT>, <TT>bourrage</TT> et <TT>contrôle</TT> ne 
+sont pas donnés</P>
+
+<P>Soit la PDU-MAC suivante :</P>
+<P STYLE="color:red"><TT>0800 2078 203b 0000 0c04 860c 0800 4500 0028 5b24 
+0000 3b06 e231 c136 3301 c036 8e0c 03ff 0201 4d20 
+2492 8e88 05a1 5010 81d0 dfad 0000 0000 0000 0000 </TT></P>
+
+<TABLE BORDER CELLSPACING="0" CELLPADDING="3">
+  <TR><TH>champ</TH><TH>octets</TH><TH>&nbsp;</TH><TH>&nbsp;</TH></TR>
+  <TR><TD>adresse destination</TD><TD nowrap><TT>08002078203b</TT></TD>
+      <TD>adresse individuelle</TD><TD>fabricant : SUN</TD></TR>
+  <TR><TD>adresse source</TD><TD nowrap><TT>00000c04860c</TT></TD>
+      <TD>adresse individuelle</TD><TD>fabricant : Cisco</TD></TR>
+  <TR>
+    <TD>type / longueur</TD>
+    <TD nowrap><TT>0800</TT></TD>
+    <TD>ce nombre est supérieur à <TT>05dc<SUB>16</SUB></TT>, c'est donc une 
+        PDU-Ethernet II</TD>
+    <TD>le code <TT>0800</TT> indique que le champ donnée contient une 
+        PDU-IP</TD>
+  </TR>
+  <TR><TD>donnée</TD><TD nowrap><TT>45000028...</TT></TD><TD>la PDU-IP</TD>
+      <TD>&nbsp;</TD></TR>
+</TABLE>
+</BODY>
+</HTML>

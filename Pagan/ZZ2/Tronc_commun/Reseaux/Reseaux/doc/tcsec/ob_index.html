@@ -1,0 +1,594 @@
+<HTML>
+<HEAD>
+<TITLE>JOS Orange Book Security Requirements Reference</TITLE>
+</HEAD>
+
+<BODY>
+<HR NOSHADE>
+
+<basefont size = 4>
+
+<font size = 5>
+	JOS Orange Book Security Requirements - HTML Draft, 11/11/97
+</font>
+<P>
+
+<font size = 3>
+<DL>
+<DT>
+	references,<BR>
+<DD>
+	<I>	<A HREF = "http://www.ora.com/catalog/csb/desc.html">Computer Security Basics</A></I>,
+	Deborah Russell and G. T. Gangemi Sr.<BR>
+	<I>	<A HREF = "http://tecnet0.jcte.jcs.mil:9000/./htdocs/teinfo/directives/
+		soft/ds5200.281.html">Department of Defense Trusted Computer System 
+		Evaluation Criteria</A></I>,
+	TCSEC DOD 5200.28-STD
+</DL>
+
+	compiled by, 
+		<A HREF = "mailto:rays@switchtech.net">Ray Shpeley</A> 
+	&copy 1997<BR>
+
+<P ALIGN = center>
+		<A HREF = "http://jos.org"><tt>http://jos.org</tt></A><BR>
+	for JOS org use only
+</P>
+</font>
+
+<HR NOSHADE>
+	This document outlines 
+		<A HREF = "ob_glossary_eo.html#orange_book">Orange Book</A> 
+		<A HREF = "ob_glossary_pz.html#security_requirement">security requirements</A> 
+	as defined under the US National Computer Security Center's Technical Guidelines 
+	Program publication, 
+		<A HREF = "http://tecnet0.jcte.jcs.mil:9000/./htdocs/teinfo/directives/
+		soft/ds5200.281.html"><I>Department of Defense Trusted Computer System 
+		Evaluation Criteria</I></A> 
+	and how they apply to JOS. It focuses on 
+		<A HREF = "ob_glossary_pz.html#secrecy">secrecy</A> 
+	and has limited applicability to the principles of 
+		<A HREF = "ob_glossary_ad.html#accuracy">accuracy</A>, 
+		<A HREF = "ob_glossary_ad.html#availability">availability</A> 
+	and 
+		<A HREF = "ob_glossary_ad.html#authenticity">authenticity</A>.
+<P>
+		<A HREF = "ob_glossary_eo.html#network">Networking</A> 
+	concerns are covered in a (to be released) companion paper on JOS Red Book Requirements.
+<P>
+	Implementation issues and examples of Orange Book requirements are covered in the 
+		<A HREF = "ob_glossary_pz.html#rainbow_series"><I>Rainbow Series</I></A> 
+	of books.
+<P>
+
+<DL>
+<DT>
+	US residents may order copies from,
+<P>
+<DD>
+	Director, National Security Agency<BR>
+	INFOSEC Awareness<BR>
+	Attention: X71<BR>
+	9800 Savage Road<BR>
+	Fort George G. Meade, MD 20755-6000<BR>
+	(301) 766-8729
+</DL>
+<P> 
+		<A HREF = "ob_glossary_pz.html#scaling">Scaling</A> 
+	concerns are important to JOS 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A>. 
+	JOS must be scalable from
+		<A HREF = "ob_glossary_eo.html#minimal_security">minimal security</A> 
+	to the Orange Book 
+		<A HREF = "ob_glossary_eo.html#labeled_security_protection">B1 class</A> 
+	(the B1 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	class has been chosen as an example security requirement for a JOS intranet/internet 
+	server application). At the 
+		<A HREF = "ob_glossary_pz.html#structured_protection">B2 class</A> 
+	and above, documentation, 
+		<A HREF = "ob_glossary_ad.html#assurance">assurance</A> 
+	and delivery considerations become predominant. These are outside the current scope 
+	of JOS requirements and are mentioned for reference purposes only.
+<P>
+	The Orange Book requirements outline only a portion of all available security 
+	requirements classes. These classes are diverse, with many overlapping requirements. 
+	The Orange book provides a concise and organized definition of security requirements 
+	classes and for this reason it was chosen as a basis for this reference document. 
+	A good understanding of the Orange Book security classes provides a framework for 
+	understanding other security requirements classes.
+<P>
+	Some 
+		<A HREF = "ob_jos_dependancies.html">JOS requirements dependancies</A> 
+	are discussed as requirements considerations.
+<P>
+	The 
+		<A HREF = "ob_glossary_ad.html">glossary</A> 
+	contains detailed descriptions of the terms used throughout this document.
+<P>
+<HR NOSHADE>
+<font size = 5>
+	The Orange Book
+</font>
+<P>
+	Computer 
+		<A HREF = "ob_glossary_pz.html#security">security</A> 
+	encompasses many aspects of security: locking the computer room and machine, protecting 
+		<A HREF = "ob_glossary_eo.html#login">login</A> 
+	accounts with 
+		<A HREF = "ob_glossary_pz.html#password">passwords</A>, 
+	using 
+		<A HREF = "ob_glossary_eo.html#file_protection">file protection</A> 
+	to keep data from being destroyed, 
+		<A HREF = "ob_glossary_eo.html#encryption">encrypting</A> 
+		<A HREF = "ob_glossary_eo.html#network">network</A> 
+	communications lines, and using special shields to keep electromagnetic 
+		<A HREF = "ob_glossary_eo.html#emanations">emanations</A> 
+	from leaking from the computer. These are all necessary computer security 
+	considerations. In contrast this document focuses on 
+		<A HREF = "ob_glossary_ad.html#computer_system_security">computer system security</A>.
+<P>
+	The four primary methods of protection in computer system security are 
+		<A HREF = "ob_glossary_pz.html#system_access_controls">system access controls</A>, 
+		<A HREF = "ob_glossary_ad.html#data_access_controls">data access controls</A>, 
+		<A HREF = "ob_glossary_pz.html#system_security_and_administration">
+		system security and administration</A>, 
+	and 
+		<A HREF = "ob_glossary_pz.html#system_design">system design</A>. 
+		<A HREF = "ob_glossary_ad.html#attack">Attacks</A> 
+	by 
+		<A HREF = "ob_glossary_pz.html#virus">viruses</A>, 
+		<A HREF = "ob_glossary_pz.html#worm">worms</A>, 
+		<A HREF = "ob_glossary_pz.html#trojan_horse">trojan horses</A>, 
+		<A HREF = "ob_glossary_ad.html#bomb">bombs</A>, 
+		<A HREF = "ob_glossary_pz.html#trap_door">trap doors</A>, 
+		<A HREF = "ob_glossary_pz.html#spoof">spoofs</A> 
+	and other forms of 
+		<A HREF = "ob_glossary_eo.html#malicious_logic">malicious logic</A>, 
+	while 
+		<A HREF = "ob_glossary_pz.html#system_security">system security</A> 
+	issues, are beyond the scope of this document.
+<P>
+	The Orange Book defines four broad heirarchal divisions of security protection. 
+	In increasing order of 
+		<A HREF = "ob_glossary_pz.html#trust">trust</A>, 
+	they are 
+		<A HREF = "ob_glossary_eo.html#minimal_security">minimal security</A>, 
+		<A HREF = "ob_glossary_ad.html#discretionary_protection">discretionary protection</A>, 
+		<A HREF = "ob_glossary_eo.html#mandatory_protection">mandatory protection</A> 
+	and 
+		<A HREF = "ob_glossary_pz.html#verified_protection">verified protection</A>.
+<P>
+	The purpose of the Orange Book is to outline evaluation criteria with the objectives of 
+		<A HREF = "ob_glossary_eo.html#measurement">measurement</A>, 
+		<A HREF = "ob_glossary_eo.html#guidance">guidance</A> 
+	and 
+		<A HREF = "ob_glossary_ad.html#acquisition">acquisition</A>. 
+	These criteria constitute a uniform set of basic 
+		<A HREF = "ob_glossary_pz.html#requirement">requirements</A> 
+	and 
+		<A HREF = "ob_glossary_eo.html#evaluation_class">evaluation classes</A> 
+	for assessing the effectiveness of 
+		<A HREF = "ob_glossary_pz.html#security_control">security controls</A> 
+	built into 
+		<A HREF = "ob_glossary_pz.html#system">systems</A>.
+<P>
+	While many efforts have been made in the Orange Book to construct secure operational 
+	environments, there is an inherent weakness in the mathematical 
+		<A HREF = "ob_glossary_eo.html#formal_proof">formal proof</A> 
+	concept of the 
+		<A HREF = "ob_glossary_pz.html#security_domain">B3</A> 
+	and 
+		<A HREF = "ob_glossary_pz.html#verified_design">A1</A> 
+	levels. According to Godel's Incompleteness Theorem, no algorithm, or calculational procedure, 
+	that uses mathematical proofs can prove its own validity. That isn't to say that the 
+		<A HREF = "ob_glossary_eo.html#formal_model">formal models</A> 
+	of the B3 and A1 levels are not successful - just that they are 
+		<A HREF = "ob_glossary_eo.html#flaw">flawed</A> 
+	in their concept.
+<P>
+	Security is a human endeavour. As such, when designing secure environments we must be aware that 
+	every design will eventually be broken, and that it is vigilance which is the real security.
+<P>
+	The O'Reilly and Associates book,
+		<A HREF = "http://www.ora.com/catalog/csb/desc.html"><I>Computer Security Basics</I></A> 
+	by Deborah Russell and G. T. Gangemi Sr., is an excellent first resource for computer security.
+	While this document provides an introduction and reference to the Orange Book, the O'Reilly book
+	covers many other salient points not addressed here.
+
+<P>
+<HR NOSHADE>
+<font size = 5>
+	Orange Book Evaluation Classes
+</font>
+<P>
+
+<DL>
+<DT>
+	The Orange Book 
+		<A HREF = "ob_glossary_eo.html#evaluation_class">evaluation classes</A> 
+	are:
+<P>
+<DD>
+	D - 
+		<A HREF = "ob_glossary_eo.html#minimal_security">minimal security</A>,<BR>
+	C1 - 
+		<A HREF = "ob_glossary_ad.html#discretionary_security_protection">
+		discretionary security protection</A>,<BR>
+	C2 - 
+		<A HREF = "ob_glossary_ad.html#controlled_access_protection">
+		controlled access protection</A>,<BR>
+	B1 - 
+		<A HREF = "ob_glossary_eo.html#labeled_security_protection">
+		labeled security protection</A>,<BR>
+	B2 - 
+		<A HREF = "ob_glossary_pz.html#structured_protection">structured protection</A>,<BR>
+	B3 - 
+		<A HREF = "ob_glossary_pz.html#security_domain">security domains</A>,<BR>
+	A1 - 
+		<A HREF = "ob_glossary_pz.html#verified_design">verified design</A>.
+</DL>
+
+<P>
+	Evaluations must be performed for 
+		<A HREF = "ob_glossary_pz.html#system">systems</A> 
+	with particular configurations on particular platforms. A system such as UNIX cannot be 
+	evaluated apart from its implementation on a particular piece of hardware.
+<P>
+<HR NOSHADE>
+<font size = 5>
+	Trusted Computer System Evaluation Criteria Summary Chart
+</font>
+<P>
+	The following chart is adapted from the book, 
+		<A HREF = "http://www.ora.com/catalog/csb/desc.html"><I>Computer Security Basics</I></A>, 
+	by Deborah Russell and G. T. Gangemi Sr.
+<P>
+<CENTER>
+
+<TABLE BORDER = 1 WIDTH = 460>
+<TR>
+<TH>	<A HREF = "ob_glossary_pz.html#security_policy">Security Policy</A></TH>
+<TH>	<A HREF = "ob_glossary_ad.html#discretionary_security_protection">C1</A></TH>
+<TH>	<A HREF = "ob_glossary_ad.html#controlled_access_protection">C2</A></TH>
+<TH>	<A HREF = "ob_glossary_eo.html#labeled_security_protection">B1</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#structured_protection">B2</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#security_domain">B3</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#verified_design">A1</A></TH>
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_ad.html#discretionary_access_control">discretionary 
+		access control</A>
+<TD>	<A HREF = "ob_classes_1.html#1">1</A>
+<TD>	<A HREF = "ob_classes_1.html#2">2</A>
+<TD>*
+<TD>*
+<TD>	<A HREF = "ob_classes_1.html#3">3</A>
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_eo.html#object_reuse">object reuse</A>
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#4">4</A>
+<TD>*
+<TD>*
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_eo.html#labels">labels</A>
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#5">5</A>
+<TD>	<A HREF = "ob_classes_1.html#6">6</A>
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_eo.html#label_integrity">label integrity</A>
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#7">7</A>
+<TD>*
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_eo.html#exportation_of_labeled_information">
+		exportation of labeled information</A>
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#8">8</A>
+<TD>*
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_eo.html#exportation_to_multilevel_devices">
+		exportation to multilevel devices</A>
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#9">9</A>
+<TD>*
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_eo.html#exportation_to_single-level_devices">
+		exportation to single-level devices</A>
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#10">10</A>
+<TD>*
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_eo.html#labeling_human-readable_output">
+		labeling human-readable output</A>
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#11">11</A>
+<TD>*
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_eo.html#mandatory_access_control">mandatory access control</A>
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#12">12</A>
+<TD>	<A HREF = "ob_classes_1.html#13">13</A>
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#subject_sensitivity_labels">subject sensitivity labels</A>
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#14">14</A>
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_ad.html#device_label">device labels</A>
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#15">15</A>
+<TD>*
+<TD>*
+</TR>
+
+<TR>
+<TH>	<A HREF = "ob_glossary_ad.html#accountability">Accountability</A></TH>
+<TH>	<A HREF = "ob_glossary_ad.html#discretionary_security_protection">C1</A></TH>
+<TH>	<A HREF = "ob_glossary_ad.html#controlled_access_protection">C2</A></TH>
+<TH>	<A HREF = "ob_glossary_eo.html#labeled_security_protection">B1</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#structured_protection">B2</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#security_domain">B3</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#verified_design">A1</A></TH>
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_eo.html#identification_and_authentication">
+		identification and authentication</A>
+<TD>	<A HREF = "ob_classes_1.html#16">16</A>
+<TD>	<A HREF = "ob_classes_1.html#17">17</A>
+<TD>	<A HREF = "ob_classes_1.html#18">18</A>
+<TD>*
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_ad.html#audit">audit</A>
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#19">19</A>
+<TD>	<A HREF = "ob_classes_1.html#20">20</A>
+<TD>	<A HREF = "ob_classes_1.html#21">21</A>
+<TD>	<A HREF = "ob_classes_1.html#22">22</A>
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#trusted_path">trusted path</A>
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_1.html#23">23</A>
+<TD>	<A HREF = "ob_classes_1.html#24">24</A>
+<TD>*
+</TR>
+
+<TR>
+<TH>	<A HREF = "ob_glossary_ad.html#assurance">Assurance</A></TH>
+<TH>	<A HREF = "ob_glossary_ad.html#discretionary_security_protection">C1</A></TH>
+<TH>	<A HREF = "ob_glossary_ad.html#controlled_access_protection">C2</A></TH>
+<TH>	<A HREF = "ob_glossary_eo.html#labeled_security_protection">B1</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#structured_protection">B2</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#security_domain">B3</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#verified_design">A1</A></TH>
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#system_architecture">system architecture</A>
+<TD>	<A HREF = "ob_classes_1.html#25">25</A>
+<TD>	<A HREF = "ob_classes_1.html#26">26</A>
+<TD>	<A HREF = "ob_classes_1.html#27">27</A>
+<TD>	<A HREF = "ob_classes_1.html#28">28</A>
+<TD>	<A HREF = "ob_classes_1.html#29">29</A>
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#system_integrity">system integrity</A>
+<TD>	<A HREF = "ob_classes_1.html#30">30</A>
+<TD>*
+<TD>*
+<TD>*
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#security_testing">security testing</A>
+<TD>	<A HREF = "ob_classes_2.html#31">31</A>
+<TD>	<A HREF = "ob_classes_2.html#32">32</A>
+<TD>	<A HREF = "ob_classes_2.html#33">33</A>
+<TD>	<A HREF = "ob_classes_2.html#34">34</A>
+<TD>	<A HREF = "ob_classes_2.html#35">35</A>
+<TD>	<A HREF = "ob_classes_2.html#36">36</A>
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_ad.html#design_specification_and_verification">
+		design specification and verification</A>
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_2.html#37">37</A>
+<TD>	<A HREF = "ob_classes_2.html#38">38</A>
+<TD>	<A HREF = "ob_classes_2.html#39">39</A>
+<TD>	<A HREF = "ob_classes_2.html#40">40</A>
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_ad.html#covert_channel_analysis">covert channel analysis</A>
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_2.html#41">41</A>
+<TD>	<A HREF = "ob_classes_2.html#42">42</A>
+<TD>	<A HREF = "ob_classes_2.html#43">43</A>
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#trusted_facility_management">trusted facility 
+		management</A>
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_2.html#44">44</A>
+<TD>	<A HREF = "ob_classes_2.html#45">45</A>
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_ad.html#configuration_management">configuration management</A>
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_2.html#46">46</A>
+<TD>*
+<TD>	<A HREF = "ob_classes_2.html#47">47</A>
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#trusted_recovery">trusted recovery</A>
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_2.html#48">48</A>
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#trusted_distribution">trusted distribution</A>
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>&middot
+<TD>	<A HREF = "ob_classes_2.html#49">49</A>
+</TR>
+
+<TR>
+<TH>Documentation</TH>
+<TH>	<A HREF = "ob_glossary_ad.html#discretionary_security_protection">C1</A></TH>
+<TH>	<A HREF = "ob_glossary_ad.html#controlled_access_protection">C2</A></TH>
+<TH>	<A HREF = "ob_glossary_eo.html#labeled_security_protection">B1</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#structured_protection">B2</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#security_domain">B3</A></TH>
+<TH>	<A HREF = "ob_glossary_pz.html#verified_design">A1</A></TH>
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#security_features_user's_guide">
+		security features user's guide</A>
+<TD>	<A HREF = "ob_classes_2.html#50">50</A>
+<TD>*
+<TD>*
+<TD>*
+<TD>*
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#trusted_facility_manual">trusted facility manual</A>
+<TD>	<A HREF = "ob_classes_2.html#51">51</A>
+<TD>	<A HREF = "ob_classes_2.html#52">52</A>
+<TD>	<A HREF = "ob_classes_2.html#53">53</A>
+<TD>	<A HREF = "ob_classes_2.html#54">54</A>
+<TD>	<A HREF = "ob_classes_2.html#55">55</A>
+<TD>*
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_pz.html#test_documentation">test documentation</A>
+<TD>	<A HREF = "ob_classes_2.html#56">56</A>
+<TD>*
+<TD>*
+<TD>	<A HREF = "ob_classes_2.html#57">57</A>
+<TD>*
+<TD>	<A HREF = "ob_classes_2.html#58">58</A>
+</TR>
+
+<TR ALIGN = CENTER>
+<TD>	<A HREF = "ob_glossary_ad.html#design_documentation">design documentation</A>
+<TD>	<A HREF = "ob_classes_2.html#59">59</A>
+<TD>*
+<TD>	<A HREF = "ob_classes_2.html#60">60</A>
+<TD>	<A HREF = "ob_classes_2.html#61">61</A>
+<TD>	<A HREF = "ob_classes_2.html#62">62</A>
+<TD>	<A HREF = "ob_classes_2.html#63">63</A>
+</TR>
+
+</TABLE>
+
+<P>
+
+<TABLE BORDER = 1>
+<TR>
+<TD>&middot
+<TD>no requirements for this class
+</TR><TR>
+<TD>#
+<TD>new or enhanced requirements for this class
+</TR><TR>
+<TD>*
+<TD>no additional requirements for this class
+</TR>
+</TABLE>
+
+<P>
+	refer to the Orange Book 
+		<A HREF = "ob_glossary_ad.html">glossary</A> 
+	for an explanation of each term
+<P>
+</CENTER>
+
+</BODY>
+</HTML>

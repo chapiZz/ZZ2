@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">8. D&eacute;finition des m&eacute;thodes</FONT></H2>
+<P>L'ensemble des m&eacute;thodes courantes d'HTTP/1.0 est d&eacute;fini ci-dessous. Bien que cet ensemble puisse &ecirc;tre compl&eacute;t&eacute;, il est pr&eacute;cis&eacute; ici que des m&eacute;thodes additionnelles impl&eacute;ment&eacute;es par des clients ou serveurs distincts ne peuvent partager la m&ecirc;me s&eacute;mantique que si leur fonction est identique.
+<A NAME="8-1"></A>
+<H3>8.1 GET</H3>
+<P>La m&eacute;thode GET signifie "r&eacute;cup&eacute;rer" le contenu quel qu'il soit de la ressource (sous forme d'une entit&eacute;) identifi&eacute;e par l'URI-vis&eacute;e. Si l'URI-vis&eacute;e identifie un processus g&eacute;n&eacute;rant dynamiquement des donn&eacute;es, ce sont les donn&eacute;es produites qui sont renvoy&eacute;es dans l'entit&eacute; au lieu du source de l'ex&eacute;cutable appel&eacute;, sauf si ce texte lui-m&ecirc;me est la sortie du processus.
+<P>La s&eacute;mantique de la m&eacute;thode GET introduit une notion conditionnelle si la requ&ecirc;te inclue le champ d'en-t&ecirc;te If-Modified-Since. Une m&eacute;thode GET conditionnelle ne r&eacute;cup&egrave;re la ressource que si celle-ci a &eacute;t&eacute; modifi&eacute;e depuis la date associ&eacute;e au champ If-Modified-Since, comme indiqu&eacute; en Section 10.9. La m&eacute;thode GET conditionnelle est utilis&eacute;e pour r&eacute;duire la charge du r&eacute;seau en permettant &agrave; des ressources en cache d'&ecirc;tre rafra&icirc;chies sans multiplier les requ&ecirc;tes ou transf&eacute;rer des donn&eacute;es inutiles.
+<A NAME="8-2"></A>
+<H3>8.2 HEAD</H3>
+<P>La m&eacute;thode HEAD est identique &agrave; la m&eacute;thode GET, sauf qu'elle ne demande pas la transmission du corps d'entit&eacute; de la ressource en retour. Seule les m&eacute;tainformations constituant l'en-t&ecirc;te HTTP de la ressource sont envoy&eacute;es. Cette m&eacute;thode permet de ne demander que les informations concernant la ressource (au sens d'HTTP). Elle est utilis&eacute;e &agrave; des fins de tests d'hyperliens, v&eacute;rification d'existence ou d'actualit&eacute; d'une ressource.
+<P>Il n'existe pas de m&eacute;thode HEAD conditionnelle comme pour la m&eacute;thode GET. Si un champ d'en-t&ecirc;te If-Modified-Since est pr&eacute;sent dans une requ&ecirc;te HEAD, il devra &ecirc;tre ignor&eacute;.
+<A NAME="8-3"></A>
+<H3>8.3 POST</H3>
+<P>La m&eacute;thode POST est utilis&eacute;e pour indiquer au serveur de soumettre l'entit&eacute; contenue dans le message &agrave; la ressource identifi&eacute;e par l'URI-vis&eacute;e. POST est destin&eacute;e &agrave; fournir un moyen uniforme pour les op&eacute;rations suivantes:
+
+<UL><LI>Annotation de ressources existantes;
+<LI>Envoi d'un message vers une &eacute;dition en ligne, un groupe de nouvelles, une liste d'adresse, ou listes similaires;
+<LI>Fournir un bloc de donn&eacute;es, par exemple, un r&eacute;sultat de formulaire [3], &agrave; un processus de gestion de donn&eacute;es;
+<LI>Ajout d'&eacute;l&eacute;ments &agrave; une base de donn&eacute;es.</UL>
+
+<P>La fonction effective de la m&eacute;thode POST est d&eacute;finie par le serveur et d&eacute;pend de l'URI d&eacute;sign&eacute;e. L'entit&eacute; "post&eacute;e" est subordonn&eacute;e &agrave; cette URI dans le m&ecirc;me sens qu'un fichier est subordonn&eacute; au r&eacute;pertoire qui le contient, un article est subordonn&eacute; au groupe de nouvelles &agrave; qui il a &eacute;t&eacute; post&eacute;, ou un enregistrement &agrave; une base de donn&eacute;es.
+<P>La r&eacute;solution d'une m&eacute;thode POST ne signifie pas forc&eacute;ment la cr&eacute;ation d'une entit&eacute; sur le serveur origine, ni une possibilit&eacute; d'acc&egrave;s futur &agrave; ces informations. En d'autres termes, le r&eacute;sultat d'un POST n'est pas n&eacute;cessairement une ressource associable &agrave; une URI. Dans ce cas, une r&eacute;ponse de code 200 (OK) ou 204 (pas de contenu) est la r&eacute;ponse la plus appropri&eacute;e, suivant que la r&eacute;ponse contient ou non une entit&eacute; pour d&eacute;crire le r&eacute;sultat.
+<P>Si une ressource a &eacute;t&eacute; cr&eacute;&eacute;e sur le serveur origine, la r&eacute;ponse sera du type 201 (cr&eacute;&eacute;) et contiendra l'entit&eacute; (de pr&eacute;f&eacute;rence du type "text/html") qui d&eacute;crira les informations sur la requ&ecirc;te et contiendra une r&eacute;f&eacute;rence sur la nouvelle ressource.
+<P>Un champ Content-Length valide est demand&eacute; dans toute requ&ecirc;te POST HTTP/1.0. Un serveur HTTP/1.0 r&eacute;pondra par un message 400 (requ&ecirc;te incorrecte) s'il ne peut d&eacute;terminer la longueur du contenu du message.
+<P>Les applications ne peuvent enregistrer en cache les r&eacute;ponses &agrave; des requ&ecirc;tes POST dans la mesure o&ugrave; il n'est absolument pas certain qu'une r&eacute;ponse ult&eacute;rieure &eacute;mise dans les m&ecirc;mes conditions produise le m&ecirc;me r&eacute;sultat.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-7.htm">Pr&eacute;c&eacute;dent</A>  - <A HREF="1945-9.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+

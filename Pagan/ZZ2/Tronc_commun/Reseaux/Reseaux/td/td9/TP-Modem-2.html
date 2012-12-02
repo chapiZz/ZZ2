@@ -1,0 +1,136 @@
+<HTML>
+<HEAD>
+   <TITLE>TP Modem (2)</TITLE>
+   <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+   <STYLE TYPE="text/css">
+   		.bleu {color:navy}
+   		.rouge {color:red}
+   		TT {color:red; font-family:monospace; font-weight:bold}
+   </STYLE>
+</HEAD>
+<BODY BGCOLOR="#f0f0f0">
+
+<TABLE WIDTH="100%">
+<TR>
+	<TD><B STYLE="font-size:larger; color:navy">TP Modem</B></TD>
+	<TD ALIGN=right><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>1998-1999</I></TD></TR>
+</TABLE>
+
+<H1>2 - Configurer le modem</H1>
+<H2>Piloter le modem</H2>
+
+	<BLOCKQUOTE>
+	On pilote le modem en lui envoyant des <B>commandes</B>, de configuration par 
+	exemple.
+	Il tente d'exécuter chaque commande, et renvoie éventuellement un 
+	<B>code résultat</B>.<BR>
+	<BR>
+	Selon le <A HREF="TP-Modem-1.html"><U>schéma de configuration matérielle et 
+	logicielle</U></A>, les commandes et codes résultats passent par le port série.<BR>
+	Une application qui utilise le modem, doit donc faire des entrées et des sorties
+	par ce port.<BR>
+		<BLOCKQUOTE>L'application la plus simple :<BR>
+			- envoie sur le port série tout  ce qui est tapé au clavier,<BR>
+			- affiche sur l'écran tout ce qui est reçu sur le port série.<BR>
+		</BLOCKQUOTE>
+		Le logiciel <B>Winterm</B> sera utilisé ici pour :<BR>
+		- envoyer des commandes au modem,<BR>
+		- afficher les codes résultats reçus du modem,<BR>
+		- envoyer des données au modem pour qu'il les envoie sur la ligne,<BR>
+		- afficher les données reçues par le modem.
+	</BLOCKQUOTE>
+	<OL>
+	<LI><B CLASS="bleu">Lancer Winterm :</B><BR>
+		Démarrer-&gt;Programmes-&gt;PhoneTools-&gt;PhoneTools <BR>
+		puis cliquer sur "Emulation Terminal"
+		<BR><BR>
+	</LI>
+	<LI>
+	<B CLASS="bleu">Configurer le port série :</B>
+		<OL>
+		<LI><B CLASS="rouge">Paramètres-&gt;Choisir le port</B>
+			<CENTER><TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0">
+			<TR><TD>Type </TD><TD>Série</TD></TR>
+			<TR><TD>Port </TD><TD>COM1</TD></TR>
+			<TR><TD>Contrôle de flux </TD><TD>RTS/CTS<BR>
+				<SMALL><B>Note</B> : ne JAMAIS mettre Xon/Xoff, <BR>contrairement aux recommandations de l'aide
+				en ligne.</SMALL>
+			</TD></TR>
+			</TABLE></CENTER>
+		</LI>
+		<LI><B CLASS="rouge">Paramètres-&gt;Vitesse &amp; Format</B>
+			<CENTER><TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0">
+			<TR><TD>Vitesse </TD><TD><I>sera choisie selon les étapes</I><BR>
+				<SMALL>consulter <A HREF="modem-ppp-faq.html#05"><U>Vitesse ligne (DCE), vitesse terminale (DTE)...</U></A></SMALL>
+			</TD></TR>
+			<TR><TD>Nb. bits </TD><TD>8</TD></TR>
+			<TR><TD>Parité</TD><TD>aucune</TD></TR>
+			<TR><TD>Nb. bits stop (arrêt)</TD><TD>1</TD></TR>
+			</TABLE></CENTER>
+		</LI>
+		<LI><B CLASS="rouge">Paramètres-&gt;Modem</B>
+			<CENTER><TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0">
+			<TR><TD></TD>
+				<TD>
+				</TD>
+			</TR>
+			<TR><TD>US Robotics</TD><TD>Sportster Winmodem 33.6</TD></TR>
+			</TABLE></CENTER>
+		</LI>
+		</OL>
+		<BR>
+	</LI>
+	<LI><B CLASS="bleu">Faire la liaison entre Winterm et le modem par :</B>
+		<BR>
+		<SPACER SIZE="50"><B CLASS="rouge">Connexion-&gt;connexion directe</B>
+	</LI>
+</OL>
+
+
+<H2>Quelles commandes ? quels résultats ?</H2>
+
+	<BLOCKQUOTE>
+	La syntaxe des commandes et les codes résultats sont listés dans l'annexe A
+	de la documentation technique du modem.
+	<OL>
+	<LI>Lire la 1<SUP>ère</SUP> page de l'annexe A, ainsi que les écrans 
+		d'aide (<TT>AT$</TT> et <TT>AT&amp;$</TT>), qui sont plus à jour que la documentation papier.<BR><BR>
+	</LI>
+	<LI>Afficher la configuration du modem en lui envoyant la commande <TT>ATI4</TT><BR>
+		Interpréter le résultat de la commande.<BR><BR>
+	</LI>
+	<LI>Examiner la commande <TT>E</TT>, et vérifier par l'exécution successive des commandes <TT>ATE0 ATE1 ATE0 ATE1</TT>
+		<BR><BR>
+	</LI>
+	<LI>Examiner les commandes <TT>Q V</TT>, et vérifier par l'exécution successive des commandes 
+		<TT>ATQ0 ATQ1 ATQ0 ATV0 ATV1 ATV0</TT><BR>
+		Quel résultat donne une commande incorrecte selon les valeurs de <TT>Q</TT> et <TT>V</TT> ?
+		<BR><BR>
+	</LI>
+	</OL>
+	</BLOCKQUOTE>
+	
+<H2>Préparer le modem pour les futures communications</H2>
+
+<BLOCKQUOTE>	Chercher les commandes pour configurer le modem :
+	<CENTER><TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0">
+	<TR><TD>haut-parleur</TD>
+		<TD>- niveau bas<BR>- actif jusqu'à la détection de porteuse</TD>
+	</TR>
+	<TR><TD>affichage des codes résultats</TD>
+		<TD>- afficher le maximum de codes<BR>- sous forme verbale</TD>
+	</TR>
+	<TR><TD>configuration de la liaison série</TD>
+		<TD>- contrôle dee flux matériel seul<BR>
+			- DTR, DSR et CD normaux<BR>
+			- débit maximum
+		</TD>
+	</TR>
+	</TABLE></CENTER>
+	<BR>
+	Envoyer les commandes au modem, puis vérifier par <TT>ATI4</TT>,<BR><BR>
+	et passer à la <A HREF="TP-Modem-3.html"><U>suite...</U></A>
+</BLOCKQUOTE><HR NOSHADE>
+
+</BODY>
+</HTML>

@@ -1,0 +1,657 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [fr] (WinNT; I) [Netscape]">
+   <TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1034
+<BR>Statut : Standard
+<CENTER>
+<H1>
+DOMAIN NAME SYSTEM</H1></CENTER>
+
+<CENTER>
+<H2>
+Concepts de base</H2></CENTER>
+
+<HR>
+<BR>Cr&eacute;dits : P. Mockapetris, ISI
+<BR>Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry
+G. FREMAUX</A>
+<BR>Edition originale : Novembre 87 / Version FR : Avril 1998
+<BR>Remplace : RFC882, RFC883, RFC973
+<BR>
+<HR>
+<H2>
+<FONT COLOR="#000080">4. SERVEURS DE NOMS DE DOMAINE</FONT></H2>
+<A NAME="4.1"></A>
+<H3>
+4.1. Introduction</H3>
+Les serveurs de noms sont d&eacute;positaires de l'information qui constitue
+la base de donn&eacute;es des domaines. La base de donn&eacute;es est divis&eacute;e
+en sections appel&eacute;es zones, lesquelles sont distribu&eacute;es sur
+l'ensemble des serveurs de noms. Comme les serveurs de noms peuvent impl&eacute;menter
+des fonctions optionnelles et des sources de donn&eacute;es diff&eacute;rentes,
+la t&acirc;che essentielle d'un serveur de nom reste de r&eacute;pondre
+&agrave; des requ&ecirc;tes sur ses donn&eacute;es propres. Par conception,
+les serveurs de noms peuvent r&eacute;pondre &agrave; ces requ&ecirc;tes
+d'une mani&egrave;re simple ; la r&eacute;ponse peut toujours &ecirc;tre
+g&eacute;n&eacute;r&eacute;e &agrave; partir des seules donn&eacute;es
+locales, et contiendra soit la r&eacute;ponse &agrave; la question pos&eacute;e,
+soit une r&eacute;f&eacute;rence &agrave; un autre serveur de noms "plus
+susceptible" d'avoir l'information demand&eacute;e.
+<P>Une zone donn&eacute;e pourra &ecirc;tre accessible &agrave; partir
+de plusieurs serveurs de noms afin d'assurer son accessibilit&eacute; m&ecirc;me
+en cas de d&eacute;faillance du serveur ou des liaisons. Par d&eacute;cision
+"administrative", nous imposons qu'une zone soit accessible au moins par
+deux serveurs, et souhaitons que la redondance soit en r&eacute;alit&eacute;
+plus importante que cela.
+<P>Un serveur de noms donn&eacute; support typiquement une ou plusieurs
+zones, ceci ne le qualifiant d'autoris&eacute; que pour une petite partie
+de l'arbre des domaines. Il pourra de plus d&eacute;tenir une certaine
+quantit&eacute; de donn&eacute;es "non-autoris&eacute;es" dans son cache,
+sp&eacute;cifiant certaines autres parties de l'arbre. Le serveur de nom
+renseigne sa r&eacute;ponse de telle sorte que le requ&eacute;rant sache
+si les informations proviennent de la partie "autoris&eacute;e" ou nom
+du serveur de noms.&nbsp;<A NAME="4.2"></A>
+<H3>
+4.2. Comment la base de donn&eacute;es est divis&eacute;e en zones</H3>
+La base de donn&eacute;es de domaines est divis&eacute;es selon deux m&eacute;thodes
+: en classes, et par "d&eacute;coupage" de l'espace des noms de domaines.
+<P>La partition en classes est assez simple. La base de donn&eacute;es
+est organis&eacute;e, d&eacute;l&eacute;gu&eacute;e, et maintenue s&eacute;par&eacute;ment
+pour chacune des classes. Comme par convention, l'espace de noms est identique
+quel que soit la classe, la s&eacute;paration par classe peut conduire
+&agrave; voir l'espace de domaines comme un tableau d'arbres de noms parall&egrave;les.
+Notez que les donn&eacute;es attach&eacute;es aux noeuds des arbres seront
+diff&eacute;rentes dans chaque arbre. Les raisons les plus courantes poussant
+&agrave; cr&eacute;er une nouvelle classe est soit la n&eacute;cessit&eacute;
+de g&eacute;rer un nouveau format de donn&eacute;es pour des types existants,
+soit la n&eacute;cessit&eacute; de g&eacute;rer diff&eacute;remment une
+partie des informations.
+<P>Dans une classe, des "coupes" dans l'espace de noms peuvent &ecirc;tre
+faites entre deux noeuds adjacents quelconques. Un fois toutes les coupes
+d&eacute;finies, chaque groupe de noeuds interconnect&eacute;s devient
+une zone ind&eacute;pendante. La zone est alors d&eacute;finie comme &eacute;tant
+la "sph&egrave;re d'autorisation" pour tout nom &agrave; l'int&eacute;rieur
+de la zone. Notez que les "coupes" dans l'espace de noms peuvent &ecirc;tre
+&agrave; des endroits diff&eacute;rents de l'arbre suivant la classe, les
+serveurs de noms associ&eacute;s peuvent &ecirc;tre diff&eacute;rents,
+etc.
+<P>Ces r&egrave;gles signifient que chaque zone doit avoir au moins un
+noeud, et donc un nom de domaine, pour lequel il est "autoris&eacute;",
+et que tous les noeuds d'une zone particuli&egrave;re sont connect&eacute;s.
+Du fait de la structure d'arbre, chaque zone contient un noeud "de plus
+haut niveau" qui est plus proche de la racine que tous les autres noeuds
+de cette zone. Le nom de ce noeud est souvent utilis&eacute; pour identifier
+la zone elle-m&ecirc;me.
+<P>Selon ce concept, il est possible, bien que pas forc&eacute;ment utile,
+de d&eacute;couper l'espace de noms de telle fa&ccedil;on que chaque nom
+de domaine se retrouve dans une zone s&eacute;par&eacute;e ou au contraire
+que tous les noeuds se retrouvent dans une zone unique. En fait, la base
+de donn&eacute;es est d&eacute;coup&eacute;e selon la volont&eacute; d'une
+organisation particuli&egrave;re d'accepter de g&eacute;rer le sous-arbre
+inf&eacute;rieur au point de coupure. Une fois que cette organisation contr&ocirc;le
+sa propre zone, elle pourra modifier les donn&eacute;es dans cette zone
+de fa&ccedil;on unilat&eacute;rale, cr&eacute;er des nouveaux sous-arbres
+&agrave; l'int&eacute;rieur de la zone, supprimer des noeuds existants,
+ou d&eacute;l&eacute;guer la gestion de sous-zone &agrave; d'autres organisations
+plus locales.
+<P>Si l'organisation est elle m&ecirc;me structur&eacute;e, elle souhaitera
+certainement cr&eacute;er des sous partitions dont elle d&eacute;l&eacute;guera
+&agrave; son tour la gestion. Dans certains cas, de telles divisions ne
+sont faites que pour rendre plus maniable la maintenance de la base de
+donn&eacute;es.&nbsp;<A NAME="4.2.1"></A>
+<H4>
+4.2.1. Consid&eacute;rations techniques</H4>
+Les donn&eacute;es d&eacute;crivant une zone se divisent en quatre parties
+majeures :
+<UL>
+<LI>
+Les donn&eacute;es autoris&eacute;es pour tous les noeuds dans la zone.</LI>
+
+<LI>
+Des donn&eacute;es d&eacute;finissant le noeud de plus haut niveau de la
+zone (peuvent &ecirc;tre consid&eacute;r&eacute;es comme faisant part des
+donn&eacute;es autoris&eacute;es).</LI>
+
+<LI>
+Des donn&eacute;es d&eacute;crivant les sous zones d&eacute;l&eacute;gu&eacute;es,
+c'est-&agrave;-dire, les points de coupure dans les &eacute;tages inf&eacute;rieurs
+de la zone.</LI>
+
+<LI>
+Les donn&eacute;es permettant l'acc&egrave;s aux serveurs de noms traitant
+les sous-zones d&eacute;l&eacute;gu&eacute;es (appel&eacute;es souvent
+"glue data").</LI>
+</UL>
+Toutes ces donn&eacute;es sont exprim&eacute;es sous forme de RR, et donc
+une zone peyt &ecirc;tre enti&egrave;rement d&eacute;crite comme un ensemble
+de RR. Des zones enti&egrave;res peuvent &ecirc;tre transf&eacute;r&eacute;es
+de serveur &agrave; serveur par le transfert des RR, soit par une suite
+de messages, ou en transf&eacute;rant le fichier principal, qui en est
+une repr&eacute;sentation textuelle, par FTP.
+<P>Les donn&eacute;es autoris&eacute;es pour une zone sont en fait tous
+les RR attach&eacute;s &agrave; tous les noeuds depuis la t&ecirc;te de
+la zone jusqu'aux feuilles les plus basses, ou le noeud imm&eacute;diatement
+au-dessus d'un point de coupe d'une sous-zone.
+<P>Bien que faisant logiquement partie des donn&eacute;es autoris&eacute;es,
+les RR qui d&eacute;crivent la t&ecirc;te de la zone sont fondamentaux
+pour la gestion des zones. Ces RR sont de deux types : des RR de serveurs
+de noms qui listent, &agrave; raison de un par RR, tous les serveurs autoris&eacute;s
+pour cette zone, et un RR SOA unique qui donne les param&egrave;tres de
+gestion de cette zone.
+<P>Les RR qui d&eacute;crivent les coupures vers le bas de la zone sont
+des RR NS qui pointent sur les serveurs de noms auxquels ont &eacute;t&eacute;
+d&eacute;l&eacute;gu&eacute;es les sous-zones. Dans la mesure o&ugrave;
+les coupures se font entre deux noeuds, ces RR NE font PAS partie des donn&eacute;es
+autoris&eacute;es de la zone, et devront donner exactement les m&ecirc;mes
+informations que le RR donnant les informations sur le noeud de t&ecirc;te
+de la sous-zone, dans le serveur d&eacute;l&eacute;gu&eacute;. Comme les
+serveurs de noms sont toujours associ&eacute;s par rapport aux limites
+de zones, les RR NS ne peuvent &ecirc;tre trouv&eacute;s que dans des noeuds
+repr&eacute;sentant la t&ecirc;te d'une zone. Dans les donn&eacute;es qui
+caract&eacute;risent la zone, les RR NS seront trouv&eacute;s dans le noeud
+qui caract&eacute;rise la t&ecirc;te de la zone courante (constituant un
+enregistrement autoris&eacute;*) et au niveau des noeuds pointant sur la
+t&ecirc;te d'une sous-zone (lequel noeud n'est pas consid&eacute;r&eacute;
+comme une information "autoris&eacute;e"), mais jamais dans un noeud interm&eacute;diaire.
+<P>L'un des objectifs de cette structure en zones est que toute zone puisse
+disposer localement de toutes les donn&eacute;es n&eacute;cessaires pour
+communiquer avec les serveurs de noms de chacune de ses sous-zones. En
+d'autres termes, que les zones m&egrave;res disposent de toute l'information
+requise pour acc&eacute;der aux serveurs des zones filles. Les RR NS qui
+nomment ces serveurs pour les sous-zones ne suffisent pas toujours &agrave;
+cet t&acirc;che dans la mesure o&ugrave;, s'ils d&eacute;finissent le nom
+du serveur, n'en donnent pas l'adresse. En particulier, si le nom du serveur
+de noms est lui-m&ecirc;me dans la sous-zone, nous pourrions &ecirc;tre
+confront&eacute; &agrave; la situation embarrassante o&ugrave; le RR NS
+nous dit que pour conna&icirc;tre l'adresse du serveur de noms de la sous-zone,
+nous devons contacter un serveur portant l'adresse que nous souhaitons
+justement apprendre. Pour contourner ce probl&egrave;me, une zone contient
+des RR qualifi&eacute;s de "glue" qui ne font pas partie de l'ensemble
+des donn&eacute;es dites "autoris&eacute;es", et repr&eacute;sentent des
+adresses de serveurs sous forme de RR. Ces RR ne sont n&eacute;cessaires
+que si le nom du serveur de nom se situe justement dans la portion d'espace
+"en dessous" de la coupure, et ne sont utilis&eacute;s que comme constituant
+partiel d'une r&eacute;ponse r&eacute;f&eacute;rentielle.&nbsp;<A NAME="4.2.2"></A>
+<H4>
+4.2.2. Consid&eacute;rations en termes d'administration</H4>
+Lorsque certaines organisations veulent r&eacute;cup&eacute;rer le contr&ocirc;le
+de leur propre domaine, la premi&egrave;re &eacute;tape est d'identifier
+la bonne zone m&egrave;re, et obtenir des "l&eacute;gataires" de la zone
+m&egrave;re un accord de d&eacute;l&eacute;gation de gestion. Comme aucune
+contrainte technique particuli&egrave;re ne vient d&eacute;terminer un
+point pr&eacute;cis de l'arbre o&ugrave; la coupure peut &ecirc;tre effectu&eacute;e,
+certains regroupements "arbitraires" ont &eacute;t&eacute; expos&eacute;s
+dans la [RFC-1032] concernant l'organisation des niveaux sup&eacute;rieurs,
+les zones m&eacute;dianes restant libres de cr&eacute;er leurs propres
+r&egrave;gles. Par exemple, une universit&eacute; pourrait choisir de n'utiliser
+qu'une seule zone, tandis qu'une autre pourrait choisir d'organiser son
+parc en sous-zones, d&eacute;di&eacute;es chacune &agrave; un d&eacute;partement
+ou une &eacute;cole. La [RFC-1033] liste les logiciels de DNS disponibles
+et expose les proc&eacute;dures administratives.
+<P>Une fois le nom de la sous-zone choisi, les futurs "l&eacute;gataires"
+devront prouver leur capacit&eacute; &agrave; supporter la redondance des
+serveurs de domaines. Notez qu'il n'y a pas d'obligation &agrave; ce que
+le serveur pour une zone soit implant&eacute; sur une machine disposant
+d'un nom dans cette zone. Dans de nombreux cas, une zone sera bien plus
+largement accessible &agrave; Internet si les serveurs qui la g&egrave;rent
+sont dispers&eacute;s, plut&ocirc;t que concentr&eacute;s sur le site physique
+contr&ocirc;l&eacute; par le "l&eacute;gataire" de la la zone. Par exemple,
+l'un des serveurs de noms pour le sous-domaine United Kingdom, ou UK, est
+situ&eacute; aux Etats-Unis. Ceci permet aux h&ocirc;tes am&eacute;ricains
+d'obtenir les informations sur les serveurs anglais sans &ecirc;tre contraint
+par les limites de bande passante transatlantique.
+<P>Dans la derni&egrave;re &eacute;tape, les RR NS et les RR "glue" pointant
+sur le serveur d&eacute;l&eacute;gu&eacute;, et n&eacute;cessaires pour
+rendre op&eacute;rationnel le transfert de gestion, devront &ecirc;tre
+ajout&eacute;s dans la zone m&egrave;re. Les administrateurs de chaque
+zones devront s'assurer que les RR NS et "glue" situ&eacute;s de chaque
+c&ocirc;t&eacute; de la coupure sont identiques et le restent.&nbsp;<A NAME="4.3"></A>
+<H3>
+4.3. Serveur de noms - sp&eacute;cifications internes</H3>
+<A NAME="4.3.1"></A>
+<H4>
+4.3.1. Requ&ecirc;tes et r&eacute;ponses</H4>
+La principale activit&eacute; d'un serveur de noms est de r&eacute;pondre
+aux requ&ecirc;tes standard. La requ&ecirc;te et sa r&eacute;ponse sont
+toutes deux v&eacute;hicul&eacute;es par un message de format standardis&eacute;
+d&eacute;crit dans la [RFC-1035]. La requ&ecirc;te contient des champs
+QTYPE, QCLASS, et QNAME, qui d&eacute;crivent le(s) type(s) et la ou les
+classes de l'information souhait&eacute;e, et quel nom de domaine cette
+information concerne.
+<P>La mani&egrave;re dont le serveur de noms r&eacute;pond peut &ecirc;tre
+diff&eacute;rente selon que le serveur utilise le mode r&eacute;cursif
+ou non :
+<UL>
+<LI>
+Le mode le plus simple de fonctionnement du point de vue serveur est le
+mode non-r&eacute;cursif, dans la mesure o&ugrave; le serveur peut r&eacute;pondre
+&agrave; la requ&ecirc;te uniquement sur la base de ses informations locales
+: la r&eacute;ponse contient une erreur, la r&eacute;ponse demand&eacute;e,
+ou donne la r&eacute;f&eacute;rence d'un autre serveur plus "susceptible"
+de disposer de l'information demand&eacute;e. Tous les serveurs de noms
+se doivent d'impl&eacute;menter le mode non-r&eacute;cursif.</LI>
+
+<BR>&nbsp;
+<LI>
+Le mode le plus simple de fonctionnement du point de vue du client est
+le mode r&eacute;cursif, dans la mesure o&ugrave; dans ce mode, le serveur
+prend &agrave; son tour le r&ocirc;le de r&eacute;solveur et ne peut retourner
+qu'un message d'erreur ou une r&eacute;ponse valide, mais jamais de r&eacute;f&eacute;rence.
+Ce service est optionel dans un serveur de noms, ce dernier pouvant de
+plus choisir de restreindre les possibilit&eacute;s de clients g&eacute;rant
+le mode r&eacute;cursif.</LI>
+</UL>
+Le service r&eacute;cursif est utile dans plusieurs situations :
+<UL>
+<LI>
+une impl&eacute;mentation simplifi&eacute;e d'un r&eacute;solveur qui ne
+sait exploiter d'autres r&eacute;ponses qu'une r&eacute;ponse directe &agrave;
+la question.</LI>
+
+<LI>
+une requ&ecirc;te qui doit passer &agrave; travers d'autres protocoles
+ou autres "fronti&egrave;res" et doit pouvoir &ecirc;tre envoy&eacute;e
+&agrave; un serveur jouant le r&ocirc;le d'interm&eacute;diaire.</LI>
+
+<LI>
+un r&eacute;seau dans lequel intervient une politique de cache commun plut&ocirc;t
+qu'un cache individuel par client.</LI>
+</UL>
+Le service non-r&eacute;cursif est appropri&eacute; si le r&eacute;solveur
+est capable de fa&ccedil;on autonome de poursuivre sa recherche et est
+capable d'exploiter l'information suppl&eacute;mentaire qui lui est envoy&eacute;e
+pour l'aider &agrave; r&eacute;soudre son probl&egrave;me.
+<P>L'utilisation du mode r&eacute;cursif est limit&eacute; aux cas qui
+r&eacute;sultent d'un accord n&eacute;goci&eacute; entr ele client et le
+serveur. Cet accord est n&eacute;goci&eacute; par l'utilisation de deux
+bits particuliers des messages de requ&ecirc;te et de r&eacute;ponse :
+<UL>
+<LI>
+Le bit RA (R&eacute;cursion admissible), est marqu&eacute; ou non par le
+serveur dans toutes les r&eacute;ponses. Ce bit est marqu&eacute; si le
+serveur accepte &agrave; priori de fournir le service r&eacute;cursif au
+client, que ce dernier l'ait demand&eacute; ou non. Autrement dit, le bit
+RA signale la disponibilit&eacute; du service plut&ocirc;t que son utilisation.</LI>
+
+<BR>&nbsp;
+<LI>
+Les requ&ecirc;tes disposent d'un bit RD (pour "r&eacute;cursion d&eacute;sir&eacute;e").
+Ce bit indique que le requ&eacute;rant d&eacute;sire utiliser le service
+r&eacute;cursif pour cette requ&ecirc;te. Les clients peuvent demander
+le service r&eacute;cursif &agrave; n'importe quel serveur de noms, bien
+que ce service ne puisse leur &ecirc;tre fourni que par les serveurs qui
+auront d&eacute;j&agrave; marqu&eacute; leur bit RA, ou des serveurs qui
+auront donn&eacute; leur accord pour ce service par une n&eacute;gociation
+propri&eacute;taire ou tout autre moyen hors du champ du protocole DNS.</LI>
+</UL>
+Le mode r&eacute;cursif est mis en uvre lorsqu'une requ&ecirc;te arrive
+avec un bit RD marqu&eacute; sur un serveur annon&ccedil;ant disposer de
+ce service ; le client peut v&eacute;rifier si le mode r&eacute;cursif
+a &eacute;t&eacute; utilis&eacute; en constatant que les deux bits RA et
+RD ont &eacute;t&eacute; marqu&eacute;s dans la r&eacute;ponse. Notez que
+le serveur de noms ne doit pas utiliser le service r&eacute;cursif s'il
+n'a pas &eacute;t&eacute; explicitement demand&eacute; par un bit RD, car
+cela interf&egrave;re avec la maintenance des serveurs de noms et de leurs
+bases de donn&eacute;es. Lorsque le service r&eacute;cursif est demand&eacute;
+et est disponible, la r&eacute;ponse r&eacute;cursive &agrave; une requ&ecirc;te
+doit &ecirc;tre l'une des suivantes :
+<UL>
+<LI>
+La r&eacute;ponse &agrave; la requ&ecirc;te, &eacute;ventuellement pr&eacute;fac&eacute;e
+par un ou plusieurs RR CNAME qui indiquent les alias trouv&eacute;s pendant
+la recherche de la r&eacute;ponse.</LI>
+
+<LI>
+Une erreur de nom indiquant que le nom demand&eacute; n'existe pas. Celle-ci
+peut inclure des RR CNAME qui indiquent que la requ&ecirc;te originale
+pointait l'alias d'un nom qui n'existe pas.</LI>
+
+<LI>
+Une indication d'erreur temporaire.</LI>
+</UL>
+Si le service r&eacute;cursif n'est pas requis, ou n'est pas disponible,
+la r&eacute;ponse non-r&eacute;cursive devra &ecirc;tre l'une des suivantes
+:
+<UL>
+<LI>
+Une r&eacute;ponse d'erreur "autoris&eacute;e" indiquant que le nom n'existe
+pas.</LI>
+
+<LI>
+Une indication temporaire d'erreur.</LI>
+
+<LI>
+Une combinaison :</LI>
+
+<UL>
+<LI>
+des RR qui r&eacute;pondent &agrave; la question, avec indication si les
+donn&eacute;es sont extraites d'une zone ou d'un cache.</LI>
+
+<LI>
+d'une r&eacute;f&eacute;rence &agrave; un serveur de noms qui g&egrave;re
+une zone plus "proche" du nom demand&eacute; que le serveur qui a &eacute;t&eacute;
+contact&eacute;.</LI>
+</UL>
+
+<LI>
+Les RR que le serveur de nom pense &ecirc;tre utile au requ&eacute;rant
+pour continuer sa recherche.</LI>
+</UL>
+<A NAME="4.3.2"></A>
+<H4>
+4.3.2. Algorithme</H4>
+L'algorithme actuel utilis&eacute; par le serveur de noms d&eacute;pends
+de l'OS local et des structures de donn&eacute;es physiques utilis&eacute;es
+pour stocker les RR. L'algorithme suivant suppose que les RR sont organis&eacute;s
+en structures d'arbre multiples, un pour chaque zone, et une particuli&egrave;re
+pour le cache :
+<OL>
+<LI>
+Marquer ou effacer la valeur de "r&eacute;cursion admissible" (RA) dans
+la r&eacute;ponse suivant que le serveur de noms souhaite proposer le service
+r&eacute;cursif ou non. Si le service r&eacute;cursif est disponible et
+requis par le marquage du bit RD dans la requ&ecirc;te, aller au pas 5,
+autrement continuez au pas 2.</LI>
+
+<LI>
+Chercher, dans les zones disponibles, celle qui est l'anc&ecirc;tre le
+plus proche de QNAME. Si une telle zone existe, aller au pas 3, sinon sautez
+au pas 4.</LI>
+
+<LI>
+Commencer la recherche dans la zone, identifiant par identifiant. Le processus
+de recherche peut s'achever de plusieurs mani&egrave;res :</LI>
+
+<OL>
+<LI>
+Si le nom QNAME est trouv&eacute; enti&egrave;rement, le noeud a &eacute;t&eacute;
+trouv&eacute;.</LI>
+
+<P><BR>Si l'information pr&eacute;sente dans le noeud est un CNAME, et
+QTYPE ne correspond pas &agrave; CNAME, copier le RR CNAME dans la section
+"r&eacute;ponse" du message retourn&eacute;, changer QNAME en le nom canonique
+dans le RR CNAME, et retournez au pas 1.
+<P>Autrement, copier tous les RR qui correspondent au QTYPE dans la section
+"r&eacute;ponse" et sauter au pas 6.
+<LI>
+Si la recherche nous am&egrave;ne hors des donn&eacute;es "autoris&eacute;es",
+il s'agit d'une r&eacute;f&eacute;rence. Ceci arrive lorsque nous rencontrons
+un noeud contenant des RR NS indiquant que nous arrivons &agrave; un point
+de coupe vers une sous-zone.</LI>
+
+<P><BR>Copier les RR NS de la sous-zone dans la section "autoris&eacute;e"
+de la r&eacute;ponse. Mettre toute adresse disponibles pouvant aider &agrave;
+atteindre la sous-zone dans la section additionnelle, en utilisant des
+RR "glue" si ces adresses ne peuvent &ecirc;tre extraites que d'une partie
+non-autoris&eacute;e ou du cache. Sauter au pas 4.
+<LI>
+Si pour l'un des identifiants du nom, aucune correspondance n'est possible
+(c-&agrave;-d., l'identifiant correspondant n'existe pas), voir si un identifiant
+"*" existe.</LI>
+
+<P><BR>Si l'identifiant "*" n'existe pas, v&eacute;rifier si le nom que
+nous cherchons est le QNAME original de la requ&ecirc;te et non un nom
+donn&eacute; par une ou plusieurs redirections dans des CNAME. Si le nom
+est l'original, pr&eacute;parer une r&eacute;ponse d'erreur "autoris&eacute;e"
+et sortir. Sinon on sort de l'algorithme sans autre action.
+<P>Si l'identifiant "*" existe, chercher les RR de ce noeud correspondant
+au QTYPE de la requ&ecirc;te. S'il en existe, les copier dans la section
+"r&eacute;ponse", mais en requalifiant le propri&eacute;taire (owner) des
+RR comme &eacute;tant QNAME, et non celui du RR contenant l'identifiant
+"*". Sauter en 6.</OL>
+
+<LI>
+Commencer la recherche dans le cache. Si QNAME y est trouv&eacute;, copier
+dans la section "r&eacute;ponse" tous les RR qui y sont rattach&eacute;s
+et dont le QTYPE est conforme. S'il n'existe pas de d&eacute;l&eacute;gation
+sur ces donn&eacute;es pour ce qui concerne "l'autorisation", chercher
+dans le cache la meilleure information d'autorisation, et la placer dans
+la section "autorisation". Aller en 6.</LI>
+
+<LI>
+Utiliser le r&eacute;solveur local ou une copie de son algorithme (voir
+la section resolveur de ce m&eacute;mo) pour r&eacute;pondre &agrave; la
+requ&ecirc;te. Enregistrer les r&eacute;sultats, y compris tout CNAME interm&eacute;diaires,
+dans la section r&eacute;ponse.</LI>
+
+<LI>
+Sur la base des donn&eacute;es locales uniquement, tenter d'ajouter tous
+les autres RR qui pourraient &ecirc;tre utiles dans la section additionnelle
+de la r&eacute;ponse et sortir.</LI>
+</OL>
+<A NAME="4.3.3"></A>
+<H4>
+4.3.3. M&eacute;taenregistrements</H4>
+Dans l'algorithme pr&eacute;c&eacute;dant, un traitement sp&eacute;cial
+a &eacute;t&eacute; fait sur les RR dont le nom de propri&eacute;taire
+(owner) commence par l'identifiant "*". De tels RR sont appel&eacute;s
+"m&eacute;taenregistrements" (NdT : nous avons choisi ce terme au m&ecirc;me
+titre que l'on utilise sous UNIX des m&eacute;tacaract&egrave;res dans
+les expressions r&eacute;guli&egrave;res pour remplacer une cha&icirc;ne
+de caract&egrave;res quelconque). Les m&eacute;taenregistrements peuvent
+&ecirc;tre compris comme des instructions servant &agrave; synth&eacute;tiser
+des RR. Lorsque les conditions appropri&eacute;es sont remplies, le serveur
+de nom cr&eacute;e des RR dont le nom de propri&eacute;taire est celui
+pr&eacute;sent dans la requ&ecirc;te et le contenu r&eacute;cup&eacute;r&eacute;
+dans le m&eacute;taenregistrement.
+<P>Cette facult&eacute; est le plus souvent utilis&eacute;e pour cr&eacute;er
+une zone servant &agrave; rediriger des mail depuis Internet vers d'autres
+syst&egrave;mes de messagerie. L'id&eacute;e g&eacute;n&eacute;rale est
+que tout nom dans cette zone pr&eacute;sent&eacute; au serveur dans une
+requ&ecirc;te doit &ecirc;tre suppos&eacute; exister, dot&eacute; de certaines
+propri&eacute;t&eacute;s, sauf si une &eacute;vidence explicite conduit
+&agrave; l'affirmation du contraire. Notez que l'utilisation du terme zone
+dans ce cas, plut&ocirc;t que domaine, est intentionnel ; un tel usage
+"par d&eacute;faut" ne se propage pas au del&agrave; d'une limite de zone,
+bien qu'une sous-zone puisse elle aussi pr&eacute;senter ce fonctionnement
+en mettant en place un usage par d&eacute;faut similaire.
+<P>Le contenu des m&eacute;taenregistrements suit les r&egrave;gles et
+formats g&eacute;n&eacute;raux des RR. Un m&eacute;taenregistrement dans
+une zone a un propri&eacute;taire (owner) contr&ocirc;lant pour quel nom
+requis l'enregistrement sera choisi. Le format pour le propri&eacute;taire
+du m&eacute;ta enregistrement est de la forme "*.<unDomaine>", o&ugrave;&nbsp;<unDomaine>repr&eacute;sente
+n'importe quel nom de domaine.&nbsp;<unDomaine>ne doit pas contenir d'autre
+identifiant "*", et doit pointer dans les donn&eacute;es autoris&eacute;es
+de la zone. La globalisation obtenue par l'usage des m&eacute;taenregistrements
+s'applique potentiellement aux descendants de&nbsp;<unDomaine>, mais pas
+&agrave;&nbsp;<unDomaine>lui-m&ecirc;me. Une autre aspect de ceci est que
+l'identifiant "*" repr&eacute;sente toujours un identifiant complet ou
+une suite d'identifiants (domaines relatifs), et jamais une partie d'identifiant.
+<P>Les m&eacute;taenregistrements ne peuvent s'appliquer :
+<UL>
+<LI>
+Lorsque la requ&ecirc;te pointe sur une autre zone. C'est-&agrave;-dire
+que le principe de d&eacute;l&eacute;gation de gestion d&eacute;sactive
+l'usage des d&eacute;fauts.</LI>
+
+<LI>
+Lorsque le nom requis ou un nom entre l'identifiant "*" et le nom demand&eacute;
+existe. Par exemple, si un m&eacute;taenregistrement &eacute;tait sp&eacute;cifi&eacute;
+avec un propri&eacute;taire "*.X", et la zone contenait en outre des RR
+pour le domaine B.X, les d&eacute;fauts s'appliqueraient &agrave; une requ&ecirc;te
+sur Z.X (&agrave; supposer qu'aucune information explicite n'existe pour
+Z.X dans cette zone), mais pas &agrave; B.X, A.B.X, ni X lui-m&ecirc;me.</LI>
+</UL>
+Un identifiant "*" apparaissant dans une requ&ecirc;te n'a pas d'effet
+particulier, mais peut &ecirc;tre utilis&eacute; pour tester les d&eacute;fauts
+d'une zone autoris&eacute;e ; une telle requ&ecirc;te est la seule mani&egrave;re
+d'obtenir des r&eacute;ponses contenant des RR portant un nom de propri&eacute;taire
+incluant un "*". Le r&eacute;sultat de telles requ&ecirc;tes ne devra pas
+&ecirc;tre conserv&eacute; en cache.
+<P>Notez que le contenu des m&eacute;taenregistrements n'est pas modifi&eacute;
+lorsque ceux-ci sont lus pour synth&eacute;tiser des RR.
+<P>Pour illustrer l'usage des m&eacute;taenregistrements, supposez qu'une
+grande soci&eacute;t&eacute; disposant d'un r&eacute;seau &eacute;tendu,
+non bas&eacute; sur TCP/IP, d&eacute;sire cr&eacute;er une passerelle de
+messagerie. Si la compagnie s'appelle X.COM, et la passerelle vers TCP/IP,
+A.X.COM, les RR suivants devraient &ecirc;tre rentr&eacute;s dans la zone
+COM :
+<PRE><TT><FONT COLOR="#008000">&nbsp;&nbsp;&nbsp; X.COM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.X.COM
+
+&nbsp;&nbsp;&nbsp; *.X.COM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.X.COM
+
+&nbsp;&nbsp;&nbsp; A.X.COM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.2.3.4
+&nbsp;&nbsp;&nbsp; A.X.COM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.X.COM
+
+&nbsp;&nbsp;&nbsp; *.A.X.COM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.X.COM</FONT></TT></PRE>
+Avec une telle programmation, toute requ&ecirc;te de type MX pour tout
+domaine terminant par X.COM retournera un RR MX pointant sur A.X.COM. Pour
+obtenir cet effet, deux m&eacute;taenregistrements sont n&eacute;cessaires.
+En effet, l'effet du m&eacute;taenregistrement *.X.COM est inhib&eacute;
+pour tous les sous-domaines de A.X.COM du fait de l'existence d'un enregistrement
+explicite pour A.X.COM. Notez de plus que les enregistrements MX pour X.COM
+et A.X.COM eux-m&ecirc;mes sont requis, et qu'aucun RR de la zone ci-dessus
+ne doit appara&icirc;tre avec un propri&eacute;taire XX.COM.&nbsp;<A NAME="4.3.4"></A>
+<H4>
+4.3.4. Mise en cache de r&eacute;ponses n&eacute;gatives (Optionnel)</H4>
+Le DNS d&eacute;finit un service optionnel qui permet aux serveurs de nom
+de distribuer, et aux r&eacute;solveurs de stocker en cache, les r&eacute;ponses
+n&eacute;gatives dot&eacute;es d'une dur&eacute;e de vie. Par exemple,
+un serveur de noms peut distribuer une dur&eacute;e de vie associ&eacute;e
+&agrave; une indication d'erreur de nom de domaine. Un r&eacute;solveur
+recevant ce message &agrave; la possibilit&eacute; de d&eacute;duire que
+le nom demand&eacute; n'existe pas pendant ladite dur&eacute;e de vie sans
+&ecirc;tre oblig&eacute; de consulter des donn&eacute;es autoris&eacute;es.
+De m&ecirc;me, un r&eacute;solveur peut &eacute;mettre une requ&ecirc;te
+avec un QTYPE qui accepte plusieurs types &agrave; la fois, et conserver
+dans le cache l'information concernant l'absence de certains types.
+<P>Cette fonctionnalit&eacute; peut &ecirc;tre particuli&egrave;rement
+importante dans un syst&egrave;me qui propose des raccourcis recherche
+en utilisant des listes car ces raccourcis, qui n&eacute;cessitent g&eacute;n&eacute;ralement
+un suffixe en fin de liste, peuvent g&eacute;n&eacute;rer de multiples
+erreurs de noms lorsqu'elles sont utilis&eacute;es.
+<P>La m&eacute;thode qu'utilise un serveur de noms sera d'ajouter un RR
+SOA dans la section additionnelle d'une r&eacute;ponse lorsque celle-ci
+est "autoris&eacute;e". Le SOA doit &ecirc;tre celui fourni par la zone
+source des donn&eacute;es autoris&eacute;es incluses dans la section r&eacute;ponse,
+ou un message d'erreur de nom si applicable. Le champ MINIMUM de l'enregistrement
+SOA contr&ocirc;le le temps pendant lequel la r&eacute;ponse n&eacute;gative
+peut &ecirc;tre gard&eacute;e dans le cache.
+<P>Notez que dans certaines circonstances, la section r&eacute;ponse peut
+sp&eacute;cifier plusieurs noms de propri&eacute;taires. Dans ce cas, le
+m&eacute;canisme de SOA ne devra &ecirc;tre employ&eacute; que pour les
+donn&eacute;es correspondant au QNAME, ces donn&eacute;es &eacute;tant
+les seules autoris&eacute;es dans cette section.
+<P>Les serveurs de noms et les r&eacute;solveurs ne devront jamais tenter
+d'ajouter des SOA dans la section additionnelle d'une r&eacute;ponse non-autoris&eacute;e,
+ni tenter d'exploiter des r&eacute;sultats autres que ceux d&eacute;clar&eacute;s
+comme "autoris&eacute;s". Il y a &agrave; cela plusieurs raisons, dont
+: l'information dans le cache ne suffit pas en g&eacute;n&eacute;ral &agrave;
+d&eacute;terminer des RR et leurs nom de zone associ&eacute;e, les RR SOA
+pourront &ecirc;tre maintenues en cache suite &agrave; une requ&ecirc;te
+explicite dirig&eacute;e vers des SOA, et les serveurs de noms n'inscrivent
+pas n&eacute;cessairement les SOA dans la section autoris&eacute;e (authority).
+<P>Ce fonctionnement reste optionnel, bien que l'on puisse pr&eacute;voir
+qu'une version plus pr&eacute;cise puisse rentrer dans le cadre du protocole
+officiel dans le futur. Les serveurs de noms ne sont pas tenus d'ajouter
+les RR SOA dans toutes leurs r&eacute;ponses autoris&eacute;es, et les
+r&eacute;solveurs ne sont pas plus tenus de conserver les r&eacute;ponses
+n&eacute;gatives en cache. Les deux comportements restent cependant recommand&eacute;s.
+Tous les r&eacute;solveurs et serveurs de noms recursifs sont tenu, au
+moins, de savoir ignorer des RR SOA lorsqu'ils se pr&eacute;sentent dans
+une r&eacute;ponse.
+<P>Certaines exp&eacute;rimentations ont &eacute;galement &eacute;t&eacute;
+propos&eacute;es pour utiliser cette fonctionnalit&eacute;. L'id&eacute;e
+qui les conduisait &eacute;tait que, si les donn&eacute;es en cache sont
+conues comme venant d'une zone identifi&eacute;e, et si une copie autoris&eacute;e
+du SOA de la zone est obtenue, et enfin si le SERIAL de la zone n'a pas
+chang&eacute; depuis que les donn&eacute;es ont &eacute;t&eacute; mises
+dans le cache, alors la dur&eacute;e de vie des donn&eacute;es du cache
+peut &ecirc;tre r&eacute;duite au MINIMUM de la zone consid&eacute;r&eacute;e,
+si ce minimum est inf&eacute;rieur &agrave; la valeur cach&eacute;e. Cet
+usage est d&eacute;crit pour une recherche future, est n'est pas recommand&eacute;
+&agrave; pr&eacute;sent.&nbsp;<A NAME="4.3.5"></A>
+<H4>
+4.3.5. Maintenance et transfert de zones</H4>
+Une partie du travail d'un administrateur de zone est de maintenir l'&eacute;tat
+des zones dans chacun des serveurs de noms autoris&eacute;s pour celles-ci.
+Lorsque des modifications, in&eacute;vitables, sont report&eacute;es, elles
+doivent l'&ecirc;tre sur tous les serveurs de noms associ&eacute;s &agrave;
+la zone. Bien que la distribution des donn&eacute;es puisse se faire par
+FTP ou toute autre proc&eacute;dure de transfert cons&eacute;quente, la
+m&eacute;thode pr&eacute;f&eacute;r&eacute;e sera le transfert de donn&eacute;es
+de zone par le protocole DNS lui-m&ecirc;me.
+<P>Le mod&egrave;le g&eacute;n&eacute;ral d'un transfert de zone ou rafra&icirc;chissement
+automatiques consiste &agrave; dire que l'in des serveurs de noms est le
+serveur ma&icirc;tre (ou encore primaire) pour cette zone. Les modifications
+sont coordonn&eacute;es depuis le serveur ma&icirc;tre, en g&eacute;n&eacute;ral
+en &eacute;ditant le fichier primaire pour la zone. A la fin de l'&eacute;dition,
+l'administrateur ordonne au serveur ma&icirc;tre de charger la zone modifi&eacute;e.
+Les autres serveurs secondaires (ou esclaves) pour cette zone doivent v&eacute;rifier
+p&eacute;riodiquement (l'intervalle de p&eacute;riodicit&eacute; doit &ecirc;tre
+r&eacute;glable) si des changements sont intervenus dans la d&eacute;finition
+primaire de la zone et demanderont des copies remises &agrave; jour une
+fois les modifications effectu&eacute;es.
+<P>Pour d&eacute;tecter ces modifications, il suffit aux serveurs secondaires
+de v&eacute;rifier le champ SERIAL de l'enregistrement SOA pour cette zone.
+En plus de tous les autres changements apport&eacute;s dans la zone, le
+champ SERIAL du SOA de la zone est toujours modifi&eacute; d&egrave;s que
+le moindre changement intervient. Cette modification peut se limiter &agrave;
+l'incr&eacute;mentation d'un compteur, ou peut &ecirc;tre bas&eacute;e
+sur l'&eacute;criture de la date et de l'heure de derni&egrave;re &eacute;criture
+du fichier ma&icirc;tre, etc. Le but est de donner un moyen de pouvoir
+savoir laquelle des deux copies du fichier de zone est le plus r&eacute;cent,
+par la simple comparaison d'un num&eacute;ro de s&eacute;rie. L'incr&eacute;mentation
+et la comparaison des num&eacute;ros de s&eacute;rie s'appuie sur un espace
+s&eacute;quentiel arithm&eacute;tique, et il existe de ce fait une limite
+th&eacute;orique sur la fr&eacute;quence de rafra&icirc;chissement d'une
+zone. Celle-ci peut s'exprimer en disant que les anciennes copies doivent
+&ecirc;tre totalement &eacute;limin&eacute;es du syst&egrave;me avant que
+le num&eacute;ro de s&eacute;rie ne "tourne" sur plus de la moiti&eacute;
+de sa plage de 32 bits. En pratique, le seul point d&eacute;licat est de
+v&eacute;rifier que la comparaison fonctionne correctement lorsque l'on
+se trouve de part et d'autre du point o&ugrave; le compteur de s&eacute;rie
+repart &agrave; 0.
+<P>La p&eacute;riodicit&eacute; de la v&eacute;rification de version par
+les serveurs secondaires est d&eacute;finie par des param&egrave;tres marqu&eacute;s
+dans le RR SOA attribu&eacute; &agrave; la zone, qui d&eacute;finissent
+l'intervalle minimum entre deux v&eacute;rifications. Ces param&egrave;tres
+sont appel&eacute;s REFRESH, RETRY, et EXPIRE. Lorsqu'une zone est enregistr&eacute;e
+dans un serveur secondaire, celui-ci attendra REFRESH secondes avant de
+v&eacute;rifier sur le primaire si un nouveau num&eacute;ro de s&eacute;rie
+a &eacute;t&eacute; donn&eacute; pour la zone. Si cette v&eacute;rification
+ne peut &ecirc;tre effectu&eacute;e, des nouvelles tentatives seront faites
+toutes les RETRY secondes. La v&eacute;rification est une requ&ecirc;te
+simple visant le RR SOA de la zone sur le serveur principal. Si le num&eacute;ro
+de s&eacute;rie dans la copie h&eacute;berg&eacute;e par le secondaire
+est &eacute;gal au num&eacute;ro de s&eacute;rie indiqu&eacute; dans le
+RR retourn&eacute; par la requ&ecirc;te, alors aucune remise &agrave; jour
+n'est n&eacute;cessaire, et la temporisation REFRESH doit &ecirc;tre r&eacute;activ&eacute;e.
+Si le serveur secondaire n'arrive pas &agrave; faire la v&eacute;rification
+apr&egrave;s que l'intervalle EXPIRE se soit &eacute;coul&eacute;, il doit
+alors admettre que sa copie de la zone est obsol&egrave;te et doit la supprimer.
+<P>Lorsque la v&eacute;rification conclue en une diff&eacute;rence de num&eacute;ros
+de s&eacute;rie, le serveur secondaire devra demander un transfert de donn&eacute;es
+de zone via une requ&ecirc;te AXFR pour cette zone. La requ&ecirc;te AXFR
+peut retourner une erreur, telle que "refus&eacute;", mais donne suite
+en temps normal &agrave; la r&eacute;ception d'une s&eacute;quence de messages
+de r&eacute;ponse. Les premier et dernier messages doivent contenir les
+donn&eacute;es du noeud autoris&eacute; de plus haut niveau dans la zone.
+Les messages interm&eacute;diaires transportent tous les autres RR enregistr&eacute;s
+pour la zone, les RR non autoris&eacute;s y compris. Le flux de messages
+permettent au serveur secondaire de reconstituer une copie conforme de
+la zone. Comme la pr&eacute;cision est essentielle, on utilisera TCP ou
+tout autre protocole fiabilis&eacute; pour les requ&ecirc;tes AXFR.
+<P>Tout serveur secondaire est tenu d'effectuer cette remise &agrave; jour
+aupr&egrave;s du principal, mais doit pouvoir optionnellement permettre
+&agrave; un autre serveur secondaire pour la m&ecirc;me zone d'effectuer
+sa remise &agrave; jour &agrave; partir de cette copie secondaire. Cette
+strat&eacute;gie permet d'am&eacute;liorer globalement la pertinence des
+donn&eacute;es, en proposant une solution en cas d'arr&ecirc;t du serveur
+principal, ou de probl&egrave;mes de r&eacute;seau, ou tout simplement
+lorsqu'un serveur secondaire dispose d'un "meilleur" acc&egrave;s sur un
+autre serveur secondaire plut&ocirc;t que sur le principal.
+<CENTER>
+<P>
+<HR></CENTER>
+
+</BODY>
+</HTML>

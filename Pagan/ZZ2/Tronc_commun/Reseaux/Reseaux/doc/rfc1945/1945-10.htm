@@ -1,0 +1,235 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">10. Définition des champs d'en-tête</FONT></H2>
+<P>Cette section décrit la syntaxe et la sémantique des champs d'en-tête essentiels utilisés dans le cadre d'HTTP/1.0. Pour les champs généraux et d'entité, l'émetteur et le récepteur peuvent tour à tour désigner le client ou le serveur, suivant celui qui est à l'origine de la transaction.
+<A NAME="10-1"></A>
+<H3>10.1 Allow</H3>
+<P>Le champ Allow (entité) liste l'ensemble des méthodes supportées par la ressource désignée par l'URI-visée. La fonction de ce champ est simplement d'informer le récepteur sur les méthodes qu'il peut utiliser sur la ressource. Ce champ n'est pas autorisé dans un requête de type POST, et doit être ignoré s'il apparaît dans ce dernier cas.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Allow          = "Allow" ":" 1#méthode</PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>Allow: GET, HEAD</CENTER></CODE>
+
+<P>Ce champ ne pourra prévenir le client de tenter d'appliquer d'autres méthodes que celles acceptées par la ressource. Il n'est là qu'à titre informatif. Les méthodes acceptées sont définies par le serveur origine pour chaque requête reçue.
+<P>Un proxy ne doit pas modifier le champ d'en-tête Allow même s'il ne connaît pas toutes les méthodes spécifiées, car l'utilisateur peut avoir à sa disposition d'autres moyens de communiquer avec le serveur origine.
+<P>Le champ d'en-tête Allow n'indique pas si les méthodes indiquées sont implémentées par le serveur (seulement si elles sont à priori acceptables par la ressource).
+<A NAME="10-2"></A>
+<H3>10.2 Authorization</H3>
+<P>Un utilisateur désireux de s'identifier auprès d'un serveur-en général, mais pas nécessairement, après réception d'une réponse 401-peut le faire en incluant un champ d'en-tête Authorization dans sa nouvelle requête. Ce champ contiendra les données d'autentification de l'utilisateur pour la ressource considérée.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Authorization        = "Authorization" ":" données_identification</PRE></CODE></FONT>
+
+<P>L'authentification de connexions HTTP est décrite en <A HREF="1945-11.htm">Section 11</A>. Si la requête est authentifiée, et un domaine d'accès attribué, les mêmes paramètres d'authentification seront reconnus pour toute autre ressource appartenant à ce domaine.
+<P>Les réponses à une requête contenant des données d'identification ne peut être enregistrée en cache.
+<A NAME="10-3"></A>
+<H3>10.3 Content-Encoding</H3>
+<P>Le champ Content-Encoding (entité) est utilisé pour compléter l'information de type de média. Lorsqu'il est présent, il indique sous quel codage la ressource est enregistrée, et par voie de conséquence, quel traitement doit être opéré sur l'entité pour pouvoir exploiter celle ci sous son type de média original, défini dans le champ d'en-tête Content-Type. Le champ Content-Encoding a été à l'origine intauré pour permettre la mise à disposition de ressource sous forme compressées, de sorte qu'il soit possible d'en connaître le type de média d'origine.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Content-Encoding        = "Content-Encoding" ":" <I>type_codage</I></PRE></CODE></FONT>
+
+<P>Les valeurs actuellement reconnues sont décrites en <A HREF="1945-3.htm#3-5">Section 3.5</A>. Exemple:
+
+<P><CODE><CENTER>Content-Encoding: x-gzip</CENTER></CODE>
+
+<P>Le type d'encodage est une caractéristique de la ressource identifiée par l'URI-visée. Typiquement, la ressource est enregistrée encodée, et le décodage ne se fera qu'à l'utilisation finale de celle-ci.
+<A NAME="10-4"></A>
+<H3>10.4 Content-Length</H3>
+<P>Le champ d'en-tête Content-Length (entité) indique la taille du corps d'entité, sous la forme d'un nombre d'octets exprimé en décimal, envoyé au récepteur. Dans le cas d'une requête de type HEAD, il renvoie la taille du corps d'entité que le serveur aurait renvoyé si la ressource avait fait l'objet d'une requête GET.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Content-Length        = "Content-Length" ":" 1*DIGIT</PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>Content-Length: 3495</CENTER></CODE>
+
+<P>Les applications utiliseront ce champ pour transmettre la taille de l'entité jointe, indépendamment du type de média de l'entité. Un champ Content-Length avec une valeur valide est obligatoire dans toute requête HTTP/1.0 contenant un corps d'entité.
+<P>Toute valeur numérique supérieure ou égale à zéro est valide. La <A HREF="1945-7.htm#7-2-2">section 7.2.2</A> décrit comment évaluer la taille d'un corps d'entité de réponse, si ce champ est omis.
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: La signification de ce champ est légèrement différente de celle de son équivalent MIME, lequel est un champ optionnel défini à l'intérieur du type "message/external-body". Pour HTTP, il doit être précisé même si la longueur du corps d'entité peut être connu avant la transmission.</FONT></NOTE>
+<A NAME="10-5"></A>
+<H3>10.5 Content-Type</H3>
+<P>Le champ d'en-tête Content-Type (entité) indique le type de média envoyé au récepteur dans le corps d'entité, ou, si la méthode invoquée est HEAD, le type de média du corps d'entité qui aurait été envoyé si la ressource avait fait l'objet d'une requête de type GET.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Content-Type        = "Content-Type" ":" <I>type_de_média</I></PRE></CODE></FONT>
+
+<P>Les types de média sont définis en <A HREF="1945-3.htm#3-6">Section 3.6</A>. Exemple:
+
+<P><CODE><CENTER>Content-Type: text/html</CENTER></CODE>
+
+<P>Une présentation d'autres méthodes pour identifier le type de média est donnée en <A HREF="1945-7.htm#7-2-1">Section 7.2.1</A>.
+<A NAME="10-6"></A>
+<H3>10.6 Date</H3>
+<P>Le champ d'en-tête Date (général) donne la date et l'heure à laquelle le message a été "rédigé", et utilise la sémantique de dates de la RFC 822. La valeur de ce champ est une date dans un des formats HTTP décrits à la <A HREF="1945-3.htm#3-3">Section 3.3</A>.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Date          = "Date" ":" <I>date_HTTP</I></PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>Date: Tue, 15 Nov 1994 08:12:31 GMT</CENTER></CODE>
+
+<P>Si un message est reçu en direct du client (pour les requêtes) ou du serveur origine (pour les réponses), on peut affirmer qu'il s'agit aussi de la date d'arrivée au récepteur. En outre, dans la mesure où la date - délivrée par l'origine - est un paramètre important pour tout ce qui touche à la gestion des caches, il est vivement conseillé que les serveurs origine renseignent systématiquement ce champ à la constitution de tout message. Les clients peuvent se limiter à l'envoi d'une date lorsque la requête contient un corps d'entité, comme dans le cas d'une requête POST, et encore cette pratique n'est pas obligatoire. Un message reçu et non daté se verra assigner une date par le récepteur si ce message doit être enregistré en cache ou rerouté via un protocole qui exige une Date.
+<P>En théorie, la date doit représenter l'instant juste avant l'émission. En pratique, c'est à la constitution du message que la date est inscrite.
+<A NAME="10-7"></A>
+<H3>10.7 Expires</H3>
+<P>Le champ d'en-tête Expires (entité) indique la date et l'heure à partir de laquelle le message doit être considéré comme obsolète. Ceci permet de suggérer la notion de "validité temporaire" de l'information. Les applications ne doivent pas enregistrer ces entités dans leur cache après la date spécifiée. Le présence d'un champ Expires ne signifie pas que la ressource originale n'a pas changé ou n'existe plus à cette date, avant, ou après cette date. Cependant, tout serveur sachant, ou pouvant supposer que cette ressource aura changé à une certaine date devra de préférence inclure un champ Expires avec cette date. Le format de la date mentionnée est une date absolue telle que définie à la <A HREF="1945-3.htm#3-3">Section 3.3</A>.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Expires         = "Expires" ":" <I>date-HTTP</I></PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>Expires: Thu, 01 Dec 1994 16:00:00 GMT</CENTER></CODE>
+
+<P>Si la date indiquée dans ce champ est égale ou antérieure à la date mentionnée dans le champ date du même en-tête, le serveur ou routeur, ou application ne devra pas enregistrer cette ressource dans son cache. Si la ressource est dynamique par nature, comme c'est le cas pour des résultats de processus générateurs de données, les entités produites se verront attribuées un champ Expires renseigné d'une façon correspondante à ce "dynamisme".
+<P>Le champ Expires ne peut pas être utilisé pour forcer un client à rafraîchir ou recharger une ressource. Sa sémantique ne concerne que les mécanismes de gestion du cache, lesquels n'utilisent ce paramètre que pour savoir si le serveur peut encore utiliser l'instance cachée lorsqu'une requête destinée à ce document est à nouveau présentée.
+<P>Les clients HTTP disposent souvent d'un mécanisme d'historique, implémenté sous forme d'un bouton "Back" et/ou d'une liste de "documents précédents", utilisés pour recharger un document précédemment chargé pendant la session courante. Par défaut, le champ Expires n'influe pas sur ces mécanismes. Si l'entité est stockée par un tel mécanisme, elle pourra être rechargée même si sa date d'expiration est passée, sauf si l'utilisateur a explicitement configuré le client pour régénérer les documents ayant expiré.
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: Il est encouragé que les applications fassent preuve d'une certaine tolérance quant à des implémentations erronées ou incomplètes du champ Expires. Une valeur zéro (0) ou une date présentée sous un mauvais format signifient "expiration immédiate". Bien que ces valeurs ne soient pas valides dans le cadre d'HTTP/1.0, une implémentation tolérante est toujours souhaitable.</FONT></NOTE>
+<A NAME="10-8"></A>
+<H3>10.8 From</H3>
+<P>Le champ d'en-tête From (requête), si présent, devra contenir l'adresse e-mail Internet de l'utilisateur "humain" contrôlant le client émetteur de la requête. Cette adresse doit être codée sous une forme utilisable par les machines, telle que définie dans la RFC 822 [7] (et RFC 1123 [6]):
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+From        = "From" ":" <I>adresse_mail</I></PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>From: webmaster@w3.org</CENTER></CODE>
+
+<P>Ce champ est exploité à des fins de statistiques, et pour identifier la source de requêtes non valides ou non autorisées. Il ne doit cependant pas être utilisé dans un contexte de sécurisation d'accès. Il doit être interprété comme l'identification de la personne ayant formulé la requête, et qui accepte la responsabilité de la méthode employée. En particulier, les robots devront renseigner ce champ afin que son responsable d'exploitation puisse être contacté en cas de dysfonctionnement à l'autre extrémité.
+<P>L'adresse e-mail Internet dans ce champ doit être séparé de la mention du nom de l'ordinateur d'où a été émis la requête. Par exemple, lorsque la requête a transité par l'intermédiaire d'un proxy, l'adresse de la source originale doit y être mentionnée.
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: Le client ne peut donner de valeur pour ce champ Form sans l'autorisation de l'utilisateur, car cette information rentre dans le cadre de la protection des données privées et des droits individuels. Il est fortement recommandé que le client laisse le choix à l'utilisateur de pouvoir activer, désactiver, et modifier la valeur émise dans ce champ avant émission de toute requête.</FONT></NOTE>
+<A NAME="10-9"></A>
+<H3>10.9 If-Modified-Since</H3>
+<P>Le champ d'en-tête If-Modified-Since (requête) est utilisé lors d'une requête de type GET pour en émettre une forme conditionnelle: Si la ressource visée n'a pas été modifiée depuis la date mentionnée dans ce champ, la copie de la ressource ne sera pas renvoyée par le serveur; En lieu et place, une réponse de type 304 (non modifié) sera renvoyée sans aucun corps d'entité associé.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+If-Modified-Since        = "If-Modified-Since" ":" <I>date_HTTP</I></PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT</CENTER></CODE>
+
+<P>Une méthode GET conditionnelle requiert la transmission d'une ressource uniquement si celle-ci a été modifiée après la date indiquée dans le champ If-Modified-Since. L'algorithme utilisé pour déterminer cette condition prend en compte les cas suivants:
+
+<P><UL>a) Si la résolution de la requête conduit à une réponse autre que 200 (OK), ou si la date passée par le champ If-Modified-Since n'est pas valide, la réponse sera alors donnée comme si la méthode invoquée était un GET standard. Une date postérieure à la date courante du serveur est non valide.<BR>
+b) Si la ressource a été modifiée après la date If-Modified-Since, la réponse sera donnée comme dans le cas d'une méthode GET standard.<BR>
+c) Si la ressource n'a pas été modifiée depuis la date If-Modified-Since, et cette date est valide, le serveur renverra une réponse 304 (non modifié).</UL>
+
+<P>Le but de cette implémentation est de permettre une remise à jour efficace des informations en cache, en réduisant au maximum les transactions réseau.
+<A NAME="10-10"></A>
+<H3>10.10 Last-Modified</H3>
+<P>Le champ d'en-tête Last-Modified (entité) indique la date et l'heure à laquelle le serveur pense que la ressource visée a été modifiée pour la dernière fois. La sémantique exacte de ce champ dépend fortement de la manière dont le récepteur va le comprendre: Si le récepteur dispose d'une copie de cette ressource d'une date inférieure à celle mentionnée dans le champ Last-Modified, cette copie devra être considérée comme obsolète.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Last-Modified        = "Last-Modified" ":" <I>date_HTTP</I></PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT</CENTER></CODE>
+
+<P>La signification exacte de cette information dépend de l'implémentation de l'émetteur et de la ressource à laquelle elle s'applique. Pour des fichiers, il s'agira de la date de dernière modification donnée par le gestionnaire de fichier du système d'exploitation. Pour des entités incluant des parties générées dynamiquement, cette date peut être plus récente que les dates de dernière modification de chacune de ses parties. Pour des routeurs vers des bases de données, il pourra s'agir de la dernière étiquette de date associée à l'enregistrement. Pour des objets virtuels, il pourra s'agir de la dernière date à laquelle l'état interne de l'objet a changé.
+<P>Un serveur origine ne doit pas envoyer de date Last-Modified postérieure à la date d'émission du message (date locale du serveur). Dans une telle éventualité, où la date à inscrire pointerait vers un instant futur, c'est la date d'émission du message qui doit être inscrite.
+<A NAME="10-11"></A>
+<H3>10.11 Location</H3>
+<P>Le champ d'en-tête Location (réponse) renvoie la localisation exacte de la ressource identifiée par l'URI-visée de la requête. Pour des réponses 3xx, ce champ indique l'URL "de préférence" donnée par le serveur pour la fonction de redirection automatique. Une seule URI absolue peut être mentionnée à la fois.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Location        = "Location" ":" <I>URI_absolue</I></PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>Location: http://www.w3.org/hypertext/WWW/NewLocation.html</CENTER></CODE>
+
+<A NAME="10-12"></A>
+<H3>10.12 Pragma</H3>
+<P>Le champ d'en-tête Pragma (générale) est utilisé pour transmettre des directives dépendantes de l'implémentation à tous les agents de la chaîne de requête/réponse. Toutes les directives Pragma spécifient un comportement particulier optionnel de la part des agents vis à vis du protocole; cependant, certains systèmes ne pourront répondre à toutes les directives.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Pragma            = "Pragma" ":" 1#directive_pragma
+
+directive_pragma  = "no-cache" | pragma
+pragma            = <I>nom_de_pragma</I> [ "=" mot ]</PRE></CODE></FONT>
+
+<P>Lorsque la directive "no-cache" est présente dans un message de requête, les applications doivent répercuter la requête jusqu'au serveur origine, même si elles disposent d'une copie de la ressource en cache. Ceci permet au client de forcer la récupération d'une "première copie" d'une ressource. Ceci permet de plus de demander au client une remise à jour de copies cachées, dans le cas où ces copies se sont avérées défectueuses, ou obsolètes.
+<P>Les directives Pragma doivent être réémises par les routeurs ou proxies, quelle que soit leur signification à l'égard des applications, dans la mesure où ces directives concernent toutes les applications de la chaîne de requête/réponse. Il n'est pas possible de définir un pragma ne concernant qu'un intermédiaire donné dans la chaîne; Cependant, toute directive non reconnue par l'un des récepteurs sera ignorée.
+<A NAME="10-13"></A>
+<H3>10.13 Referer</H3>
+<P>Le champ d'en-tête Referer (requête) permet au client d'indiquer, à l'usage du serveur, l'adresse (URI) de la ressource dans laquelle l'URI-visée a été trouvée. Ceci permet au serveur de générer et entretenir des listes de "rétro-liens" destinées à renseigner les clients futurs sur des "sites intéressants", ou à but d'archivage et d'analyse, optimisation de cache, etc. Il permet aussi l'analyse de liens obsolètes ou de type incorrect à but de maintenance. Le champ Referer ne doit pas être inscrit si la source de l'URI-visée provient d'une entité n'ayant pas d'URI propre, comme l'entrée de l'adresse via un clavier.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Referer        = "Referer" ":" ( URI_absolue | URI_relative )</PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>Referer: http://www.w3.org/hypertext/DataSources/Overview.html</CENTER></CODE>
+
+<P>Si une URI partielle est donnée, elle se référera relativement à l'URI-visée. L'URI donnée en référence ne doit pas inclure de fragment.
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: Dans la mesure où la référence d'un lien est une information qui peut avoir un caractère privé, ou être amenée à révéler une information privée, il est recommandé de laisser le choix à l'utilisateur final de renseigner ou non ce champ. Par exemple, un navigateur pourra disposer d'un commutateur qui permettra une navigation ouverte ou anonyme, qui simultanément peut activer ou désactiver l'émission des champs Referer et Form.</FONT></NOTE>
+<A NAME="10-14"></A>
+<H3>10.14 Server</H3>
+<P>Le champ d'en-tête Server (réponse) contient des informations sur le logiciel utilisé par le serveur origine pour traiter la requête. Ce champ peut contenir plusieurs noms de produits différents (<A HREF="1945-3.htm#3-7">Section 3.7</A>) ainsi que des commentaires identifiant le serveur et des "sous-composants" des applications. Par convention, les noms sont listés par ordre d'importance, eu égard à l'identification du produit utilisé.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Server       = "Server" ":" 1*( produit | commentaire )</PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>Server: CERN/3.0 libwww/2.17</CENTER></CODE>
+
+<P>Si la réponse est transmise via un proxy, ce dernier ne doit pas ajouter ses propres commentaires à la liste.
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: La révélation du nom et de la version du logiciel serveur peut présenter le risque de permettre des attaques extérieures contre telle ou telle application dont les "portes dérobées" sont connues. Les développeurs de serveurs auront tout intérêt à laisser l'émission de cette information optionnelle.</FONT></NOTE>
+<A NAME="10-15"></A>
+<H3>10.15 User-Agent</H3>
+<P>Le champ d'en-tête User-Agent (requête) contient des informations sur l'utilisateur émetteur de la requête. Cette information est utilisée à des fins statistiques, pour tracer des violations de protocole, et à des fins de reconnaissance automatique d'utilisateur permettant de formater la réponse de la manière la plus adaptée. L'usage de ce champ, bien que non indispensable, est cependant conseillé. Le champ User-Agent peut mentionner plusieurs noms de produits (<A HREF="1945-3.htm#3-7">Section 3.7</A>) ainsi que des commentaires identifiant le programme ou des sous-composants de ce programme dans la mesure où ceux-ci peuvent être significatifs pour le serveur. Par convention, ces informations sont listées par ordre d'importance.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+User-Agent        = "User-Agent" ":" 1*( produit | commentaires )</PRE></CODE></FONT>
+
+<P>Exemple:
+
+<P><CODE><CENTER>User-Agent: CERN-LineMode/2.15 libwww/2.17b3</CENTER></CODE>
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: Certains proxies ajoutent leur propre information à ce champ. Ceci est déconseillé, dans la mesure où le contenu final de ce champ peut alors devenir ambigu, voire confus.</FONT></NOTE>
+<A NAME="10-16"></A>
+<H3>10.16 WWW-Authenticate</H3>
+<P>Le champ d'en-tête WWW-Authenticate (réponse) doit être inclus dans des réponses de type 401 (non autorisé). La valeur du champ consiste en un ou plusieurs "modèles" d'identification pour l'URI-visée.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+WWW-Authenticate       = "WWW-Authenticate" ":" 1#modèle</PRE></CODE></FONT>
+
+<P>Le processus d'identification et d'authentification d'accès HTTP est décrit en <A HREF="1945-11.htm">Section 11</A>. Les applications utilisatrices doivent interpréter avec circonspection la valeur d'un champ WWW-Authenticate lorsqu'il présente plus d'un modèle d'authentification, ou si plusieurs champs WWW-Authenticate apparaissent dans l'en-tête, le contenu d'un modèle pouvant lui même apparaître comme une liste de paramètres séparés par une virgule.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-9.htm">Pr&eacute;c&eacute;dent</A> - <A HREF="1945-11.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+
+

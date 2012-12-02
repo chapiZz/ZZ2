@@ -1,0 +1,433 @@
+<html><head><title>SCSSI : SCSSI : ITSEC v1.2 Fonctionnalit&eacute;</title></head>
+<body bgcolor=#ffffff>
+
+<TABLE >
+<TR><TD WIDTH=161><A HREF="/index.html"><IMG SRC="/images/sigle2.gif" ALT="Retour Page de Garde" ALIGN="TOP" BORDER="0"></A>
+</TD><TD WIDTH=100%><CENTER>PREMIER MINISTRE</CENTER>
+<P>
+<CENTER><B><FONT SIZE=5>Service Central</FONT></B> <B><FONT SIZE=5>de la S&eacute;curit&eacute; des Syst&egrave;mes d'Information</FONT></B></CENTER>
+</TD>
+</TR>
+
+</TABLE><HR>
+<!                      >
+<!                      >
+<!                      >
+
+<TABLE>
+<TR><TD BGCOLOR="#96c7f8" WIDTH=161 VALIGN="TOP">
+<BR>
+<TABLE WIDTH=161>
+<TR><TD BGCOLOR="#ffffff" WIDTH=161 ALIGN="center"><B>DOCUMENTATION</B></TD></TR>
+<TR><TD ALIGN="left"><SMALL>
+<A HREF="/document/index.html">Index</A> de la documentation<BR><BR>
+EVALUATION
+</SMALL>
+
+<UL=COMPACT type="square">
+<SMALL>
+<LI><A HREF="/document/certif.html">Critères d'évaluation</A>
+<LI><A HREF="/document/certif.html">Schéma de certification</A>
+<LI><A HREF="/document/docs/GARDE/garde.html">Guides GARDE</A>
+<LI><A HREF="/document/certif.html">Certificats et PP</A>
+</SMALL>
+</UL>
+
+<SMALL>REGLEMENTATION</SMALL>
+<UL=COMPACT type="square">
+<SMALL>
+<LI><A HREF="/document/chiffre.html">Cryptologie</A>
+<LI><A HREF="/document/tempest.html">Domaine tempest</A>
+<LI><A HREF="/document/ssi.html">Systèmes d'information</A>
+</SMALL>
+</UL>
+
+<SMALL>
+<A HREF="/document/methodes.html">METHODES</A><BR><BR>
+<A HREF="/document/fiches/index.html">FICHES DE SYNTHESE</A>
+</SMALL>
+
+</TD></TR></TABLE>
+<HR>
+
+<TABLE WIDTH=161>
+<TR><TD BGCOLOR="#ffffff" WIDTH=161 ALIGN="center"><B>AILLEURS SUR LE SITE</B></TD></TR>
+<TR><TD ALIGN="left"><UL=COMPACT type="square"><SMALL>
+<LI><A HREF="/index.html">Retour à la page d'accueil</A>
+<LI><A HREF="/present/index.html">Présentation du SCSSI</A>
+<LI><A HREF="/pratiq/index.html">Informations pratiques</A>
+<LI><A HREF="/rubriq/index.html">Rubriques</A>
+<LI><A HREF="/courrier.html">Courrier des lecteurs</A>
+</SMALL></TD></TR></TABLE>
+
+<BR>
+</TD>
+<!                    >
+<!                    >
+<!                    >
+
+<TD WIDTH=31></TD>
+<TD WIDTH=100% VALIGN=TOP>
+<TABLE WIDTH=100%><TR>
+<TD BGCOLOR="#FF9933" VALIGN=MIDDLE>
+<BR>
+<H2><CENTER>SCSSI : ITSEC v1.2 Fonctionnalit&eacute;</H2>
+<A HREF="/document/criteres.html">Index de la documentation sur les critères</A> | 
+<A HREF="/document/index.html">Index général de la documentation</A>
+<BR>
+<A HREF="/document/docs/ITSEC/itsec.html">Sommaire</A> |
+<A HREF="/document/docs/ITSEC/itsec-0.html">Introduction</A> |
+<A HREF="/document/docs/ITSEC/itsec-1.html">Champ d'application</A> |
+<A HREF="/document/docs/ITSEC/itsec-2.html">Fonctionnalité</A> 
+<A HREF="/document/docs/ITSEC/itsec-3.html">Efficacité</A> |
+<A HREF="/document/docs/ITSEC/itsec-4.html">Conformité</A> |
+<A HREF="/document/docs/ITSEC/itsec-E1.html">Conformité E1</A> |
+<A HREF="/document/docs/ITSEC/itsec-E2.html">Conformité E2</A> |
+<A HREF="/document/docs/ITSEC/itsec-E3.html">Conformité E3</A> |
+<A HREF="/document/docs/ITSEC/itsec-E4.html">Conformité E4</A> |
+<A HREF="/document/docs/ITSEC/itsec-E5.html">Conformité E5</A> |
+<A HREF="/document/docs/ITSEC/itsec-E6.html">Conformité E6</A>
+<A HREF="/document/docs/ITSEC/itsec-5.html">Résultats de l'évaluation</A> |
+<A HREF="/document/docs/ITSEC/itsec-6.html">Glossaire</A> |
+<A HREF="/document/docs/ITSEC/itsec-A.html">Exemples de classes de Fonctionnalité</A> |
+<A HREF="/document/docs/ITSEC/itsec-B.html">"Claims language"</A> |
+
+<BR><BR>
+<a href="itsec.html"><img alt="[Début]" border=0 src="/images/top.gif"></a> <a href="itsec-1.html"><img alt="[Précédente]" border=0 src="/images/prev.gif"></a> <a href="itsec-3.html"><img alt="[Suivante]" border=0 src="/images/next.gif"></a> <a href="itsec-B.html"><img alt="[Fin]" border=0 src="/images/bottom.gif"></a>
+<BR><BR>
+</TD></TR></TABLE>
+<a name="393239">
+<center><h3> FONCTIONNALITE</h3></center>
+</a><a name="392969">
+<h4> Introduction</h4>
+</a>Une cible d'&eacute;valuation (TOE) qui fournit de la s&eacute;curit&eacute; (une combinaison de confidentialit&eacute;, d'int&eacute;grit&eacute; et de disponibilit&eacute;) doit pr&eacute;senter des caract&eacute;ristiques de s&eacute;curit&eacute; appropri&eacute;es. Il sera normalement n&eacute;cessaire de d&eacute;terminer qu'un degr&eacute; de confiance appropri&eacute; peut &ecirc;tre accord&eacute; &agrave; ces caract&eacute;ristiques. Pour cela, les caract&eacute;ristiques elles-m&ecirc;mes doivent &ecirc;tre sp&eacute;cifi&eacute;es. Le ou les documents qui sp&eacute;cifient ces caract&eacute;ristiques, ainsi que le niveau d'&eacute;valuation d&eacute;sir&eacute;, constituent la cible de s&eacute;curit&eacute; pour cette TOE.<p>
+
+Dans les pr&eacute;sents crit&egrave;res, les caract&eacute;ristiques de s&eacute;curit&eacute; sont consid&eacute;r&eacute;es &agrave; trois niveaux. Le point de vue le plus abstrait est celui des objectifs de s&eacute;curit&eacute; qui repr&eacute;sentent la contribution &agrave; la s&eacute;curit&eacute; qu'une TOE se propose d'apporter. Pour atteindre ces objectifs, la TOE doit contenir certaines fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute;. Ces fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; doivent, &agrave; leur tour, &ecirc;tre impl&eacute;ment&eacute;es gr&acirc;ce &agrave; des m&eacute;canismes de s&eacute;curit&eacute; sp&eacute;cifiques. Ces trois niveaux peuvent &ecirc;tre sch&eacute;matis&eacute;s comme suit &#32;:<p>
+
+<ol>
+<a name="392972">
+<li>Objectifs de s&eacute;curit&eacute; - Pourquoi la fonctionnalit&eacute; est voulue.
+</a><a name="392973">
+<li>Fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; - Quelle fonctionnalit&eacute; est r&eacute;ellement fournie.
+</a><a name="392974">
+<li>M&eacute;canismes de s&eacute;curit&eacute; - Comment la fonctionnalit&eacute; est fournie.
+</a></ol>
+<a name="392975">
+<h4> La cible de s&eacute;curit&eacute;</h4>
+</a>La cible de s&eacute;curit&eacute; sert &agrave; la fois de sp&eacute;cification des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute;, par rapport &agrave; laquelle la TOE sera &eacute;valu&eacute;e, et de description des liens entre la TOE et l'environnement dans lequel celle-ci sera exploit&eacute;e. Sont donc int&eacute;ress&eacute;s par la cible de s&eacute;curit&eacute; non seulement les responsables de la production de la TOE et de son &eacute;valuation, mais &eacute;galement les responsables de sa gestion, de son achat, de son installation, de sa configuration, de son exploitation et de son emploi.<p>
+
+Le contenu exig&eacute; d'une cible de s&eacute;curit&eacute; peut &ecirc;tre r&eacute;sum&eacute; ainsi &#32;:<p>
+
+<ol>
+<a name="392978">
+<li><I>Soit</I>	une <strong>politique de s&eacute;curit&eacute; du syst&egrave;me<br></strong><I>soit</I>		un <strong>argumentaire du produit</strong>.
+</a><a name="392979">
+<li>Une sp&eacute;cification des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; requises.
+</a><a name="392980">
+<li>Une d&eacute;finition des m&eacute;canismes de s&eacute;curit&eacute; requis <I>(optionnelle)</I>.
+</a><a name="392981">
+<li>La cotation annonc&eacute;e de la r&eacute;sistance minimum des m&eacute;canismes.
+</a><a name="392982">
+<li>Le niveau d'&eacute;valuation vis&eacute;.
+</a></ol>
+Chacun de ces &eacute;l&eacute;ments est d&eacute;crit plus en d&eacute;tail ci-dessous.<p>
+
+Les exigences pour la pr&eacute;sentation de la cible de s&eacute;curit&eacute; d&eacute;pendent du niveau d'&eacute;valuation vis&eacute;. Le niveau d'&eacute;valuation d&eacute;termine &eacute;galement les autres documents de la TOE qui doivent &ecirc;tre fournis pour l'&eacute;valuation, ainsi que les exigences sur leur contenu et leur pr&eacute;sentation, et les exigences concernant les &eacute;l&eacute;ments de preuve qui doivent &ecirc;tre fournis afin de montrer que la TOE satisfait &agrave; la cible de s&eacute;curit&eacute;.<p>
+
+La cible de s&eacute;curit&eacute; peut se pr&eacute;senter sous la forme d'un document unique ou de plusieurs documents. Lorsque plusieurs documents sont utilis&eacute;s, leurs relations doivent &ecirc;tre clairement indiqu&eacute;es.<p>
+
+Le commanditaire de l'&eacute;valuation est responsable de la fourniture et de la fid&eacute;lit&eacute; de la cible de s&eacute;curit&eacute; pour l'&eacute;valuation.<p>
+
+<a name="392987">
+<h4> Politique de s&eacute;curit&eacute; d'un syst&egrave;me</h4>
+</a>Les &eacute;l&eacute;ments constituant une cible de s&eacute;curit&eacute; sont diff&eacute;rents selon qu'il s'agit d'un syst&egrave;me ou d'un produit. Dans le cas d'un syst&egrave;me, l'environnement r&eacute;el dans lequel la TOE sera utilis&eacute;e est connu, ses objectifs de s&eacute;curit&eacute; peuvent &ecirc;tre d&eacute;termin&eacute;s, et les menaces r&eacute;elles et les contre-mesures existantes peuvent &ecirc;tre prises en compte. Ces d&eacute;tails sont donn&eacute;s dans un document de politique de s&eacute;curit&eacute; du syst&egrave;me.<p>
+
+La politique de s&eacute;curit&eacute; d'un syst&egrave;me sp&eacute;cifie l'ensemble des lois, r&egrave;glements et pratiques qui r&eacute;gissent la fa&ccedil;on de g&eacute;rer, prot&eacute;ger et diffuser les informations et autres ressources sensibles au sein d'un syst&egrave;me sp&eacute;cifique. Elle doit identifier les objectifs de s&eacute;curit&eacute; du syst&egrave;me et les menaces auxquelles celui-ci devra faire face. Ces objectifs de s&eacute;curit&eacute; doivent &ecirc;tre pris en compte par une combinaison de fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; du syst&egrave;me (impl&eacute;ment&eacute;es au sein de la TOE), et &eacute;galement par des moyens physiques, relatifs au personnel ou organisationnels, associ&eacute;s au syst&egrave;me. La politique de s&eacute;curit&eacute; d'un syst&egrave;me doit couvrir tous les aspects de la s&eacute;curit&eacute; relatifs au syst&egrave;me, en incluant ces mesures physiques, organisationnelles et relatives au personnel qui lui sont associ&eacute;es.<p>
+
+Toutes les organisations auront des normes g&eacute;n&eacute;rales de s&eacute;curit&eacute; qui s'appliqueront &agrave; tous les syst&egrave;mes au sein de l'organisation et qui d&eacute;finiront les relations concernant la s&eacute;curit&eacute; entre l'organisation et le monde ext&eacute;rieur. Ces normes peuvent &ecirc;tre consid&eacute;r&eacute;es comme une <strong>politique de s&eacute;curit&eacute; interne</strong> &#32;: l'ensemble des lois, r&egrave;glements et pratiques qui r&eacute;gissent la fa&ccedil;on de g&eacute;rer, prot&eacute;ger et diffuser les biens, en particulier les informations sensibles, au sein de l'organisation. Beaucoup d'organisations auront une politique de s&eacute;curit&eacute; interne explicite et &eacute;crite, qui sp&eacute;cifiera les r&egrave;gles, les pratiques ainsi que les lois nationales et internationales applicables auxquelles elles doivent se conformer. Dans ce cas, on doit y faire r&eacute;f&eacute;rence dans la politique de s&eacute;curit&eacute; du syst&egrave;me. Dans le cas contraire, tous les aspects pertinents doivent &ecirc;tre pr&eacute;sent&eacute;s par &eacute;crit dans chacune des politiques de s&eacute;curit&eacute; des syst&egrave;mes de l'organisation.<p>
+
+Le premier r&ocirc;le de la politique de s&eacute;curit&eacute; interne est de fournir le contexte n&eacute;cessaire &agrave; l'identification des objectifs de s&eacute;curit&eacute; du syst&egrave;me. Le fait d'identifier les biens propres &agrave; prendre en consid&eacute;ration, les menaces g&eacute;n&eacute;rales et les r&eacute;sultats des analyses de risques aideront &agrave; identifier ces objectifs de s&eacute;curit&eacute; du syst&egrave;me. Un d&eacute;bat sur les m&eacute;thodes d'analyse de risques est hors du champ d'application des pr&eacute;sents crit&egrave;res.<p>
+
+Dans le cas d'un syst&egrave;me individuel, la politique de s&eacute;curit&eacute; du syst&egrave;me doit d&eacute;finir les mesures de s&eacute;curit&eacute; &agrave; mettre en oeuvre pour satisfaire aux objectifs de s&eacute;curit&eacute; du syst&egrave;me en coh&eacute;rence avec la politique s&eacute;curit&eacute; interne. Les mesures de s&eacute;curit&eacute; requises par la politique de s&eacute;curit&eacute; du syst&egrave;me seront r&eacute;alis&eacute;es par une combinaison de fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; impl&eacute;ment&eacute;es par la TOE, et par des moyens physiques, relatifs au personnel et organisationnels. La politique de s&eacute;curit&eacute; du syst&egrave;me doit indiquer clairement le partage des responsabilit&eacute;s entre les fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; et les autres moyens.<p>
+
+Les mesures de s&eacute;curit&eacute; des TI d'une politique de s&eacute;curit&eacute; d'un syst&egrave;me peuvent &ecirc;tre s&eacute;par&eacute;es du reste de la politique de s&eacute;curit&eacute; syst&egrave;me et d&eacute;finies dans un document s&eacute;par&eacute; &#32;: la <strong>politique de s&eacute;curit&eacute; technique</strong>. Il s'agit de l'ensemble des lois, r&egrave;glements et pratiques qui r&eacute;gissent le traitement des informations sensibles et l'utilisation des ressources par le mat&eacute;riel et le logiciel d'un syst&egrave;me TI.<p>
+
+Dans bien des cas il peut &ecirc;tre commode d'inclure les sp&eacute;cifications des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; dans la politique de s&eacute;curit&eacute; du syst&egrave;me ou dans la politique de s&eacute;curit&eacute; technique.<p>
+
+La politique de s&eacute;curit&eacute; du syst&egrave;me ou la politique de s&eacute;curit&eacute; technique peuvent servir de base au choix de produits de s&eacute;curit&eacute; des TI qui conviennent pour &ecirc;tre incorpor&eacute;s dans le syst&egrave;me &#32;; un tel choix de produits est hors du champ d'application des pr&eacute;sents crit&egrave;res.<p>
+
+<a name="392996">
+<h4> Argumentaire d'un produit</h4>
+</a>Dans le cas d'un produit, l'environnement pr&eacute;cis dans lequel la TOE va &ecirc;tre utilis&eacute;e n'est pas connu de son d&eacute;veloppeur, puisque le produit peut &ecirc;tre incorpor&eacute; dans diff&eacute;rents syst&egrave;mes sp&eacute;cifiques et diff&eacute;rents environnements syst&egrave;me. En remplacement, il doit &ecirc;tre fourni un argumentaire qui donne les informations n&eacute;cessaires &agrave; un acheteur &eacute;ventuel pour d&eacute;cider si ce produit va l'aider &agrave; satisfaire aux objectifs de s&eacute;curit&eacute; de son syst&egrave;me, et pour d&eacute;finir ce qui reste &agrave; faire pour les satisfaire compl&egrave;tement.<p>
+
+L'argumentaire d'un produit doit identifier la mani&egrave;re dont il est pr&eacute;vu d'utiliser ce produit, l'environnement pr&eacute;vu pour son utilisation et les menaces suppos&eacute;es dans cet environnement. Il doit inclure un r&eacute;sum&eacute; des caract&eacute;ristiques de s&eacute;curit&eacute; du produit, et d&eacute;finir toutes les hypoth&egrave;ses concernant l'environnement et la mani&egrave;re dont le produit sera utilis&eacute;. Ceci doit inclure les mesures de s&eacute;curit&eacute; relatives au personnel, physiques, organisationnelles et des TI requises en appui du produit, ainsi que ses d&eacute;pendances par rapport &agrave; des mat&eacute;riels, des logiciels et/ou des microprogrammes du syst&egrave;me qui ne sont pas fournis avec le produit.<p>
+
+<a name="392999">
+<h4> Sp&eacute;cification des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute;</h4>
+</a>La cible de s&eacute;curit&eacute; doit inclure une sp&eacute;cification des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; que la TOE doit fournir. Ces fonctions peuvent &ecirc;tre d&eacute;clar&eacute;es explicitement, ou par r&eacute;f&eacute;rence &agrave; une ou plusieurs classes de fonctionnalit&eacute; pr&eacute;d&eacute;finies, ou encore par r&eacute;f&eacute;rence &agrave; une norme accept&eacute;e qui d&eacute;finit une fonctionnalit&eacute; de s&eacute;curit&eacute;. Des classes pr&eacute;d&eacute;finies sont expos&eacute;es plus loin dans ce chapitre.<p>
+
+Un ou plusieurs documents normatifs qui concernent la s&eacute;curit&eacute; peuvent faire partie d'une cible de s&eacute;curit&eacute;, soit qu'elle y fasse r&eacute;f&eacute;rence, soit qu'elle les inclue. Lorsque les normes permettent des options, les options choisies doivent &ecirc;tre clairement identifi&eacute;es. Lorsqu'une norme ne fournit pas toutes les informations requises, les informations compl&eacute;mentaires n&eacute;cessaires doivent &ecirc;tre explicitement fournies dans la cible de s&eacute;curit&eacute;.<p>
+
+Dans le cas d'un syst&egrave;me, les fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; doivent &ecirc;tre reli&eacute;es aux objectifs de s&eacute;curit&eacute;, de sorte qu'on puisse voir quelles fonctions satisfont &agrave; quels objectifs (une fonction peut satisfaire, ou aider &agrave; satisfaire, &agrave; plusieurs objectifs). Chacune des fonctions prises en compte dans la sp&eacute;cification des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; doit au minimum aider &agrave; satisfaire au moins &agrave; un objectif. La sp&eacute;cification des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; doit &eacute;galement montrer pourquoi les fonctions conviennent pour contrer les menaces identifi&eacute;es ou d&eacute;clar&eacute;es contre les objectifs de s&eacute;curit&eacute;.<p>
+
+Dans le cas d'un produit, les fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; doivent &ecirc;tre reli&eacute;es aux modes pr&eacute;vus d'utilisation du produit et les hypoth&egrave;ses faites concernant l'environnement dans lequel le produit sera install&eacute; doivent &ecirc;tre donn&eacute;es dans l'argumentaire du produit. Cette mise en correspondance doit inclure toutes les d&eacute;pendances envers d'autres fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; et d'autres mesures ne relevant pas de la s&eacute;curit&eacute; des TI, suppos&eacute;es fournies par l'environnement.<p>
+
+Du point de vue de l'&eacute;valuation, la sp&eacute;cification des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; est la partie la plus importante de la cible de s&eacute;curit&eacute;. Ces fonctions doivent toujours &ecirc;tre sp&eacute;cifi&eacute;es dans un mode informel, en langage naturel. De plus, pour les niveaux sup&eacute;rieurs d'&eacute;valuation, elles doivent &eacute;galement &ecirc;tre sp&eacute;cifi&eacute;es suivant un style de pr&eacute;sentation semi-formel ou formel. Des d&eacute;tails concernant de tels styles de pr&eacute;sentation sont donn&eacute;s plus loin dans ce chapitre.<p>
+
+<a name="393005">
+<h4> D&eacute;finition des m&eacute;canismes de s&eacute;curit&eacute; requis</h4>
+</a>Une cible de s&eacute;curit&eacute; peut, de fa&ccedil;on optionnelle, imposer ou revendiquer l'emploi de m&eacute;canismes de s&eacute;curit&eacute; particuliers. Tous les m&eacute;canismes de s&eacute;curit&eacute; inclus dans la cible de s&eacute;curit&eacute; doivent &ecirc;tre reli&eacute;s aux fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; correspondantes, de sorte qu'on puisse voir quels m&eacute;canismes r&eacute;alisent chaque fonction (un m&eacute;canisme peut r&eacute;aliser plusieurs fonctions, et une fonction peut &ecirc;tre r&eacute;alis&eacute;e par une combinaison de plusieurs m&eacute;canismes).<p>
+
+Lorsque des m&eacute;canismes de s&eacute;curit&eacute; sont impos&eacute;s par la cible de s&eacute;curit&eacute;, c'est au d&eacute;veloppeur d'impl&eacute;menter les m&eacute;canismes requis. Dans le cas contraire, c'est au d&eacute;veloppeur de d&eacute;velopper et r&eacute;aliser des m&eacute;canismes qui, combin&eacute;s, r&eacute;alisent les fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; requises.<p>
+
+<a name="393008">
+<h4> Cotation annonc&eacute;e de la r&eacute;sistance minimum des m&eacute;canismes</h4>
+</a>Chaque cible de s&eacute;curit&eacute; doit sp&eacute;cifier une cotation annonc&eacute;e de la r&eacute;sistance minimum des m&eacute;canismes de s&eacute;curit&eacute; de la TOE vis &agrave; vis d'une attaque directe. Ce doit &ecirc;tre l'une des cotations <I>&eacute;l&eacute;mentaire</I>, <I>moyenne</I> ou <I>&eacute;lev&eacute;e</I> d&eacute;finies au chapitre 3 des pr&eacute;sents crit&egrave;res.<p>
+
+<a name="393010">
+<h4> Niveau d'&eacute;valuation vis&eacute;</h4>
+</a>Chaque cible de s&eacute;curit&eacute; doit sp&eacute;cifier le niveau d'&eacute;valuation vis&eacute; pour l'&eacute;valuation de la TOE. Ce doit &ecirc;tre l'un des niveaux <I>E1</I>, <I>E2</I>, <I>E3</I>, <I>E4</I>, <I>E5</I>, <I>E6</I> d&eacute;finis au chapitre 4 des pr&eacute;sents crit&egrave;res.<p>
+
+<a name="393012">
+<h4> Exemples d'utilisation de documents existants de politique de s&eacute;curit&eacute;</h4>
+</a>Les pr&eacute;sents crit&egrave;res visent &agrave; permettre l'utilisation de documents existants de politique de s&eacute;curit&eacute; d&eacute;velopp&eacute;s pour d'autres crit&egrave;res ou d'autres normes, pour constituer tout ou partie de la cible de s&eacute;curit&eacute; d'un syst&egrave;me. En cons&eacute;quence, le contenu pr&eacute;cis des documents qui constituent la cible de s&eacute;curit&eacute; n'est pas impos&eacute;. L'information minimum exig&eacute;e pour une &eacute;valuation par rapport aux pr&eacute;sents crit&egrave;res a &eacute;t&eacute; pr&eacute;sent&eacute;e plus haut. Dans la mesure o&ugrave; une cible de s&eacute;curit&eacute; peut &ecirc;tre constitu&eacute;e de plus d'un document, des mod&egrave;les existants de documents de politique peuvent &ecirc;tre adapt&eacute;s (bien que des documents compl&eacute;mentaires puissent &ecirc;tre exig&eacute;s pour compl&eacute;ter les informations exig&eacute;es pour une cible de s&eacute;curit&eacute;).<p>
+
+Deux exemples sont donn&eacute;s ci-dessous pour montrer comment des types particuliers de documents de politique de s&eacute;curit&eacute; peuvent satisfaire aux exigences pour une cible de s&eacute;curit&eacute;.<p>
+
+Au Royaume Uni il est obligatoire de produire une politique de s&eacute;curit&eacute; syst&egrave;me ou SSP (System Security Policy) pour tous les syst&egrave;mes qui traiteront des informations classifi&eacute;es au niveau national. Si l'autorit&eacute; qui donne son autorisation d&eacute;cide qu'une &eacute;valuation de la s&eacute;curit&eacute; est n&eacute;cessaire, une politique de s&eacute;curit&eacute; de l'information dans les syst&egrave;mes &eacute;lectroniques ou SEISP (System Electronic Information Security Policy) doit &eacute;galement &ecirc;tre produite. Pour certains niveaux d'&eacute;valuation vis&eacute;s, un mod&egrave;le de politique de s&eacute;curit&eacute; ou SPM (Security Policy Model) doit aussi &ecirc;tre produit. La SSP comprend une d&eacute;finition de l'&eacute;tendue du syst&egrave;me, les objectifs de s&eacute;curit&eacute; du syst&egrave;me, les mesures de s&eacute;curit&eacute; &agrave; faire respecter et l'attribution des responsabilit&eacute;s pour les faire respecter (c'est &agrave; dire qu'elle correspond &eacute;troitement &agrave; la politique de s&eacute;curit&eacute; du syst&egrave;me telle que d&eacute;crite dans les pr&eacute;sents crit&egrave;res). Elle contient &eacute;galement un d&eacute;riv&eacute; du niveau d'&eacute;valuation requis pour la cible, bas&eacute; sur les caract&eacute;ristiques cl&eacute;s du syst&egrave;me et de son environnement. Si n&eacute;cessaire, une SEISP est &eacute;labor&eacute;e &agrave; partir de la SSP. Il s'agit d'une pr&eacute;sentation plus d&eacute;taill&eacute;e des aspects mat&eacute;riels et logiciels de la SSP, mais encore en style informel &#32;: elle correspond &agrave; la politique de s&eacute;curit&eacute; technique d&eacute;crite dans les pr&eacute;sents crit&egrave;res. Le SPM est une sp&eacute;cification parall&egrave;le des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; r&eacute;dig&eacute;e en style formel ou semi-formel. Il est &eacute;labor&eacute; lorsqu'une telle sp&eacute;cification parall&egrave;le est exig&eacute;e pour le niveau d'&eacute;valuation vis&eacute;.<p>
+
+Un "Claims Document" est une liste d'annonces concernant la fonctionnalit&eacute; d&eacute;di&eacute;e &agrave; la s&eacute;curit&eacute; fournie par un produit, &eacute;labor&eacute;e par le d&eacute;veloppeur du produit, et r&eacute;dig&eacute;e en style semi-formel utilisant le "Claims Language" d&eacute;fini dans l'annexe B du pr&eacute;sent document. Il inclut les hypoth&egrave;ses et les contraintes concernant la mani&egrave;re dont le produit doit &ecirc;tre utilis&eacute; pour que ces annonces soient valides. Il inclut &eacute;galement une identification des objectifs de s&eacute;curit&eacute;, une sp&eacute;cification informelle des annonces, une correspondance entre les fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; annonc&eacute;es et ces objectifs de s&eacute;curit&eacute;, ainsi que le niveau d'&eacute;valuation d&eacute;sir&eacute;, afin de compl&eacute;ter une cible de s&eacute;curit&eacute; de produit telle qu'exig&eacute;e par les pr&eacute;sents crit&egrave;res.<p>
+
+<a name="393017">
+<h4> Rubriques g&eacute;n&eacute;riques</h4>
+</a>Il sera plus facile de comprendre une cible de s&eacute;curit&eacute; si la sp&eacute;cification de ses fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; a &eacute;t&eacute; pr&eacute;sent&eacute;e dans un ordre logique. Cela aidera &agrave; comparer les cibles de s&eacute;curit&eacute; et simplifiera le travail des &eacute;valuateurs. Il existe des regroupements naturels de fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; qui donnent un tel ordre, et un ensemble recommand&eacute; de huit <I>rubriques g&eacute;n&eacute;riques</I> pour un tel regroupement figure dans les pr&eacute;sents crit&egrave;res.<p>
+
+Les rubriques recommand&eacute;es sont les suivants &#32;:<p>
+
+<ul>
+<li>Identification et authentification
+
+<li>Contr&ocirc;le d'acc&egrave;s
+
+<li>Imputabilit&eacute;
+
+<li>Audit
+
+<li>R&eacute;utilisation d'objet
+
+<li>Fid&eacute;lit&eacute;
+
+<li>Fiabilit&eacute; de service
+
+<li>Echange de donn&eacute;es
+</ul><p>
+
+Il est recommand&eacute; d'utiliser ces rubriques standards chaque fois que possible. Leur utilisation simplifiera la comparaison avec d'autres cibles de s&eacute;curit&eacute; et permettra de d&eacute;terminer plus facilement si une cible de s&eacute;curit&eacute; particuli&egrave;re inclut ou exclut des fonctions d'un certain type.<p>
+
+<a name="393029">
+<h4> Identification et authentification</h4>
+</a>Pour beaucoup de TOE, il y aura des exigences pour la d&eacute;termination et le contr&ocirc;le des utilisateurs qui sont autoris&eacute;s &agrave; avoir acc&egrave;s aux ressources contr&ocirc;l&eacute;es par la TOE. Cela implique non seulement d'&eacute;tablir l'identit&eacute; annonc&eacute;e par un utilisateur, mais aussi de v&eacute;rifier que cet utilisateur est bien la personne qu'il pr&eacute;tend &ecirc;tre. Pour ce faire, l'utilisateur fournira &agrave; la TOE une information que la TOE sait &ecirc;tre associ&eacute;e &agrave; l'utilisateur en question.<p>
+
+Cette rubrique doit rassembler toutes les fonctions destin&eacute;es &agrave; &eacute;tablir et v&eacute;rifier une identit&eacute; annonc&eacute;e.<p>
+
+Cette rubrique doit inclure toutes les fonctions qui permettent d'ajouter de nouvelles identit&eacute;s et d'&eacute;liminer ou d'invalider d'anciennes identit&eacute;s. De m&ecirc;me, elle doit inclure toutes les fonctions destin&eacute;es &agrave; cr&eacute;er, modifier ou permettre &agrave; des utilisateurs autoris&eacute;s de contr&ocirc;ler les informations d'authentification n&eacute;cessaires pour v&eacute;rifier l'identit&eacute; d'utilisateurs particuliers. Elle doit aussi inclure des fonctions pour assurer l'int&eacute;grit&eacute; des informations d'authentification ou pr&eacute;venir leur usage non autoris&eacute;. Elle doit inclure toutes les fonctions destin&eacute;es &agrave; limiter la possibilit&eacute; d'essais r&eacute;p&eacute;t&eacute;s d'&eacute;tablissement d'une fausse identit&eacute;.<p>
+
+<a name="393033">
+<h4> Contr&ocirc;le d'acc&egrave;s</h4>
+</a>Pour beaucoup de TOE, il y aura des exigences pour garantir que les utilisateurs et les processus qui agissent pour le compte de ceux-ci sont emp&ecirc;ch&eacute;s d'acc&eacute;der aux informations et aux ressources auxquelles ils ne sont pas autoris&eacute;s &agrave; acc&eacute;der ou auxquelles ils n'ont pas besoin d'acc&eacute;der. De m&ecirc;me, il y aura des exigences concernant la cr&eacute;ation ou la modification (y compris la suppression) non autoris&eacute;es d'informations.<p>
+
+Cette rubrique doit rassembler toutes les fonctions destin&eacute;es &agrave; contr&ocirc;ler les flux d'informations entre les utilisateurs, les processus de traitement et les objets, ainsi que l'utilisation qu'ils font des ressources. Ceci inclut l'administration (c'est &agrave; dire l'octroi et le retrait) des droits d'acc&egrave;s et leur v&eacute;rification.<p>
+
+Cette rubrique doit inclure les fonctions servant &agrave; &eacute;tablir et entretenir toutes les listes ou r&egrave;gles qui r&eacute;gissent les droits d'effectuer diff&eacute;rents types d'acc&egrave;s. Elle doit inclure toutes les fonctions relatives aux restrictions temporaires d'acc&egrave;s &agrave; des objets simultan&eacute;ment accessibles par plusieurs utilisateurs ou processus, et n&eacute;cessaires au maintien de la coh&eacute;rence et de la fid&eacute;lit&eacute; de ces objets. Elle doit inclure toutes les fonctions destin&eacute;es &agrave; assurer que, d&egrave;s leur cr&eacute;ation, des listes d'acc&egrave;s par d&eacute;faut ou des r&egrave;gles d'acc&egrave;s par d&eacute;faut s'appliquent aux objets. Elle doit inclure toutes les fonctions destin&eacute;es &agrave; contr&ocirc;ler la propagation des droits d'acc&egrave;s aux objets. Elle doit inclure &eacute;galement toutes les fonctions destin&eacute;es &agrave; contr&ocirc;ler la d&eacute;duction d'information par agr&eacute;gation de donn&eacute;es auxquelles on peut l&eacute;gitimement acc&eacute;der d'une autre mani&egrave;re.<p>
+
+<a name="393037">
+<h4> Imputabilit&eacute;</h4>
+</a>Pour beaucoup de TOE, il y aura des exigences pour garantir l'enregistrement des informations pertinentes sur les actions soit d'un utilisateur, soit d'un processus agissant pour le compte de celui-ci, de fa&ccedil;on que les cons&eacute;quences de ces actions puissent &ecirc;tre ult&eacute;rieurement associ&eacute;es &agrave; l'utilisateur en question et qu'on puisse le tenir pour responsable.<p>
+
+Cette rubrique doit rassembler toutes les fonctions destin&eacute;es &agrave; enregistrer l'exercice des droits qui se rapportent &agrave; la s&eacute;curit&eacute;.<p>
+
+Cette rubrique doit inclure des fonctions relatives au recueil, &agrave; la protection et &agrave; l'analyse de telles informations. Certaines fonctions peuvent satisfaire &agrave; la fois aux exigences d'imputabilit&eacute; et de capacit&eacute; &agrave; &ecirc;tre audit&eacute;es et relever ainsi des deux rubriques. De telles fonctions peuvent &ecirc;tre incluses dans l'une de ces deux rubriques, mais doivent &ecirc;tre r&eacute;f&eacute;renc&eacute;es dans l'autre.<p>
+
+<a name="393041">
+<h4> Audit</h4>
+</a>Pour beaucoup de TOE, il y aura des exigences pour garantir que sont enregistr&eacute;es suffisamment d'informations sur les &eacute;v&eacute;nements, aussi bien courants qu'exceptionnels, pour qu'un examen ult&eacute;rieur puisse d&eacute;terminer s'il y a effectivement eu violation de la s&eacute;curit&eacute;, et, dans ce cas, quelles informations ou autres ressources ont &eacute;t&eacute; compromises.<p>
+
+Cette rubrique doit rassembler toutes les fonctions destin&eacute;es &agrave; d&eacute;celer et &agrave; examiner les &eacute;v&eacute;nements susceptibles de constituer une menace pour la s&eacute;curit&eacute;.<p>
+
+Cette rubrique doit inclure des fonctions relatives au recueil, &agrave; la protection et &agrave; l'analyse de telles informations. Une telle analyse peut &eacute;galement inclure des analyses de tendance pour tenter de d&eacute;tecter des violations potentielles de la cible de s&eacute;curit&eacute; avant que celles-ci ne se produisent. Certaines fonctions peuvent satisfaire &agrave; la fois aux exigences d'imputabilit&eacute; et de capacit&eacute; &agrave; &ecirc;tre audit&eacute; et relever ainsi des deux rubriques. De telles fonctions peuvent &ecirc;tre incluses dans l'une de ces deux rubriques, mais doivent &ecirc;tre r&eacute;f&eacute;renc&eacute;es dans l'autre.<p>
+
+<a name="393045">
+<h4> R&eacute;utilisation d'objet</h4>
+</a>Pour beaucoup de TOE, il y aura des exigences pour garantir que les ressources telles que la m&eacute;moire centrale ou des zones de stockage sur disque peuvent &ecirc;tre r&eacute;utilis&eacute;es tout en pr&eacute;servant la s&eacute;curit&eacute;.<p>
+
+Cette rubrique doit inclure toutes les fonctions destin&eacute;es &agrave; contr&ocirc;ler la r&eacute;utilisation des objets supports de donn&eacute;es.<p>
+
+Cette rubrique doit inclure des fonctions destin&eacute;es &agrave; initialiser les objets supports de donn&eacute;es non allou&eacute;s ou &agrave; effacer ceux qui sont r&eacute;allou&eacute;s. Elle doit inclure toutes les fonctions pour initialiser ou effacer les supports r&eacute;utilisables tels que les bandes magn&eacute;tiques, ou pour effacer les p&eacute;riph&eacute;riques de sortie tels que les &eacute;crans de visualisation lorsqu'ils ne sont pas utilis&eacute;s.<p>
+
+<a name="393049">
+<h4> Fid&eacute;lit&eacute;</h4>
+</a>Pour beaucoup de TOE, il y aura des exigences pour garantir que les relations sp&eacute;cifiques entre les diff&eacute;rentes donn&eacute;es sont correctement maintenues et que les donn&eacute;es sont &eacute;chang&eacute;es entre processus sans &ecirc;tre alt&eacute;r&eacute;es.<p>
+
+Cette rubrique doit rassembler toutes les fonctions destin&eacute;es &agrave; garantir que des donn&eacute;es n'ont pas &eacute;t&eacute; modifi&eacute;es d'une mani&egrave;re non autoris&eacute;e.<p>
+
+Cette rubrique doit inclure des fonctions pour d&eacute;terminer, &eacute;tablir et maintenir la fid&eacute;lit&eacute; des relations entre les donn&eacute;es qui sont li&eacute;es. Elle doit aussi inclure des fonctions qui garantissent qu'il est possible, lorsque des donn&eacute;es sont &eacute;chang&eacute;es entre processus, utilisateurs ou objets, de d&eacute;celer ou d'emp&ecirc;cher toute perte, ajout ou modification, et qu'il est impossible de modifier la source et la destination, annonc&eacute;es ou r&eacute;elles, du transfert de donn&eacute;es.<p>
+
+<a name="393053">
+<h4> Fiabilit&eacute; de service</h4>
+</a>Pour beaucoup de TOE, il y aura des exigences pour garantir que les t&acirc;ches critiques en temps sont ex&eacute;cut&eacute;es au moment voulu, ni plus t&ocirc;t ni plus tard, et que les t&acirc;ches non critiques en temps ne peuvent pas le devenir. De m&ecirc;me, pour beaucoup de TOE il y aura des exigences pour garantir que l'acc&egrave;s aux ressources est possible quand on en a besoin, et que des ressources ne sont pas sollicit&eacute;es ou conserv&eacute;es inutilement.<p>
+
+Cette rubrique doit inclure toutes les fonctions destin&eacute;es &agrave; garantir que les ressources sont accessibles et utilisables &agrave; la demande d'une entit&eacute; autoris&eacute;e (c'est &agrave; dire un utilisateur ou un processus agissant en son nom) et &agrave; pr&eacute;venir ou &agrave; limiter les interf&eacute;rences avec les op&eacute;rations critiques en temps.<p>
+
+Cette rubrique doit inclure des fonctions de d&eacute;tection d'erreur et de reprise sur incident destin&eacute;es &agrave; limiter les cons&eacute;quences d'erreurs sur l'exploitation de la TOE, et ainsi &agrave; r&eacute;duire au minimum l'interruption ou l'arr&ecirc;t de service. Elle doit &eacute;galement inclure toutes les fonctions de s&eacute;quencement qui assurent que la TOE r&eacute;pond aux &eacute;v&eacute;nements externes et produit des r&eacute;sultats dans les d&eacute;lais limites sp&eacute;cifi&eacute;s.<p>
+
+<a name="393057">
+<h4> Echange de donn&eacute;es</h4>
+</a>Pour beaucoup de TOE il y aura des exigences pour la s&eacute;curit&eacute; des donn&eacute;es pendant leur transmission &agrave; travers des canaux de communication. On parle g&eacute;n&eacute;ralement de s&eacute;curit&eacute; des communications, car elles sont distinctes de la s&eacute;curit&eacute; informatique.<p>
+
+Cette rubrique doit couvrir toutes les fonctions destin&eacute;es &agrave; garantir la s&eacute;curit&eacute; des donn&eacute;es au cours de leur transmission sur des canaux de communication. Il est recommand&eacute; de d&eacute;couper de telles fonctions suivant les sous-rubriques tir&eacute;es de l'architecture de s&eacute;curit&eacute; OSI &#32;:<p>
+
+<ul>
+<li>Authentification
+
+<li>Contr&ocirc;le d'acc&egrave;s
+
+<li>Confidentialit&eacute; des donn&eacute;es
+
+<li>Int&eacute;grit&eacute; des donn&eacute;es
+
+<li>Non r&eacute;pudiation
+</ul><p>
+
+Les fonctions doivent &ecirc;tre regroup&eacute;es sous ces sous-rubriques d'une mani&egrave;re coh&eacute;rente avec leur utilisation et leur d&eacute;finition dans l'architecture de s&eacute;curit&eacute; OSI [OSI].<p>
+
+Certaines fonctions peuvent satisfaire aux exigences &agrave; la fois de s&eacute;curit&eacute; informatique et de s&eacute;curit&eacute; des communications et ainsi relever d'autres rubriques. Dans ce cas, il doit y avoir une r&eacute;f&eacute;rence aux autres rubriques correspondantes.<p>
+
+<a name="393067">
+<h4> Classes pr&eacute;d&eacute;finies</h4>
+</a>Beaucoup de syst&egrave;mes auront des objectifs de s&eacute;curit&eacute; similaires &#32;; il sera souvent possible d'identifier des ensembles communs de fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; qui satisfont &agrave; ces objectifs. De m&ecirc;me, beaucoup de produits de s&eacute;curit&eacute; viseront &agrave; satisfaire le m&ecirc;me besoin du march&eacute; et poss&eacute;deront donc une fonctionnalit&eacute; similaire. De telles <I>classes pr&eacute;d&eacute;finies</I> de fonctions courantes peuvent &ecirc;tre prises pour base de la cible de s&eacute;curit&eacute; d'un syst&egrave;me ou d'un produit particulier, ou peuvent servir de lignes directrices pour aider les utilisateurs &agrave; choisir la fonctionnalit&eacute; de s&eacute;curit&eacute; qui convient pour satisfaire &agrave; leurs objectifs de s&eacute;curit&eacute; particuliers, et pour aider les constructeurs &agrave; choisir les fonctions &agrave; inclure dans leurs produits. Pour tirer le maximum de b&eacute;n&eacute;fice de cet aspect commun, il est souhaitable que des normes existent pour des classes de fonctionnalit&eacute; pr&eacute;d&eacute;finies. Les pr&eacute;sents crit&egrave;res ont donc &eacute;t&eacute; con&ccedil;us pour autoriser dans les cibles de s&eacute;curit&eacute; la r&eacute;f&eacute;rence &agrave; des classes pr&eacute;d&eacute;finies de fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute;. Toute cible de s&eacute;curit&eacute; peut faire r&eacute;f&eacute;rence &agrave; une ou plusieurs classes pr&eacute;d&eacute;finies pour d&eacute;finir tout ou partie de ses fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute;.<p>
+
+Les organismes de normalisation ou ceux qui repr&eacute;sentent des secteurs de march&eacute; particuliers ont d&eacute;j&agrave; &eacute;labor&eacute; de telles d&eacute;finitions normalis&eacute;es. On s'attend &agrave; ce que la mise &agrave; disposition des pr&eacute;sents crit&egrave;res encourage le d&eacute;veloppement de classes pr&eacute;d&eacute;finies, sous une forme compatible avec les pr&eacute;sents crit&egrave;res. Toutefois, puisque la s&eacute;curit&eacute; des TI va continuer &agrave; &eacute;voluer rapidement, il sera n&eacute;cessaire de d&eacute;finir dans l'avenir de nouvelles classes pr&eacute;d&eacute;finies d&egrave;s que de nouveaux groupes de fonctions deviendront suffisamment courants pour que de telles classes deviennent int&eacute;ressantes.<p>
+
+En m&ecirc;me temps que la sp&eacute;cification de ses fonctions de s&eacute;curit&eacute;, chaque classe pr&eacute;d&eacute;finie doit indiquer les objectifs de la classe, en fonction de son utilisation pr&eacute;vue, et les raisons du choix des fonctions particuli&egrave;res qu'elle comporte. Les classes pr&eacute;d&eacute;finies peuvent comprendre &eacute;galement d'autres informations qu'il est n&eacute;cessaire d'inclure dans une cible de s&eacute;curit&eacute;, telles que le d&eacute;tail de tous les m&eacute;canismes obligatoires pour une classe. Dans le cas o&ugrave; les d&eacute;tails du contenu de telles classes sont publi&eacute;s, il n'est pas n&eacute;cessaire de les r&eacute;p&eacute;ter dans chaque cible de s&eacute;curit&eacute; qui y fait r&eacute;f&eacute;rence.<p>
+
+L'utilisation de classes pr&eacute;d&eacute;finies n'est pas obligatoire. Il y aura des cas o&ugrave; le commanditaire de l'&eacute;valuation souhaitera ne pas les employer, d'autres o&ugrave; il ne le pourra pas, par exemple lorsqu'aucune classe pr&eacute;d&eacute;finie ne d&eacute;crit les caract&eacute;ristiques de s&eacute;curit&eacute; qu'il souhaite. Au lieu d'utiliser des classes pr&eacute;d&eacute;finies, il est toujours possible de sp&eacute;cifier individuellement chaque fonction d&eacute;di&eacute;e &agrave; la s&eacute;curit&eacute;. Une d&eacute;claration de fonctions de s&eacute;curit&eacute; individuelles peut &ecirc;tre coupl&eacute;e avec une ou plusieurs classes pr&eacute;d&eacute;finies qui d&eacute;crivent partiellement, mais non compl&egrave;tement, la cible de s&eacute;curit&eacute;. Toutefois, une classe pr&eacute;d&eacute;finie ne doit &ecirc;tre sp&eacute;cifi&eacute;e comme faisant partie de la cible de s&eacute;curit&eacute; que si tous les aspects de cette classe entrent dans la cible de s&eacute;curit&eacute;.<p>
+
+Dix exemples de classes pr&eacute;d&eacute;finies sont donn&eacute;es en annexe A. Elles sont toutes d&eacute;riv&eacute;es des classes de fonctionnalit&eacute; donn&eacute;es dans [ZSIEC]. Elles sont toutes pr&eacute;sent&eacute;es en style informel, et en version provisoire dans la version actuelle de l'ITSEC &#32;:<p>
+
+<ol>
+<a name="393073">
+<li>Les exemples de classes de fonctionnalit&eacute; F-C1,F-C2, F-B1, F-B2 et F-B3 sont les classes de confidentialit&eacute; ordonn&eacute;es hi&eacute;rarchiquement qui correspondent &eacute;troitement aux exigences de fonctionnalit&eacute; des classes C1 &agrave; A1 du TCSEC [TCSEC].
+</a><a name="393074">
+<li>L'exemple de classe de fonctionnalit&eacute; F-IN concerne les TOE pour lesquelles il y a des exigences &eacute;lev&eacute;es d'int&eacute;grit&eacute; pour les donn&eacute;es et les programmes. De telles exigences peuvent &ecirc;tre n&eacute;cessaires par exemple pour des TOE bases de donn&eacute;es.
+</a><a name="393075">
+<li>L'exemple de classe de fonctionnalit&eacute; F-AV impose des exigences &eacute;lev&eacute;es pour la disponibilit&eacute; d'une TOE compl&egrave;te ou de fonctions sp&eacute;ciales d'une TOE. De telles exigences sont importantes par exemple pour des TOE qui contr&ocirc;lent des processus industriels.
+</a><a name="393076">
+<li>L'exemple de classe de fonctionnalit&eacute; F-DI impose des exigences &eacute;lev&eacute;es en ce qui concerne la pr&eacute;servation de l'int&eacute;grit&eacute; des donn&eacute;es au cours de leur transmission.
+</a><a name="393077">
+<li>L'exemple de classe de fonctionnalit&eacute; F-DC est destin&eacute;e aux TOE tr&egrave;s exigeantes en mati&egrave;re de confidentialit&eacute; des donn&eacute;es au cours de leur transmission. Un dispositif cryptographique est par exemple un candidat pour cette classe.
+</a><a name="393078">
+<li>L'exemple de classe de fonctionnalit&eacute; F-DX est destin&eacute;e aux r&eacute;seaux tr&egrave;s exigeants en mati&egrave;re de confidentialit&eacute; et d'int&eacute;grit&eacute; des informations &agrave; transmettre. Par exemple, cela peut &ecirc;tre le cas lorsque des informations sensibles doivent &ecirc;tre transmises &agrave; travers des r&eacute;seaux non prot&eacute;g&eacute;s (par exemple des r&eacute;seaux publics).
+</a></ol>
+<p>
+
+Il n'existe pas de restriction concernant la fonctionnalit&eacute; sp&eacute;cifique qui peut &ecirc;tre annonc&eacute;e ou exig&eacute;e pour une cible de s&eacute;curit&eacute;. Les fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; de toute cible de s&eacute;curit&eacute; peuvent donc &ecirc;tre enti&egrave;rement d&eacute;crites au moyen des formats de sp&eacute;cification disponibles. L'existence de classes pr&eacute;d&eacute;finies ne restreindra donc nullement les fabricants de produits qui cherchent &agrave; faire progresser l'&eacute;tat de l'art, mais elle diminuera le travail qu'implique la sp&eacute;cification de produits ou de syst&egrave;mes analogues aux st&eacute;r&eacute;otypes d&eacute;crits, et fournira une base de comparaison de la fonctionnalit&eacute; offerte. Les cibles de s&eacute;curit&eacute; de produit peuvent, m&ecirc;me lorsqu'elles revendiquent la conformit&eacute; &agrave; une classe pr&eacute;d&eacute;finie, sp&eacute;cifier des contraintes additionnelles et des d&eacute;tails quant &agrave; l'environnement requis pour aider les utilisateurs potentiels &agrave; d&eacute;terminer si le produit pourrait convenir &agrave; leur environnement r&eacute;el.<p>
+
+<a name="393080">
+<h4> Style de sp&eacute;cification</h4>
+</a>Les pr&eacute;sents crit&egrave;res n'imposent pas l'emploi de m&eacute;thodes ou de styles particuliers, qu'ils soient priv&eacute;s ou normalis&eacute;s, pour la sp&eacute;cification des fonctions de s&eacute;curit&eacute;. Ils n'excluent aucune m&eacute;thode ni aucun style, dans la mesure o&ugrave; les exigences concernant la pr&eacute;sentation et les &eacute;l&eacute;ments de preuve pour le niveau d'&eacute;valuation vis&eacute; sont satisfaits. Dans le but d'&eacute;tablir des cat&eacute;gories entre les approches possibles de la sp&eacute;cification, trois types de styles ont &eacute;t&eacute; identifi&eacute;s dans le cadre des pr&eacute;sents crit&egrave;res &#32;: informel, semi-formel et formel. Chacun de ces types est d&eacute;crit de fa&ccedil;on plus approfondie ci-dessous.<p>
+
+Ceux qui auront besoin d'utiliser une cible de s&eacute;curit&eacute; ne seront pas tous familiaris&eacute;s avec des sp&eacute;cifications r&eacute;dig&eacute;es en style semi-formel ou formel. Aussi toutes les cibles de s&eacute;curit&eacute; doivent contenir une sp&eacute;cification des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; r&eacute;dig&eacute;e en style informel. Bien que les sp&eacute;cifications informelles ne demandent pas une formation sp&eacute;ciale pour &ecirc;tre comprises, elles sont sujettes &agrave; ambigu&iuml;t&eacute; et &agrave; impr&eacute;cision. Les sp&eacute;cifications en style semi-formel ou formel r&eacute;duisent cette possibilit&eacute; d'ambigu&iuml;t&eacute; et d'impr&eacute;cision. Aussi, pour les niveaux sup&eacute;rieurs d'&eacute;valuation, la sp&eacute;cification informelle des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; doit &ecirc;tre appuy&eacute;e par une sp&eacute;cification parall&egrave;le semi-formelle ou formelle.<p>
+
+La technique ou le style de sp&eacute;cification utilis&eacute; dans une cible de s&eacute;curit&eacute; pour d&eacute;finir les objectifs de s&eacute;curit&eacute;, et pour d&eacute;finir tout m&eacute;canisme de s&eacute;curit&eacute; impos&eacute; ou annonc&eacute;, est hors du champ d'application des pr&eacute;sents crit&egrave;res.<p>
+
+S'il est exig&eacute; qu'une cible de s&eacute;curit&eacute; contienne une sp&eacute;cification des fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; dans un style particulier, cette sp&eacute;cification peut &ecirc;tre totalement ou partiellement remplac&eacute;e par une r&eacute;f&eacute;rence &agrave; une ou plusieurs classes pr&eacute;d&eacute;finies r&eacute;dig&eacute;es dans ce style.<p>
+
+Chaque fois qu'une sp&eacute;cification est exig&eacute;e, quelqu'en soit le style, elle peut se pr&eacute;senter sous forme d'un ou de plusieurs documents. Lorsqu'on utilise plusieurs documents, leurs relations doivent &ecirc;tre clairement indiqu&eacute;es.<p>
+
+<a name="393086">
+<h4> Sp&eacute;cification informelle</h4>
+</a>Une sp&eacute;cification informelle est r&eacute;dig&eacute;e en langage naturel, plut&ocirc;t qu'avec une notation exigeant des restrictions ou des conventions particuli&egrave;res. Le terme langage naturel d&eacute;signe le moyen de communication que constitue toute langue parl&eacute;e courante (par exemple l'allemand, l'anglais, le fran&ccedil;ais ou le n&eacute;erlandais). Des sp&eacute;cifications r&eacute;dig&eacute;es en langage naturel ne sont soumises &agrave; aucune restriction particuli&egrave;re mais doivent se conformer aux conventions usuelles de cette langue (par exemple la grammaire et la syntaxe). <p>
+
+Une sp&eacute;cification en langage naturel doit &ecirc;tre r&eacute;dig&eacute;e avec le souci de minimiser l'ambigu&iuml;t&eacute;, en s'assurant (c'est un minimum) que tous les termes sont utilis&eacute;s de fa&ccedil;on coh&eacute;rente, et que tout terme ayant une signification particuli&egrave;re (une signification non d&eacute;finie dans un dictionnaire largement utilis&eacute;) est d&eacute;fini dans un ou plusieurs glossaires, inclus ou auquel il est fait r&eacute;f&eacute;rence. Il est peu probable que toute ambigu&iuml;t&eacute; puisse &ecirc;tre compl&egrave;tement &eacute;limin&eacute;e. L'&eacute;valuation cherchera &agrave; identifier et &agrave; lever toutes les ambigu&iuml;t&eacute;s restantes.<p>
+
+<a name="393089">
+<h4> Sp&eacute;cification semi-formelle</h4>
+</a>Une sp&eacute;cification en style semi-formel exige l'emploi d'une ou plusieurs notations restreintes, conform&eacute;ment &agrave; un ensemble de conventions incluses dans la sp&eacute;cification ou auxquelles il est fait r&eacute;f&eacute;rence. Les conventions sont sp&eacute;cifi&eacute;es de fa&ccedil;on informelle. Une telle notation doit permettre de sp&eacute;cifier les effets d'une fonction ainsi que les conditions d'exception ou d'erreur associ&eacute;es &agrave; cette fonction.<p>
+
+Un style semi-formel peut &ecirc;tre soit pr&eacute;sent&eacute; sous forme graphique soit bas&eacute; sur un usage restreint du langage naturel (par exemple, une structure de phrase restreinte et des mots-cl&eacute; ayant une signification particuli&egrave;re). On peut prendre comme exemples de style semi-formel les diagrammes de flux de donn&eacute;es, les diagrammes de transition d'&eacute;tats, les diagrammes entit&eacute;-association, les diagrammes de structure de donn&eacute;es, les diagrammes d&eacute;crivant la structure de processus ou de programme, et la notation SDL recommand&eacute;e par le CCITT pour les sp&eacute;cifications.<p>
+
+Les m&eacute;thodes de conception structur&eacute;e et de d&eacute;veloppement utilisent g&eacute;n&eacute;ralement au moins l'une de ces notations semi-formelles pour l'expression des sp&eacute;cifications, ainsi que des guides m&eacute;thodologiques (par exemple, des mesures de complexit&eacute; et des m&eacute;thodes de gestion de projet) concernant l'utilisation de la notation. A titre d'exemples de m&eacute;thodes de conception structur&eacute;e incluant de telles notations on peut citer &#32;: la m&eacute;thode structur&eacute;e de Yourdon [YSM], la technique d'analyse et de conception structur&eacute;es [SADT], la m&eacute;thode d'analyse et de conception structur&eacute;es de syst&egrave;mes [SSADM], ainsi que les m&eacute;thodes Jackson de conception structur&eacute;e [JSD] et de programmation structur&eacute;e [JSP].<p>
+
+Un exemple particulier de notation semi-formelle qui a &eacute;t&eacute; utilis&eacute; avec succ&egrave;s pour d&eacute;finir des cibles de s&eacute;curit&eacute; est le Claims Language. Le Claims Language est un sous-ensemble de l'anglais &#32;: son vocabulaire et la forme syntaxique de ses phrases sont tous deux soumis &agrave; des restrictions. Il a &eacute;t&eacute; con&ccedil;u (comme son nom l'indique) pour fournir un moyen structur&eacute; de faire des annonces concernant les caract&eacute;ristiques de s&eacute;curit&eacute; de produits TI. Il permet d'utiliser le langage naturel pour exprimer les parties de la d&eacute;finition d'une cible de s&eacute;curit&eacute; qui concernent les fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; annonc&eacute;es. On peut trouver une d&eacute;finition compl&egrave;te, coh&eacute;rente avec les pr&eacute;sents crit&egrave;res, du Claims Language en annexe B.<p>
+
+<a name="393094">
+<h4> Sp&eacute;cification formelle</h4>
+</a>Une sp&eacute;cification en style formel est r&eacute;dig&eacute;e avec une notation formelle bas&eacute;e sur des concepts math&eacute;matiques bien &eacute;tablis. Les concepts sont utilis&eacute;s pour d&eacute;finir la syntaxe et la s&eacute;mantique de la notation, ainsi que les r&egrave;gles de d&eacute;duction qui soutiennent le raisonnement logique. On doit pouvoir montrer que des sp&eacute;cifications formelles sont construites &agrave; partir d'un ensemble d'axiomes d&eacute;clar&eacute;s, et ces sp&eacute;cifications doivent pouvoir montrer la validit&eacute; de propri&eacute;t&eacute;s cl&eacute;s, telles que la production d'une sortie valide pour toutes les entr&eacute;es possibles. Lorsqu'il existe une hi&eacute;rarchie de niveaux de sp&eacute;cification, il doit &ecirc;tre possible de d&eacute;montrer que chaque niveau maintient les propri&eacute;t&eacute;s &eacute;tablies pour le niveau pr&eacute;c&eacute;dent.<p>
+
+Les r&egrave;gles syntaxiques et s&eacute;mantiques qui sous-tendent une notation formelle utilis&eacute;e dans une cible de s&eacute;curit&eacute; doivent d&eacute;finir comment reconna&icirc;tre sans ambigu&iuml;t&eacute; des constructions et d&eacute;terminer leur signification. Lorsque des r&egrave;gles de d&eacute;duction sont utilis&eacute;es pour soutenir le raisonnement logique, il doit &ecirc;tre prouv&eacute; qu'il est impossible d'en d&eacute;duire des contradictions. Toutes les r&egrave;gles qui sous-tendent la notation doivent &ecirc;tre d&eacute;finies ou mises en r&eacute;f&eacute;rence. Toutes les constructions utilis&eacute;es dans une sp&eacute;cification formelle doivent &ecirc;tre compl&egrave;tement d&eacute;finies &agrave; l'aide de ces r&egrave;gles. La notation formelle doit permettre de sp&eacute;cifier l'effet d'une fonction ainsi que toutes les conditions d'exception ou d'erreur associ&eacute;es &agrave; cette fonction.<p>
+
+Parmi les exemples de notation formelle on peut citer VDM, d&eacute;crit dans [SSVDM], Z, d&eacute;crit dans [ZRM], le langage de sp&eacute;cification RAISE, d&eacute;crit dans [RSL], Ina Jo, d&eacute;crit dans [IJRM], le langage de sp&eacute;cification Gypsy, d&eacute;crit dans [GYPSY], et le langage de sp&eacute;cification de protocoles de l'ISO [LOTOS]. L'utilisation de constructions &agrave; base de logique des pr&eacute;dicats (ou d'autre logique) et de la th&eacute;orie des ensembles en tant que notation formelle est acceptable, pourvu que les conventions (r&egrave;gles de d&eacute;monstration) soient document&eacute;es ou mises en r&eacute;f&eacute;rence (comme expos&eacute; plus haut).<p>
+
+<a name="393098">
+<h4> Coh&eacute;rence entre des sp&eacute;cifications parall&egrave;les en styles diff&eacute;rents</h4>
+</a>Les sp&eacute;cifications parall&egrave;les doivent &ecirc;tre pr&eacute;sent&eacute;es de telle mani&egrave;re que les relations entre ces sp&eacute;cifications soient claires, et que lorsque ces sp&eacute;cifications concernent le m&ecirc;me point, ce point soit trait&eacute; de fa&ccedil;on coh&eacute;rente. Des sp&eacute;cifications parall&egrave;les peuvent faire l'objet de documents s&eacute;par&eacute;s ou &ecirc;tre imbriqu&eacute;es dans un document unique.<p>
+
+Quand il existe une ambigu&iuml;t&eacute; dans une sp&eacute;cification informelle, la sp&eacute;cification formelle ou semi-formelle associ&eacute;e doit lever l'ambigu&iuml;t&eacute;. N&eacute;anmoins des sp&eacute;cifications parall&egrave;les incoh&eacute;rentes entre elles doivent &ecirc;tre consid&eacute;r&eacute;es comme erron&eacute;es. On doit corriger ce type d'erreur en faisant r&eacute;f&eacute;rence &agrave; des informations compl&eacute;mentaires ext&eacute;rieures &agrave; la cible de s&eacute;curit&eacute; et on doit modifier l'une des sp&eacute;cifications ou les deux.<p>
+
+<a name="393101">
+<h4> Mod&egrave;les formels de politique de s&eacute;curit&eacute;</h4>
+</a>Au niveau d'&eacute;valuation E4 et au dessus, une TOE doit impl&eacute;menter un mod&egrave;le sous-jacent de politique de s&eacute;curit&eacute;, c'est &agrave; dire qu'il doit y avoir une pr&eacute;sentation abstraite des principes de s&eacute;curit&eacute; importants que la TOE doit faire respecter. Cette pr&eacute;sentation doit &ecirc;tre r&eacute;dig&eacute;e dans un style formel, et constitue un <strong>mod&egrave;le formel de politique de s&eacute;curit&eacute;</strong>. Tout ou partie d'un mod&egrave;le pertinent d&eacute;j&agrave; publi&eacute; peut &ecirc;tre mis en r&eacute;f&eacute;rence, sinon un mod&egrave;le doit &ecirc;tre fourni comme partie int&eacute;grante de la cible de s&eacute;curit&eacute;. Tous les styles formels de sp&eacute;cification identifi&eacute;s ci-dessus peuvent &ecirc;tre utilis&eacute;s pour d&eacute;finir un tel mod&egrave;le.<p>
+
+Il n'est pas n&eacute;cessaire que le mod&egrave;le formel couvre toutes les fonctions d&eacute;di&eacute;es &agrave; la s&eacute;curit&eacute; sp&eacute;cifi&eacute;es dans la cible de s&eacute;curit&eacute;. Toutefois, une interpr&eacute;tation informelle du mod&egrave;le sous l'angle de la cible de s&eacute;curit&eacute; doit &ecirc;tre fournie, et doit montrer que la cible de s&eacute;curit&eacute; impl&eacute;mente la politique de s&eacute;curit&eacute; sous-jacente et ne contient aucune fonction en contradiction avec cette politique sous-jacente.<p>
+
+Voici des exemples de mod&egrave;les formels de politique de s&eacute;curit&eacute; qui ont &eacute;t&eacute; publi&eacute;s &#32;:<p>
+
+<ol>
+<a name="393105">
+<li>Le mod&egrave;le de Bell-La Padula [BLP] qui mod&eacute;lise les exigences de contr&ocirc;le d'acc&egrave;s caract&eacute;ristiques d'une politique nationale de s&eacute;curit&eacute; pour la confidentialit&eacute;.
+</a><a name="393106">
+<li>Le mod&egrave;le de Clark et Wilson [CWM] qui mod&eacute;lise les exigences d'int&eacute;grit&eacute; des syst&egrave;mes transactionnels commerciaux.
+</a><a name="393107">
+<li>Le mod&egrave;le de Brewer-Nash [BNM] qui mod&eacute;lise les exigences de contr&ocirc;le d'acc&egrave;s visant &agrave; assurer la confidentialit&eacute; pour le client, ce qui est typique d'un organisme de services financiers.
+</a><a name="393108">
+<li>Le mod&egrave;le d'Eizenberg [EZBM] qui mod&eacute;lise des droits d'acc&egrave;s qui varient avec le temps.
+</a><a name="393109">
+<li>Le mod&egrave;le de Landwehr [LWM] qui mod&eacute;lise les exigences d'un r&eacute;seau de traitement de messages en mati&egrave;re d'&eacute;change de donn&eacute;es.
+</a></ol>
+
+<TABLE BGCOLOR="#FF9933"><TR><TD WIDTH=100%>
+<CENTER>
+<BR><A HREF="/document/criteres.html">Index de la documentation sur les critères</A> | 
+<A HREF="/document/index.html">Index général de la documentation</A>
+<BR>
+<A HREF="/document/docs/ITSEC/itsec.html">Sommaire</A> |
+<A HREF="/document/docs/ITSEC/itsec-0.html">Introduction</A> |
+<A HREF="/document/docs/ITSEC/itsec-1.html">Champ d'application</A> |
+<A HREF="/document/docs/ITSEC/itsec-2.html">Fonctionnalité</A> 
+<A HREF="/document/docs/ITSEC/itsec-3.html">Efficacité</A> |
+<A HREF="/document/docs/ITSEC/itsec-4.html">Conformité</A> |
+<A HREF="/document/docs/ITSEC/itsec-E1.html">Conformité E1</A> |
+<A HREF="/document/docs/ITSEC/itsec-E2.html">Conformité E2</A> |
+<A HREF="/document/docs/ITSEC/itsec-E3.html">Conformité E3</A> |
+<A HREF="/document/docs/ITSEC/itsec-E4.html">Conformité E4</A> |
+<A HREF="/document/docs/ITSEC/itsec-E5.html">Conformité E5</A> |
+<A HREF="/document/docs/ITSEC/itsec-E6.html">Conformité E6</A>
+<A HREF="/document/docs/ITSEC/itsec-5.html">Résultats de l'évaluation</A> |
+<A HREF="/document/docs/ITSEC/itsec-6.html">Glossaire</A> |
+<A HREF="/document/docs/ITSEC/itsec-A.html">Exemples de classes de Fonctionnalité</A> |
+<A HREF="/document/docs/ITSEC/itsec-B.html">"Claims language"</A> |
+
+<BR><BR><a href="itsec.html"><img alt="[Début]" border=0 src="/images/top.gif"></a> <a href="itsec-1.html"><img alt="[Précédente]" border=0 src="/images/prev.gif"></a> <a href="itsec-3.html"><img alt="[Suivante]" border=0 src="/images/next.gif"></a> <a href="itsec-B.html"><img alt="[Fin]" border=0 src="/images/bottom.gif"></a>
+<BR><BR>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+<HR>
+
+<SMALL><A HREF="/courrier.html">
+webmaster@scssi.gouv.fr</A>
+
+- Copyright &copy 1999 Service Central de la Sécurité des Systèmes d'Information
+<BR>Dernière mise à jour le 17/06/99 à 17:03:30
+</SMALL>
+</body>
+</html>

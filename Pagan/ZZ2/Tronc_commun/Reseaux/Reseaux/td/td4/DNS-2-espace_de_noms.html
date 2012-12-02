@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+	<TITLE>Etude du DNS - (2) Espace de noms</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+<BODY BGCOLOR="white">
+
+<H1>Etude de l'application DNS</H1>
+
+<P ALIGN="right"><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude 
+	Vialatte</A><BR>
+	<!--#config timefmt="%b %Y"--><!--#flastmod virtual="$DOCUMENT_URI" --></I></P>
+
+<H2>2 - L'espace de noms</H2>
+<P><B>L'organisation</B></P>
+	<BLOCKQUOTE>
+	<P>L'ensemble des systèmes nommés (c'est un sous-ensemble de l'ensemble 
+	des systèmes raccordés) est
+	subdivisé en domaines, qui peuvent être eux-mêmes subdivisés en domaines, 
+	qui... jusqu'aux domaines les plus fins que sont les systèmes.</P>
+	<P>Le terme <b>domaine</B> désigne donc soit un groupe de domaines, soit un 
+	groupe de systèmes, soit un système seul.</P>
+	</BLOCKQUOTE>
+<P><B>La construction des noms</B></P>
+	<BLOCKQUOTE>
+	<P>Sauf pour les domaines de plus haut niveau (<i>Top Level Domain</i>), 
+	chaque domaine a un <b>nom</b> dans le domaine qui le contient.<BR>
+	Chaque domaine a un <b>nom complet</b> ou <B>FQDN</B> (<SPAN CLASS="etranger">Fully Qualified Domain Name</SPAN>)
+	dans l'espace de noms.
+	Le FQDN d'un domaine est construit en suffixant son nom simple par le FQDN 
+	du domaine qui le contient.</P>
+		
+		<BLOCKQUOTE>
+		<P>Le système <TT>custsv</TT> est un système (donc un domaine) du domaine <TT>univ-bpclermont</TT>
+		qui est un domaine du domaine <TT>fr</TT>.<BR>
+		Le FQDN du domaine <TT>univ-bpclermont</TT> est <TT>univ-bpclermont.fr</TT><BR>
+		Le FQDN du domaine <TT>custsv</TT> est <TT>custsv.univ-bpclermont.fr</TT><br>
+		le FQDN du domaine <tt>fr</tt> est <tt>fr.</tt> (il faut le "." à la fin)</P>
+		<p>Le système <TT>luna</TT> est un système du domaine <tt>cust2000</tt>, 
+		qui est un domaine du domaine <TT>univ-bpclermont</TT>
+		qui est un domaine du domaine <TT>fr</TT>.<BR>
+		Le FQDN du domaine <TT>luna</TT> est <TT>luna.cust2000.univ-bpclermont.fr</TT></p>
+		</BLOCKQUOTE>
+
+	</BLOCKQUOTE>
+<P><B>Les noms de 1<SUP>er</SUP> niveau - TLD</B></P>
+	<BLOCKQUOTE>
+	<P>Les domaines de plus haut niveau (TLD - 
+	<SPAN CLASS="etranger">Top Level Domain</SPAN>) étaient anciennement 
+    définis par l'<A HREF="http://www.iana.org/domain-names.htm">IANA</A> 
+	(<SPAN CLASS="etranger">Internet Assigned Numbers Authority</SPAN>, 
+	<A HREF="http://www.iana.org">http://www.iana.org</A>) et le sont maintenant par
+	l'<A HREF="http://www.icann.org/tlds/">ICANN</A> (<SPAN CLASS="etranger">Internet Corporation for Assigned Names and Numbers</SPAN>, 
+	<A HREF="http://www.icann.org">http://www.icann.org</A>).<BR>
+	Trois types de noms de domaine sont définis :</P>
+		<UL>
+		<LI>des TLD g&eacute;n&eacute;riques sont : 
+			<TT>com net org edu gov mil int aero biz coop info museum name pro</TT>.</LI>
+		<LI>des TLD nationaux sont d&eacute;finis par la norme 
+			<A HREF="../../doc/iso/is3166.html">IS3166</A> de l'ISO : <tt>fr au be ca pf</tt>...</LI>
+		<LI>le pseudo-TLD <TT>arpa</TT> et son domaine <TT>in-addr</TT> sont réservés pour la traduction des adresses-IP en 
+			nom de domaine ou de système.</LI>
+		</UL>
+	</BLOCKQUOTE>
+<P><B>Les noms de 2<SUP>ème</SUP> niveau</B></P>
+	
+	<BLOCKQUOTE><P>L'attribution des noms de 2<SUP>ème</SUP> niveau est déléguée selon le TLD : </P>
+	<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="3">
+	<TR><TH>TLD</TH><TH>délégations</TH><TH>listes</TH></TR>
+	<TR><TD>domaines nationaux</TD><TD>autorités nationales<BR><BR>
+			exemple : <TT>fr</TT> est délégué à l'AFNIC,<BR>
+			(<SPAN CLASS="etranger" STYLE="font-size:x-small">Association Française pour le Nommage Internet en Coopération</SPAN> <A HREF="http://www.nic.fr" STYLE="font-size:x-small">http://www.nic.fr</A>)</TD>
+		<TD><A HREF="http://www.iana.org/cctld/cctld-whois.htm">liste</A></TD></TR>
+	<TR><TD><TT>com net org aero biz coop info museum name pro</TT></TD><TD>organisations accréditées par l'ICANN<BR>
+			(<SPAN CLASS="etranger" STYLE="font-size:x-small">Internet Corporation for Assigned Names and Numbers</SPAN>, <A HREF="http://www.icann.org" STYLE="font-size:x-small">http://www.icann.org</A>)</TD>
+		<TD><A HREF="http://www.icann.org/registrars/accredited-list.html">liste</A></TD></TR>
+	<TR><TD><TT>edu gov mil</TT></TD><TD>réservés aux USA</TD><TD><A HREF="http://www.iana.org/gtld/gtld.htm">règles</A></TD></TR>
+	<TR><TD><TT>int</TT></TD><TD>organisations relevant de traités internationaux ou multinationaux</TD><TD><A HREF="http://www.iana.org/int-dom/int.htm">pré-requis</A></TD></TR>
+	</TABLE>
+	</BLOCKQUOTE>
+
+
+<H3>Extrait de l'espace de noms de l'Internet</H3>
+
+	<CENTER><IMG SRC="DNS-hierarchie.png" ALT="Internet" WIDTH="718" HEIGHT="294"></CENTER>
+	<BLOCKQUOTE>Exemples de FQDN :
+	<TT>&nbsp;&nbsp;&nbsp;news.ext.jussieu.fr&nbsp;&nbsp;&nbsp;&nbsp;custsv.univ-bpclermont.fr</TT>
+	</BLOCKQUOTE>
+<P ALIGN=right><A HREF="DNS-3-bd.html">Suite...<IMG SRC="../../images/ArrowRight.gif" ALT="suite" WIDTH="20" HEIGHT="20" BORDER="0"></A></P>
+
+
+<HR>
+</BODY>
+</HTML>

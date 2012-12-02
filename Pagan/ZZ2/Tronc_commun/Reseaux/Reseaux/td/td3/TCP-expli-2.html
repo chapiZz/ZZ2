@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+ <TITLE>Etude d'un protocole fiable : TCP (3')</TITLE>
+ <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY>
+<H1>Etude d'un protocole fiable : TCP</H1>
+<P ALIGN=right>
+<I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A>
+<!--#config timefmt="%d/%m/%Y"--><!--#flastmod  virtual="$DOCUMENT_URI" --></I></P>
+
+<H2>Numérotation, acquittement : explication simplifiée</H2>
+<HR>
+<BLOCKQUOTE>
+	La fiabilisation du transfert de données est obtenue de la manière suivante :
+	<UL>
+	<LI><P>chaque PDU de données est identifiée par un <B>numéro</B>, qui est le numéro du 1<SMALL><SUP>er</SUP></SMALL> octet de 
+		données qu'elle transporte. Il est placé dans le champ <B><TT>seq</TT></B> de la PDU</P></LI>
+	<LI><P>pour chaque sens de transmission, le numéro à utiliser pour la 1<SMALL><SUP>ère</SUP></SMALL> PDU est défini lors de 
+		l'établissement de la connexion (champ <TT>seq</TT> de la 1<SMALL><SUP>ère</SUP></SMALL> PDU émise +1).</P></LI>
+	<LI><P>pour chaque sens de transmission, le numéro à utiliser pour les autres PDU est égal à : (n° de la PDU précédente) + 
+		(nombre d'octets de données transportés par la PDU précédente)</P>
+			<BLOCKQUOTE>
+			Chaque octet transmis dans un sens de transmission peut alors être désigné par son numéro qui représente sa position 
+			dans le flux (<I>stream</I>) d'octets transmis dans ce sens de transmission.
+			</BLOCKQUOTE></LI>
+	</UL>
+	Chaque entité-TCP possède 2 variables internes :
+	<UL STYLE="list-style:none">
+	<LI><TT>&nbsp;&nbsp;V(S)&nbsp;&nbsp;&nbsp;</TT>le n° qui devra être affecté à la prochaine PDU à émettre</LI>
+	<LI><TT>&nbsp;&nbsp;V(R)&nbsp;&nbsp;&nbsp;</TT>le n° qui devrait avoir la prochaine PDU attendue en réception</LI>
+	</UL>
+
+	<H3>Chaque fois qu'une entité-TCP émet une PDU de données :</H3>
+	<UL>
+	<LI>elle copie la valeur de <TT>V(S)</TT> dans le champ <TT>seq</TT> de la PDU</LI>
+	<LI>elle augmente la valeur de <TT>V(S)</TT> du nombre d'octets de données placés dans la PDU (éventuellement 0)</LI>
+	<LI>elle copie la valeur de <TT>V(R)</TT> dans le champ <TT>ack</TT></LI>
+	<LI>elle mémorise dans un <I>buffer d'émission</I> les octets de données (copiés dans la PDU) "au cas où..."</LI>
+	<LI>elle arme un temporisateur (<I>timer</I>) à une valeur qui dépend de mesures du délai d'aller et retrour (RTT : 
+		<I>Round Trip Time</I>)</LI>
+	</UL>
+	Si le temporisateur arrive à échéance, refaire une tentative d'émission des octets restants dans le buffer d'émission.<BR><BR>
+
+	<H3>Chaque fois qu'une entité-TCP reçoit une PDU de données :</H3>
+	<UL>
+	<LI>elle compare les valeurs du champ <TT>seq</TT> de la PDU et de sa variable <TT>V(R)</TT>.<BR>
+		<TABLE BORDER="0" CELLPADDING="5">
+		<TR><TD><TT>seq = V(R)</TT></TD>
+			<TD>s'il y a des octets de données, ils sont mémorisés dans le buffer de réception, à la place calculée à partir 
+				de la valeur de <TT>seq</TT>, donc à la suite des octets précédemment reçus</TD>
+		</TR>
+		<TR><TD><TT>seq &gt; V(R)</TT></TD>
+			<TD>les octets de numéro <TT>V(R)</TT> à <TT>seq-1</TT> se sont perdus.<BR>
+				==&gt; la PDU reçue est ignorée.<BR>
+				==&gt; éventuellement une PDU vide est envoyée
+			</TD>
+		</TR>
+		<TR><TD><TT>seq &lt; V(R)</TT></TD>
+			<TD>les octets de numéro <TT>seq</TT> à <TT>V(R)-1</TT> ont déjà été reçus.<BR>
+				Pas de problème, les octets de données sont mémorisés dans le buffer de réception à la place calculée à partir 
+				de la valeur de <TT>seq</TT></TD>
+		</TR>
+		</TABLE>
+		<DL>
+		<DT>Note : la mémorisation dans le buffer de réception suppose qu'il y a assez de place.</DT>
+		<DD>Si ce n'est pas le cas, la PDU reçue est ignorée, et une PDU vide peut être envoyée</DD>
+		</DL>
+		<BR>
+	</LI>
+	<LI>elle compare les valeurs du champ <TT>ack</TT> et de sa variable <TT>V(S)</TT>
+		<TABLE CELLPADDING="5">
+		<TR><TD><TT>ack = V(S)</TT></TD>
+			<TD>tous les octets (précédemment émis) ont été reçus<BR>
+				==&gt; les enlever du buffer d'émission<BR>
+				==&gt; désactiver le temporisateur</TD>
+		</TR>
+		<TR><TD><TT>ack &lt; V(S)</TT></TD>
+			<TD>seuls les octets jusqu'au numéro <TT>ack</TT> (précédemment émis) ont été reçus<BR>
+				==&gt; enlever les octets reçus du buffer d'émission<BR></TD>
+		</TR>
+		<TR><TD><TT>ack &gt; V(S)</TT></TD>
+			<TD>il y a un problème !<BR>
+				il vaut mieux fermer la connexion, pour éventuellement repartir sur des bases saines.</TD>
+		</TR>
+		</TABLE>
+	</LI>
+	</UL>
+</BLOCKQUOTE>
+<HR>
+
+</BODY>
+</HTML>

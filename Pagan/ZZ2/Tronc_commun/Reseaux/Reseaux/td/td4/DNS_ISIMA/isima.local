@@ -1,0 +1,13 @@
+;
+; BIND data file for local loopback interface. 
+;
+@      IN    SOA    sp.isima.fr. postmaster.isima.fr. (
+	 	   2006060844	; Serial
+			21600	; Refresh - 6 heures
+			3600	; Retry - 1 heure
+			604800	; Expire - 1 semaine
+			86400 )	; Minimum - 24 hours
+;
+	IN	NS	sp.isima.fr.
+1	IN	PTR	localhost.
+loopback.	IN	A	127.0.0.1

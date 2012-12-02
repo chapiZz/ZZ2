@@ -1,0 +1,689 @@
+<html><head><title>FTP</title></head>
+<body bgcolor="#dddddd">
+
+<p>RFC: 959<br>
+Statut : Standard<br>
+</p><p>Remplace RFC: 765 (IEN 149) 
+</p><h1 align="center">File Transfer Protocol (FTP)</h1>
+<h2 align="center">Spécification</h2>
+<p></p><hr>
+<p>Crédits : J. Postel, J. Reynolds / ISI<br>
+Traduction : <a href="mailto:Valery.Fremaux@eisti.fr">Valéry G. FREMAUX</a> Ingénieur Professeur / <a href="http://www.eisti.fr/">EISTI</a><br>
+Edition originale : Octobre 1985 / Version FR: Février 1997 
+</p><p align="center"><a href="959-3.htm">Précédent</a> - <a href="959-5.htm">Suite</a> - <a href="959tm.htm">Retour au sommaire</a>
+</p><p></p><hr>
+
+<h2><font color="#000080">4. FONCTIONS DE TRANFERT DE FICHIERS</font></h2>
+
+<p>Le canal de communication entre le USER-PI et le SERVER-PI est établi
+comme une connexion TCP entre l'utilisateur et le port standard FTP du serveur.
+L'interpréteur de protocole est responsable de l'émission des commandes FTP
+et de l'interprétation des réponses; le SERVER-PI interprète les commandes,
+envoie les réponses, et pilote le DTP pour établir le canal de données et
+transférer les fichiers. Si le correspondant du processus de transfert (le
+processus passif) est un USER-DTP, alors celui-ci est lui-même piloté par
+l'intermédiaire de l'interpréteur de protocole de l'hôte USER-FTP; s'il s'agit
+d'un second SERVER-DTP, alors son contrôle se fait via son propre PI sur
+commande du USER-PI. Les réponses FTP sont décrites dans la section suivante.
+Dans la description des quelques commandes de la section présente, il nous
+est apparu utile d'être explicite sur les réponses à attendre.  </p><h3><a name="4.1">4.1. COMMANDES FTP</a></h3>
+
+<p>Le protocole FTP suit les recommandations du protocole Telnet pour toutes
+les communications sur le canal de contrôle. Comme le langage choisi pour
+la communication sous Telnet peut être une option négociée, toutes les références
+dans les deux prochaines section se font par rapport au "langage Telnet"
+et le "code de fin de ligne Telnet" correspondant. De façon courante, on
+considérera qu'il s'agit du NVT-ASCII et de la séquence respective  &lt;CRLF&gt;.
+Aucune autre spécification du protocole Telnet ne sera citée ici.  </p><p>Les commandes FTP sont des chaînes de caractères "Telnet" terminées
+par le "code de fin de ligne Telnet". Les codes de commande sont eux-mêmes
+des caractères alphabétiques suivis du caractère &lt;SP&gt; (Espace) si d'autres
+paramètres suivent, et Telnet-EOL dans le cas contraire. Les codes et sémantique
+des commandes sont décrites dans cette section; la syntaxe détaillée est
+décrite dans la Section traitant des Commandes, les séquences de réponse
+sont explicitées dans la Section traitant du Séquencement des Commandes et
+Réponses, et les scénarios illustrant l'usage typique d'une commande sont
+donnés en Section traitant des Scénarios FTP Typiques.  </p><p>Les commandes FTP peuvent être divisées en commandes de contrôle
+d'accès, commandes de paramétrage de transfert, et des commandes de service
+FTP. Certaines commandes (telles qu'ABOR, STAT, QUIT) peuvent être émises
+via le canal de contrôle y compris lorsqu'un transfert est en cours. Certains
+serveur ne pourront simultanément gérer le canal de contrôle et celui de
+données, auquel cas certaines actions spéciales devront être faites pour
+attirer l'attention du serveur. La procédure suivante doit être employée
+dans cet ordre: </p><p> 
+
+</p><ol><li>Le système de l'utilisateur insère un signal "Interrupt Process" Telnet (IP) dans le flux Telnet.
+</li><li>Le système utilisateur envoie un signal "Synch" Telnet.
+</li><li>3. Le système utilisateur tente une commande d'avortement (ex., ABOR) dans le flux de commande Telnet.
+</li><li>Le SERVER-PI, après réception de "l'IP", inspecte le flux Telnet en attendant EXACTEMENT UNE commande FTP.</li></ol>
+
+<p>(Sur certains serveurs, cette procédure n'est pas indispensable, mais son activation ne produira pas d'effets inattendus).
+</p><h4><a name="4.1.1">4.1.1. COMMANDES DE CONTROLE D'ACCES</a></h4>
+<p>Les commandes qui suivent traitent du paramétrage du contrôle d'accès
+(les codes numériques de commande sont donnés entre parenthèses).  </p><p><b><code><font color="#880000">USER NAME (USER)</font></code></b><br>
+NOM D'UTILISATEUR
+
+</p><p>Le champ argument est une chaîne Telnet identifiant l'utilisateur.
+L'identifiant de l'utilisateur est celui qui est requis par le serveur pour
+permettre l'accès au système de fichiers de l'hôte serveur. Cette commande
+est normalement la première à être envoyée dès que le canal de contrôle est
+mis en place (certains serveurs l'imposent). Des informations d'identification
+supplémentaires telles qu'un mot de passe et/ou un nom de compte utilisateur
+peuvent être aussi requis par certains serveurs. Les serveurs doivent accepter
+une nouvelle commande USER à tout moment en vue de changer les droits et
+privilèges d'accès, ou le compte. Ceci aura l'effet d'annuler toute référence
+à l'utilisateur, au mot de passe, et au compte précédent en recommençant
+la séquence d'ouverture de session depuis le début. Tous les paramètres de
+transfert restent cependant inchangés et tout transfert de fichier en cours
+se termine normalement avec les anciens paramètres de session.  </p><p><b><code><font color="#880000">PASSWORD (PASS)</font></code></b><br>
+MOT DE PASSE
+
+</p><p>Le champ argument est une chaîne Telnet indiquant le mot de passe
+attribué à cet utilisateur. Cette commande doit immédiatement suivre la commande
+précédente, et, sur certains sites, complète les données d'identification
+de l'utilisateur pour lui permettre un accès au système de fichiers. Comme
+le mot de passe est une information dite "sensible", il est préférable de
+le "masquer" lors de son entrée, voire d'en éviter l'impression en clair
+à l'écran. Cependant, il apparaît que le serveur n'a aucun moyen de s'opposer
+à sa divulgation. Il est donc de la responsabilité des USER-FTP d'éviter
+le stockage explicite du mot de passe et son affichage.  </p><p><b><code><font color="#880000">ACCOUNT (ACCT)</font></code></b><br>
+COMPTE UTILISATEUR
+
+</p><p>Le champ argument est une chaîne Telnet qui spécifie le "compte" de
+l'utilisateur. Cette commande n'est pas nécessairement couplée à une commande
+USER, et certains site pourront imposer la spécification d'un compte à l'ouverture
+de session tandis que d'autre ne le demanderont que pour des accès spécifiques,
+par exemple pour enregistrer des fichiers. Dans ce dernier cas, il est admis
+que cette commande puisse arriver à tout moment.  </p><p>Des codes de réponse existent pour différencier ces cas pour un automate
+: lorsque l'infirmation de compte est requise à l'ouverture de session, la
+réponse à une commande PASSword exécutée avec succès est de code 332. Dans
+l'autre cas où le compte utilisateur n'est pas requis à l'ouverture de session,
+la réponse donnée à une commande PASSword concluante est de code 230; enfin,
+si le compte utilisateur est requis à la suite d'une commande exécutée plus
+loin dans le processus, le serveur répondra par un code 332 ou 532 suivant
+que la commande précédente est complétée (attente de la commande ACCounT)
+ou respectivement avortée.  </p><p><b><code><font color="#880000">CHANGE WORKING DIRECTORY (CWD) </font></code></b><br>
+CHANGEMENT DE REPERTOIRE
+
+</p><p>Cette commande permet de changer le répertoire distant de travail
+(récupération ou téléchargement de fichiers) sans modifier les paramètres
+en cours de la session. Les paramètres de transfert restent eux aussi inchangés.
+L'argument est un chemin d'accès valide dans le langage du système de fichier
+local.  </p><p><b><code><font color="#880000">CHANGE TO PARENT DIRECTORY (CDUP)</font></code></b><br>
+ACCES AU REPERTOIRE PERE
+
+</p><p>Il s'agit d'un cas particulier de la commande CWD, et est définie
+pour simplifier l'implémentation de programmes transférant des structures
+entières de répertoires entre des systèmes d'exploitation utilisant des syntaxes
+différentes pour l'accès au répertoire père. Les codes de réponse attendus
+sont identiques à ceux attendus pour la commande CWD. Voir l'Appendice II
+pour plus de détails.  </p><p><b><code><font color="#880000">STRUCTURE MOUNT (SMNT)</font></code></b><br>
+MONTAGE DE VOLUME
+
+</p><p>Cette commande permet de monter un volume sous un système de fichier
+différent sans changer de contexte pour la session. Les paramètres de transfert
+sont de même inchangés. L'argument est un chemin d'accès valide du système
+local.  </p><p><b><font color="#880000">REINITIALIZE (REIN)</font></b><br>
+REINITIALISATION
+
+</p><p>Cette commande tue une connexion USER, libérant toute les ressources
+d'entrées/sorties et les informations de session, sauf pour l'opération de
+transfert en cours qui est achevée normalement. Tous les paramètres sont
+rétablis dans leurs valeurs par défaut et le canal de contrôle est laissé
+ouvert. L'état obtenu est identique à l'état dans lequel serait un canal
+de contrôle juste après son établissement. Une commande USER est en général
+attendue.  </p><p><b><code><font color="#880000">LOGOUT (QUIT)</font></code></b><br>
+FERMETURE DE SESSION
+
+</p><p>Cette commande termine une session USER et si aucun transfert n'est
+en cours, ferme le canal de contrôle. Si un fichier est en cours de transfert,
+la connexion restera ouverte jusqu'à recevoir le code de résultat de l'opération,
+puis sera fermée par le serveur. Un processus utilisateur qui transfère des
+fichiers multiples pour des USER distincts sans être obligé de couper puis
+de rouvrir à chaque fois une nouvelle session, utilisera plutôt une commande
+REIN. </p><p>Une fermeture inopinée du canal de contrôle sera considéré par un
+serveur comme la succession implicite d'un commande d'avortement (ABOR) suivi
+d'une fermeture de session (QUIT).  </p><h4><a name="4.1.2">4.1.2. COMMANDES DE PARAMETRAGE DU TRANSFERT</a></h4>
+
+<p>Tous les paramètres de transfert ont des valeurs par défaut, et l'usage
+des commandes de paramétrage du transfert ne sont à utiliser que dans le
+cas ou des valeurs non standard sont requises pour la connexion. Les valeurs
+"par défaut" sont usuellement les dernières utilisées, ou, si aucune n'a
+été spécifiée, la valeur par défaut "standard". Ceci implique que le serveur
+doit se "rappeler" des valeurs par défaut applicables. Ces commandes peuvent
+apparaître dans n'importe quel ordre, mais doivent toujours précéder les
+requêtes de service FTP. Les commandes suivantes spécifient les paramètres
+de transfert :  </p><p><b><code><font color="#880000">DATA PORT (PORT)</font></code></b><br>
+PORT DU CANAL DE DONNEES
+
+</p><p>L'argument est une spécification de port hôte indiquant le port de
+données à utiliser pour l'établissement du canal de données. Il existe des
+valeurs standard pour les ports USER et SERVER, et, dans une situation normale,
+cette commande et ses réponses associées ne sont pas exploitées. Si cette
+commande est utilisée, l'argument doit être noté comme la concaténation d'une
+adresse TCP/IP complètement qualifiée, soit une adresse Internet en 32-bits
+et une adresse de port TCP en 16-bits . Cette adresse est découpée en champs
+de 8-bits dont la valeur est transmise comme un nombre décimal (dans une
+représentation sous forme chaîne de caractères). Les champs sont séparés
+par des virgules . Une commande PORT aurait l'allure suivante :  </p><p><code><font color="#008000">    PORT h1,h2,h3,h4,p1,p2</font></code>
+
+</p><p>dans laquelle h1 contient les 8 bits de poids fort de l'adresse Internet de l'hôte spécifié.
+
+</p><p><b><code><font color="#880000">PASSIVE (PASV)</font></code></b><br>
+MODE PASSIF
+
+</p><p>Cette commande demande au SERVER-DTP de se mettre "à l'écoute" d'un
+port de données (différent du port par défaut) et d'attendre une demande
+de connexion plutôt que de prendre l'initiative d'en établir une sur réception
+d'une commande de transfert. La réponse à cette commande précise l'adresse
+et le port sur lesquels le serveur s'est mis en écoute.  </p><p><b><code><font color="#880000">REPRESENTATION TYPE (TYPE)</font></code></b><br>
+TYPE DE REPRESENTATION
+
+</p><p>L'argument de cette commande spécifie le type de représentation des
+données utilisée conformément à la Section traitant des Représentation de
+Données et Stockage. Plusieurs types admettent un second paramètre. Le premier
+paramètre est exprimé comme un seul et unique caractère Telnet, tout comme
+le second paramètre Format dans le cas des types ASCII et EBCDIC; le second
+paramètre dans le cas du type LocalByte est un entier décimal indiquant la
+taille de l'octet logique. Les paramètres sont séparés par des &lt;SP&gt;
+(Espace, ASCII code 32).  </p><p>      Les codes suivants sont réservés pour les types :
+
+
+</p><p><font color="#008000"><code><pre>        A - ASCII  |    | N - Non-print
+                   |-&gt;&lt;-| T - Telnet format effectors
+        E - EBCDIC |    | C - Carriage Control (ASA)
+
+        I - Image        
+        L &lt;byte size&gt; - taille d'octet logique locale
+</pre></code></font> 
+
+</p><p>La représentation des données utilisée par défaut est l'ASCII "Non-print".
+Si le paramètre de Format est modifié, puis le premier argument est à son
+tour changé, le Format retourne à la valeur "Non-print" par défaut.  </p><p><b><code><font color="#880000">FILE STRUCTURE (STRU)</font></code></b><br>
+STRUCTURE DE FICHIER
+
+</p><p>L'argument est donné sous forme d'un caractère Telnet unique spécifiant
+la structure de fichier conformément à la Section traitant des Représentations
+de Données et Stockage.   </p><p> 
+
+
+</p><p>Les codes suivant sont actuellement réservés pour l'encodage des structures :
+
+
+</p><p><font color="#008000"><code><pre>        F - structure-fichier (pas de structure sous-jacente)
+        R - structure-enregistrement
+        P - structure-pages
+</pre></code></font>
+
+</p><p>La structure par défaut est la structure-fichier.
+
+</p><p><b><code><font color="#880000">TRANSFER MODE (MODE)</font></code></b><br>
+MODE DE TRANSFERT
+
+
+</p><p>L'argument est donné sous forme d'un caractère Telnet unique spécifiant
+les modes de transfert de données décrits dans la Section traitant des Modes
+de Transmission. </p><p>Les codes suivants sont réservés pour l'encodage du mode de transmission :
+
+</p><p><font color="#008000"><code><pre>        S - flux (stream)
+        B - Bloc
+        C - Compressé
+</pre></code></font> 
+
+</p><p>Le mode de transfert par défaut est le mode flux.
+
+</p><h4><a name="4.1.3">4.1.3. COMMANDES DE SERVICE FTP</a></h4>
+
+<p>Les commandes de service FTP rassemblent toutes les commandes opérationnelles
+de transfert ou système qui peuvent être invoquées par l'utilisateur. L'argument
+d'une commande de service FTP est en général un chemin d'accès. La syntaxe
+de ce chemin doit se conformer aux conventions adoptées par le site serveur
+(avec une valeur par défaut applicable), et aux conventions de langage adoptée
+par le canal de contrôle. La valeur par défaut conseillée est soit la dernière
+combinaison d'unité logique, chemin d'accès et nom de fichier, soit un chemin
+complet défini comme défaut par l'utilisateur. Les commandes peuvent être
+invoquées dans n'importe quel ordre excepté pour le couple "rename from",
+"rename to" qui doit être exécuté dans cette ordre et subséquemment, et le
+cas de la commande "restart" qui doit être suivie de la dernière commande
+avortée (ex., STOR ou RETR). Les données, lorsqu'elles sont émises en réponse
+à une commande de service FTP, devront toujours l'être via le canal de données,
+sauf pour certaines réponses à caractère informatif. Les commandes suivantes
+dont partie de la classe "commandes de service FTP" :  </p><p><b><code><font color="#880000">RETRIEVE (RETR)</font></code></b><br>
+TRANSMISSION
+
+</p><p>Cette commande provoque la transmission par le SERVER-DTP d'une copie
+du fichier spécifié par son chemin d'accès complet, à destination du SERVER-
+ou USER-DTP à l'autre extrémité du canal de données. Le statut et le contenu
+du fichier côté émetteur doit rester inchangé.  </p><p><b><code><font color="#880000">STORE (STOR)</font></code></b><br>
+ENREGISTREMENT
+
+</p><p>Cette commande provoque l'acceptation par le SERVER-DTP des données
+transférées via le canal de données, lesquelles seront enregistrées dans
+un fichier sur le serveur récepteur. Si le fichier entièrement spécifié existe
+sur le serveur avant la transmission, alors son contenu sera remplacé par
+le contenu transmis. Dans l'alternative, un nouveau fichier est créé.  </p><p><b><code><font color="#880000">STORE UNIQUE (STOU)</font></code></b><br>
+ENREGISTREMENT UNIQUE
+
+</p><p>Cette commande provoque le même comportement que la commande STOR
+excepté le fait que le fichier doit être créé dans le répertoire courant
+sous un nom unique. La réponse de code 250 (Transfer Started) doit inclure
+le nom de fichier généré par le site récepteur.  </p><p><b><code><font color="#880000">APPEND (with create) (APPE)</font></code></b><br>
+AJOUTER AU FICHIER
+
+</p><p>Cette commande provoque l'acceptation par le SERVER-DTP des données
+transmises sur le canal de données, lesquelles seront enregistrées dans un
+fichier sur le site de réception. La différence avec la commande STOR réside
+dans le fait que si le fichier spécifié existe déjà sur le site de réception,
+les données transmises viennent s'ajouter au fichier existant.  </p><p><b><code><font color="#880000">ALLOCATE (ALLO)</font></code></b><br>
+ALLOCATION
+
+</p><p>Cette commande peut être nécessaire sur certains serveurs pour réserver
+un espace de stockage suffisant pour permettre le stockage des données à
+transférer. L'argument est un entier donnant la taille en octets à réserver
+(la taille est relative à l'octet logique). Pour des fichiers transférés
+en mode enregistrement ou par pages, un  nombre maximal d'enregistrement
+ou une taille maximale de page (comptée en octets logiques) peut être nécessaire;
+ces valeurs sont indiquées par l'usage d'un deuxième paramètre entier décimal.
+Ce second argument est optionnel, et doit être séparé du premier, lorsqu'utilisé,
+par les trois caractères Telnet &lt;SP&gt; R &lt;SP&gt;. Cette commande doit
+être usuellement suivie d'une commande STORe ou APPEnd. La commande ALLO
+doit être traitée comme une commande NOOP (no operation) par tous les serveurs
+ne nécessitant pas une prédéclaration de la taille de fichiers à enregistrer,
+ceux qui nécessitent seulement une mention de la taille maximale d'enregistrement
+ou de taille maximale de page peuvent accepter une absence de valeur pour
+le premier paramètre, ou ignoreront la valeur si spécifiée.  </p><p><b><code><font color="#880000">RESTART (REST)</font></code></b><br>
+REPRISE
+
+</p><p>Le champ argument contient une expression du marqueur de contrôle
+à partir duquel le transfert doit être repris. Cette commande ne provoque
+pas explicitement de transfert de données, mais déplace simplement le point
+de lecture du fichier interrompu jusqu'au point de contrôle spécifié. Cette
+commande sera immédiatement suivie de la commande de service FTP nécessaire
+à relancer le processus de transfert.  </p><p><b><code><font color="#880000">RENAME FROM (RNFR)</font></code></b><br>
+RENOMMER...
+
+</p><p>Cette commande indique l'ancien chemin d'accès complet du fichier
+qui doit être renommé. Cette commande doit être immédiatement suivie d'une
+commande "rename to" spécifiant le nouveau nom du fichier en question.  </p><p><b><code><font color="#880000">RENAME TO (RNTO)</font></code></b><br>
+RENOMMER VERS...
+
+
+</p><p>Cette commande indique le nouveau nom du fichier spécifié dans le
+commande "rename from" précédente. L'usage subséquent de ces deux commandes
+provoque le changement du nom du fichier sur le système distant.  </p><p><b><code><font color="#880000">ABORT (ABOR)</font></code></b><br>
+AVORTEMENT
+
+</p><p>Cette commande provoque l'interruption immédiate de la dernière commande
+de service FTP et tout transfert de données associé. Cette commande peut
+demander une "action spéciale", comme il est discuté dans le Section traitant
+des Commandes FTP, pour en forcer la reconnaissance asynchrone par le serveur.
+Aucune action n'est a effectuer si la commande précédent a été achevée (y
+compris un transfert de données). Le canal de contrôle ne doit pas être coupé
+par le serveur, mais le canal de données doit être fermé.  </p><p>Le serveur doit prendre en compte deux situations sur réception de
+cette commande : (1) toute commande de service FTP est achevée, ou (2) une
+commande de service FTP est en cours. Dans le premier cas, le serveur ferme
+le canal de données (s'il est encore ouvert) et répond par un code 226, indiquant
+que la commande d'avortement a été correctement traitée.  </p><p>Dans le second cas, le serveur interrompt le service FTP en cours,
+coupe le canal de données, et renvoie un code  426 pour indiquer que la dernière
+commande s'est achevée anormalement. Le serveur envoie à la suite un code
+226, indiquant que la commande d'avortement elle-même s'est bien déroulée. 
+ </p><p><b><code><font color="#880000">DELETE (DELE)</font></code></b><br>
+SUPPRESSION
+
+</p><p>Cette commande provoque la suppression sur le site serveur du fichier
+précisé par le chemin d'accès complet. Si une étape supplémentaire de protection
+est nécessaire (telle qu'une confirmation éventuelle du type "Supprimer réellement
+ce fichier?"), elle doit être fournie par le processus USER-FTP.  </p><p><b><code><font color="#880000">REMOVE DIRECTORY (RMD)</font></code></b><br>
+SUPPRESSION DE REPERTOIRE
+
+</p><p>Cette commande provoque la suppression du chemin d'accès spécifié
+au titre de répertoire (si le chemin est absolu) ou de sous répertoire du
+répertoire courant (si le chemin est relatif). Voir l'appendice II.  </p><p><b><code><font color="#880000">MAKE DIRECTORY (MKD)</font></code></b><br>
+CREATION DE REPERTOIRE
+
+</p><p>Cette commande provoque la création d'un répertoire (si le chemin
+est absolu) ou d'un sous répertoire du répertoire courant (si le chemin est
+relatif) selon le chemin spécifié. Voir l'appendice II.  </p><p><b><code><font color="#880000">PRINT WORKING DIRECTORY (PWD)</font></code></b><br>
+IMPRESSION DU REPERTOIRE COURANT
+
+</p><p>Cette commande renvoie le nom du répertoire courant dans la réponse. Voir Appendice II.
+
+</p><p><b><code><font color="#880000">LIST (LIST)</font></code></b><br>
+CATALOGUE DU REPERTOIRE COURANT
+
+</p><p>Cette commande provoque l'émission par le serveur d'une liste de fichiers
+au DTP passif. Si le chemin mentionné spécifie un répertoire ou tout autre
+groupe de fichiers, le serveur répondra par une liste des fichiers dans ce
+répertoire ou ce groupe. Si le chemin spécifie un fichier normal, alors les
+informations système relatives à ce fichier seront renvoyées. Une absence
+d'argument indique par défaut le répertoire courant. La réponse est transférée
+via le canal de données pour les types ASCII ou EBCDIC. (l'utilisateur doit
+s'assurer que le type est effectivement ASCII ou EBCDIC). Comme les informations
+relatives à un fichier peuvent varier grandement en forme et présentation
+entre divers systèmes, celles-ci seront généralement peu exploitable par
+un automate. Elles sont cependant fort utiles pour un utilisateur humain. 
+ </p><p><b><code><font color="#880000">NAME LIST (NLST)</font></code></b><br>
+CATALOGUE COURT
+
+</p><p>Cette commande provoque l'envoi par le serveur d'un catalogue succinct
+d'un de ses répertoires vers l'utilisateur. Le chemin spécifié doit décrire
+un répertoire valide ou tout autre descripteur d'un ensemble de fichiers;
+un argument omis désigne le répertoire courant. Le serveur répondra par une
+liste de noms de fichiers à l'exclusion de toute autre information. Les données
+sont transférées en ASCII ou EBCDIC sur le canal de données sous forme d'une
+suite de noms de chemins d'accès valides séparés par des &lt;CRLF&gt; ou
+&lt;NL&gt;. (Encore une fois, l'utilisateur doit s'assurer que le paramètre
+TYPE est correct). Cette commande a été implémentée pour permettre à des
+processus automatiques de pouvoir récupérer cette liste pour traitement ultérieur.
+Un cas typique est l'implémentation d'une fonction de téléchargement de fichiers
+multiples.  </p><p><b><code><font color="#880000">SITE PARAMETERS (SITE)</font></code></b><br>
+PARAMETRES CONTEXTUELS
+
+</p><p>Cette commande est utilisée par le serveur pour proposer des services
+spécifiques à ce système qui sont indispensables pour le transfert de fichiers
+mais insuffisamment universels pour justifier l'attribution d'une commande
+dans le protocole. La nature de ces services, et leur syntaxe devra être
+fournie par chaque service les utilisant, en réponse d'une commande HELP
+SITE.  </p><p><b><code><font color="#880000">SYSTEM (SYST)</font></code></b><br>
+SYSTEME
+
+</p><p>Cette commande permet de connaître le type de système d'exploitation
+sur le serveur. La réponse devra mentionner dans son premier "mot" l'un des
+systèmes mentionnés dans le document Assigned Numbers [4] en cours de validité. 
+ </p><p><b><code><font color="#880000">STATUS (STAT)</font></code></b><br>
+STATUT
+
+</p><p>Cette commande provoque l'envoi d'un message d'état (statut) de réponse
+sur le canal de contrôle. Cette commande peut être utilisée en cours de transfert
+(avec les signaux IP et Synch de Telnet - voir la Section traitant des commandes
+FTP) auquel cas le serveur doit répondre avec l'état de la transaction en
+cours, ou bine elle peut être envoyée entre deux transferts. Dans ce dernier
+cas, la commande devra être utilisée avec un argument. Si cet argument est
+un chemin d'accès, la commande résultante équivaut à une commande "list"
+à l'exception près que la réponse sera transmise par le canal de connexion
+au lieu du canal de données. Si un chemin partiel est donné, Le serveur répondra
+par une liste de noms de fichiers ou d'attributs associés à cette spécification.
+Si aucun argument n'est donné, le serveur renverra une information générale
+concernant le processus serveur FTP. Ceci pourra inclure l'ensemble des paramètres
+de connexion actuellement utilisé ainsi que l'état de toutes les connexions. 
+ </p><p><b><code><font color="#880000">HELP (HELP)</font></code></b><br>
+AIDE
+
+</p><p>Cette commande provoque l'envoi d'une information d'aide concernant
+l'implémentation du serveur lui-même, via la connexion de contrôle. Cette
+commande peut prendre un argument (ex., n'importe quel nom de commande) et
+renvoie des informations encore plus précises. La réponse sera de type 211
+ou 214. Il est suggéré que la commande HELP soit permise y compris avant
+qu'une commande USER d'ouverture de session n'ait été exécutée. Le serveur
+pourra utiliser cette commande pour donner des informations sur des paramètres
+dépendants du système, ex., en réponse à la requête "HELP SITE".  </p><p><b><code><font color="#880000">NOOP (NOOP)</font></code></b><br>
+PAS D'ACTION
+
+</p><p>Cette commande n'affecte aucun paramètre ni n'interagit avec aucune
+des commandes précédemment lancées. Elle provoque aucune autre action qu'une
+simple réponse "OK" de la part du serveur.  </p><h3><a name="4.2">4.2. REPONSES FTP</a></h3>
+
+<p>Les réponses à des commandes FTP sont destinées à assurer une certaine
+synchronisation des actions impliquées dans un processus de transfert de
+fichiers, et garantir que le processus utilisateur puisse toujours connaître
+l'état du serveur. Chaque commande suscite au moins une réponse, mais plusieurs
+réponses peuvent être données; dans ce dernier cas, les multiples réponses
+devront être aisément différentiables. De plus, certaines commandes peuvent
+être émises groupées en séquence, comme USER, PASS et ACCT, ou RNFR et RNTO.
+Les réponses témoignent de l'existence d'états intermédiaires si toutes les
+commandes passées sont exécutées avec succès. L'échec d'une seule étape nécessitera
+de recommencer toute la procédure.  </p><p>Les détails d'une séquence de commandes-réponses sont explicitées dans l'ensemble de diagrammes ci-après.
+
+</p><p> Une réponse FTP répond consiste en un nombre à trois chiffres (transmis
+sous forme de trois caractères alphanumériques) suivis d'un texte. Le code
+numérique est à destination d'automates pour renseigner des dispositions
+à prendre et de l'état suivant de celui-ci; le texte est plutôt destiné à
+l'utilisateur humain. Les trois digits du code sont sensés contenir suffisamment
+d'information pour que le processus utilisateur (USER-PI) n'ait pas nécessité
+d'examiner la partie texte de la réponse, laquelle peut être soit éliminée,
+soit transférée à l'interface utilisateur, selon la nécessité. En particulier,
+le texte émis peut varier de serveur à serveur, et un automate pourrait donc
+avoir des difficultés à analyser tous les messages possibles.  </p><p>Une réponse est définie comme contenant le code à 3-digits, suivi
+d'un Espace &lt;SP&gt;, suivie par une ligne de texte (lorsqu'une longueur
+maximale de réponse a été définie auparavant), et terminée par le code de
+fin-de-ligne Telnet. Il y aura des cas cependant, ou le texte sera plus long
+qu'une simple ligne. Dans ce cas, le texte entier aurait pu être mis entre
+crochets de sorte que le processus utilisateur puisse savoir quand s'arrête
+la lecture du texte (c-à-d. arrête l'analyse de l'entrée du canal de contrôle)
+pour passer à d'autres tâches. Ceci implique l'utilisation d'un format particulier
+sur la première ligne pour indiquer que d'autres lignes suivent, et un autre
+format particulier sur la dernière. Au moins une de ces lignes doit présenter
+le code de réponse. Pour satisfaire tous les avis sur le problème, il a été
+décidé que le code serait identique sur la première et la dernière ligne. 
+ </p><p>Ainsi, le format d'une réponse multilignes est tel que la première
+ligne débute par le code exact de la réponse, suivi d'un tiret "-" (Hyphénation
+ou "moins"), suivi du texte de la première ligne. La dernière ligne commencera
+par le même code, suivi immédiatement d'un Espace &lt;SP&gt;, éventuellement
+du texte, terminé par le code de fin-de-ligne Telnet.  </p><p>Par exemple:
+
+</p><p><font color="#008000"><code><pre>                123-First line
+                Second line
+                 234 A line beginning with numbers
+                123 The last line
+</pre></code></font>
+ 
+</p><p>Le processus utilisateur n'a plus qu'à chercher la deuxième occurrence
+du code de réponse suivie de l'Espace &lt;SP&gt; en début de ligne, et ignorer
+les lignes intermédiaires. Si une ligne intermédiaire commence par un nombre
+de 3-digits, le serveur ajoutera un espace en tête de ligne pour éviter toute
+confusion.  </p><p>Ce schéma permet à des routines système standard d'être employées
+pour générer la réponse (ex. pour la réponse à la commande STAT), avec un
+marquage supplémentaire "artificiel" en tête de la première et la dernière
+ligne. Au cas (rare) ou ces routines seraient susceptibles de générer une
+ligne commençant par 3 digits suivi d'un espace, un caractère neutre (ex.
+Espace) sera rajouté en tête de chaque ligne.  </p><p>Ce schéma permet d'éviter la mise entre crochets de la réponse.
+
+</p><p>Les trois digits de la réponse ont chacun une signification particulière.
+Ceci permet d'implémenter des traitements à réponse du plus simple au plus
+complexe dans l'USER-PI. Le premier digit indique si la commande se termine
+en succès, échec, ou est incomplète. (Rapport au diagramme d'état), un interpréteur
+de protocole simpliste pourra déterminer une stratégie d'action à lancer
+(telles que se retirer, tenter de nouveau, etc.) en se bornant à examiner
+ce digit. Un processus utilisateur désireux de savoir de quelle nature est
+l'erreur, (ex. erreur du système de fichiers, erreur de syntaxe dans la commande)
+pourra examiner le second digit, le troisième étant réservé au degré le plus
+fin de signalisation (ex., une commande RNTO sans commande RNFR antérieure). 
+ </p><p>Le premier digit peut prendre 5 valeurs différentes :
+
+</p><ul><p><b><code>1yz  Réponse positive préliminaire</code></b>
+
+</p><p> L'action demandée a été correctement reconnue et lancée; on devra
+attendre une autre réponse pour pouvoir demander l'exécution d'une nouvelle
+commande. (Un processus utilisateur émettant une nouvelle commande avant
+conclusion de la première obtiendrait une réponse d'erreur du type "violation
+de protocole"; certains processus serveur FTP peuvent empiler les réponses
+entrantes sans émettre ce type d'avertissement). Ce type de réponse est utilisé
+pour avertir l'utilisateur que sa commande a été bien reconnue et qu'il peut
+alors surveiller son canal de données, notamment dans le cas d'applications
+dans lesquelles la surveillance simultanée des deux canaux "contrôle" et
+"données" n'est pas pratique. Un serveur FTP devra au moins émettre une commande
+de classe 1yz par commande reçue.  </p><p><b><code>2yz  Réponse positive définitive</code></b>
+
+</p><p>L'action demandée s'est complètement déroulée avec succès. Une nouvelle commande peut être reçue par le serveur.
+
+</p><p><b><code>3yz  Réponse positive intermédiaire</code></b>
+
+</p><p>La commande a été acceptée, mais le serveur a mis celle-ci en sommeil,
+dans l'attente d'informations supplémentaires. L'utilisateur devra alors
+émettre une autre commande avec les informations demandées. Cette réponse
+est utilisée dans les groupements de commandes en séquence.  </p><p><b><code>4yz  Réponse négative transitoire</code></b>
+
+</p><p>La commande a été refusée, et l'action n'a pas été exécutée, mais
+la condition d'erreur invoquée est de nature temporaire, impliquant que la
+même commande peut être tentée à nouveau. Dans le cas d'une séquence de commandes
+groupées, l'utilisateur reprendra toute la séquence depuis son début. Le
+contexte du terme "transitoire" reste cependant difficile à expliciter, en
+particulier lorsque deux sites distincts (SERVER- et processus USER) doivent
+s'accorder sur son interprétation. Chaque réponse de la classe 4yz peut correspondre
+à un contexte de durée différent, mais le but de cette classe est de signaler
+au processus utilisateur la possibilité de tenter l'opération encore une
+fois. Une règle d'implémentation pour savoir si une réponse doit entrer ou
+doit être fournie dans la classe 4yz ou 5yz (Négative définitive) est la
+suivante : une réponse sera de classe 4yz si la commande peut être répétée
+avec une chance de succès, A L'IDENTIQUE, et sans aucune modification des
+paramètres USER ou SERVER (c-à-d., la commande est écrite strictement comme
+la première; l'utilisateur ne change pas ses droits d'accès, ne change pas
+de compte ni de session; le serveur ne change pas d'implémentation).  </p><p><b><code>5yz  Réponse négative définitive</code></b>
+
+</p><p>La commande a été refusée, et l'action n'a pas été exécutée. Le serveur
+notifie par là au processus utilisateur qu'il sera vain de retenter la même
+commande (dans la même séquence).  Certaines conditions d'erreur "permanentes"
+pourront toutefois être corrigées, et la commande pourra être relancée par
+une action explicite de l'utilisateur humain, soit après correction de la
+commande, soit après changement de ses droits, soit après intervention de
+l'opérateur du serveur. </p></ul>
+<p>Le second digit donne une indication sur la nature de la réponse :
+
+</p><ul>
+<p><b><code>x0z Syntaxe</code></b>
+
+</p><p>Ces réponses se réfèrent à des erreurs de syntaxe, des commandes correctes
+en termes de syntaxe, mais ne se référant à aucune fonction connue ou implémentée. 
+ </p><p><b><code>x1z Information</code></b>
+
+</p><p>Indiquent une réponse à des demandes d'information, comme les commandes d'états ou d'aide.
+
+</p><p><b><code>x2z Connexions</code></b>
+
+</p><p>Réponses se référent à une problématique de connexion sur les canaux "contrôle" ou "données".
+
+</p><p><b><code>x3z Identification et authentification</code></b>
+
+</p><p>Réponses du processus d'accès au système de fichiers.
+
+</p><p><b><code>x4z  Non encore spécifiée.</code></b>
+
+</p><p><b><code>x5z Système de fichiers</code></b>
+
+</p><p>Ces réponses se réfèrent à l'état du système de fichiers serveur lorsque des commandes de ce système sont invoquées.
+</p></ul>
+
+<p>Le troisième digit permet de qualifier encore plus finement les réponses
+dans chacune des catégories données par le deuxième digit. La liste des réponses
+donnée ci-après le montre. Notez que le contenu informationnel du texte ci-dessous
+est une "recommandation", et est nature à interprétation en fonction du serveur
+qui l'émet. Les codes de réponse, par opposition, doivent suivre à la lettre
+les spécifications indiquées; c'est-à-dire que les implémentations des serveurs
+ne doivent jamais inventer de nouveaux codes, même si les situations dans
+lesquelles ils peuvent être sont légèrement différentes que celles définies;
+elles devront impérativement choisir le code correspondant à la situation
+la plus proche.  </p><p>Une commande telle que TYPE ou ALLO dont l'exécution complète n'est
+pas de nature à apporter une information utile pour le processus utilisateur
+provoqueront le retour d'une réponse de code 200. Lorsque la commande en
+question n'est pas implémentée par un processus SERVER-FTP particulier (cette
+fonction n'a pas de signification dans ce contexte particulier de serveur,
+par exemple, la commande ALLO sur un site TOPS20), ce dernier devra de préférence
+répondre par un code positif de sorte que l'utilisateur puisse poursuivre
+sa procédure. Une réponse de code 202 sera utilisé dans ce cas, associé par
+exemple au texte suivant: "Allocation non nécessaire." Si, par contre, la
+commande est générale, mais non implémentée par le site serveur, un code
+502 sera répondu. Une version affinée de cette réponse est le code 504 qui
+précise que cette commande est implémentée, mais l'un au moins des paramètres
+associés ne l'est pas.  </p><h4><a name="4.2.1">4.2.1 CODES DE REPONSE PAR GROUPES DE FONCTIONS</a></h4>
+ 
+<p>     200 Commande conclue.
+</p><p>     500 Erreur de syntaxe, commande non reconnue. Inclut le cas d'une ligne de commande trop longue.
+</p><p>     501 Erreur de syntaxe dans le paramètres ou arguments.
+</p><p>     202 Commande non implémentée, ou superflue sur ce site.
+</p><p>     502 Commande non implémentée.
+</p><p>     503 Mauvaise séquence de commandes.
+</p><p>     504 Commande non implémentée pour ce paramètre.
+</p><p>     
+</p><p>     110 Réponse à marqueur de reprise. Dans ce cas, le texte doit
+être exact et n'est pas "adaptable" par des implémentations "locales"; il
+DOIT indiquer: MARK yyyy = mmmm où yyyy est le marqueur du flux de données
+USER-DTP, et mmmm le marqueur équivalent côté serveur (noter l'espace indispensable
+entre les marqueurs et le "="). </p><p>     211 Statut système, ou réponse d'aide système.
+</p><p>     212 Statut de répertoire.
+</p><p>     213 Statut de fichier.
+</p><p>     214 Message d'aide.<br> Sur la manière d'utiliser le serveur
+ou la signification d'une commande non standard. Cette réponse n'est destinée
+qu'à un utilisateur humain. </p><p>     215 NOM de type de système.<br>
+Le nom de type de système est un nom officiel standard défini dans la RFC "Assigned Numbers".
+</p><p>     120 Service disponible dans nnn minutes.
+</p><p>     220 Service disponible pour nouvel utilisateur.
+</p><p>     221 Canal de contrôle fermé par le service. Cas archivé si nécessaire.
+</p><p>     421 Service non disponible, canal de contrôle fermé. Répondu
+à toute commande lorsque la fermeture imminente du service est prévue. </p><p>     125 Canal de données déjà ouvert; début de transfert.
+</p><p>     225 Canal de données ouvert; pas de transfert en cours.
+</p><p>     425 Erreur d'ouverture du canal de données.
+</p><p>     226 Fermeture du canal de données. Service terminé (par exemple, transfert de fichier ou avortement).
+</p><p>     426 Connexion fermée, transfert interrompu.
+</p><p>     227 Passage en mode passif (h1,h2,h3,h4,p1,p2).
+</p><p>     
+</p><p>     230 Session ouverte.
+</p><p>     530 Session non ouverte.
+</p><p>     331 Nom d'utilisateur reçu, mot de passe demandé.
+</p><p>     332 Compte utilisateur demandé.
+</p><p>     532 Compte utilisateur demandé pour enregistrement de fichiers.
+</p><p>     150 Statut de fichier vérifié; ouverture de canal de données en cours.
+</p><p>     250 Service fichier terminé.
+</p><p>     257 "CHEMIN" créé.
+</p><p>     350 Service fichier en attente d'information.
+</p><p>     450 Service fichier non traité. Fichier non disponible (ex., fichier verrouillé par un autre utilisateur).
+</p><p>     550 Service fichier non traité. Fichier non accessible (ex., fichier non trouvé, accès refusé).
+</p><p>     451 Service interrompu. Erreur locale de traitement.
+</p><p>     551 Service interrompu. Type de page inconnu.
+</p><p>     452 Service interrompu. Espace insuffisant.
+</p><p>     552 Service fichier interrompu. Quota dépassé (pour le répertoire ou compte courant).
+</p><p>     553 Service interrompu. Nom de fichier erroné.
+
+</p><h4><a name="4.2.2">4.2.2 CODES REPONSE PAR ORDRE NUMERIQUE</a></h4>
+ 
+<p>     110 Réponse à marqueur de reprise. Dans ce cas, le texte doit être
+exact et n'est pas "adaptable" par des implémentations "locales"; il DOIT
+indiquer: MARK yyyy = mmmm où yyyy est le marqueur du flux de données USER-DTP,
+et mmmm le marqueur équivalent côté serveur (noter l'espace indispensable
+entre les marqueurs et le "="). </p><p>     120 Service disponible dans nnn minutes.
+</p><p>     125 Canal de données déjà ouvert; début de transfert.
+</p><p>     150 Statut de fichier vérifié; ouverture de canal de données en cours.
+</p><p> 
+</p><p>     200 Commande conclue.
+</p><p>     202 Commande non implémentée, ou superflue sur ce site.
+</p><p>     211 Statut système, ou réponse d'aide système.
+</p><p>     212 Statut de répertoire.
+</p><p>     213 Statut de fichier.
+</p><p>     214 Message d'aide.<br> Sur la manière d'utiliser le serveur
+ou la signification d'une commande non standard. Cette réponse n'est destinée
+qu'à un utilisateur humain. </p><p>     215 NOM de type de système.<br>
+Le nom de type de système est un nom officiel standard défini dans la RFC "Assigned Numbers".
+</p><p>     220 Service disponible pour nouvel utilisateur.
+</p><p>     221 Canal de contrôle fermé par le service. Cas archivé si nécessaire.
+</p><p>     225 Canal de données ouvert; pas de transfert en cours.
+</p><p>     226 Fermeture du canal de données. Service terminé (par exemple, transfert de fichier ou avortement).
+</p><p>     227 Passage en mode passif (h1,h2,h3,h4,p1,p2).
+</p><p>     230 Session ouverte.
+</p><p>     250 Service fichier terminé.
+</p><p>     257 "CHEMIN" créé.
+</p><p> 
+</p><p>     331 Nom d'utilisateur reçu, mot de passe demandé.
+</p><p>     332 Compte utilisateur demandé.
+</p><p>     350 Service fichier en attente d'information.
+</p><p> 
+</p><p>     421 Service non disponible, canal de contrôle fermé. Répondu
+à toute commande lorsque la fermeture imminente du service est prévue. </p><p>     425 Erreur d'ouverture du canal de données.
+</p><p>     426 Connexion fermée, transfert interrompu.
+</p><p>     450 Service fichier non traité. Fichier non disponible (ex., fichier verrouillé par un autre utilisateur).
+</p><p>     451 Service interrompu. Erreur locale de traitement.
+</p><p>     452 Service interrompu. Espace insuffisant.
+</p><p> 
+</p><p>     500 Erreur de syntaxe, commande non reconnue. Inclut le cas d'une ligne de commande trop longue.
+</p><p>     501 Erreur de syntaxe dans le paramètres ou arguments.
+</p><p>     502 Commande non implémentée.
+</p><p>     503 Mauvaise séquence de commandes.
+</p><p>     504 Commande non implémentée pour ce paramètre.
+</p><p>     530 Session non ouverte.
+</p><p>     532 Compte utilisateur demandé pour enregistrement de fichiers.
+</p><p>     550 Service fichier non traité. Fichier non accessible (ex., fichier non trouvé, accès refusé).
+</p><p>     551 Service interrompu. Type de page inconnu.
+</p><p>     552 Service fichier interrompu. Quota dépassé (pour le répertoire ou compte courant).
+</p><p>     553 Service interrompu. Nom de fichier erroné.
+
+</p><p></p><hr>
+<p align="center"><a href="959-3.htm">Précédent</a> - <a href="959-5.htm">Suivant</a> - <a href="959tm.htm">Retour au sommaire</a>
+
+</p></body></html>

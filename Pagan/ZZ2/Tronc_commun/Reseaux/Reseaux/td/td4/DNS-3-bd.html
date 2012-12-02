@@ -1,0 +1,167 @@
+<HTML>
+<HEAD>
+	<TITLE>Etude du DNS - (3) la base de données</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="white">
+<H1>Etude de l'application DNS</H1>
+<P ALIGN="RIGHT">
+<I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>
+<!--#config timefmt="%b %Y"--><!--#flastmod virtual="$DOCUMENT_URI" --></I></P>
+
+<H2>3 - La base de données</H2>
+
+<H3>3.1 - Les informations sur les domaines</H3>
+
+
+<BLOCKQUOTE>
+L'ensemble d'informations sur un domaine est composé d'un ou plusieurs 
+<B>RR</B> (<I>Resource Record</I>).<BR>
+Chaque RR contient 5 champs d'information :
+<BLOCKQUOTE><TABLE BORDER="1" CELLPADDING="5" cellspacing="0">
+<tr bgcolor="#d0d0d0"><td>Champ</td><td>Contenu</td></tr>
+<TR><TD><I>owner</I></TD><TD>le nom auquel se rapporte l'information du RR</TD></TR>
+<TR VALIGN=top><TD>type de<br />l'information<br />contenue<br />dans le RR</TD>
+	<TD>
+	<TABLE CELLPADDING="3">
+		<TR valign="top"><TD>A</TD>
+			<TD><I>address</I></TD>
+			<TD>l'adresse-IP d'un système</TD></TR>
+		<TR valign="top"><TD>CNAME</TD>
+			<TD><I>canonical name</I></TD>
+			<TD>le nom canonique (officiel) du système</TD></TR>
+		<TR valign="top"><TD>HINFO</TD>
+			<TD><I>host information</I></TD>
+			<TD>le processeur et le système d'exploitation (OS) d'un système</TD>
+		</TR>
+		<TR valign="top"><TD>MX</TD><TD><I>mail exchange</I></TD>
+			<TD>le système où est installé le serveur de courrier pour ce domaine. Voir 
+				[RFC-974] pour plus de détails.
+			</TD>
+		</TR>
+		<TR valign="top"><TD>NS</TD>
+			<TD><I>name server</I></TD>
+			<TD>le serveur de noms "autorisé" pour le domaine</TD></TR>
+		<TR valign="top"><TD>PTR</TD>
+			<TD><I>pointer</I></TD>
+			<TD>un pointeur vers une autre partie de l'espace de noms de 
+				domaines</TD>
+		</TR>
+		<TR valign="top"><TD>SOA</TD>
+			<TD><I>start of authority</I></TD>
+			<TD>informations sur la zone (copie maître, durées de validité...)</TD></TR>
+		<TR valign="top"><TD>RP</TD>
+			<TD><I>responsible person</I></TD>
+			<TD>la personne représentant l'autorité</TD></TR>
+	</TABLE>
+	</TD>
+</TR>
+<TR><TD>classe</TD>
+	<TD>la famille de protocoles (<TT>IN</TT>=Internet<!--, <TT>CH</TT>=Chaos-->)</TD></TR>
+<TR><TD>TTL</TD>
+	<TD>la durée de validité du RR en secondes (<SPAN class="etranger">Time 
+		To Live</SPAN>)</TD></TR>
+<TR><TD>RDATA</TD>
+	<TD>les données spécifiques du type de RR</TD>
+</TR>
+</TABLE></BLOCKQUOTE>
+
+
+<!--<P>Exemple : l'ensemble des RR des domaines du domaine <TT>univ-bpclermont.fr</TT> 
+est dans le fichier <A HREF="ubp.db">ubp.db</A>.<BR>
+Dans ces fichiers textes, les informations identiques à plusieurs RR sont regroupées 
+(TTL par exemple).</P>
+<HR>-->
+<SPAN CLASS="exercice">Exercice 3.1</SPAN> : afficher les RR d'un domaine<br />
+(Exécuter sur <b>fc.isima.fr</b> la commande : <tt class="commande">host -a <i>FQDN_du_domaine</i></tt>)
+	<ul style="list-style:none">
+	<li>
+		<dl>
+		<dt>Quels sont les RR des FQDN suivants ?</dt>
+			<dd><TT>custsv.univ-bpclermont.fr</tt></dd>
+			<dd><TT>cust.univ-bpclermont.fr</tt></dd>
+			<dd><TT>luna.cust2000.univ-bpclermont.fr</tt></dd>
+        	<dd><TT>www.isima.fr</tt><br><br></dd>
+			<dd><TT>univ-bpclermont.fr</tt></dd>
+			<dd><TT>cust2000.univ-bpclermont.fr</tt></dd>
+			<dd><TT>isima.fr</tt></dd>
+			<dd><TT>fr.</tt> (avec un point à la fin)</dd>
+			<dd>etc...</dd>
+		</dl>
+	</li>
+	<li><a href="ex3.1.html">des réponses</a> 
+		(<span class="date"><!--#config timefmt="%d %b %Y"--><!--#flastmod  virtual="ex3.1.html" --></span>)
+	</li>
+	</ul>
+
+<HR>
+</BLOCKQUOTE>
+
+<H3>3.2 - Organisation physique</H3>
+
+<BLOCKQUOTE>
+	<P>La base de données, très grande, est divisée en sections, appelées 
+	<B>zones</B>.<BR>
+	Le découpage est souvent effectué, selon les délégations de responsabilité,
+	par sous-arbres; cela permet de mettre la maintenance de chaque zone au plus
+	près des administrateurs.</P>
+	
+	<P>Chaque zone doit comporter une <B>copie maître</B>, dans laquelle
+	l'administrateur de la zone effectue les mises à jour (insertions, 
+	suppressions ou modifications
+	de RR). Elle est souvent mémorisée sur un des systèmes recensés dans la 
+	zone.<BR>
+	Par sécurité, pour assurer la pérennité de l'accès à l'information 
+	qu'elle contient,
+	chaque zone doit aussi comporter une ou plusieurs <B>copies 
+	esclaves</B>, 
+	dont au moins une est située dans un système en dehors du sous-arbre 
+	qu'elle décrit.</P>
+		<BLOCKQUOTE>
+		La copie maître de la zone <TT>univ-bpclermont.fr</TT> est dans le
+		système <TT>ciccgw.univ-bpclermont.fr</TT> (voir le RR-SOA).<BR>
+		Les copies esclaves "officielles" sont dans les systèmes 
+		<TT>ns2.nic.fr</TT>, et dans les systèmes <TT>cicsun.univ-bpclermont.fr</TT>
+		(voir les RR-NS).
+		</BLOCKQUOTE>
+	<P>Les copies esclaves sont aussi utilisées pour répartir la charge de réponse
+	aux interrogations, et ainsi améliorer le délai de réponse.</P>
+		<BLOCKQUOTE>
+		Pour alléger la charge des 2 serveurs-DNS internes à la zone 
+		<TT>univ-bpclermont.fr</TT>, des 
+		copies esclaves internes à la zone ont été installées, au département
+		de Mathématiques, au CUST, au LASMEA..., mais ils ne sont pas connus de
+		l'extérieur.
+		</BLOCKQUOTE> 
+	<P>Un système peut ainsi contenir la copie maître d'une ou plusieurs zones, et
+	la copie esclave d'autres zones.<BR>
+	L'extraction d'informations de ces copies est effectuée par un processus appelé
+	<B>serveur-DNS</B> installé sur chaque systèmes contenant des copies maîtres 
+	ou esclaves de zones.</P>
+	</BLOCKQUOTE>
+	<CENTER><IMG SRC="DNS-3-bd.png" ALT="serveurs DNS" WIDTH="562" HEIGHT="515"></CENTER>
+	<BLOCKQUOTE>
+<SPAN CLASS="exercice">Exercice 3.2</SPAN> : 
+	afficher la localisation des copies maître et esclaves de la zone d'un domaine
+	<blockquote>
+	<p><b>tp</b> : <tt class="commande">host -a <i>FQDN_du_domaine</i></tt><br/>
+		ou bien <tt class="commande">host -a 
+		<i>FQDN_du_domaine un_des_noms_NS</i> </tt><br /></p>
+	<dl>
+	<dt>Où sont les copies maîtres des zones suivantes ?</dt>
+		<dd><tt>u-clermont1.fr</tt></dd>
+		<dd><tt>isima.fr</tt></dd>
+		<dd><tt>fr.</tt> (attention : ne pas oublier le point à la fin du FQDN d'un TLD)</dd>
+		<dd>etc...</dd>
+	<dt><p><a href="ex3.2.html">les réponses</a> 
+		(<span class="date"><!--#config timefmt="%d %b %Y"--><!--#flastmod  virtual="ex3.2.html" --></span>)</p></dt>
+	</dl>
+	</blockquote>
+
+	</BLOCKQUOTE>
+<P ALIGN=right><A HREF="DNS-4-appli.html">Suite...<IMG SRC="../../images/ArrowRight.gif" ALT="suite" WIDTH="20" HEIGHT="20" BORDER="0"></A></P>
+
+<HR>
+</BODY>
+</HTML>

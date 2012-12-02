@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+	<TITLE>RFC 1700 : ASSIGNED NUMBERS</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+<P>extrait de <A HREF="../doc/rfc1700/rfc1700.html">RFC1700</A></P>
+
+<H1>Ether types</H1>
+
+<BLOCKQUOTE>
+<P>Many of the networks of all classes are Ethernets (10Mb) or
+Experimental Ethernets (3Mb).  These systems use a message "type"
+field in much the same way the ARPANET uses the "link" field.</P>
+
+If you need an Ether Type, contact:
+
+<BLOCKQUOTE><PRE>
+Xerox Systems Institute
+3400 Hillview Ave.
+PO BOX 10034
+Palo Alto, CA 94303
+
+Phone: 415-813-7164
+Contact: Fonda Lix Pallone</PRE></BLOCKQUOTE>
+
+The following list of EtherTypes is contributed unverified information
+from various sources.
+</BLOCKQUOTE>
+
+<H3>Assignments:</H3>
+
+<BLOCKQUOTE>
+<PRE><B>Ethernet          Exp. Ethernet    Description          References</B>
+<B><U>decimal  Hex      decimal  octal                                  </U></B>
+   000   0000-05DC   -       -    IEEE802.3 Length Field   [XEROX]
+   257   0101-01FF   -       -    Experimental             [XEROX]
+   512   0200        512   1000   XEROX PUP (see 0A00)   [8,XEROX]
+   513   0201        -      -     PUP Addr Trans (see 0A01)[XEROX]
+         0400                     Nixdorf                  [XEROX]
+  1536   0600       1536   3000   XEROX NS IDP         [133,XEROX]
+         0660                     DLOG                     [XEROX]
+         0661                     DLOG                     [XEROX]
+  2048   0800        513   1001   Internet IP (IPv4)     [105,JBP]
+  2049   0801        -      -     X.75 Internet            [XEROX]
+  2050   0802        -      -     NBS Internet             [XEROX]
+  2051   0803        -      -     ECMA Internet            [XEROX]
+  2052   0804        -      -     Chaosnet                 [XEROX]
+  2053   0805        -      -     X.25 Level 3             [XEROX]
+  2054   0806        -      -     ARP                     [88,JBP]
+  2055   0807        -      -     XNS Compatability        [XEROX]
+  2056   0808        -      -     Frame Relay ARP          [XEROX]
+  2076   081C        -      -     Symbolics Private         [DCP1]
+  2116   0844        -      -     Planning Research Corp.  [XEROX]
+  2184   0888-088A   -      -     Xyplex                   [XEROX]
+  2304   0900        -      -     Ungermann-Bass net debugr[XEROX]
+  2560   0A00        -      -     Xerox IEEE802.3 PUP      [XEROX]
+  2561   0A01        -      -     PUP Addr Trans           [XEROX]
+  2989   0BAD        -      -     Banyan Systems           [XEROX]
+  4096   1000        -      -     Berkeley Trailer nego    [XEROX]
+  4097   1001-100F   -      -     Berkeley Trailer encap/IP[XEROX]
+  8192   2000-20FF   -      -     LRW Systems
+  5632   1600        -      -     Valid Systems            [XEROX]
+ 16962   4242        -      -     PCS Basic Block Protocol [XEROX]
+ 21000   5208        -      -     BBN Simnet               [XEROX]
+ 24576   6000        -      -     DEC Unassigned (Exp.)    [XEROX]
+ 24577   6001        -      -     DEC MOP Dump/Load        [XEROX]
+ 24578   6002        -      -     DEC MOP Remote Console   [XEROX]
+ 24579   6003        -      -     DEC DECNET Phase IV Route[XEROX]
+ 24580   6004        -      -     DEC LAT                  [XEROX]
+ 24581   6005        -      -     DEC Diagnostic Protocol  [XEROX]
+ 24582   6006        -      -     DEC Customer Protocol    [XEROX]
+ 24583   6007        -      -     DEC LAVC, SCA            [XEROX]
+ 24584   6008-6009   -      -     DEC Unassigned           [XEROX]
+ 24586   6010-6014   -      -     3Com Corporation         [XEROX]
+ 28672   7000        -      -     Ungermann-Bass download  [XEROX]
+ 28674   7002        -      -     Ungermann-Bass dia/loop  [XEROX]
+ 28704   7020-7029   -      -     LRT                      [XEROX]
+ 28720   7030        -      -     Proteon                  [XEROX]
+ 28724   7034        -      -     Cabletron                [XEROX]
+ 32771   8003        -      -     Cronus VLN            [131,DT15]
+ 32772   8004        -      -     Cronus Direct         [131,DT15]
+ 32773   8005        -      -     HP Probe                 [XEROX]
+ 32774   8006        -      -     Nestar                   [XEROX]
+ 32776   8008        -      -     AT&T                     [XEROX]
+ 32784   8010        -      -     Excelan                  [XEROX]
+ 32787   8013        -      -     SGI diagnostics            [AXC]
+ 32788   8014        -      -     SGI network games          [AXC]
+ 32789   8015        -      -     SGI reserved               [AXC]
+ 32790   8016        -      -     SGI bounce server          [AXC]
+ 32793   8019        -      -     Apollo Computers         [XEROX]
+ 32815   802E        -      -     Tymshare                 [XEROX]
+ 32816   802F        -      -     Tigan, Inc.              [XEROX]
+ 32821   8035        -      -     Reverse ARP             [48,JXM]
+ 32822   8036        -      -     Aeonic Systems           [XEROX]
+ 32824   8038        -      -     DEC LANBridge            [XEROX]
+ 32825   8039-803C   -      -     DEC Unassigned           [XEROX]
+ 32829   803D        -      -     DEC Ethernet Encryption  [XEROX]
+ 32830   803E        -      -     DEC Unassigned           [XEROX]
+ 32831   803F        -      -     DEC LAN Traffic Monitor  [XEROX]
+ 32832   8040-8042   -      -     DEC Unassigned           [XEROX]
+ 32836   8044        -      -     Planning Research Corp.  [XEROX]
+ 32838   8046        -      -     AT&T                     [XEROX]
+ 32839   8047        -      -     AT&T                     [XEROX]
+ 32841   8049        -      -     ExperData                [XEROX]
+ 32859   805B        -      -     Stanford V Kernel exp.   [XEROX]
+ 32860   805C        -      -     Stanford V Kernel prod.  [XEROX]
+ 32861   805D        -      -     Evans & Sutherland       [XEROX]
+ 32864   8060        -      -     Little Machines          [XEROX]
+ 32866   8062        -      -     Counterpoint Computers   [XEROX]
+ 32869   8065        -      -     Univ. of Mass. @ Amherst [XEROX]
+ 32870   8066        -      -     Univ. of Mass. @ Amherst [XEROX]
+ 32871   8067        -      -     Veeco Integrated Auto.   [XEROX]
+ 32872   8068        -      -     General Dynamics         [XEROX]
+ 32873   8069        -      -     AT&T                     [XEROX]
+ 32874   806A        -      -     Autophon                 [XEROX]
+ 32876   806C        -      -     ComDesign                [XEROX]
+ 32877   806D        -      -     Computgraphic Corp.      [XEROX]
+ 32878   806E-8077   -      -     Landmark Graphics Corp.  [XEROX]
+ 32890   807A        -      -     Matra                    [XEROX]
+ 32891   807B        -      -     Dansk Data Elektronik    [XEROX]
+ 32892   807C        -      -     Merit Internodal           [HWB]
+ 32893   807D-807F   -      -     Vitalink Communications  [XEROX]
+ 32896   8080        -      -     Vitalink TransLAN III    [XEROX]
+ 32897   8081-8083   -      -     Counterpoint Computers   [XEROX]
+ 32923   809B        -      -     Appletalk                [XEROX]
+ 32924   809C-809E   -      -     Datability               [XEROX]
+ 32927   809F        -      -     Spider Systems Ltd.      [XEROX]
+ 32931   80A3        -      -     Nixdorf Computers        [XEROX]
+ 32932   80A4-80B3   -      -     Siemens Gammasonics Inc. [XEROX]
+ 32960   80C0-80C3   -      -     DCA Data Exchange Cluster[XEROX]
+ 32964   80C4-80C5                Banyan Systems           [XEROX]
+ 32966   80C6        -      -     Pacer Software           [XEROX]
+ 32967   80C7        -      -     Applitek Corporation     [XEROX]
+ 32968   80C8-80CC   -      -     Intergraph Corporation   [XEROX]
+ 32973   80CD-80CE   -      -     Harris Corporation       [XEROX]
+ 32975   80CF-80D2   -      -     Taylor Instrument        [XEROX]
+ 32979   80D3-80D4   -      -     Rosemount Corporation    [XEROX]
+ 32981   80D5        -      -     IBM SNA Service on Ether [XEROX]
+ 32989   80DD        -      -     Varian Associates        [XEROX]
+ 32990   80DE-80DF   -      -     Integrated Solutions TRFS[XEROX]
+ 32992   80E0-80E3   -      -     Allen-Bradley            [XEROX]
+ 32996   80E4-80F0   -      -     Datability               [XEROX]
+ 33010   80F2        -      -     Retix                    [XEROX]
+ 33011   80F3        -      -     AppleTalk AARP (Kinetics)[XEROX]
+ 33012   80F4-80F5   -      -     Kinetics                 [XEROX]
+ 33015   80F7        -      -     Apollo Computer          [XEROX]
+ 33023   80FF-8103   -      -     Wellfleet Communications [XEROX]
+ 33031   8107-8109   -      -     Symbolics Private        [XEROX]
+ 33072   8130        -      -     Hayes Microcomputers     [XEROX]
+ 33073   8131        -      -     VG Laboratory Systems    [XEROX]
+         8132-8136                Bridge Communications    [XEROX]
+ 33079   8137-8138   -      -     Novell, Inc.             [XEROX]
+ 33081   8139-813D   -      -     KTI                      [XEROX]
+         8148                     Logicraft                [XEROX]
+         8149                     Network Computing Devices[XEROX]
+         814A                     Alpha Micro              [XEROX]
+    	 814B                     Keithley Instruments
+ 33100   814C        -      -     SNMP                      [JKR1]
+         814D                     BIIN                     [XEROX]
+         814E                     BIIN                     [XEROX]
+         814F                     Technically Elite Concept[XEROX]
+         8150                     Rational Corp            [XEROX]
+         8151-8153                Qualcomm                 [XEROX]
+         815C-815E                Computer Protocol Pty Ltd[XEROX]
+         8164-8166                Charles River Data System[XEROX]
+    	 8167-816C                Keithley Instruments
+         817D-818C                Protocol Engines         [XEROX]
+         818D                     Motorola Computer        [XEROX]
+         819A-81A3                Qualcomm                 [XEROX]
+         81A4                     ARAI Bunkichi            [XEROX]
+         81A5-81AE                RAD Network Devices      [XEROX]
+         81B7-81B9                Xyplex                   [XEROX]
+         81CC-81D5                Apricot Computers        [XEROX]
+         81D6-81DD                Artisoft                 [XEROX]
+    	 81DE-81E0                Hewlett-Packart
+         81E6-81EF                Polygon                  [XEROX]
+         81F0-81F2                Comsat Labs              [XEROX]
+         81F3-81F5                SAIC                     [XEROX]
+         81F6-81F8                VG Analytical            [XEROX]
+         8203-8205                Quantum Software         [XEROX]
+         8221-8222                Ascom Banking Systems    [XEROX]
+         823E-8240                Advanced Encryption Syste[XEROX]
+         8263-826A                Charles River Data System[XEROX]
+         827F-8282                Athena Programming       [XEROX]
+         829A-829B                Inst Ind Info Tech       [XEROX]
+         829C-82AB                Taurus Controls          [XEROX]
+         82AC-838F                Walker Richer & Quinn    [XEROX]
+    	 8390                     LANSoft
+    	 8391-8693                Walker Richer & Quinn    [XEROX]
+         8694-869D                Idea Courier             [XEROX]
+         869E-86A1                Computer Network Tech    [XEROX]
+         86A3-86AC                Gateway Communications   [XEROX]
+         86DB                     SECTRA                   [XEROX]
+         86DE                     Delta Controls           [XEROX]
+ 34543   86DF        -      -     ATOMIC                     [JBP]
+         86E0-86EF                Landis & Gyr Powers      [XEROX]
+         8700-8710                Motorola                 [XEROX]
+         8711-8720                Cray Communications
+         8725-8728                Phoenix Microsystems
+         8739-873C                Control technology
+         8755-8759                LANSoft
+         875A-875C                Norand
+         875D-8766                Univ. of Utah Dept./Computer Science
+         8780-8785                Symbol Technologies
+         8804-8806                Marathon Technologies
+         880F-8812                Hypercom Network Systems
+         8813                     Japan Computer Industry
+         884C                     The ATM Forum
+         8856                     Axis Communications
+         885A                     Foundry Networks
+         885B -885C               Hewlett-Packard
+         885D                     Endocardial Solutions
+         885E                     Quantum Corporation
+         885F                     Digidesign
+         8860                     AGCS
+         8861-8862                Intel
+         8863-8864                UUNET Technologies
+         8865                     Visual Networks
+         8866-8867                Lucent Technologies
+         8868                     NBX Coporation
+         8869                     Broadband Access Systems
+         886A                     Electronic Theatre Controls
+         886B                     Bay Networks
+         886C                     Epigram
+         886D-886E                Intel
+         886F                     Microsoft
+         8870                     Alteon networks
+         8871                     Nippon Telegraph &amp; Telephone Corp
+         8872                     UUNET Technologies
+         8873                     Crescent Networks
+         8874                     Broadcom
+         8875                     Adaptive Broadband
+         8A96-8A97                Invisible Software       [XEROX]
+ 36864   9000        -      -     Loopback                 [XEROX]
+ 36865   9001        -      -     3Com(Bridge) XNS Sys Mgmt[XEROX]
+ 36866   9002        -      -     3Com(Bridge) TCP-IP Sys  [XEROX]
+ 36867   9003        -      -     3Com(Bridge) loop detect [XEROX]
+ 65280   FF00        -      -     BBN VITAL-LanBridge cache[XEROX]
+         FF00-FF0F                ISC Bunker Ramo          [XEROX]</PRE>
+
+<P>The standard for transmission of IP datagrams over Ethernets and
+Experimental Ethernets is specified in [RFC894] and [RFC895]
+respectively.</P>
+
+<P>NOTE:  Ethernet 48-bit address blocks are assigned by the IEEE.</P>
+</BLOCKQUOTE>
+</BODY>
+</HTML>

@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+ <TITLE>Etude d'un protocole fiable : TCP (1)</TITLE>
+ <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY>
+<H1>Etude d'un protocole fiable : TCP</H1>
+
+<P ALIGN=right>
+<I><A HREF="mailto:laurenco@isima.fr">Patrice Laurencot</A>
+<!--#config timefmt="%d/%m/%Y"--><!--#flastmod  virtual="$DOCUMENT_URI" --></I></P>
+<H2>1 - Le contexte</H2>
+<HR>
+<P>Des erreurs de transmission peuvent se produire :</P>
+	<UL>
+	<LI><P><B>perturbations subies par le signal dans le médium</B> 
+		(couche physique)<BR>
+		Ces perturbations entrainent que le signal reçu peut être différent
+		du signal émis.<BR>
+		Si une telle perturbation s'est produite, le récepteur qui extrait
+		des bits de ce signal, obtient alors une chaîne de bits différente
+		de celle qui a été émise.</P>
+		<P>La détection et la correction de ces erreurs sont éventuellement 
+		effectuées par les entités de couche 2 ou de couche LLC, immédiatement
+		au dessus de la couche physique.</P></LI>
+	<LI><P><B>pannes ou surcharges des routeurs</B>
+		(couche Réseau)<BR>
+		Ces dysfonctionnements peuvent entrainer la perte ou la duplication
+		de PDU-Reseau, et des informations qu'elles transportent.</P>
+		<P>La détection et la correction de ces pertes sont éventuellement 
+		effectuées par les entités de couche Transport, immédiatement
+		au dessus de la couche Réseau.</P></LI>
+	</UL>
+<P>La détection des erreurs est effectuée gràce à des informations
+de contrôle (redondance) calculées par l'émetteur, et vérifiées par le récepteur.</P>
+<P>La correction est effectuée en commun par l'émetteur et le récepteur, souvent
+par une retransmission de l'information mal transmise, d'où un retard de 
+livraison.<BR>
+Un retard de livraison peut n'être pas acceptable, par exemple lors la 
+transmission d'un signal sonore.</P>
+
+<P>En conséquence, plusieurs stratégies de détection et de correction des
+erreurs existent, selon les couches :</P>
+<TABLE BORDER="1" CELLSPACING="0">
+<TR ALIGN=center><TD ROWSPAN=2>procédures de</TD>
+	<TD>OSI</TD>
+	<TD COLSPAN=4>OSI</TD>
+    <td>&nbsp;</td>
+	<TD COLSPAN=2>Transport OSI</TD>
+	<TD COLSPAN=2>Transport TCP/IP</TD></TR>
+<TR ALIGN=center>
+	<TD>DLL</TD>
+	<TD>MAC</TD>
+	<TD>LLC-1</TD>
+	<TD>LLC-2</TD>
+	<TD>LLC-3</TD>
+    <td>PPP</td>
+	<TD>COTS</TD>
+	<TD>CLTS</TD>
+	<TD>TCP</TD>
+	<TD>UDP</TD></TR>
+<TR ALIGN=center><TD ALIGN=left><SMALL>détection d'erreur ou de perte</SMALL></TD>
+	<TD>O</TD>
+	<TD>O</TD><TD>N</TD><TD>O</TD><TD>O</TD>
+    <td>O</td>
+	<TD>O</TD><TD>N</TD>
+	<TD>O</TD><TD>N</TD></TR>
+<TR ALIGN=center><TD ALIGN=left><SMALL>signalement d'erreur ou de perte</SMALL></TD>
+	<TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>O</TD><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR ALIGN=center><TD ALIGN=left><SMALL>tentative de correction<BR>signalement d'échec de tentative</SMALL></TD>
+	<TD>O</TD><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>O</TD><TD>&nbsp;</TD><TD>O</TD><TD>O</TD><TD>&nbsp;</TD><TD>O</TD><TD>&nbsp;</TD></TR>
+</TABLE>
+<P>Ce sont les spécifieurs d'une application qui décideront des couches
+de la pile nécessaire à l'application, selon les contraintes d l'application.<BR>
+Par exemple</P>
+	<UL>
+	<LI><P>contrainte impérative d'exactitude<BR>FTP, SMTP, HTTP utilisent 
+		TCP</P></LI>
+	<LI>contrainte de temps<BR>RSTP 
+		[<A HREF="http://www.ietf.org/rfc/rfc2326.txt?number=2326">RFC 2326</A>]
+		transmet les ordres en utilisant TCP, et le flux vidéo en utilisant UDP.</LI>
+</UL>
+
+<P>L'objet de ce TP est d'étudier les procédures de détection et de correction
+mises en oeuvre entre deux entités-TCP :</P>
+<OL>
+<LI>la connexion-TCP entre les deux entités d'application : 
+	identification, établissement, terminaison,</LI>
+<LI>la numérotation des informations transmises sur une connexion-TCP,</LI>
+<LI>l'acquittement de bonne réception,</LI>
+<LI>le contrôle de flux.</LI>
+</OL>
+
+<P ALIGN=right><A HREF="TCP-2.html">Suite...<IMG SRC="../../images/ArrowRight.gif" ALT="suite" WIDTH="20" HEIGHT="20" BORDER="0"></A></P>
+<HR>
+
+</BODY>
+</HTML>

@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<TITLE>L'interface V24</TITLE>
+   <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+
+<BODY BGCOLOR="#f0f0f0" LINK="#005bce">
+
+<H1>L'interface V24 : les principaux circuits
+<BR><BR></H1>
+
+<CENTER><IMG SRC="interface_v24.gif" WIDTH="505" HEIGHT="217"></CENTER>
+<BR><BR>
+<TABLE BORDER="2" WIDTH="100%" CELLPADDING="5" CELLSPACING="0">
+<TR BGCOLOR="#CECECE"><TH>n°broche<BR>sur 25</TH><TH>nom</TH><TH>V24</TH><TH>RS232C</TH><TH>Description</TH>
+</TR>
+<TR><TH>1</TH><TH>&nbsp;</TH><TH>101</TH><TH>AA</TH>
+	<TD>terre de protection</TD></TR>
+<TR><TH>2</TH><TH>TX</TH><TH>103</TH><TH>BA</TH>
+	<TD><B>Emission</B><BR>
+		Le contr&ocirc;leur s&eacute;rie fournit sur ce circuit les bits que le modem devra coder et envoyer sur la ligne
+		t&eacute;l&eacute;phonique.<BR>
+		Chaque bit transmis sur le circuit 103 est cod&eacute; par une tension maintenue pendant une dur&eacute;e fonction 
+		du d&eacute;bit; (par exemple 417 microsecondes pour un d&eacute;bit de 2400 bits par seconde).	</TD></TR>
+<TR><TH>3</TH><TH>RD</TH><TH>104</TH><TH>BB</TH>
+	<TD><B>Réception</B><BR>
+		Le modem &eacute;coute la ligne t&eacute;l&eacute;phonique, et en particulier la modulation de la porteuse (voir 109), qui 
+		code des bits envoy&eacute;s par le modem distant.<BR>
+		Lorsqu'il entend une telle modulation, il tente de d&eacute;coder ce qu'il entend, et s'il y arrive, place les 
+		bits d&eacute;cod&eacute;s sur ce circuit 104.<BR>
+		Chaque bit transmis sur le circuit 104 est cod&eacute; par une tension maintenue pendant une dur&eacute;e fonction 
+		du d&eacute;bit; (par exemple 3333 microsecondes pour un d&eacute;bit de 300 bits par seconde).</TD></TR>
+<TR><TH>4</TH><TH>RTS</TH><TH>105</TH><TH>CA</TH>
+	<TD><B>Demande &agrave; &eacute;mettre</B><BR>
+		C'est par ce circuit que le contr&ocirc;leur s&eacute;rie indique au modem qu'il veut envoyer des bits ou cesser d'en envoyer.<BR>
+		C'est un ordre au modem de se mettre en &eacute;tat d'&eacute;mission. Le modem doit r&eacute;pondre par le circuit 
+		106 pour indiquer quand il est pr&ecirc;t. Le contr&ocirc;leur s&eacute;rie ne doit pas envoyer de bits sur 103 tant 
+		que le modem n'est pas pr&ecirc;t.</TD></TR>
+<TR><TH>5</TH><TH>CTS</TH><TH>106</TH><TH>CB</TH>
+	<TD><B>Pr&ecirc;t &agrave; &eacute;mettre</B><BR>
+		Le modem r&eacute;pond par ce circuit &agrave; une sollicitation du contr&ocirc;leur s&eacute;rie pour commencer ou 
+		arr&ecirc;ter d'&eacute;mettre.</TD></TR>
+<TR><TH>6</TH><TH>DSR</TH><TH>107</TH><TH>CC</TH>
+	<TD><B>Connexion &eacute;tablie</B><BR>
+		Par ce circuit, le modem indique que la communication t&eacute;l&eacute;phonique est &eacute;tablie avec un modem
+		distant, ou bien que la communication est coup&eacute;e.</TD></TR>
+<TR><TH>20</TH><TH>DTR</TH><TH>108</TH><TH>CD</TH>
+	<TD><B>Connecter/D&eacute;connecter</B><BR>
+		Par ce circuit, le contr&ocirc;leur s&eacute;rie ordonne au modem de prendre/lib&eacute;rer la ligne 
+		t&eacute;l&eacute;phonique.<BR>
+		Diverses actions peuvent suivre ou pr&eacute;c&eacute;der cette action, selon que l'appareil est en appel manuel, en appel
+		automatique, ou en r&eacute;ponse automatique.</TD></TR>
+<TR><TH>8</TH><TH>DCD</TH><TH>109</TH><TH>CF</TH>
+	<TD><B>Porteuse pr&eacute;sente</B><BR>
+		Dans la communication par modem et ligne t&eacute;l&eacute;phonique, les bits sont cod&eacute;s en modulation de porteuse.<BR>
+		Par cette ligne, le modem indique qu'il per&ccedil;oit la porteuse &eacute;mise par le modem distant. Elles mettent en
+		oeuvre d'autres circuits de l'interface V24.</TD></TR>
+</TABLE>
+
+</BODY>
+
+</HTML>

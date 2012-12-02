@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">6. R&eacute;ponse</FONT></H2>
+<P>Une fois la requ&ecirc;te re&ccedil;ue et interpr&eacute;t&eacute;e, un serveur r&eacute;pond par un message HTTP de r&eacute;ponse.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+R&eacute;ponse             = R&eacute;ponse_simple | R&eacute;ponse_compl&egrave;te
+
+R&eacute;ponse_simple      = [ Corps_entit&eacute; ]
+
+R&eacute;ponse_compl&egrave;te    = Ligne_&eacute;tat             ; <A HREF="1945-6.htm#6-1">Section 6.1</A>
+                    *( En-t&ecirc;te_g&eacute;n&eacute;rale      ; <A HREF="1945-4.htm#4-3">Section 4.3</A>
+                    | En-t&ecirc;te_r&eacute;ponse        ; <A HREF="1945-6.htm#6-2">Section 6.2</A>
+                    | En-t&ecirc;te_entit&eacute; )       ; <A HREF="1945-7.htm#7-1">Section 7.1</A>
+                     CRLF
+                    [ Corps_entit&eacute; ]         ; <A HREF="1945-7.htm#7-2">Section 7.2</A> </PRE></CODE></FONT>
+
+<P>Une r&eacute;ponse_simple ne peut &ecirc;tre envoy&eacute; qu'en r&eacute;ponse d'une requ&ecirc;te_simple HTTP/0.9 ou si le serveur ne supporte que la version limit&eacute;e de protocole HTTP/0.9. Si un client &eacute;met une requ&ecirc;te_compl&egrave;te HTTP/1.0 et re&ccedil;oit une r&eacute;ponse ne commen&ccedil;ant pas par une ligne_&eacute;tat, il devra conclure qu'il s'agit d'une r&eacute;ponse_simple et l'interpr&eacute;tera en cons&eacute;quence. Notez qu'une r&eacute;ponse ne contient que le corps_entit&eacute;, et se termine par la fermeture de la connexion par le serveur.
+<A NAME="6-1"></A>
+<H3>6.1 Ligne d'&eacute;tat</H3>
+<P>La premi&egrave;re ligne d'un message de r&eacute;ponse_compl&egrave;te est la ligne d'&eacute;tat, constitu&eacute;e d'une indication du num&eacute;ro de version du protocole, suivi du code num&eacute;rique de la r&eacute;ponse, suivi enfin d'une explicitation textuelle de cette r&eacute;ponse, chaque &eacute;l&eacute;ment &eacute;tant s&eacute;par&eacute; par un espace. Aucun CR ni LF ne peuvent y appara&icirc;tre &agrave; l'exception de la s&eacute;quence CRLF finale.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Ligne_&eacute;tat        = Version_HTTP SP Code_&eacute;tat SP Raison CRLF</PRE></CODE></FONT>
+
+<P>La ligne d'&eacute;tat d&eacute;butant toujours par ce num&eacute;ro de version et le code de r&eacute;ponse:
+
+<P><CODE><CENTER>"HTTP/" 1*DIGIT "." 1*DIGIT SP 3DIGIT SP</CENTER></CODE>
+
+<P>(ex., "HTTP/1.0 200 "), la seule pr&eacute;sence de cette expression est suffisante pour diff&eacute;rentier une r&eacute;ponse_simple d'une r&eacute;ponse_compl&egrave;te &eacute;mise en retour d'une requ&ecirc;te sousle protocole HTTP/1.0. Le format de r&eacute;ponse_simple n'interdit cependant pas qu'une telle expression soit plac&eacute;e en t&ecirc;te du corps d'entit&eacute;, provoquant ainsi une erreur d'interpr&eacute;tation de la part du r&eacute;cepteur. Dans la pratique, la plupart des serveurs HTTP/0.9 ne peuvent g&eacute;n&eacute;rer que des r&eacute;ponses de type "text/html", ce qui en principe, &eacute;limine le risque d'une telle confusion.
+<A NAME="6-1-1"></A>
+<H4>6.1.1 Code d'&eacute;tat et raison explicite</H4>
+<P>L'&eacute;l&eacute;ment code_&eacute;tat est un nombre entier &agrave; 3 chiffres indiquant le succ&egrave;s ou la cause d'erreur de la transaction. L'&eacute;l&eacute;ment "raison" est un commentaire textuel destin&eacute; &agrave; identifier explicitement la cause d'erreur. Le code d'&eacute;tat sera en g&eacute;n&eacute;ral exploit&eacute; par des automates. La raison est &agrave; destination de notre intellect humain. Celle-ci n'est pas obligatoirement trait&eacute;e ni report&eacute;e par le client.
+<P>Le premier chiffre du code d'&eacute;tat indique la classe g&eacute;n&eacute;rale de la r&eacute;ponse. Les deux derniers n'ont pas de r&ocirc;le de classification particulier. Le premier chiffre peut prendre 5 valeurs:
+
+<P><TABLE CELLSPACING=10>
+<TR><TD><B>Code</B></TD><TD><B>Classe</B></TD><TD><B>Usage</B></TD></TR>
+<TR><TD>1xx</TD><TD>Information</TD><TD>Non utilis&eacute;, pour usage futur</TD></TR>
+<TR><TD>2xx</TD><TD>Succ&egrave;s</TD><TD>L'action a &eacute;t&eacute; correctement re&ccedil;ue, interpr&eacute;t&eacute;e, et ex&eacute;cut&eacute;e.</TD></TR>
+<TR><TD>3xx</TD><TD>Redirection</TD><TD>Une d&eacute;cision suppl&eacute;mentaire doit &ecirc;tre prise pour terminer la requ&ecirc;te</TD></TR>
+<TR><TD>4xx</TD><TD>Erreur Client</TD><TD>La requ&ecirc;te pr&eacute;sente une erreur de forme et ne peut &ecirc;tre satisfaite</TD></TR>
+<TR><TD>5xx</TD><TD>Erreur Serveur</TD><TD>La requ&ecirc;te est valide, mais le serveur ne peut la satisfaire</TD></TR></TABLE>
+
+<P>Les valeurs actuellement reconnues sous HTTP/1.0, et les phrases types d'explicitation associ&eacute;es, sont pr&eacute;sent&eacute;es ci-dessous. Ces phrases ne sont que recommand&eacute;es -- elles peuvent &ecirc;tre remplac&eacute;es par des variations locales sans affecter le protocole. Ces codes sont int&eacute;gralement list&eacute;s en section 9.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Code_&eacute;tat   = "200"   ; OK                      OK
+            | "201"   ; Created                 Cr&eacute;&eacute;
+            | "202"   ; Accepted                Accept&eacute;
+            | "204"   ; No Content              Pas de contenu
+            | "301"   ; Moved Permanently       Changement d'adresse d&eacute;finitif
+            | "302"   ; Moved Temporarily       Changement temporaire
+            | "304"   ; Not Modified            Non modifi&eacute;
+            | "400"   ; Bad Request             Requ&ecirc;te incorrecte
+            | "401"   ; Unauthorized            Non autoris&eacute;
+            | "403"   ; Forbidden               Interdit
+            | "404"   ; Not Found               Non trouv&eacute;
+            | "500"   ; Internal Server Error   Erreur interne serveur
+            | "501"   ; Not Implemented         Non impl&eacute;ment&eacute;
+            | "502"   ; Bad Gateway             Erreur de routeur
+            | "503"   ; Service Unavailable     Indisponible
+            | autres_codes</PRE></CODE></FONT>
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+autres_codes = 3DIGIT
+
+Raison  = *[TEXT, sauf CR, LF]</PRE></CODE></FONT>
+
+<P>La liste des codes HTTP est extensible, mais seuls les codes ci-dessus sont utilis&eacute;s dans la pratique courante. Les applications HTTP n'ont pas n&eacute;cessairement &agrave; conna&icirc;tre la signification de tous les codes enregistr&eacute;s, bien que ce soit souhaitable pour des raisons &eacute;videntes. Au minimum, les applications devront pouvoir comprendre le premier chiffre de ce code, et comprendre tout num&eacute;ro de r&eacute;ponse non identifi&eacute; comme le num&eacute;ro x00 de la classe, indiquant ainsi la d&eacute;finition g&eacute;n&eacute;rique de la classe. Aucune r&eacute;ponse non identifi&eacute;e ne peut &ecirc;tre enregistr&eacute;e en cache.
+<P>Par exemple, si un code "inconnu" 431 est re&ccedil;u par le client, celui-ci peut interpr&eacute;ter sans doute possible qu'un probl&egrave;me est survenu, et peut  r&eacute;agir comme s'il avait re&ccedil;u le code 400. Dans de tels cas, il est fortement conseill&eacute; que l'application reporte le corps de l'entit&eacute; de r&eacute;ponse, dans la mesure o&ugrave; il y a de fortes chances que celui-ci contienne des informations "en clair" sur la nature de l'erreur.
+<A NAME="6-2"></A>
+<H3>6.2 En-t&ecirc;te de r&eacute;ponse </H3>
+<P>Les champs d'en-t&ecirc;te de r&eacute;ponse v&eacute;hiculent certaines informations compl&eacute;mentaires concernant cette r&eacute;ponse, et qui ne peuvent &ecirc;tre mentionn&eacute;es dans la ligne d'&eacute;tat. Ces champs donnent des informations sur le serveur lui-m&ecirc;me, et sur les actions &agrave; mener par la suite pour acc&eacute;der &agrave; la ressource demand&eacute;e.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Response-Header    = Location            ; <A HREF="1945-10.htm#10-11">Section 10.11</A>
+                   | Server              ; <A HREF="1945-10.htm#10-14">Section 10.14</A>
+                   | WWW-Authentificate  ; <A HREF="1945-10.htm#10-16">Section 10.16</A> </PRE></CODE></FONT>
+
+<P>Des nouveaux noms de champs d'en-t&ecirc;te_r&eacute;ponse ne peuvent &ecirc;tre introduits que dans le cadre d'un changement de version du protocole. Cependant, de nouveaux champs ou champs exp&eacute;rimentaux peuvent utiliser la s&eacute;mantique de champs d'en-t&ecirc;te_r&eacute;ponse, &agrave; partir du moment ou les deux extr&eacute;mit&eacute;s de la communication sont d'accord pour le faire. Tout champ non reconnu sera consid&eacute;r&eacute; comme un champ d'en-t&ecirc;te_entit&eacute;.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-5.htm">Pr&eacute;c&eacute;dent</A> - <A HREF="1945-7.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+

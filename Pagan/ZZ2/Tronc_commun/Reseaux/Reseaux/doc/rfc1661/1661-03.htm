@@ -1,0 +1,89 @@
+<HTML>
+<TITLE>PPP - RFC 1661 - VF</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<P>RFC: 1661<BR>
+Statut : Standard<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm" TARGET="_top">INDEX FRANCAIS</A>
+<CENTER><H1>POINT TO POINT PROTOCOL - PPP</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER> W. Simpson / Juillet 1994<BR>
+Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry G. FREMAUX</A> Ing&eacute;nieur Professeur / <A HREF="http://www.eisti.fr">EISTI</A><BR>
+Edition originale : Mai 1996 / Version FR: Janvier 1998
+<HR>
+<CENTER>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-02.htm">Précédent</A> - <A HREF="1661-04.htm">Suivant</A><HR>
+</CENTER>
+<A NAME="3"></A>
+<H2>3. Fonctionnement d'une liaison PPP</H2>
+<A NAME="3.1"></A>
+<H3>3.1. Vue d'ensemble</H3>
+<P>Afin d'établir une communication sur un lien point-à-point, chaque extrémité du lien PPP DOIT d'abord émettre des paquets LCP pour configurer et tester le support de liaison. Une fois la liaison établie, le correspondant POURRA être authentifié.
+<P>Ensuite, PPP DOIT envoyer des paquets NCP pour choisir et configurer un ou plusieurs protocoles réseau disponibles. Une fois que les protocoles réseau choisis ont été configurés, les datagrammes pour chacun de ces protocoles réseau peuvent être envoyés sur la liaison.
+<P>La liaison restera disponible et configurée pour la communication jusqu'à ce que des paquets LCP ou NCP ne ferment explicitement la liaison, à moins qu'un événement extérieur ne survienne (par exemple une temporisation d'inactivité, ou l'intervention de l'administrateur).
+<A NAME="3.2"></A>
+<H3>3.2.  Diagramme d'états</H3>
+<P>Dans les processus de configuration, de maintien et de clôture de liaison point-à-point, le lien PPP rencontre un certain nombre d'états décrits de façon sommaire par le schéma suivant :
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+   +------+        +-------------+         +----------------+
+   |      | UP     |             |Ouverture|                |SUCCES/NONE
+   |"Dead"|------->|Etablissement|-------->|Authentification|--+
+   |      |        |             |         |                |  |
+   +------+        +-------------+         +----------------+  |
+      ^               |                        |               |
+      |         Echec |                  Echec |               |
+      +<--------------+          +-------------+               |
+      |                          |                             |
+      |         +-----------+    |           +-----------+     |
+      |    DOWN |           |    | Fermeture |           |     |
+      +---------|    Fin    |<---+<----------| Connexion |<----+
+                |           |                |           |
+                +-----------+                +-----------+ </FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+
+<P>Toutes les transitions possibles ne sont pas explicitées dans ce diagramme. La sémantique suivante DOIT être adoptée.
+<A NAME="3.3"></A>
+<H3>3.3. "Link Dead" (couche physique non prête)</H3>
+<P>Une communication débute et se termine nécessairement dans cet état. Lorsqu'un événement extérieur (comme une détection de porteuse ou la configuration par l'administrateur réseau) indique que le niveau physique est en état pour un processus de connexion, PPP passera la liaison en phase d'établissement.
+<P>Durant cette phase, l'automate LCP (décrit plus loin) sera dans l'état Initial ou Démarrage. Le passage à l'état Etablissement sera signalée par un événement Up à l'automate LCP.
+<H4>Note d'implémentation :</H4>
+<P>Typiquement, une liaison doit retomber dans cet état après toute déconnexion du modem. Dans le cas d'une liaison filaire permanente, cette état pourra n'être maintenu que pendant une très courte durée  cependant suffisamment longue pour pouvoir simuler un état repos effectif.
+<A NAME="3.4"></A>
+<H3>3.4. Etablissement</H3>
+<P>Le protocole de liaison Link Control Protocol (LCP) est utilisé pour établir la connexion grâce à l'échange de paquets de Configuration. Cet échange est totalement résolu, et l'automate LCP entre dans l'état Ouvert, lorsque des paquets d'acquittement <I>Configuration-Acquittée</I> (décrits plus loin) ont été reçus des deux côtés.
+<P>Toutes les options de Configuration sont supposées être à leur valeur par défaut avant d'être modifiées par l'échange de configuration. Voir le chapitre sur les options de configuration LCP pour plus de détails.
+<P>Il est important de noter que seules les options de configuration indépendantes de tout protocole réseau sont  configurées par LCP. La configuration de chacun des protocoles réseau est réalisée via des protocoles Network Control Protocols (NCPs) spécifiques durant la phase de configuration réseau. Tout paquet non-LCP reçu pendant cette phase DOIT être ignoré.
+<P>La réception d'une requête pour configuration LCP provoque un retour à l'état d'établissement de liaison à partir de l'état de configuration réseau ou de la phase d'authentification.
+<A NAME="3.5"></A>
+<H3>3.5. Authentification</H3>
+<P>Sur certaines liaisons il peut être pertinent d'imposer une authentification du correspondant avant de permettre toute négociation protocolaire au niveau réseau.
+<P>Par défaut, l'authentification n'est pas demandée. Lorsqu'une implémentation impose que le correspondant s'authentifie à l'aide d'un protocole d'authentification particulier, alors il DOIT explicitement demander l'usage de ce protocole d'authentification pendant la phase d'établissement de la liaison.
+<P>L'authentification DEVRAIT être faite le plus tôt possible après la conclusion de la phase d'établissement. La détermination de la qualité de la liaison POURRA être réalisée dans le même temps. Toutefois, une implémentation correcte NE DOIT PAS permettre un échange de paquets de mesure de la qualité de liaison, dans le but de retarder indéfiniment le processus d'authentification.
+<P>Le passage de la phase d'authentification à la phase de négociation de protocole réseau NE DOIT PAS être accepté avant que l'authentification n'ait abouti avec succès. Si l'authentification échoue, l'authentificateur DEVRAIT plutôt entamer une phase de fermeture de liaison.
+<P>Les paquets LCP, d'authentification, et de mesure de qualité de liaison sont les seuls autorisés pendant cette phase. Tout autre forme de paquet DOIT être ignoré.
+<H4>Notes d'implémentation :</H4>
+<P>Une implémentation NE DOIT PAS faire échouer un processus d'authentification sur une simple temporisation ou une absence de réponse. L'authentification DEVRAIT permettre un certain nombre de tentatives, et ne conclure à un échec seulement lorsque le nombre de tentatives maximum est "consommé".
+<P>C'est dans tous les cas l'implémentation qui a refusé d'authentifier son correspondant qui doit entamer la phase de fermeture de liaison.
+<A NAME="3.6"></A>
+<H3>3.6. Phase de négociation réseau</H3>
+<P>Une fois que PPP a achevé les procédures précédentes, chaque protocole réseau (tels qu'IP, IPX, ou AppleTalk) DOIT être configuré séparément via un protocole Network Control Protocol (NCP). Chaque NCP DEVRAIT pouvoir être Ouvert et Fermé à tout moment.
+<H4>Notes d'implémentation :</H4>
+<P>Comme il se peut que certaines implémentations demandent un temps non négligeable pour mesurer la qualité de liaison, les modules PPP DEVRAIENT éviter l'utilisation de temporisations à durée fixe entre la fin de l'authentification et le début d'une négociation NCP.
+<P>Lorsqu'un NCP atteint l'état Ouvert, la liaison PPP est alors prête à véhiculer les paquets du protocole réseau associé. Tout paquet dans un protocole géré par NCPs arrivant alors que le NCP associé (ou associable) est en état fermé doit être ignoré.
+<P>Lorsque le LCP est dans son état ouvert, tout paquet protocolaire non supporté par l'implémentation DOIT être retourné à l'émetteur dans un paquet Protocole-Rejeté (décrit plus loin). Seuls les protocoles gérés (mais de NCP fermés) sont ignorés.
+<P>Dans cet état, le trafic sur le lien est composé de toute combinaison de paquets LCP, NCP, et datagrammes réseau.
+<A NAME="3.7"></A>
+<H3>3.7. Fermeture de liaison</H3>
+<P>PPP peut fermer la liaison à tout moment. Ceci peut survenir suite à une perte de porteuse, l'échec d'une authentification, la détection d'une qualité de liaison insuffisante, la chute d'une temporisation d'attente, ou la fermeture de la liaison du fait d'une décision humaine.
+<P>Le protocole LCP est utilisé pour procéder à la clôture de la liaison par l'échange de paquets de Clôture. Lors de la fermeture, PPP en informe tout d'abord les couches réseau afin que ces dernières puissent prendre leurs dispositions.
+<P>Après l'échange des paquets de Clôture, l'implémentation DEVRAIT signaler à la couche physique de procéder à la déconnexion physique, particulièrement utile dans le cas de l'échec d'une authentification. L'émetteur d'une Requête pour Clôture DEVRAIT se déconnecter juste après avoir reçu un acquittement de Clôture, ou au plus tard après que la temporisation de Reprise soit écoulée. Le récepteur d'une Requête pour Clôture DEVRAIT attendre la déconnexion du correspondant, et NE DOIT PAS se déconnecter pendant au moins la durée d'une temporisation de Reprise comptée à partir de l'émission de l'acquittement de Clôture. PPP DEVRAIT passer en état "Link Dead".
+<P>Tout paquet autre que LCP reçu durant cette phase DOIT être ignoré.
+<H4>Note d'implémentation :</H4>
+<P>La fermeture d'une liaison par LCP est suffisante. Les différents NCP actifs n'ont pas l'obligation d'envoyer chacun leur salve de paquets de clôture. Inversement, la rupture d'une communication réseau par un NCP n'est pas une raison suffisante pour la coupure de la liaison PPP, même s'il s'agit du dernier NCP actif sur la liaison.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-02.htm">Précédent</A> - <A HREF="1661-04.htm">Suivant</A></BODY></HTML>
+

@@ -1,0 +1,130 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry G. FREMAUX</A> Ing&eacute;nieur Professeur / <A HREF="http://www.eisti.fr">EISTI</A><BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">Table des Matières</FONT></H2>
+
+<P><A HREF="1945-0.htm">Avant Propos</A><BR>
+
+<P>
+<OL><LI><A HREF="1945-1.htm">Introduction</A>
+<OL><LI><A HREF="1945-1.htm#1-1">Objectif</A>
+<LI><A HREF="1945-1.htm#1-2">Terminologie</A>
+<LI><A HREF="1945-1.htm#1-3">Fonctionnement global</A>
+<LI><A HREF="1945-1.htm#1-4">HTTP et MIME</A></OL>
+<LI><A HREF="1945-2.htm">Conventions de notation et Grammaire générique</A>
+<OL><LI><A HREF="1945-2.htm#2-1">BNF étendue</A>
+<LI> <A HREF="1945-2.htm#2-2">Règles de base</A></OL>
+<LI> <A HREF="1945-3.htm">Paramètres du protocole</A>
+<OL><LI> <A HREF="1945-3.htm#3-1">Numéro de Version</A>
+<LI> <A HREF="1945-3.htm#3-2">Uniform Resource Identifiers</A>
+<OL><LI> <A HREF="1945-3.htm#3-2-1">General Syntax</A>
+<LI><A HREF="1945-3.htm#3-2-2">URL http</A></OL>
+<LI> <A HREF="1945-3.htm#3-3">Formats de temps et de date</A>
+<LI> <A HREF="1945-3.htm#3-4">Tables de caractères</A>
+<LI> <A HREF="1945-3.htm#3-5">Indication d'encodage du contenu</A>
+<LI> <A HREF="1945-3.htm#3-6">Types de média</A>
+<OL><LI> <A HREF="1945-3.htm#3-6-1">Canonisation et texte par défaut</A>
+<LI> <A HREF="1945-3.htm#3-6-2">Types multiples "multipart"</A></OL>
+<LI> <A HREF="1945-3.htm#3-7">Produits</A></OL>
+<LI>. <A HREF="1945-4.htm">Messages HTTP</A>
+<OL><LI> <A HREF="1945-4.htm#4-1">Types de messages</A>
+<LI> <A HREF="1945-4.htm#4-2">En-têtes de messages</A>
+<LI> <A HREF="1945-4.htm#4-3">En tête générale</A></OL>
+<LI> <A HREF="1945-5.htm">Request</A>
+<OL><LI> <A HREF="1945-5.htm#5-1">Request-Line</A>
+<OL><LI> <A HREF="1945-5.htm#5-1-1">Méthodes</A>
+<LI> <A HREF="1945-5.htm#5-1-2">Request-URI</A></OL>
+<LI> <A HREF="1945-5.htm#5-2">En-tête de requête</A></OL>
+<LI> <A HREF="1945-6.htm">Réponse</A>
+<OL><LI> <A HREF="1945-6.htm#6-1">Ligne d'état</A>
+<OL><LI> <A HREF="1945-6.htm#6-1-1">Code d'état et raison explicite</A></OL>
+<LI> <A HREF="1945-6.htm#6-2">En-tête de réponse</A></OL>
+<LI> <A HREF="1945-7.htm">Entités</A>
+<OL><LI> <A HREF="1945-7.htm#7-1">En-tête d'entité</A>
+<LI> <A HREF="1945-7.htm#7-2">Corps d'entité</A>
+<OL><LI> <A HREF="1945-7.htm#7-2-1">Type</A>
+<LI> <A HREF="1945-7.htm#7-2-2">Longueur</A></OL></OL>
+<LI> <A HREF="1945-8.htm">Définition des méthodes</A>
+<OL><LI> <A HREF="1945-8.htm#8-1">GET</A>
+<LI> <A HREF="1945-8.htm#8-2">HEAD</A>
+<LI> <A HREF="1945-8.htm#8-3">POST</A></OL>
+<LI> <A HREF="1945-9.htm">Définition des codes d'état</A>
+<OL><LI> <A HREF="1945-9.htm#9-1">Information 1xx</A>
+<LI> <A HREF="1945-9.htm#9-2">Succès 2xx</A>
+<UL><LI><A HREF="1945-9.htm#200">200 OK</A>
+<LI><A HREF="1945-9.htm#201">201 Créé</A>
+<LI><A HREF="1945-9.htm#202">202 Acceptée</A>
+<LI><A HREF="1945-9.htm#204">204 Pas de contenu</A></UL>
+<LI> <A HREF="1945-9.htm#9-3">Redirection 3xx</A>
+<UL><LI><A HREF="1945-9.htm#300">300 Choix multiples</A>
+<LI><A HREF="1945-9.htm#301">301 Changement d'adresse définitive</A>
+<LI><A HREF="1945-9.htm#302">302 Changement d'adresse temporaire</A>
+<LI><A HREF="1945-9.htm#304">304 Non modifié</A></UL>
+<LI> <A HREF="1945-9.htm#9-4">Erreur client 4xx</A>
+<UL><LI><A HREF="1945-9.htm#400">400 Requête incorrecte</A>
+<LI><A HREF="1945-9.htm#401">401 Non autorisé</A>
+<LI><A HREF="1945-9.htm#403">403 Interdit</A>
+<LI><A HREF="1945-9.htm#404">404 Non trouvé</A></UL>
+<LI> <A HREF="1945-9.htm#9-5">Erreur serveur 5xx</A>
+<UL><LI><A HREF="1945-9.htm#500">500 Erreur serveur interne</A>
+<LI><A HREF="1945-9.htm#501">501 Non implémenté</A>
+<LI><A HREF="1945-9.htm#502">502 Erreur de routeur</A>
+<LI><A HREF="1945-9.htm#503">503 Service indisponible</A></UL></OL>
+<LI> <A HREF="1945-10.htm">Définition des champs d'en-tête</A>
+<OL><LI> <A HREF="1945-10.htm#10-1">Allow</A>
+<LI> <A HREF="1945-10.htm#10-2">Authorization</A>
+<LI> <A HREF="1945-10.htm#10-3">Content-Encoding</A>
+<LI><A HREF="1945-10.htm#10-4">Content-Length</A>
+<LI><A HREF="1945-10.htm#10-5">Content-Type</A>
+<LI> <A HREF="1945-10.htm#10-6">Date</A>
+<LI><A HREF="1945-10.htm#10-7">Expires</A>
+<LI><A HREF="1945-10.htm#10-8">From</A>
+<LI><A HREF="1945-10.htm#10-9">If-Modified-Since</A>
+<LI><A HREF="1945-10.htm#10-10">Last-Modified</A>
+<LI><A HREF="1945-10.htm#10-11">Location</A>
+<LI><A HREF="1945-10.htm#10-12">Pragma</A>
+<LI><A HREF="1945-10.htm#10-13">Referer</A>
+<LI><A HREF="1945-10.htm#10-14">Server</A>
+<LI><A HREF="1945-10.htm#10-15">User-Agent</A>
+<LI><A HREF="1945-10.htm#10-16">WWW-Authenticate</A></OL>
+<LI> <A HREF="1945-11.htm">Authentification d'accès sous HTTP</A>
+<OL><LI><A HREF="1945-11.htm#11-1">Modèle d'authentification de base</A></OL>
+<LI><A HREF="1945-12.htm">Sécurité</A>
+<OL><LI> <A HREF="1945-12.htm#12-1">Authentification des clients</A>
+<LI><A HREF="1945-12.htm#12-2">Méthodes sûres</A>
+<LI><A HREF="1945-12.htm#12-3">Abus de l'information Server Log Information</A>
+<LI><A HREF="1945-12.htm#12-4">Transfert d'information sensible</A>
+<LI><A HREF="1945-12.htm#12-5">Attaques sur les Fichiers et Répertoires</A></OL>
+<LI><A HREF="1945-13.htm">Crédits</A>
+<LI><A HREF="1945-14.htm">Bibliographie</A>
+<LI><A HREF="1945-15.htm">Adresses des auteurs</A></OL>
+<A HREF="1945ap.htm">Appendices</A>
+<UL>A. <A HREF="1945ap.htm #A">Internet Media Type message/http</A><BR>
+B. <A HREF="1945ap.htm #B">Applications tolérantes</A><BR>
+C. <A HREF="1945ap.htm #C">Relations avec les MIME</A><BR>
+<UL>C.1 <A HREF="1945-AP.htm #C-1">Conversion vers la forme canonique</A><BR>
+C.2 <A HREF="1945ap.htm #C-2">Conversion de formats de dates</A><BR>
+C.3 <A HREF="1945ap.htm #C-3">Introduction du champ Content-Encoding</A><BR>
+C.4 <A HREF="1945ap.htm #C-4">Pas de champ Content-Transfer-Encoding</A><BR>
+C.5 <A HREF="1945ap.htm #C-5">Champs d'en-tête HTTP dans des parties de corps Multipart</A><BR></UL>
+D. <A HREF="1945ap.htm #D">Fonctions supplémentaires</A><BR>
+<UL>D.1 <A HREF="1945ap.htm #D-1">Additional Request Methods</A><BR>
+D.2 <A HREF="1945ap.htm #D-2">Définitions d'autres champs d'en-tête</A><BR></UL></UL>
+
+

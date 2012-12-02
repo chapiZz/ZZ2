@@ -1,0 +1,121 @@
+<HTML>
+<HEAD>
+<TITLE>PPP - RFC 1661 - VF
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<P>RFC: 1661<BR>
+Statut : Standard<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm" TARGET="_top">INDEX FRANCAIS</A>
+<CENTER><H1>POINT TO POINT PROTOCOL - PPP</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER> W. Simpson / Juillet 1994<BR>
+Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry G. FREMAUX</A> Ing&eacute;nieur Professeur / <A HREF="http://www.eisti.fr">EISTI</A><BR>
+Edition originale : Mai 1996 / Version FR: Janvier 1998
+<HR>
+
+<BR>Remplace: 1548
+
+<HR>
+<H2>Table des Matières</H2>
+
+<UL><LI><A HREF="1661-00.htm">Préface</A>
+<LI><A HREF="1661-01.htm">1. Introduction</A>
+<UL><UL><LI><A HREF="1661-01.htm#1.a">Encapsulation</A>
+<LI><A HREF="1661-01.htm#1.b">Protocole de contrôle de liaison (Link Control Protocol) </A>
+<LI><A HREF="1661-01.htm#1.c">Protocole de gestion réseau (Network Control Protocol) </A>
+<LI><A HREF="1661-01.htm#1.d">Configuration</A></UL>
+<LI><A HREF="1661-01.htm#1.1">1.1. Note sur la sémantique</A>
+<LI><A HREF="1661-01.htm#1.2">1.2.  Terminologie</A></UL>
+<LI><A HREF="1661-02.htm">2. Encapsulation PPP</A>
+<UL><LI><A HREF="1661-02.htm#2.b">Champ protocole</A>
+<LI><A HREF="1661-02.htm#2.c">Champ Information</A>
+<LI><A HREF="1661-02.htm#2.d">Bourrage</A></UL>
+<LI><A HREF="1661-03.htm">3. Fonctionnement d'une liaison PPP</A>
+<UL><LI><A HREF="1661-03.htm#3.1">3.1. Vue d'ensemble</A>
+<LI><A HREF="1661-03.htm#3.2">3.2. Diagramme d'états</A>
+<LI><A HREF="1661-03.htm#3.3">3.3. "Link Dead" (couche physique non prête) </A>
+<LI><A HREF="1661-03.htm#3.4">3.4. Etablissement</A>
+<LI><A HREF="1661-03.htm#3.5">3.5. Authentification</A>
+<LI><A HREF="1661-03.htm#3.6">3.6. Phase de négociation réseau</A>
+<LI><A HREF="1661-03.htm#3.7">3.7. Fermeture de liaison</A></UL>
+<LI><A HREF="1661-04.htm">4. L'automate de négociation d'options</A>
+<UL><LI><A HREF="1661-04.htm#4.1">4.1. Table de transition d'états</A>
+<LI><A HREF="1661-04.htm#4.2">4.2. Etats</A>
+<UL><LI><A HREF="1661-04.htm#4.2.a">Initial</A>
+<LI><A HREF="1661-04.htm#4.2.b">Démarrage (Starting) </A>
+<LI><A HREF="1661-04.htm#4.2.c">Fermé (Closed</A>)
+<LI><A HREF="1661-04.htm#4.2.d">Arrêté (Stopped) </A>
+<LI><A HREF="1661-04.htm#4.2.e">Fermeture en cours (Closing) </A>
+<LI><A HREF="1661-04.htm#4.2.f">Arrêt en cours (Stopping) </A>
+<LI><A HREF="1661-04.htm#4.2.g">Connexion-demandée (Request-Sent) </A>
+<LI><A HREF="1661-04.htm#4.2.h">Connexion-Acquittée (Ack-Received) </A>
+<LI><A HREF="1661-04.htm#4.2.i">Aquittement-connexion (Ack-Sent) </A>
+<LI><A HREF="1661-04.htm#4.2.j">Ouvert (Opened) </A></UL>
+<LI><A HREF="1661-04.htm#4.3">4.3. Evénements</A>
+<UL><LI><A HREF="1661-04.htm#4.3.a">Up</A>
+<LI><A HREF="1661-04.htm#4.3.b">Down</A>
+<LI><A HREF="1661-04.htm#4.3.c">Ouverture (Open) </A>
+<LI><A HREF="1661-04.htm#4.3.d">Fermeture (Close) </A>
+<LI><A HREF="1661-04.htm#4.3.e">Temporisation (TO+,TO-)</A>
+<LI><A HREF="1661-04.htm#4.3.f">Requête-Configuration-Reçue (RCR+,RCR-)</A>
+<LI><A HREF="1661-04.htm#4.3.g">Acquitement-Configuration-Reçue (RCA) </A>
+<LI><A HREF="1661-04.htm#4.3.h">Configuration-NonAcquittée/Rejetée-Reçue (RCN) </A>
+<LI><A HREF="1661-04.htm#4.3.i">Requête-Fermeture-Reçue (RTR) </A>
+<LI><A HREF="1661-04.htm#4.3.j">Acquittement-Fermeture-Reçue (RTA) </A>
+<LI><A HREF="1661-04.htm#4.3.k">Code-Inconnu-Reçu (RUC) </A>
+<LI><A HREF="1661-04.htm#4.3.l">Code-Rejeté-Reçu, Protocole-Rejeté-Reçu (RXJ+,RXJ-)</A>
+<LI><A HREF="1661-04.htm#4.3.m">Requête-Echo-Reçu, Réponse-Echo-Reçu, Requête-Elimination-Reçu. (RXR) </A></UL>
+<LI><A HREF="1661-04.htm#4.4">4.4. Actions</A>
+<UL><LI><A HREF="1661-04.htm#4.4.a">Evénement-Illégal (-)</A>
+<LI><A HREF="1661-04.htm#4.4.b">Ouvrir (tlu) </A>
+<LI><A HREF="1661-04.htm#4.4.c">Fermer (tld) </A>
+<LI><A HREF="1661-04.htm#4.4.d">Démarrer (tls) </A>
+<LI><A HREF="1661-04.htm#4.4.e">Terminer (tlf) </A>
+<LI><A HREF="1661-04.htm#4.4.f">Init-Compteur-Reprise (irc) </A>
+<LI><A HREF="1661-04.htm#4.4.g">Zero-Compteur-Reprise (zrc) </A>
+<LI><A HREF="1661-04.htm#4.4.h">Emission-Requête-Configuration (scr) </A>
+<LI><A HREF="1661-04.htm#4.4.i">Emission-Configuration-Acquittée (sca) </A>
+<LI><A HREF="1661-04.htm#4.4.j">Emission-Configuration-NonAcquittée (scn) </A>
+<LI><A HREF="1661-04.htm#4.4.k">Emision-Requête-Fermeture (str) </A>
+<LI><A HREF="1661-04.htm#4.4.l">Emission-Fermeture-Acquittée (sta) </A>
+<LI><A HREF="1661-04.htm#4.4.m">Emission-Code-Rejeté (scj) </A>
+<LI><A HREF="1661-04.htm#4.4.n">Emission-Réponse-Echo (ser) </A></UL>
+<LI><A HREF="1661-04.htm#4.5">4.5. Elimination de rebouclages</A>
+<LI><A HREF="1661-04.htm#4.6">4.6. Compteurs et Temporisations</A>
+<UL><LI><A HREF="1661-04.htm#4.6.a">Temporisation de Reprise</A>
+<LI><A HREF="1661-04.htm#4.6.b">Max-Fermeture</A>
+<LI><A HREF="1661-04.htm#4.6.c">Max-Configuration</A>
+<LI><A HREF="1661-04.htm#4.6.d">Max-Echec</A></UL></UL>
+<LI><A HREF="1661-05.htm">5. Formats de paquets LCP</A>
+<UL><UL><LI><A HREF="1661-05.htm#5.a">Code</A>
+<LI><A HREF="1661-05.htm#5.b">Identificateur</A>
+<LI><A HREF="1661-05.htm#5.c">Longueur</A>
+<LI><A HREF="1661-05.htm#5.d">Données</A></UL>
+<LI><A HREF="1661-05.htm#5.1">5.1. Requête-Configuration</A>
+<LI><A HREF="1661-05.htm#5.2">5.2. Configuration-Acquittée</A>
+<LI><A HREF="1661-05.htm#5.3">5.3. Configuration-NonAcquittée</A>
+<LI><A HREF="1661-05.htm#5.4">5.4. Configuration-Rejetée</A>
+<LI><A HREF="1661-05.htm#5.5">5.5. Requête-Fermeture et Fermeture-Acquittée</A>
+<LI><A HREF="1661-05.htm#5.6">5.6. Code-Rejeté</A>
+<LI><A HREF="1661-05.htm#5.7">5.7. Protocole-Rejeté</A>
+<LI><A HREF="1661-05.htm#5.8">5.8. Requête-Echo et Réponse-Echo</A>
+<LI><A HREF="1661-05.htm#5.9">5.9. Requête-Elimination</A></UL>
+<LI><A HREF="1661-06.htm#6">6. Options de Configuration LCP</A>
+<UL><UL><LI><A HREF="1661-06.htm#6.a">Philosophie</A>
+<LI><A HREF="1661-06.htm#6.b">Type</A>
+<LI><A HREF="1661-06.htm#6.c">Longueur</A>
+<LI><A HREF="1661-06.htm#6.d">Données</A></UL>
+<LI><A HREF="1661-06.htm#6.1">6.1. Unité-Réception-Maximale (URM) </A>
+<LI><A HREF="1661-06.htm#6.2">6.2. Protocole-Authentification</A>
+<LI><A HREF="1661-06.htm#6.3">6.3. Protocole-Qualité</A>
+<LI><A HREF="1661-06.htm#6.4">6.4. Nombres-Magiques</A>
+<LI><A HREF="1661-06.htm#6.5">6.5. Compression-Champ-Protocole (PFC) </A>
+<LI><A HREF="1661-06.htm#6.6">6.6. Compression-Adresse-et-Contrôles (ACFC) </A></UL>
+<LI><A HREF="1661ap.htm#AP1">Considérations sécuritaires</A>
+<LI><A HREF="1661ap.htm#AP2">Références</A>
+<LI><A HREF="1661ap.htm#AP3">Remerciements</A>
+<LI><A HREF="1661ap.htm#AP4">Contact</A></UL>
+

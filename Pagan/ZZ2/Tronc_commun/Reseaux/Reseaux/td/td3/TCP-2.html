@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+ <TITLE>Etude d'un protocole fiable : TCP (2)</TITLE>
+ <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY>
+<H1>Etude d'un protocole fiable : TCP</H1>
+<P ALIGN=right>
+<I><A HREF="mailto:laurenco@isima.fr">Patrice Laurencot</A>
+<!--#config timefmt="%d/%m/%Y"--><!--#flastmod  virtual="$DOCUMENT_URI" --></I></P>
+
+<H2>2 - La connexion-TCP</H2>
+<HR>
+
+<H3>Connexion-TCP et identification de connexion-TCP</H3>
+
+	<BLOCKQUOTE>
+	<P>Une connexion-TCP est un canal bi-directionnel (2 tuyaux)
+	construit entre 2 entités d'application (c'est à dire processus).</P>
+	<CENTER><IMG SRC="connexion-TCP.gif" ALT="les tuyaux" WIDTH="478" HEIGHT="231"></CENTER>
+    <P>Chaque connexion-TCP est entièrement identifiée par les adresses des TCP-SAP de ses deux extrémités.<BR>
+    L'adresse d'un TCP-SAP est composée de :</P>
+    <UL>
+    <LI><B>l'adresse-IP du système</B> qui le contient</LI>
+    <LI><B>"tcp"</B> implicite</LI>
+    <LI><B>un numéro de port</B>, qui peut être bien connu ou enregistré (<A HREF="./port-numbers">liste</A>), 
+        ou bien privé.
+    </UL>
+    <DL>
+	<DT><SPAN CLASS="exercice">Exercice 1</SPAN></DT>
+		<DD>Afficher la liste des connexions-TCP actuellement établies 
+        (ESTABLISHED dans colonne "state") sur le 
+		système, par la commande : <br>
+        <TT>&nbsp;&nbsp;&nbsp;&nbsp;netstat -an | grep ^tcp |grep ESTABLISHED | more</TT><BR>
+        ou<br>
+        <TT>&nbsp;&nbsp;&nbsp;&nbsp;netstat -a | grep ^tcp |grep ESTABLISHED | more</TT><BR>
+		Combien y en a-t-il ?</DD>
+	<DT><BR><SPAN CLASS="exercice">Exercice 2</SPAN></DT>
+		<DD>Recherchez maintenant les connections en attente "LISTEN":
+		<UL STYLE="list-style:none">
+		<LI>Pour quelle application est construite chaque connexion ?
+            (chercher n°port dans la <A HREF="./port-numbers">liste</A>)</LI>
+		</UL></DD>
+	</DL>
+</BLOCKQUOTE>
+
+<H3>Etablissement de connexion-TCP</H3>
+
+<BR>
+
+	<BLOCKQUOTE>
+	<P>L'<B>établissement de connexion</B> est réalisé par l'échange de 3 PDU-TCP entre
+	les entités-TCP : </P>
+	<CENTER><IMG SRC="TCP-connect.gif" ALT="chronogramme connexion TCP" WIDTH="708" HEIGHT="258"></CENTER>
+	
+	<P>La 1<SUP>ère</SUP> est caractérisée par le flag <TT>SYN</TT>, la 2<SUP>ème</SUP> par les flags <TT>SYN</TT> et <TT>ACK</TT>, 
+	et la 3<SUP>ème</SUP> par le seul flag <TT>ACK</TT>.</P>
+	<P>La 1<SUP>ère</SUP> PDU-TCP envoyée par chaque entité-TCP (flag <TT>SYN)</TT> contient dans son champ <TT>seq</TT> le numéro après duquel 
+	elle numérotera les PDU-TCP-données qu'elle émettra.<BR>
+	La 2<SUP>ème</SUP> PDU-TCP envoyée par chaque entité-TCP  (flag <TT>ACK</TT>) contient dans son champ <TT>ack</TT> le numéro que devra contenir 
+	la prochaine PDU-TCP-données qu'elle recevra.</P>
+
+    <DL>
+	<DT><SPAN CLASS="exercice">Exercice 3</SPAN></DT>
+		<DD>Le fichier <A HREF="tcp-trace.html"><TT>tcp-trace.html</TT></A> contient la trace partiellement commentée des PDU échangées entre 
+			2 systèmes lors d'une session FTP.</DD>
+		<DD>Examiner les échanges 6, 7 et 8 de la phase d'établissement de 
+			connexion-TCP entre les TCP-SAP <TT>193.54.51.67/1058</TT> et 
+		<TT>193.54.51.1/21</TT>.<BR>
+		Rechercher les autres tentatives d'établissement de connexion TCP.</DD>
+	</DL>
+
+	</BLOCKQUOTE>
+
+
+<H3>Terminaison de connexion-TCP</H3>
+
+
+	<BLOCKQUOTE>
+	<P>La <B>terminaison normale</B> de connexion se fait par l'échange de 2 PDU-TCP dans chaque sens; la 1<SUP>ère</SUP> PDU de 
+	chacune de ces 2 paires est caractérisée par le flag <TT>FIN</TT>.<BR>
+	Une <B>terminaison brutale</B> est possible, en envoyant une seule PDU avec le flag <TT>RST</TT>.</P>
+	<CENTER><IMG SRC="TCP-term.gif" ALT="chronogrammes terminaisons" WIDTH="644" HEIGHT="257"></CENTER>
+	
+    <DL>
+	<DT><BR><SPAN CLASS="exercice">Exercice 4</SPAN></DT>
+		<DD>Examiner dans <A HREF="tcp-trace.html"><TT>tcp-trace.html</TT></A> 
+			la terminaison normale de la connexion-TCP d'identificateur 
+			<TT>193.54.51.67/1058</TT>-	<TT>193.54.51.1/21</TT>, dans les PDU
+			n° 248 à 251.</DD>
+	<DT><SPAN CLASS="exercice">Exercice 5</SPAN></DT>
+		<DD>Chercher dans  <A HREF="tcp-trace.html"><TT>tcp-trace.html</TT></A> 
+		d'autres terminaisons de connexion normales ou de connexion brutales.</DD>
+		<DD></DD>
+	</DL>
+	</BLOCKQUOTE>
+
+
+<P ALIGN=right><A HREF="TCP-3.html">Suite...<IMG SRC="./ArrowRight.gif" ALT="suite" WIDTH="20" HEIGHT="20" BORDER="0"></A></P>
+<HR>
+
+</BODY>
+</HTML>

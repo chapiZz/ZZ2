@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+	<TITLE>Etudes de couches de niveau MAC</TITLE>
+	<LINK HREF="reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR=white>
+
+<H1>Etude de couches de niveau MAC</H1>
+
+<P ALIGN=right>
+<SMALL><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>
+2001-2002</I></SMALL></P>
+<P>Référence : <A HREF="../../transparents/2/t-2.5.1b.png">pile de protocoles</A> 
+(extrait de cours : <A HREF="../../cours/reseaux-02.html">chapitre 2</A>, 
+<A HREF="../../cours/reseaux-05-MAC.html">chapitre 5</A>,
+<A HREF="../../transparents/index.html">transparents</A>)</P>
+<HR>
+<P>Les couches MAC étudiées ici (Ethernet-II, IEEE-802.3) sont celles 
+utilisées par les systèmes du campus des Cézeaux.</P>
+<P>L'étude est illustrée à l'aide d'un fichier résultat d'une écoute de 23 
+secondes du câble du CUST, période pendant laquelle
+1193 PDU-MAC ont été observées.</P>
+	<BLOCKQUOTE>
+	<P>Le fichier <TT>complet.html</TT> contient la totalité 
+	des PDU observées. (<SPAN CLASS="a-verifier">ne pas imprimer ce fichier de plus de 20000 lignes</SPAN>)</P>
+	<P>	Le fichier <TT>extrait.html</TT> contient 
+	14 PDU-MAC extraites d'une liste de PDU-MAC qui ont été observées sur le câble.<BR>
+	Les 3 premières PDU de cette liste sont interprétées.</P>
+	</BLOCKQUOTE>
+<HR>
+<OL>
+<LI><DL>
+	<DT><B>Que voit-on passer sur le câble ?</B><BR>
+        Interpréter les PDU du fichier <A HREF="../TRACES/extrait.html"><TT>extrait.html</TT></A>, avec l'aide<BR><BR></DT>
+	<DD>de la <A HREF="ether_pdu.html">description des PDU-MAC</A>,</DD>
+	<DD>de la <A HREF="../../doc/ieee/ieee-oui.html">liste des OUI</A> (<I>Organizationally Unique Identifier</I>) des fabricants de cartes Ethernet,</DD>
+	<DD>de la <A HREF="../../doc/rfc1700/rfc1700-ethernet_multicast_addresses.html">liste des adresses de groupe</A> (<I>multicast</I>),</DD>
+	<DD>de la <A HREF="../../doc/rfc1700/rfc1700-ether_types.html">liste des valeurs</A> du champ <TT>type</TT> des PDU-Ethernet.</DD>
+	</DL>
+	<BR>
+</LI>
+<LI><B>Quels sont les utilisateurs de la couche Ethernet II ?</B><BR>
+    Examiner le fichier <A HREF="../TRACES/complet.html"><TT>complet.html</TT></A> pour r&eacute;pondre aux questions suivantes :<BR>
+	<BR>
+	<UL TYPE=disc>
+	<LI><P>recenser les couches auxquelles appartiennent les PDU transmises par la couche Ethernet II<BR>
+		<SMALL>Note : les commandes <TT>grep</TT> et <TT>sort</TT> peuvent faciliter la recherche</SMALL></P></LI>
+	<LI><P>quelles sont les couches (au dessus d'une couche MAC) qui utilisent la diffusion g&eacute;n&eacute;rale (<I>broadcast</I>) ?</P></LI>
+	<LI><P>quelles sont les couches (au dessus d'une couche MAC) qui utilisent la diffusion de groupe (<I>multicast</I>) ? <BR>
+		quels sont les identificateurs de ces groupes ?</P></LI>
+	</UL>
+</LI>
+</OL>
+<HR>
+
+</BODY></HTML>

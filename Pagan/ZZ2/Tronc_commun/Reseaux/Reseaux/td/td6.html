@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+	<TITLE>NFS</TITLE>
+	<LINK HREF="../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+
+<H1>Partage de fichiers par NFS</H1>
+<P ALIGN="RIGHT"><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>
+1999-2000</I></P>
+
+<HR>
+<H2>1 - Le PC client-NFS du serveur-NFS <SPAN STYLE="font-family:monospace">se1</SPAN></H2>
+	<BLOCKQUOTE>
+	<P><U>Documentation Linux</U> : mount(8), nfs(5), NFS-HOWTO (4:installer un client-NFS, 6:NFS et la s&eacute;curit&eacute;)<BR>
+	<U>Documentation AIX</U> : exports, showmount, mountd</P>
+	Le syst&egrave;me <TT>se1</TT> exporte le r&eacute;pertoire <TT>/isim2</TT>.
+	<OL>
+	<LI><P>Trouver sur <TT>se1</TT> les param&egrave;tres d'exportation de ce r&eacute;pertoire.<BR>
+		(commande <TT>showmount</TT>, et examen du fichier <TT>exports</TT>de <TT>se1</TT>)</P></LI>
+	<LI><P>Monter le r&eacute;pertoire sur le PC au point de montage <TT>/mnt/se1</TT> (à créer)<BR>
+		Quelle est la commande de montage manuelle ?<BR><A HREF="file:/usr/doc/HOWTO/fr/html/NFS-HOWTO-4.html"></A>
+		Que faudrait-il faire pour un montage syst&eacute;matique au d&eacute;marrage du PC ?<BR>
+		Comment am&eacute;liorer la s&eacute;curit&eacute; du client-NFS ?</P></LI>
+	<LI><P>Quels sont les droits en lecture et &eacute;criture du super-utilisateur dans le r&eacute;pertoire et ses sous-r&eacute;pertoires ?<BR>
+		Quels sont les droits d'un utilisateur ? <BR>
+		Peut-on les contourner ? Si oui, comment ?</P></LI>
+	<LI><P>D&eacute;monter le r&eacute;pertoire.</P></LI>
+	</OL>
+	</BLOCKQUOTE>
+
+<H2>2 - Partage de fichiers entre 2 PC</H2>
+	<BLOCKQUOTE>
+	Cette 2<SUP>&egrave;me</SUP> partie doit se faire &agrave; l'aide de 2 PC, o&ugrave; chacun sera client et serveur-NFS de l'autre.
+	</BLOCKQUOTE>
+<H3>2.1 - Configurer un serveur-NFS</H3>
+	<BLOCKQUOTE>
+	<P><U>Documentation Linux</U> : mountd(8), nfsd(8), exports(5), NFS-HOWTO (3:installer un serveur-NFS, 6:NFS et la s&eacute;curit&eacute;)</P>
+	<OL>
+	<LI><P>D&eacute;crire dans le fichier <TT>/etc/exports</TT> les r&eacute;pertoires &agrave; exporter :<BR>
+		- le r&eacute;pertoire des utilisateurs, avec les droits en lecture et &eacute;criture, pour les PC seulement,<BR>
+		- le r&eacute;pertoire /usr/local, en lecture seule, pour l'autre PC,<BR>
+		- tout autre r&eacute;pertoire au choix.</P></LI>
+	<LI><P>Avertir les d&eacute;mons de montage-NFS (<TT>mountd</TT>) et de service-NFS (<TT>nfsd</TT>) que la liste de r&eacute;pertoires export&eacute;s
+		a &eacute;t&eacute; modifi&eacute;, par <TT>kill -HUP <I>pid</I></TT></P></LI>
+	<LI><P>V&eacute;rifier que l'op&eacute;ration a r&eacute;ussie par <TT>showmount -e</TT></P></LI>
+	</OL>
+	Par la suite, v&eacute;rifier les r&eacute;pertoires import&eacute;s par <TT>showmount -a</TT>.
+	</BLOCKQUOTE>
+
+<H3>2.2 - Configurer le client-NFS</H3>
+	<BLOCKQUOTE>
+	<P><U>Documentation Linux</U> : mount(8), nfs(5), NFS-HOWTO (4:installer un client-NFS, 6:NFS et la s&eacute;curit&eacute;)</P>
+	<OL>
+	<LI>chercher les r&eacute;pertoires export&eacute;s par l'autre PC par <TT>showmount -e <I>PC</I></TT></LI>
+	<LI>Pour chaque r&eacute;pertoire &agrave; monter : cr&eacute;er un sous-r&eacute;pertoire dans <TT>/mnt</TT>, et faire le montage, manuel ou par <TT>/etc/fstab</TT></LI>
+	</OL>
+	</BLOCKQUOTE>
+
+<H2>3 - Extension du partage aux autres PC</H2>
+	
+	<BLOCKQUOTE>
+	Chaque serveur-NFS autorise tous les autres PC &agrave; importer ses r&eacute;pertoires.<BR>
+	Chaque client-NFS effectue le montage d'au moins un r&eacute;pertoire des autres PC.
+	</BLOCKQUOTE>
+	
+
+<HR>
+
+<H2>En cas de probl&egrave;mes</H2>
+	<OL>
+	<LI><P>v&eacute;rifier que le portmapper fonctionne sur les syst&egrave;mes concern&eacute;s par <TT>rpcinfo -p <I>syst&egrave;me</I></TT>.<BR>
+		s'il ne fonctionne pas sur un syst&egrave;me, il faut sur ce syst&egrave;me :</P>
+		<OL>
+		<LI>arr&ecirc;ter les d&eacute;mons-NFS, par <TT>/etc/rc.d/init.d/nfs stop</TT></LI>
+		<LI>lancer le portmapper, par <TT>/etc/rc.d/init.d/portmap start</TT></LI>
+		<LI>relancer les d&eacute;mons-NFS, par <TT>/etc/rc.d/init.d/nfs start</TT></LI>
+		</OL><P></P>
+	<LI><P>v&eacute;rifier que les d&eacute;mons-NFS fonctionnent; si ce n'est pas le cas, les lancer.</P></LI>
+	<LI><P>si tous les d&eacute;mons fonctionnent, il y a vraisemblablement une erreur dans le fichier <TT>/etc/exports</TT>.<BR>
+		corriger l'erreur, arr&ecirc;ter et relancer les d&eacute;mons-NFS</P></LI>
+	</OL>
+
+<HR>
+</BODY></HTML>

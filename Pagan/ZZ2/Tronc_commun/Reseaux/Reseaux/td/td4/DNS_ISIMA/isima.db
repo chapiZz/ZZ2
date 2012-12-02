@@ -1,0 +1,131 @@
+;
+; Data file of hostnames in this zone.
+;
+@    IN    SOA    sp.isima.fr. postmaster.isima.fr. (
+	 	   2006060844	; Serial
+			21600	; Refresh - 6 heures
+			3600	; Retry - 1 heure
+			604800	; Expire - 1 semaine
+			86400 )	; Minimum - 24 hours
+;
+    IN    NS    sp.isima.fr.
+    IN    NS    ns2.nic.fr.
+;
+    IN    MX    0	sp.isima.fr.
+garp	IN	MX	0	gargamel.isima.fr.
+artalis.net	IN	MX	10	artalis0.isima.fr.
+artalis.fr	IN	MX	10	artalis0.isima.fr.
+;
+loopback	IN	A	127.0.0.1	; loopback (lo0) name/address
+localhost	IN	CNAME	loopback
+sp		IN	A	193.55.95.1
+                IN	MX		0	sp.isima.fr.
+isima		IN	CNAME	sp
+;
+;  Liste des machines du domaine  isima.fr
+;
+
+iris		IN	A	193.55.95.4
+mad3		IN	A	193.55.95.5
+cosi2005	IN	A	193.55.95.7
+cosi		IN	CNAME	cosi2005
+guiers		IN	A	193.55.95.8
+bermudes        IN      A       193.55.95.9
+visio		IN	A	193.55.95.10
+liszt           IN      A       193.55.95.11
+aurora		IN	A	193.55.95.12
+kiux		IN	A	193.55.95.13
+vert            IN      A       193.55.95.14
+ziad		IN	A	193.55.95.15
+tims		IN	A	193.55.95.20
+servicemosaic	IN	A	193.55.95.21
+testmail	IN	A	193.55.95.22
+acappella	IN	A	193.55.95.23
+aures           IN      A       193.55.95.25
+david		IN	A	193.55.95.26
+ibimy		IN	A	193.55.95.29
+keyfox          IN      A       193.55.95.30
+gargamel        IN      A       193.55.95.31
+garp            IN      A       193.55.95.32
+mowgli		IN	A	193.55.95.34
+d104		IN	A	193.55.95.35
+biolpc03	IN	A	193.55.95.36
+debian		IN	A	193.55.95.37
+aurelie         IN      A       193.55.95.38
+erdos		IN	A	193.55.95.41
+asti2005	IN	A	193.55.95.42
+asti		IN	CNAME asti2005
+mathieu		IN	A	193.55.95.47
+kmh3		IN	A	193.55.95.53
+nostradamus	IN	A	193.55.95.56
+lefuneste	IN	A	193.55.95.57
+biostudent	IN	A	193.55.95.58
+elo		IN	A	193.55.95.59
+fc              IN      A       193.55.95.60
+arbuste         IN      A       193.55.95.62
+base		IN	A	193.55.95.64
+txhpcg          IN      A       193.55.95.65
+tchernev	IN	A	193.55.95.66
+Mesnard         IN      A       193.55.95.68
+smir	        IN      A       193.55.95.69
+asusy		IN	A	193.55.95.73
+hyperp          IN      A       193.55.95.78
+www             IN      A       193.55.95.79
+web		IN	CNAME	www
+chris		IN	A	193.55.95.83
+pchazal         IN      A       193.55.95.86
+daniel          IN      A       193.55.95.87
+veneon          IN      A       193.55.95.88
+eyrieux         IN      A       193.55.95.89
+claude          IN      A       193.55.95.90
+rose            IN      A       193.55.95.94
+perrot		IN	A	193.55.95.95
+romanche        IN      A       193.55.95.98
+pcbiblio        IN      A       193.55.95.104
+guil		IN	A	193.55.95.105
+quilliot	IN	A	193.55.95.106
+lpcziad		IN	A	193.55.95.108
+frog		IN      A       193.55.95.111
+anelis		IN	A	193.55.95.112
+isa             IN      A       193.55.95.117
+profcirc	IN	A	193.55.95.118
+libd1		IN	A	193.55.95.119
+ChristF         IN      A       193.55.95.120
+myriam		IN	A	193.55.95.122
+libd2		IN	A	193.55.95.125
+poste		IN	A	193.55.95.131
+nst141          IN      A       193.55.95.141
+nst142          IN      A       193.55.95.142
+nst143          IN      A       193.55.95.143
+nst144          IN      A       193.55.95.144
+nst145          IN      A       193.55.95.145
+nst146          IN      A       193.55.95.146
+nst147          IN      A       193.55.95.147
+nst148		IN	A	193.55.95.148
+bdlimos		IN	A	193.55.95.150
+pc157		IN	A	193.55.95.157
+pc158		IN	A	193.55.95.158
+pc160		IN	A	193.55.95.160
+pc161		IN	A	193.55.95.161
+lagrange	IN	A	193.55.95.173
+penarbed	IN	A	193.55.95.174
+hilbert		IN	A	193.55.95.175
+pascal		IN	A	193.55.95.176
+fourier		IN	A	193.55.95.178
+wolfe           IN      A       193.55.95.179
+lorinquer	IN	A	193.55.95.181
+margaux		IN	A	193.55.95.182
+solu1		IN	A	193.55.95.183
+solu4		IN	A	193.55.95.186
+berry		IN	A	193.55.95.187
+lachesis	IN	A	193.55.95.188
+infopc2		IN	A	193.55.95.189
+fulkerson	IN	A	193.55.95.190
+turing		IN	A	193.55.95.191
+dantzig		IN	A	193.55.95.192
+epoc		IN	A	193.55.95.195
+artalis0	IN	A	193.55.95.210
+artalis1        IN      A       193.55.95.211
+artalis2        IN      A       193.55.95.212
+chef2           IN      A       193.55.95.242
+;

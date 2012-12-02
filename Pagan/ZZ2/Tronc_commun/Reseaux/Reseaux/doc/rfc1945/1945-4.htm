@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">4. Messages HTTP</FONT></H2>
+<A NAME="4-1"></A>
+<H3>4.1 Types de messages</H3>
+<P>Les messages HTTP consistent en des requêtes émises par un utilisateur à destination d'un serveur, ou d'une réponse d'un serveur au destinataire.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+HTTP-message     = Requête_simple        ; HTTP/0.9 messages
+                 | Réponse_simple
+                 | Requête_complète      ; HTTP/1.0 messages
+                 | Réponse_complète</PRE></CODE></FONT>
+
+<P>Les requêtes et réponses "complètes" utilisent le format de message défini dans la RFC 822 [7] concernant la transmission d'entités. Ces deux messages peuvent contenir une en-tête optionnelle ainsi que le corps de l'entité. Le corps et l'en-tête de l'entité sont séparés par une ligne vide (soit une séquence CRLFCRLF).
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Requête_complète   = Ligne_requête           ; <A HREF="1945-5.htm#5-1">Section 5.1</A>
+                   *( En-tête_générale       ; <A HREF="1945-4.htm#4-3">Section 4.3</A>
+                   | En-tête_requête         ; <A HREF="1945-5.htm#5-2">Section 5.2</A>
+                   | En-tête_entité )        ; <A HREF="1945-7.htm#7-1">Section 7.1</A>
+                   CRLF
+                   [ Corps_entité ]          ; <A HREF="1945-7.htm#7-2">Section 7.2</A> </PRE></CODE>
+
+<P><CODE><PRE>
+Réponse_complète    = Ligne-état             ; <A HREF="1945-6.htm#6-1">Section 6.1</A>
+                    *( En-tête_générale      ; <A HREF="1945-4.htm#4-3">Section 4.3</A>
+                    | En-tête_réponse        ; <A HREF="1945-6.htm#6-2">Section 6.2</A>
+                    | En-tête_entité )       ; <A HREF="1945-7.htm#7-1">Section 7.1</A>
+                    CRLF
+                    [ Corps_entité ]         ; <A HREF="1945-7.htm#7-2">Section 7.2</A> </PRE></CODE></FONT>
+
+<P>Les requête et réponse simple ne transportent jamais d'en-tête. Une seule requête est de ce type : GET.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+Requête_simple         = "GET" SP URI-visée CRLF
+
+Réponse_simple         = [ Corps_entité ]</PRE></CODE></FONT>
+
+<P>L'usage des requêtes simples reste déconseillé, car il ne permet pas au serveur de définir le type de média dans sa réponse.
+
+<A NAME="4-2"></A>
+<H3>4.2 En-têtes de messages</H3>
+<P>Les champs d'en-têtes HTTP, dont l'<I>en-tête_générale</I> (<A HREF="1945-4.htm#4-3">Section 4.3</A>), l'<I>en-tête_requête</I> (<A HREF="1945-5.htm#5-2">Section 5.2</A>), L'<I>en-tête_réponse</I> (<A HREF="1945-6.htm#6-2">Section 6.2</A>), et l'<I>en-tête_entité</I> (<A HREF="1945-7.htm#7-1">Section 7.1</A>), ont tous le même format générique décrit dans le paragraphe 3.1 de la RFC 822 [7]. Chaque champ d'en-tête consiste en un nom suivi immédiatement d'un deux-points (":"), un espace (SP), et la valeur du paramètre. Les noms de champs sont insensibles à la casse. Les champs d'en-tête peuvent être écrits sur plusieurs lignes, à condition que le premier caractères des lignes suivantes soit SP ou HT. Cette pratique reste cependant déconseillée.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+HTTP-header        = nom ":" SP [ valeur ] CRLF
+
+nom                = <I>nom_de_champ</I>
+valeur             = *( contenu | LWS )
+
+contenu            = [les OCTETs décrivant la valeur, pouvant 
+                     être un *TEXT ou combinaison de noms,
+                     caractères spéciaux, et chaînes entre 
+                     guillemets]</PRE></CODE></FONT>
+
+<P>L'ordre dans lequel les champs d'en-tête sont reçus n'a pas d'importance. Une "bonne habitude" consistera toutefois à envoyer les champs d'en-tête_générale en premier, suivi des champs d'en-tête_requête ou d'en-tête_réponse, puis enfin les champs d'en-tête_entité.
+<P>Lorsque plusieurs champs de même nom doivent être définis avec des valeurs différentes, celles-ci doivent apparaître comme une liste séparée par des virgules [#(values)]. Il doit être possible de combiner cette définition multiple à partir des paires individuelles "nom: valeur", sans changer la sémantique du message, en ajoutant chaque valeur à la suite de la première, en utilisant une virgule comme séparateur.
+<A NAME="4-3"></A>
+<H3>4.3 En tête générale</H3>
+<P>Certains champs d'en-tête ont une utilité aussi bien dans des requêtes que dans des réponses, en conservant la même signification. Les informations définies dans ces champs concernent le message lui-même, et non l'entité qu'il transporte.
+
+<P><FONT COLOR="#448844"><CODE><PRE>
+General-Header          = Date            ; <A HREF="1945-10.htm#10-6">Section 10.6</A>
+                        | Pragma          ; <A HREF="1945-10.htm#10-12">Section 10.12</A> </PRE></CODE></FONT>
+
+<P>Des nouveaux noms de champs d'en-tête_générale ne peuvent être introduits que dans le cadre d'un changement de version du protocole. Cependant, de nouveaux champs ou champs expérimentaux peuvent utiliser la sémantique de champs d'en-tête_générale, à partir du moment ou les deux extrémités de la communication sont d'accord pour le faire. Tout champ non reconnu sera considéré comme un champ d'en-tête_entité.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-3.htm">Pr&eacute;c&eacute;dent</A> - <A HREF="1945-5.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+

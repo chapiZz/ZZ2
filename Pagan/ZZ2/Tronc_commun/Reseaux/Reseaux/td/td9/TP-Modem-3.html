@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+   <TITLE>TP Modem (3)</TITLE>
+   <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+   <STYLE TYPE="text/css">
+   		.bleu {color:navy}
+   		.rouge {color:red}
+   		TT {font-family:monospace; color:red; font-weight:bold}
+   </STYLE>
+</HEAD>
+<BODY BGCOLOR="#f0f0f0" TEXT="#000000" LINK="#005BCE" VLINK="#A52A2A">
+
+<TABLE WIDTH="100%">
+<TR>
+	<TD><B STYLE="font-size:larger; color:navy">TP Modem</B></TD>
+	<TD ALIGN=right>
+<I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>
+1998-1999</I>
+</TD>
+</TR>
+</TABLE>
+
+<H1>3 - Communications simples</H1>
+
+<H2>Communications manuelles</H2>
+
+
+	<BLOCKQUOTE>
+	Deux PC voisins PCA et PCB.
+	<UL>
+	<LI>PCA est appelant</LI>
+	<LI>PCB est appelé, et doit répondre (ou non) aux appels de PCA.</LI>
+	</UL>
+	</BLOCKQUOTE>
+	
+	<OL>
+	<LI><B CLASS="bleu">Réaliser une communication entre PCA et PCB en 5 &eacute;tapes</B> 
+		<OL>
+		<LI>PCA appelle PCB (commandes de base : <TT>D P T</TT>)</LI>
+		<LI>PCB répond à l'appel (commandes de base : <TT>A</TT>)</LI>
+		<LI>taper quelques caractères sur chaque clavier.</LI>
+		<LI>L'un des PC raccroche (commandes : <TT>+++ H</TT>)</LI>
+		</OL>
+		Noter les résultats renvoyés par les modems à chaque étape.<BR>
+		<BR>
+	</LI>
+	<LI><B CLASS="bleu">Recommencer la manipulation en variant les configurations</B>
+		<CENTER><TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0">
+		<TR><TD>compression </TD><TD><TT>&amp;K</TT></TD></TR>
+		<TR><TD>correction d'erreurs </TD><TD><TT>&amp;M</TT></TD></TR>
+		<TR><TD>débit </TD><TD><TT>&amp;N S27</TT></TD></TR>
+		</TABLE></CENTER>
+		Que se passe-t-il si les 2 modems sont configurés différemment ?
+	</LI>
+	</OL>
+<BR>
+<H2>Communications avec un logiciel spécialisé</H2>
+
+
+	<OL>
+	<LI><B CLASS="bleu">Faire afficher le dialogue entre le logiciel et le modem</B><BR>
+		<B CLASS="rouge">Paramètres-&gt;Modem</B>, bouton <B CLASS="rouge">Paramètres</B>, cocher <B CLASS="rouge">Montrer les commandes</B>
+		<BR><BR>
+	</LI>
+	<LI><B CLASS="bleu">Du côté appelant</B><BR>
+		<B CLASS="rouge">Connexion-&gt;Connecter par téléphone</B><BR>
+		Donner le numéro de l'appelé, et faire <B CLASS="rouge">OK</B>
+		<BR><BR>
+	</LI>
+	<LI><B CLASS="bleu">Du côté appelé</B><BR>
+		<!--<B CLASS="rouge">Connexion-&gt;Mode réponse</B>-->
+		Répondre manuellement (<TT>ATA</TT>)
+	</LI>
+	</OL>
+	<BLOCKQUOTE>Noter et interpréter le dialogue de chaque côté.</BLOCKQUOTE>
+
+<HR NOSHADE>
+</BODY>
+</HTML>

@@ -1,0 +1,136 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">Appendices</FONT></H2>
+<P>Ces appendices ont &eacute;t&eacute; ajout&eacute;s par souci d'information - Ils ne forment pas partie int&eacute;grante de la sp&eacute;cification HTTP/1.0.
+<A NAME="A"></A>
+<H3>A. Internet Media Type message/http</H3>
+<P>Outre la d&eacute;finition du protocole HTTP/1.0, ce document sert &agrave; la sp&eacute;cification de l'Internet Media Type "message/http". La sp&eacute;cification suivante est enregistr&eacute;e aupr&egrave;s de l'IANA [13].
+
+<P><CODE><PRE>
+       Media Type :                 message
+
+       Media subtype :              http
+
+       Param&egrave;tres obligatoires:     none
+
+       Param&egrave;tres optionnels:       version, msgtype
+</PRE></CODE>
+
+<TABLE><TR><TD>version:</TD><TD> Version du protocole HTTP utilis&eacute; pour le message courant (e.g., "1.0"). Si ce param&egrave;tre est absent, la version peut &ecirc;tre d&eacute;duite par analyse de la premi&egrave;re ligne du corps.</TD></TR>
+<TR><TD>msgtype:</TD><TD> Le type de message -- "request" ou "response". Si ce param&egrave;tre est absent, la version peut &ecirc;tre d&eacute;duite par analyse de la premi&egrave;re ligne du corps.</TD></TR>
+<TR><TD>Consid&eacute;rations d'encodage:</TD><TD> seulement "7bits", "8bits", ou "binary" permis</TD></TR>
+<TR><TD>Consid&eacute;rations en termes de s&eacute;curit&eacute;:</TD><TD> aucune</TD></TR></TABLE>
+<A NAME="B"></A>
+<H3>B. Applications tol&eacute;rantes</H3>
+<P>Bien que ce document donne toutes les sp&eacute;cifications pour la g&eacute;n&eacute;ration de messages HTTP/1.0, toutes les applications ne pr&eacute;senteront pas une impl&eacute;mentation correcte. Nous recommandons de ce fait que les applications op&eacute;rationnelles puissent tol&eacute;rer certaines d&eacute;viation de ce protocole, dans la mesure o&ugrave; celles-ci gardent un caract&egrave;re univoque.
+<P>Les clients devront faire preuve de tol&eacute;rance dans l'interpr&eacute;tation de la ligne d'&eacute;tat. Les serveurs devront &agrave; leur tour se montrer ouverts dans l'interpr&eacute;tation de la ligne de Requ&ecirc;te. En particulier, ils devront accepter tout nombre d'espaces ou de tabulations entre les champs, m&ecirc;me lorsqu'un espace simple est requis.
+<P>La fin de ligne dans les en-t&ecirc;tes HTTP est marqu&eacute;e par la s&eacute;quence CRLF. Cependant, nous conseillons aux applications interpr&eacute;tant de telles en-t&ecirc;tes de reconna&icirc;tre une fin de ligne sur LF simple en ignorant le CR de t&ecirc;te.
+<A NAME="C"></A>
+<H3>C. Relations avec les MIME</H3>
+<P>HTTP/1.0 utilise de nombreuses syntaxes d&eacute;j&agrave; employ&eacute;es pour le Mail Internet (RFC 822 [7]) et entre autres les Multipurpose Internet Mail Extensions (MIME [5]) permettant aux entit&eacute;s d'&ecirc;tre transmises sous une grande quantit&eacute; de formes tout en respectant le principe d'&eacute;volutivit&eacute;. Cependant, la RFC 1521 concerne le mail, et HTTP impl&eacute;mente certaines fonctions d'une fa&ccedil;on diff&eacute;rente de la RFC 1521. Ces diff&eacute;rences ont &eacute;t&eacute; soigneusement contr&ocirc;l&eacute;es afin d'optimiser la transmission en mode binaire, pour ouvrir le champ d'application offert par des nouveaux types de m&eacute;dia, pour faciliter la comparaison de dates, tout en restant compatibles avec des serveurs et clients HTTP ant&eacute;rieurs.
+<P>A cette heure, nous esp&eacute;rons une r&eacute;vision de la RFC 1521. Cette r&eacute;vision pourrait int&eacute;gr&eacute; quelques unes des pratiques utilis&eacute;es par HTTP/1.0 mais ne faisant pas partie de la RFC 1521.
+<P>Cet appendice d&eacute;crit les points sp&eacute;cifiques pour lesquels HTTP et la RFC 1521 diff&egrave;rent. Les proxies et routeurs dirigeant des messages HTTP vers un environnement MIME strict devront conna&icirc;tre ces diff&eacute;rences et propose une conversion appropri&eacute;e si n&eacute;cessaire. A l'inverse Les proxies et routeurs acc&eacute;dant &agrave; un environnement HTTP &agrave; partir d'un environnement MIME strict, devront de m&ecirc;me se charger de la conversion, et donc conna&icirc;tre ces diff&eacute;rences.
+<A NAME="C-1"></A>
+<H4>C.1 Conversion vers la forme canonique</H4>
+<P>La RFC 1521 impose qu'une entit&eacute; Internet Mail soit convertie dans sa forme canonique avant d'&ecirc;tre transmise, (Appendice G de la RFC 1521 [5]). La Section 3.6.1 de ce document d&eacute;crit toutes les formes admises du sous-type "texte" transmis sous HTTP.
+<P>La RFC 1521 impose que le contenu d'un message dont le Content-Type est "text" repr&eacute;sente les fins de ligne par la s&eacute;quence CRLF et interdise l'usage de CR ou de LF en dehors de ce contexte de fin de ligne. HTTP permet l'usage de s&eacute;quences CRLF, de CR et LF seuls pour marquer la fin de ligne du texte dans le corps du document envoy&eacute; sous HTTP.
+<P>L&agrave; o&ugrave; c'est possible, un proxy ou un routeur du HTTP vers un environnement strictement RFC 1521 devra traduire toutes les fins de ligne du texte contenu dans ces documents concern&eacute;s par la Section 3.6.1 dans ce document en forme canonique selon la RFC 1521: une s&eacute;quence CRLF. Notez, cependant, que cette r&egrave;gle peut se compliquer dans le cas o&ugrave; un champ Content-Encoding est pr&eacute;sent et par le fait qu'HTTP permettent l'utilisation de tables de caract&egrave;res tant que le caract&egrave;re 13 et 10 continuent &agrave; repr&eacute;senter les &eacute;quivalents de CR et LF (comme c'est le cas pour certaines tables utilisant plusieurs octets par caract&egrave;re).
+<A NAME="C-2"></A>
+<H4>C.2 Conversion de formats de dates</H4>
+<P>HTTP/1.0 utilise un ensemble de formats de date restreint (Section 3.3) pour simplifier l'impl&eacute;mentation des comparaisons de date. Les proxies et routeurs agissant &agrave; partir d'autres protocoles devront s'assurer que tout champ d'en-t&ecirc;te de Date dans un message reste conforme &agrave; l'un des formats reconnus par HTTP/1.0, et r&eacute;&eacute;criront les dates si n&eacute;cessaire.
+<A NAME="C-3"></A>
+<H4>C.3 Introduction du champ Content-Encoding</H4>
+<P>La RFC 1521 n'introduit aucun concept &eacute;quivalent au champ d'en-t&ecirc;te Content-Encoding d&eacute;fini par HTTP/1.0. Comme celui-ci fait fonction de modificateur du type de m&eacute;dia, les proxies et routeurs depuis HTTP vers des protocoles compatibles MIME doivent soit changer la valeur indiqu&eacute;e dans le champ Content-Type, soit analyser le corps d'entit&eacute; avant de faire suivre le message. (Certaines impl&eacute;mentations exp&eacute;rimentales du champ Content-Type pour la messagerie Internet ont utilis&eacute; une valeur ";conversions=<content-coding>" pour obtenir une fonction similaire &agrave; celle procur&eacute;e par le champ Content-Encoding. Ce param&egrave;tre n'est pas officiel dans la RFC 1521.)
+<A NAME="C-4"></A>
+<H4>C.4 Pas de champ Content-Transfer-Encoding</H4>
+<P>HTTP n'exploite pas le champ Content-Transfer-Encoding (CTE) utilis&eacute; par la RFC 1521. Les proxies et routeurs depuis un protocole MIME vers un protocole HTTP devront supprimer tout CTE &agrave; l'exclusion &eacute;ventuellement du CTE "identity" ("quoted-printable" ou "base64") avant de faire suivre le message vers un client HTTP client.
+<P>Les proxies et routeurs depuis HTTP vers un protocole compatible MIME ont la responsabilit&eacute; de s'assurer que le message envoy&eacute; est au format correct pour un transfert en toute s&eacute;curit&eacute; sous ce protocole, cette s&eacute;curit&eacute; &eacute;tant naturellement limit&eacute;e aux limitations propres du protocole utilis&eacute;. Un tel proxy ou routeur devra ajouter un Content-Transfer-Encoding appropri&eacute;, de fa&ccedil;on &agrave; pr&eacute;senter les donn&eacute;es conform&eacute;ment aux attentes de ce protocole.
+<A NAME="C-5"></A>
+<H4>C.5 Champs d'en-t&ecirc;te HTTP dans des parties de corps Multipart</H4>
+<P>Sous RFC 1521, la plupart des champs d'en-t&ecirc;te plac&eacute;s dans les sous-parties d'un corps Multipart sont en g&eacute;n&eacute;ral ignor&eacute;s sauf si le nom du champ d&eacute;bute par "Content-". En HTTP/1.0, les sous-parties de corps Multipart peuvent contenir tout champ d'en-t&ecirc;te HTTP dont la signification est pertinente pour cette partie de message.
+<A NAME="D"></A>
+<H3>D. Fonctions suppl&eacute;mentaires</H3>
+<P>Cet appendice liste quelques &eacute;l&eacute;ments de protocole parfois employ&eacute;s dans certaines impl&eacute;mentations HTTP, mais qui ne sont pas consid&eacute;r&eacute;es comme "l&eacute;gitimes" par la plupart des applications HTTP/1.0. Les d&eacute;veloppeurs ont un int&eacute;r&ecirc;t &agrave; conna&icirc;tre ces fonctions, mais ne peuvent &ecirc;tre s&ucirc;rs de leur pr&eacute;sence effective, ni de leur impl&eacute;mentation par d'autres applications HTTP/1.0.
+<A NAME="D-1"></A>
+<H4>D.1 M&eacute;thodes de requ&egrave;tes suppl&eacute;mentaires</H4>
+
+<A NAME="D-1-1"></A>
+<P><I>D.1.1 PUT</I>
+<P>La m&eacute;thode PUT demande &agrave; ce que l'entit&eacute; jointe soit enregistr&eacute;e par le serveur sous l'URI-vis&eacute;e. Si cette URI pointe vers une ressource d&eacute;j&agrave; existante, l'entit&eacute; jointe sera consid&eacute;r&eacute;e comme une nouvelle version de celle jusqu'alors pr&eacute;sente sur le serveur origine. Si l'URI-vis&eacute;e pointe sur une ressource inexistante, et &agrave; la condition que cette URI puisse &ecirc;tre d&eacute;finie en tant que nouvelle ressource du serveur, ce dernier cr&eacute;era une nouvelle ressource sous cette URI.
+<P>La diff&eacute;rence fondamentale entre les m&eacute;thodes POST et PUT r&eacute;side dans la signification donn&eacute;e &agrave; l'URI-vis&eacute;e. Celle-ci, pour une m&eacute;thode POST d&eacute;signe la ressource "active" &agrave; laquelle l'entit&eacute; doit &ecirc;tre confi&eacute;e dans le but d'un traitement. Cette ressource peut &ecirc;tre un programme, un routeur ou un autre protocole, ou encore une entit&eacute; acceptant des annotations. Par contre, L'URI pr&eacute;cis&eacute;e dans une m&eacute;thode PUT nomme l'entit&eacute; incluse dans la requ&ecirc;te - Le client sait parfaitement de quelle URI il s'agit et le serveur n'applique la m&eacute;thode &agrave; aucune autre ressource.
+
+<A NAME="D-1-2"></A>
+<P></I>D.1.2 DELETE</I>
+<P>La m&eacute;thode DELETE demande au serveur de supprimer la ressource point&eacute;e par l'URI-vis&eacute;e.
+
+<A NAME="D-1-3"></A>
+<P></I>D.1.3 LINK</I>
+<P>La m&eacute;thode LINK &eacute;tablit une ou plusieurs liaisons entre la ressource existante d&eacute;finie par l'URI-vis&eacute;e et d'autres ressources.
+
+<A NAME="D-1-4"></A>
+<P><I>D.1.4 UNLINK</I>
+<P>A contrario, cette m&eacute;thode supprime des liaisons entre la ressource d&eacute;finie par l'URI-vis&eacute;e, et d'autres ressources qui lui sont li&eacute;es.
+<A NAME="D-2"></A>
+<H4>D.2 D&eacute;finitions d'autres champs d'en-t&ecirc;te</H4>
+
+<A NAME="D-2-1"></A>
+<P><I>D.2.1 Accept</I>
+<P>Le champ d'en-t&ecirc;te Accept (requ&ecirc;te) peut &ecirc;tre utilis&eacute; pour d&eacute;finir une liste de types de m&eacute;dia accept&eacute;s en r&eacute;ponse &agrave; la requ&ecirc;te. L'ast&eacute;risque "*" est utilis&eacute;e pour grouper des types de m&eacute;dia par classe, "*/*" indiquant tous les types de m&eacute;dia, et "type/*" indiquant tous les sous-types du type "type". La gamme de types signal&eacute;e par le client sert essentiellement &agrave; limiter les documents &agrave; des types acceptables par le client dans le contexte de la requ&ecirc;te formul&eacute;e.
+
+<A NAME="D-2-2"></A>
+<P><I>D.2.2 Accept-Charset</I>
+<P>Le champ d'en-t&ecirc;te Accept-Charset (requ&ecirc;te) peut &ecirc;tre utilis&eacute; pour former une liste de tables de caract&egrave;res pr&eacute;f&eacute;rentielles, autres que les tables US-ASCII et ISO-8859-1 utilis&eacute;es par d&eacute;faut. Ce champ permet &agrave; un client de signaler &agrave; un serveur qu'il sait accepter d'autres repr&eacute;sentations de texte que les repr&eacute;sentations par d&eacute;faut, et est donc en mesure d'exploiter des documents encod&eacute;s avec ces tables, si le serveur sait les transmettre.
+
+<A NAME="D-2-3"></A>
+<P><I>D.2.3 Accept-Encoding</I>
+<P>Le champ d'en-t&ecirc;te Accept-Encoding (requ&ecirc;te) est similaire au champ Accept, mais restreint la gamme de valeurs Content-Coding attendues dans une r&eacute;ponse.
+
+<A NAME="D-2-4"></A>
+<P><I>D.2.4 Accept-Language</I>
+Le champ d'en-t&ecirc;te Accept-Encoding (requ&ecirc;te) est similaire au champ Accept, mais restreint la gamme de langues attendues dans une r&eacute;ponse.
+
+<A NAME="D-2-5"></A>
+<P><I>D.2.5 Content-Language</I>
+<P>Le champ d'en-t&ecirc;te Content-Language (entit&eacute;) d&eacute;crit la ou les langues naturelles des destinataires potentiels du corps d'entit&eacute;. Notez que ceci n'a aucun lien avec les langues utilis&eacute;es dans l'ensemble de l'entit&eacute;.
+
+<A NAME="D-2-6"></A>
+<P><I>D.2.6 Link</I>
+<P>Le champ d'en-t&ecirc;te Link (entit&eacute;) permet de d&eacute;crire les liaisons entre l'entit&eacute; jointe et d'autres ressources. Une entit&eacute; peut se voir attribuer plusieurs valeurs pour le champ Link. Un champ Link, au niveau m&eacute;tainformation, indique typiquement des relations du type d&eacute;pendance hi&eacute;rarchique ou des chemins d'acc&egrave;s.
+
+<A NAME="D-2-7"></A>
+<P><I>D.2.7 MIME-Version</I>
+<P>Les messages HTTP peuvent inclure un champ unique d'en-t&ecirc;te g&eacute;n&eacute;rale indiquant quelle version du protocole MIME a &eacute;t&eacute; employ&eacute; pour construire le message. L'utilisation de ce champ MIME-Version, tel que d&eacute;crit par la RFC 1521 [5], peut indiquer si le message est compatible MIME. Malheureusement, certaines premi&egrave;res impl&eacute;mentations de serveurs HTTP/1.0 &eacute;mettent ce champ sans r&eacute;serve. Il est conseill&eacute; de l'ignorer.
+
+<A NAME="D-2-8"></A>
+<P><I>D.2.8 Retry-After</I>
+<P>Le champ d'en-t&ecirc;te Retry-After (r&eacute;ponse) peut &ecirc;tre utilis&eacute; dans une r&eacute;ponse 503 (service indisponible) dans le but d'indiquer pendant combien de temps (estim&eacute;) le service restera indisponible aux requ&ecirc;tes du client. La valeur de ce champ peut &ecirc;tre une date HTTP ou un nombre entier de secondes (en d&eacute;cimal) &agrave; partir de l'heure de la r&eacute;ponse.
+
+<A NAME="D-2-9"></A>
+<P><I>D.2.9 Title</I>
+<P>Le champ d'en-t&ecirc;te Title est purement informatif et donne le titre de l'entit&eacute;.
+
+<A NAME="D-2-10"></A>
+<P><I>D.2.10 URI</I>
+<P>Le champ d'en-t&ecirc;te URI (entit&eacute;) peut contenir toute ou partie des Uniform Resource Identifiers (Section 3.2) par laquelle la ressource d&eacute;finie par l'URI-vis&eacute;e peut &ecirc;tre identifi&eacute;e. Aucune garantie n'est cependant donn&eacute;e que la ressource soit effectivement accessible par l'une des URI sp&eacute;cifi&eacute;es.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-15.htm">Pr&eacute;c&eacute;dent</A>  - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+

@@ -1,0 +1,241 @@
+<HTML>
+<HEAD>
+  <TITLE>Acquisition du 21/10/1997 - Extrait DNS</TITLE>
+  <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css"> 
+  <STYLE TYPE="text/css">
+  	.blue {color:#005bce; font-weight:bold}
+  </STYLE>
+</HEAD>
+
+<BODY BGCOLOR="white">
+<H1>Etude de l'application DNS</H1>
+<P ALIGN="RIGHT"><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>
+<!--#config timefmt="%b %Y"--><!--#flastmod virtual="$DOCUMENT_URI" --></I></P>
+
+<H2><A NAME="as-h2-7600">5 - Echange de PDU-DNS</A></H2>
+
+    <blockquote>
+    Information supplémentaire : <A HREF="pdu-DNS.html">le format des PDU-DNS</A>
+    <p><SPAN CLASS="exercice">Exercice 5-1</span> : scénarios</p>
+    <ol>
+	<li><p>Construire le chronogramme des échanges de la recherche 
+        <A HREF="#as-h3-7601"><tt>www.hexalis.fr</tt></A></p></li>
+	<li><p>Construire le chronogramme des échanges de la recherche de 
+        <A HREF="#as-h3-7602"><TT>counter.digits.com</TT></A></p></li>
+	</ol>
+    </blockquote>
+
+
+<HR>
+<H3 ALIGN=center><A NAME="as-h3-7601">Recherche de <TT>www.hexalis.fr</TT></A></H3>
+
+<PRE>
+<SPAN CLASS="heure">-- 261 --------- 13:14:26.219600 ------------------------------------------- Lg.PDU=74</SPAN>
+IP	Src=193.54.51.71	Dst=193.54.51.1	v=4	hl=5	qos=0	lg=60	id=45104	off=0	ttl=32	ck=1CC	p=17 (UDP)
+UDP	Src=1948	Dst=53	lg=40	ck=E6F7
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=QUERY id=0008 rcode=0
+	header flags:   AA=0 TC=0 RD=1 RA=0
+	questions=1  answers=0    authority records=0 additionnal=0
+	Q 	www.hexalis.fr	A	IN</SPAN>
+</PRE>
+<PRE>
+<SPAN CLASS="heure">-- 262 --------- 13:14:26.220576 ------------------------------------------- Lg.PDU=74</SPAN>
+IP	Src=193.54.51.1	Dst=192.93.0.4	v=4	hl=5	qos=0	lg=60	id=38377	off=0	ttl=30	ck=522F	p=17 (UDP)
+UDP	Src=53	Dst=53	lg=40	ck=B37A
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=QUERY id=7008 rcode=0
+	header flags:   AA=0 TC=0 RD=0 RA=0
+	questions=1  answers=0    authority records=0 additionnal=0
+	Q	www.hexalis.fr	A	IN</SPAN></PRE>
+
+<PRE>
+<SPAN CLASS="heure">-- 263 --------- 13:14:26.241072 ------------------------------------------- Lg.PDU=282</SPAN>
+IP	Src=192.93.0.4	Dst=193.54.51.1	v=4	hl=5	qos=0	lg=268	id=29630	off=0	ttl=21	ck=7C8A	p=17 (UDP)
+UDP	Src=53	Dst=53	lg=248	ck=2D68
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=ANSWER id=7008 rcode=0
+	header flags:   AA=0 TC=0 RD=0 RA=0
+	questions=1  answers=0    authority records=5 additionnal=5
+	Q	www.hexalis.fr		A	IN
+	A	hexalis.fr		NS	IN	1000j	merlin.capmedia.fr
+	A	hexalis.fr		NS	IN	1000j	ns0.oleane.net
+	A	hexalis.fr		NS	IN	1000j	ns1.oleane.net
+	A	hexalis.fr		NS	IN	1000j	ns0.pipex.net
+	A	hexalis.fr		NS	IN	1000j	ns1.pipex.net
+	I	merlin.capmedia.fr	A	IN	1000j	193.25.99.1
+	I	ns0.oleane.net		A	IN	10j	194.2.0.30
+	I	ns1.oleane.net		A	IN	10j	194.2.0.60
+	I	ns0.pipex.net		A	IN	12j	158.43.128.8
+	I	ns1.pipex.net		A	IN	12j	158.43.192.7</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 264 --------- 13:14:26.242048 ------------------------------------------- Lg.PDU=74</SPAN>
+IP	Src=193.54.51.1	Dst=194.2.0.60	v=4	hl=5	qos=0	lg=60	id=38378	off=0	ttl=30	ck=5051	p=17 (UDP)
+UDP	Src=53	Dst=53	lg=40	ck=B09C
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=QUERY id=7009 rcode=0
+	header flags:   AA=0 TC=0 RD=1 RA=0
+	questions=1  answers=0    authority records=0 additionnal=0
+	Q	www.hexalis.fr	A	IN</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 265 --------- 13:14:26.267424 ------------------------------------------- Lg.PDU=123</SPAN>
+IP	Src=194.2.0.60	Dst=193.54.51.1	v=4	hl=5	qos=0	lg=109	id=8355	off=0	ttl=53	ck=AE67	p=17 (UDP)
+UDP	Src=53	Dst=53	lg=89	ck=5425
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=ANSWER id=7009 rcode=0
+	header flags:   AA=0 TC=0 RD=1 RA=0
+	questions=1  answers=2    authority records=0 additionnal=0
+	Q	www.hexalis.fr		A	IN
+	R	www.hexalis.fr		NS	IN	2j	saturne4.hexalis.fr
+	R	saturne4.hexalis.fr	A	IN	2j	192.51.87.103</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 266 --------- 13:14:26.268400 ------------------------------------------- Lg.PDU=123</SPAN>
+IP	Src=193.54.51.1	Dst=193.54.51.71	v=4	hl=5	qos=0	lg=109	id=38379	off=0	ttl=30	ck=1DE0	p=17 (UDP)
+UDP	Src=53	Dst=1948	lg=89	ck=8A00
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=ANSWER id=0008 rcode=0
+	header flags:   AA=0 TC=0 RD=1 RA=0
+	questions=1  answers=2    authority records=0 additionnal=0
+	Q	www.hexalis.fr	A	IN
+	R   www.hexalis.fr      NS  IN	2j     lg=21   saturne4.hexalis.fr
+	R   saturne4.hexalis.fr	A	IN	2j     lg=4    192.51.87.103</SPAN></PRE>
+
+
+<HR>
+<H3 ALIGN=center><A NAME="as-h3-7602">Recherche de <TT>counter.digits.com</TT></A></H3>
+<PRE>
+<SPAN CLASS="heure">-- 297 --------- 13:14:26.900848 ------------------------------------------- Lg.PDU=78</SPAN>
+IP	Src=193.54.51.98	Dst=193.54.51.1	v=4	hl=5	qos=0	lg=64	id=38423	off=0	ttl=32	ck=1BC6	p=17 (UDP)
+UDP	Src=1594	Dst=53	lg=44	ck=A7D4
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=QUERY id=000D rcode=0
+	header flags:   AA=0 TC=0 RD=1 RA=0
+	questions=1  answers=0    authority records=0 additionnal=0
+	Q	counter.digits.com	A	IN</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 298 --------- 13:14:26.901824 ------------------------------------------- Lg.PDU=78</SPAN>
+IP	Src=193.54.51.1	Dst=207.87.128.98	v=4	hl=5	qos=0	lg=64	id=38385	off=0	ttl=30	ck=C2CA	p=17 (UDP)
+UDP	Src=53	Dst=53	lg=44	ck=E3BA
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=QUERY id=700A rcode=0
+	header flags:   AA=0 TC=0 RD=0 RA=0
+	questions=1  answers=0    authority records=0 additionnal=0
+	Q	counter.digits.com	A	IN</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 472 --------- 13:14:30.901824 ------------------------------------------- Lg.PDU=78</SPAN>
+IP	Src=193.54.51.1	Dst=206.181.95.161	v=4	hl=5	qos=0	lg=64	id=38403	off=0	ttl=30	ck=E41B	p=17 (UDP)
+UDP	Src=53	Dst=53	lg=44	ck=51E
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=QUERY id=700A rcode=0
+	header flags:   AA=0 TC=0 RD=0 RA=0
+	questions=1  answers=0    authority records=0 additionnal=0
+	Q	counter.digits.com	A	IN</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 507 --------- 13:14:31.900848 ------------------------------------------- Lg.PDU=78</SPAN>
+IP	Src=193.54.51.98	Dst=192.54.142.100	v=5	hl=4	qos=0	lg=64	id=45079	off=0	ttl=32	ck=A762	p=17 (UDP)
+UDP	Src=1594	Dst=53	lg=44	ck=4D71
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=QUERY id=000D rcode=0
+	header flags:   AA=0 TC=0 RD=1 RA=0
+	questions=1  answers=0    authority records=0 additionnal=0
+	Q	counter.digits.com	A	IN</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 508 --------- 13:14:31.905728 ------------------------------------------- Lg.PDU=349</SPAN>
+IP	Src=192.54.142.100	Dst=193.54.51.98	v=4	hl=5	qos=0	lg=335	id=62174	off=16384	ttl=254	ck=458B	p=17 (UDP)
+UDP	Src=53	Dst=1594	lg=315	ck=B2D0
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=ANSWER id=000D rcode=
+	header flags:   AA=0 TC=0 RD=1 RA=1
+	questions=1  answers=4    authority records=5 additionnal=5
+	Q	counter.digits.com	A	IN
+	R	counter.digits.com	A	IN	1/2h	207.87.128.113
+	R	counter.digits.com	A	IN	1/2h	207.87.128.110
+	R	counter.digits.com	A	IN	1/2h	207.87.128.111
+	R	counter.digits.com	A	IN	1/2h	207.87.128.112
+	A	DIGITS.COM		NS	IN	1j	NS1.LYCOS.com
+	A	DIGITS.COM		NS	IN	1j	NS2.LYCOS.com
+	A	DIGITS.COM		NS	IN	1j	NS.LETTERS.com
+	A	DIGITS.COM		NS	IN	1j	NS.IBP.com
+	A	DIGITS.COM		NS	IN	1j	ns.galanter.com
+	I	NS1.LYCOS.com		A	IN	1j	207.77.90.10
+	I	NS2.LYCOS.com		A	IN	1j	207.77.90.11
+	I	NS.LETTERS.com		A	IN	1j	207.87.128.98
+	I	NS.IBP.com		A	IN	1j	206.181.95.161
+	I	ns.galanter.com		A	IN	1j	206.42.166.47</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 673 --------- 13:14:34.901824 ------------------------------------------- Lg.PDU=78</SPAN>
+IP	Src=193.54.51.1	Dst=206.42.166.47	v=4	hl=5	qos=0	lg=64	id=38415	off=0	ttl=30	ck=9E0C	p=17 (UDP)
+UDP	Src=53	Dst=53	lg=44	ck=BF1A
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=QUERY id=700A rcode=0
+	header flags:  AA=0 TC=0 RD=0 RA=0 
+	questions=1  answers=0    authority records=0 additionnal=0
+	Q	counter.digits.com	A	IN</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 846 --------- 13:14:38.901824 ------------------------------------------- Lg.PDU=78</SPAN>
+IP	Src=193.54.51.1	Dst=207.77.90.11	v=4	hl=5	qos=0	lg=64	id=38430	off=0	ttl=30	ck=E8FE	p=17 (UDP)
+UDP	Src=53	Dst=53	lg=44	ck=A1C
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=QUERY id=700A rcode=0
+	header flags:   AA=0 TC=0 RD=0 RA=0 
+	questions=1  answers=0    authority records=0 additionnal=0
+	Q	counter.digits.com	A	IN</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 856 --------- 13:14:39.31232 ------------------------------------------- Lg.PDU=346</SPAN>
+IP	Src=207.77.90.11	Dst=193.54.51.1	v=4	hl=5	qos=0	lg=332	id=22149	off=0	ttl=15	ck=368C	p=17 (UDP)
+UDP	Src=53	Dst=53	lg=312	ck=E867
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=ANSWER id=700A rcode=0
+	header flags:   AA=1 TC=0 RD=0 RA=1 
+	questions=1  answers=4    authority records=5 additionnal=5
+	Q	counter.digits.com	A	IN
+	R	counter.digits.com	A	IN	2h	207.87.128.111
+	R	counter.digits.com	A	IN	2h	207.87.128.112
+	R	counter.digits.com	A	IN	2h	207.87.128.113
+	R	counter.digits.com	A	IN	2h	207.87.128.110
+	A	digits.com		NS	IN	1j	ns1.lycos.com
+	A	digits.com		NS	IN	1j	ns2.lycos.com
+	A	digits.com		NS	IN	1j	ns.letters.com
+	A	digits.com		NS	IN	1j	ns.galanter.com
+	A	digits.com		NS	IN	1j	ns.ibp.com
+	I	ns1.lycos.com		A	IN	1j	207.77.90.10
+	I	ns2.lycos.com		A	IN	1j	207.77.90.11
+	I	ns.letters.com		A	IN	1j	207.87.128.98
+	I	ns.galanter.com		A	IN	1j	206.42.166.47
+	I	ns.ibp.com		A	IN	1j	206.181.95.161</SPAN></PRE>
+
+
+<PRE>
+<SPAN CLASS="heure">-- 858 --------- 13:14:39.33184 ------------------------------------------- Lg.PDU=346</SPAN>
+IP	Src=193.54.51.1	Dst=193.54.51.98	v=4	hl=5	qos=0	lg=332	id=38431	off=0	ttl=30	ck=1CB2	p=17 (UDP)
+UDP	Src=53	Dst=1594	lg=312	ck=8620
+DNS	<SPAN STYLE="color:#005bce; font-weight:bold">opcode=ANSWER id=000D rcode=0
+	header flags:   AA=1 TC=0 RD=1 RA=1
+	questions=1  answers=4    authority records=5 additionnal=5
+	Q	counter.digits.com	A	IN
+	R	counter.digits.com	A	IN	2h	207.87.128.111
+	R	counter.digits.com	A	IN	2h	207.87.128.112
+	R	counter.digits.com	A	IN	2h	207.87.128.113
+	R	counter.digits.com	A	IN	2h	207.87.128.110
+	A	digits.com		NS	IN	1j	ns1.lycos.com
+	A	digits.com		NS	IN	1j	ns2.lycos.com
+	A	digits.com		NS	IN	1j	ns.letters.com
+	A	digits.com		NS	IN	1j	ns.galanter.com
+	A	digits.com		NS	IN	1j	ns.ibp.com
+	I	ns1.lycos.com		A	IN	1j	207.77.90.10
+	I	ns2.lycos.com		A	IN	1j	207.77.90.11
+	I	ns.letters.com		A	IN	1j	207.87.128.98
+	I	ns.galanter.com		A	IN	1j	206.42.166.47
+	I	ns.ibp.com		A	IN	1j	206.181.95.161</SPAN></PRE>
+
+
+
+
+<HR>
+</BODY></HTML>

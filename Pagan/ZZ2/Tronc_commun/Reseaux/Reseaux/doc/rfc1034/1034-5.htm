@@ -1,0 +1,470 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [fr] (WinNT; I) [Netscape]">
+   <TITLE>1034-5
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+RFC: 1034
+<BR>Statut : Standard
+<CENTER>
+<H1>
+DOMAIN NAME SYSTEM</H1></CENTER>
+
+<CENTER>
+<H2>
+Concepts de base</H2></CENTER>
+
+<HR>
+<BR>Cr&eacute;dits : P. Mockapetris, ISI
+<BR>Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry
+G. FREMAUX</A>
+<BR>Edition originale : Novembre 87 / Version FR : Avril 1998
+<BR>Remplace : RFC882, RFC883, RFC973
+<BR>
+<HR>
+<H2>
+<FONT COLOR="#000080">5. RESOLVEURS</FONT></H2>
+<A NAME="5.1"></A>
+<H3>
+5.1. Introduction</H3>
+Les "r&eacute;solveurs" sont des programmes qui interfacent les applications
+utilisateur aux serveurs de noms de domaines. Dans le cas le plus simple,
+un r&eacute;solveur re&ccedil;oit une requ&ecirc;te provenant d'une application
+(ex., applications de courrier &eacute;lectronique, TELNET, FTP) sous la
+forme d'un appel d'une fonction de biblioth&egrave;que, d'un appel syst&egrave;me
+etc., et renvoie une information sous une forme compatible avec la repr&eacute;sentation
+locale de donn&eacute;es du syst&egrave;me.
+<P>Le r&eacute;solveur est situ&eacute; sur la m&ecirc;me machine que l'application
+recourant &agrave; ses services, mais devra par contre consulter des serveurs
+de noms de domaines sur d'autres h&ocirc;tes. Comme un r&eacute;solveur
+peut avoir besoin de contacter plusieurs serveurs de noms, ou &agrave;
+l'extr&ecirc;me inverse obtenir les informations directement &agrave; partir
+de son cache local, le temps de r&eacute;ponse d'un r&eacute;solveur peut
+varier selon de grandes proportions, depuis quelques millisecondes &agrave;
+plusieurs secondes.
+<P>L'une des raisons les plus importantes qui justifient l'existence des
+r&eacute;solveurs est d'&eacute;liminer le temps d'acheminement de l'information
+depuis le r&eacute;seau, et de d&eacute;charger simultan&eacute;ment les
+serveurs de noms, en r&eacute;pondant &agrave; partir des donn&eacute;es
+cach&eacute;es en local. Il en r&eacute;sulte qu'un cache partag&eacute;
+entre plusieurs processus, utilisateurs, machines, etc., sera incomparablement
+plus efficace qu'une cache non partag&eacute;.&nbsp;<A NAME="5.2"></A>
+<H3>
+5.2. Interface r&eacute;solveur-client</H3>
+<A NAME="5.2.1"></A>
+<H4>
+5.2.1. Fonctions typiques</H4>
+L'interface client du r&eacute;solveur est largement d&eacute;pendante
+des conventions de l'h&ocirc;te local, mais on peut exprimer trois fonctions
+typiques qui rentrent dans le cadre de cette interface :
+<BR>&nbsp;
+<OL>
+<LI>
+<I>translation depuis les noms d'h&ocirc;tes vers les adresses d'h&ocirc;tes.</I></LI>
+
+<P><BR>Cette fonction est souvent d&eacute;finie &agrave; l'image d'anciens
+m&eacute;canismes utilisant les fichiers HOSTS.TXT. A partir d'une certaine
+cha&icirc;ne de caract&egrave;res donn&eacute;e, l'appelant d&eacute;sire
+obtenir une ou plusieurs adresses IP sur 32 bits. Dans le contexte du DNS,
+cette demande se traduit par une requ&ecirc;te sur des RR de type A. Comme
+le DNS ne pr&eacute;serve pas l'ordre des RR, cette fonction peut choisir
+de trier et r&eacute;pondre par toutes les adresses obtenues, ou seulement
+la "meilleure" adresse si le client est plus enclin &agrave; n'accepter
+qu'une adresse unique en retour. Notez qu'il est recommander d'utiliser
+un retour multiple, mais un retour d'adresse unique peut dans certains
+cas &ecirc;tre la seule solution pour &eacute;muler le fonctionnement d'anciens
+services bas&eacute;s sur des fichiers HOSTS.TXT.
+<BR>&nbsp;
+<LI>
+<I>Translation depuis une adresse vers un nom d'h&ocirc;te</I></LI>
+
+<P><BR>Cette fonctionnalit&eacute; suivra souvent dans sa formulation,
+la forme de fonctions plus anciennes. A partir d'une adresse IP 32 bits,
+le requ&eacute;rant d&eacute;sire une cha&icirc;ne de caract&egrave;res
+donnant le nom de la machine. Le sens des octets de l'adresse IP sera alors
+invers&eacute;. Les quatre octets ainsi transform&eacute;s &eacute;tant
+alors utilis&eacute; comme composante de nom, on les suffixera de la cha&icirc;ne
+"IN-ADDR.ARPA". Une requ&ecirc;te de type PTR est alors envoy&eacute;e
+pour obtenir le RR donnant le nom primaire de l'h&ocirc;te en question.
+Par exemple, une requ&ecirc;te &agrave; propos de la machine d'adresse
+IP 1.2.3.4 recherchera des RR PTR pour le nom de domaine "4.3.2.1.IN-ADDR.ARPA".
+<BR>&nbsp;
+<LI>
+<I>Fonction de recherche g&eacute;n&eacute;rale</I></LI>
+
+<P><BR>Cette fonction r&eacute;cup&egrave;re des informations arbitraire
+&agrave; partir du DNS, et n'a pas de fonctionnalit&eacute; ant&eacute;rieure
+correspondante. Le requ&eacute;rant fournit un QNAME, QTYPE, et une QCLASS,
+et d&eacute;sire obtenir tous les RR correspondants. Cette fonction utilisera
+de pr&eacute;f&eacute;rence la repr&eacute;sentation DNS pour toutes les
+donn&eacute;es des RR plut&ocirc;t que celle de l'h&ocirc;te local, et
+retournera le contenu de ces RR (ex., TTL) plut&ocirc;t qu'une forme trait&eacute;e
+selon les conventions locales.
+<P>Lorsque le r&eacute;solveur ex&eacute;cute la fonction, on pourra s'attendre
+&agrave; l'une des r&eacute;ponses suivantes :
+<BR>&nbsp;
+<UL>
+<LI>
+Un ou plusieurs RR donnant les donn&eacute;es demand&eacute;es. Dans ce
+cas, le r&eacute;solveur fournit la r&eacute;ponse dans le format appropri&eacute;.</LI>
+
+<BR>&nbsp;
+<LI>
+Une erreur de nom (NE). Ceci arrive lorsque le nom pr&eacute;sent&eacute;
+n'existe pas. Par exemple, un utilisateur peut tr&egrave;s bien avoir mal
+orthographi&eacute; un nom d'h&ocirc;te.</LI>
+
+<BR>&nbsp;
+<LI>
+Une erreur "donn&eacute;e non trouv&eacute;e". Ceci intervient lorsque
+le nom demand&eacute; existe, mais pas les donn&eacute;es du type sp&eacute;cifi&eacute;
+pour le nom demand&eacute;. Par exemple, une requ&ecirc;te pour une adresse
+d'h&ocirc;te appliqu&eacute;e &agrave; un nom de bo&icirc;te aux lettres
+retournerait cette erreur, car le nom existe bel et bien, mais pas le RR
+donnant une adresse d'h&ocirc;te.</LI>
+</UL>
+Il est important de noter que les fonctions de translation entre des noms
+d'h&ocirc;te et des adresses peuvent retourner la combinaison d'une "erreur
+de nom" et d'une erreur "donn&eacute;e non trouv&eacute;e" dans un seul
+retour d'erreur, alors que la fonction de recherche g&eacute;n&eacute;rale
+ne le pourra pas. Une raison pour ceci est que les applications peuvent
+dans un premier temps demander un certain type d'information &agrave; propos
+d'un h&ocirc;te puis dans une seconde requ&ecirc;te un autre type d'information
+&agrave; propos du m&ecirc;me h&ocirc;te ; si les deux erreurs sont combin&eacute;es,
+alors les requ&ecirc;tes inutiles ralentiraient l'application.</OL>
+<A NAME="5.2.2"></A>
+<H4>
+5.2.2. Alias</H4>
+Lorsqu'il essaie de r&eacute;soudre une requ&ecirc;te particuli&egrave;re,
+le r&eacute;solveur peut s'apercevoir que le nom demand&eacute; est un
+alias. Par exemple, le r&eacute;solveur s'aper&ccedil;oit que le r&eacute;sultat
+d'une translation est de ce type lorsque le RR renvoy&eacute; est un CNAME.
+Si possible, ce cas de d&eacute;tection d'un alias devra &ecirc;tre signal&eacute;e
+au client.
+<P>Dans la plupart des cas, un r&eacute;solveur relancera la r&eacute;solution
+sur le nouveau nom translat&eacute; donn&eacute; dans le RR CNAME. Cependant,
+lors de l'appel &agrave; la fonction de recherche g&eacute;n&eacute;ralis&eacute;e,
+le r&eacute;solveur ne suivra pas la cha&icirc;ne d'alias lorsque le RR
+CNAME est re&ccedil;u en r&eacute;ponse &agrave; une requ&ecirc;te sur
+ce m&ecirc;me type. Ceci permet justement d'&eacute;mettre des requ&ecirc;tes
+pour savoir si un alias existe. Autrement dit, si le type de requ&ecirc;te
+demand&eacute; est CNAME, l'utilisateur s'int&eacute;resse effectivement
+au RR CNAME en tant que tel, et non l'objet final qu'il repr&eacute;sente.
+<P>Un certain nombre de conditions sp&eacute;cifiques peuvent appara&icirc;tre
+lorsque l'on traite avec des alias. On cherchera &agrave; &eacute;viter
+des longues cha&icirc;nes de redirection par alias, dans la mesure ou cela
+porte atteinte &agrave; l'efficacit&eacute; du syst&egrave;me. Par contre,
+cette situation ne sera pas signal&eacute; comme un cas d'erreur. Inversement,
+des bouclages d'une cha&icirc;ne de redirection par alias ainsi que des
+alias pointant sur des noms inexistants devront &ecirc;tre signal&eacute;s
+comme erreur, laquelle sera report&eacute;e au client.<A NAME="5.2.3"></A>
+<H4>
+5.2.3. Fautes temporaires</H4>
+Concr&egrave;tement, tous les r&eacute;solveurs pourront se retrouver occasionnellement
+dans l'incapacit&eacute; d'achever une r&eacute;solution. Cette situation
+peut appara&icirc;tre lorsqu'un r&eacute;solveur perd le contact avec une
+partie du r&eacute;seau &agrave; cause d'une panne r&eacute;seau ou d'un
+routeur, ou, de fa&ccedil;on moins courante dans le cas d'une indisponibilit&eacute;
+ou d&eacute;fection simultan&eacute;e de tous les serveurs correspondant
+&agrave; une zone.
+<P>Il est essentiel que cette classe d'erreur ne soit pas report&eacute;e
+au client au m&ecirc;me titre qu'une erreur de nom ou que d'une erreur
+sur l'existence des donn&eacute;es. Non seulement ce type d'erreur irrite
+notablement l'utilisateur humain, mais peut aussi causer de s&eacute;rieux
+probl&egrave;me lorsqu'une messagerie utilise le DNS.
+<P>Il serait possible dans de tels cas d'erreurs de r&eacute;soudre cette
+situation momentan&eacute;e en bloquant la requ&ecirc;te ind&eacute;finiment,
+dans l'attente de la lev&eacute;e de la condition de faute. Mais il s'agit
+d'une mauvaise id&eacute;e, surtout lorsque le client est un processus
+serveur qui pourrait exploiter ce temps d'attente &agrave; des tches bien
+plus utiles. La solution pr&eacute;conis&eacute;e est de toujours admettre
+qu'une erreur "temporaire" puisse &ecirc;tre un des r&eacute;sultats possibles
+de l'appel &agrave; une fonction de r&eacute;solution, m&ecirc;me si cela
+peut rendre l'&eacute;mulation de certaines fonctions bas&eacute;es sur
+le principe du HOSTS.TXT plus ardue.<A NAME="5.3"></A>
+<H3>
+5.3. R&eacute;solveurs - sp&eacute;cifications internes</H3>
+Toutes les impl&eacute;mentations de r&eacute;solveur utilisent des algorithmes
+sensiblement diff&eacute;rents, et utilisent la plupart de leur code pour
+traiter les erreurs de toutes natures plut&ocirc;t que les occurrences
+"normales". Cette section expose une strat&eacute;gie recommand&eacute;e
+de base pour mener les op&eacute;rations de r&eacute;solution, les d&eacute;tails
+pouvant &ecirc;tre trouv&eacute;s dans la [RFC-1035].&nbsp;<A NAME="5.3.1"></A>
+<H4>
+5.3.1. Noyau de r&eacute;solution minimal</H4>
+Une possibilit&eacute; pour l'impl&eacute;mentation de la fonction r&eacute;solveur
+est de d&eacute;porter la fonction de r&eacute;solution au dehors de la
+machine locale vers un serveur de noms supportant le mode r&eacute;cursif.
+Ceci constitue une m&eacute;thode simple pour offrir le service de de noms
+de domaines &agrave; un PC un peu faible en ressources, et pour centraliser
+le cache pour l'ensemble des machines et utilisateurs d'un r&eacute;seau
+local ou d'une organisation.
+<P>Tout ce dont le noyau de r&eacute;solution minimal &agrave; besoin est
+une liste d'adresses de serveurs de noms susceptible de mener la r&eacute;solution
+r&eacute;cursive &agrave; notre place. Ce type de r&eacute;solveur aura
+certainement besoin de ces informations stock&eacute;es dans un fichier
+de configuration, car il n'aura probablement pas la sophistication suffisante
+pour localiser celle-ci dans la base de donn&eacute;es des domaines. De
+plus, l'utilisateur aura besoin de v&eacute;rifier que les serveur mentionn&eacute;s
+peuvent effectivement fournir le service r&eacute;cursif ; un serveur de
+noms quel qu'il soit est tout &agrave; fait libre de refuser le service
+r&eacute;cursif &agrave; une partie ou la totalit&eacute; de ses clients.
+L'utilisateur devra contacter son administrateur local pour savoir quels
+sont les serveurs qu'il pourra utiliser.
+<P>Ce type de service comporte un certain nombre de limites et de d&eacute;fauts.
+Comme les requ&ecirc;tes peuvent &ecirc;tre trait&eacute;es dans un temps
+totalement arbitraire, le noyau aura souvent des difficult&eacute;s &agrave;
+optimiser les temporisations de retransmission de paquets UDP signalant
+des paquets perdus ou des serveurs d&eacute;faillants ; le serveur de noms
+pourra facilement &ecirc;tre d&eacute;bord&eacute; par un noyau un peu
+trop z&eacute;l&eacute;, surtout s'il interpr&egrave;te toutes les retransmissions
+comme des nouvelles requ&ecirc;tes. L'utilisation de TCP pourrait &ecirc;tre
+une r&eacute;ponse &agrave; ce probl&egrave;me, mais l'implantation de
+TCP reviendrait &agrave; consommer pratiquement autant de ressources sur
+l'h&ocirc;te qu'un r&eacute;solveur complet.<A NAME="5.3.2"></A>
+<H4>
+5.3.2. Ressources</H4>
+En plus de ses ressources propres, le r&eacute;solveur peut aussi disposer
+d'acc&egrave;s partag&eacute;s &agrave; des donn&eacute;es de zones maintenues
+par un serveur de noms local. Ceci donne au r&eacute;solveur l'avantage
+d'un acc&egrave;s plus rapide aux donn&eacute;es, mais impose que le r&eacute;solveur
+surveille qu'aucune donn&eacute;e mise en cache ne vienne masquer une donn&eacute;e
+pour cette zone. Dans cette partie, nous appellerons "information locale"
+la r&eacute;union des informations contenues dans le cache et celles de
+la zone partag&eacute;e, en sous-entendant que les donn&eacute;es "autoris&eacute;es"
+seront toujours utilis&eacute;es de pr&eacute;f&eacute;rence &agrave; toute
+donn&eacute;e du cache lorsque les deux sont pr&eacute;sentes simultan&eacute;ment
+en local.
+<P>Les algorithmes de r&eacute;solution qui suivent supposent que toutes
+les fonctions ont &eacute;t&eacute; exprim&eacute;es sous forme d'une fonction
+de recherche g&eacute;n&eacute;ralis&eacute;e, et utilisent les structures
+de donn&eacute;es suivantes pour repr&eacute;senter la progression de la
+requ&ecirc;te au niveau du r&eacute;solveur :
+<TABLE CELLSPACING=20 >
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">SNAME</FONT></TD>
+
+<TD><FONT COLOR="#008000">le nom de domaine sur lequel porte la recherche.</FONT></TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">STYPE</FONT></TD>
+
+<TD><FONT COLOR="#008000">le QTYPE de la requ&ecirc;te.</FONT></TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">SCLASS</FONT></TD>
+
+<TD><FONT COLOR="#008000">la QCLASS de la requ&ecirc;te.</FONT></TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">SLIST&nbsp;</FONT></TD>
+
+<TD><FONT COLOR="#008000">une structure qui d&eacute;crit les serveurs
+de noms et la zone concern&eacute;e par la requ&ecirc;te en cours de traitement
+par le r&eacute;solveur. Cette structure garde la trace des serveurs de
+noms que le r&eacute;solveur estime actuellement &ecirc;tre les plus susceptibles
+de d&eacute;tenir l'information d&eacute;sir&eacute;e ; cette trace est
+remise &agrave; jour si l'information arrivant au r&eacute;solveur est
+de nature &agrave; remettre en cause cette estimation. Cette structure
+contiendra un champ &eacute;quivalent &agrave; un nom de zone, des champs
+pour repr&eacute;senter les serveurs de noms identifi&eacute;s pour cette
+zone, les adresses de ces derniers, et des informations de type "historique"
+permettant d'estimer quel est le serveur suivant le mieux plac&eacute;
+pour obtenir les informations recherch&eacute;es. L'&eacute;quivalent du
+nom de zone est un d&eacute;compte du nombre d'identifiants (consid&eacute;r&eacute;s
+&agrave; partir de la racine) que SNAME a en commun avec la zone objet
+de la recherche courante ; ceci donne une mesure de la "distance" qui s&eacute;pare
+encore le r&eacute;solveur de SNAME.</FONT></TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">SBELT</FONT></TD>
+
+<TD><FONT COLOR="#008000">une structure "ceinture de s&eacute;curit&eacute;"
+d'une forme identique &agrave; SLIST, initialis&eacute;e &agrave; partir
+d'un fichier de configuration, et qui liste les serveurs qui devraient
+&ecirc;tre utilis&eacute;s lorsque le r&eacute;solveur ne dispose plus
+ou pas assez d'informations locales pour guider la s&eacute;lection de
+serveurs de noms. Le d&eacute;compte de correspondance sera fix&eacute;
+&agrave; -1 pour indiquer qu'aucun des identifiants ne correspond.</FONT></TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#000080">CACHE</FONT></TD>
+
+<TD><FONT COLOR="#008000">une structure qui enregistre les r&eacute;sultats
+de pr&eacute;c&eacute;dentes r&eacute;ponses. Les r&eacute;solveurs sont
+responsables de la purge des RR dont la dur&eacute;e de vie a expir&eacute;
+(dans le cache). La plupart des impl&eacute;mentations convertissent l'intervalle
+sp&eacute;cifi&eacute; dans les RR re&ccedil;us en une sorte de date "absolue"
+de p&eacute;remption lorsque le RR est enregistr&eacute; dans le cache.
+Plut"t que d&eacute;cr&eacute;menter les dur&eacute;es de vie individuellement,
+le r&eacute;solveur n'a plus qu'&agrave; ignorer ou supprimer les RR "p&eacute;rim&eacute;s"
+lorsqu'il les rencontre au cours d'une recherche, ou encore supprimer les
+RR dont la date de p&eacute;remption est ant&eacute;rieure &agrave; la
+date courante lors d'op&eacute;rations temporis&eacute;es de r&eacute;cup&eacute;ration
+de m&eacute;moire (par destruction des vieux RR).</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="5.3.3"></A>
+<H4>
+5.3.3. Algorithme</H4>
+L'algorithme de haut niveau contient quatre &eacute;tapes :
+<OL>
+<LI>
+V&eacute;rifier si la r&eacute;ponse est disponible en local, si c'est
+le cas on la renvoie au client.</LI>
+
+<LI>
+D&eacute;terminer les "meilleurs" serveurs &agrave; contacter.</LI>
+
+<LI>
+Leur envoyer des requ&ecirc;tes jusqu'&agrave; ce qu'un d'eux r&eacute;ponde.</LI>
+
+<LI>
+Analyser la r&eacute;ponse, soit :</LI>
+
+<OL>
+<LI>
+Si la r&eacute;ponse r&eacute;pond &agrave; la question pos&eacute;e, ou
+stipule une erreur de nom, retouner l'information au client et mettre cette
+information en cache.</LI>
+
+<LI>
+Si la r&eacute;ponse indique une redirection de "plus grande proximit&eacute;",
+mettre en cache les r&eacute;f&eacute;rences de ce nouveau serveur, et
+retourner &agrave; l'&eacute;tape 2.</LI>
+
+<LI>
+Si la r&eacute;ponse est un CNAME tout en &eacute;tant pas la r&eacute;ponse
+attendue, cacher le CNAME, remplacer le SNAME par le nom canonique lu dans
+le RR CNAME et retourner &agrave; l'&eacute;tape 1.</LI>
+
+<LI>
+Si la r&eacute;ponse rend compte d'une d&eacute;faillance du serveur ou
+autre cas bizarre, supprimer le serveur de la SLIST et retourner &agrave;
+l'&eacute;tape 3.</LI>
+</OL>
+</OL>
+L'&eacute;tape 1 cherche la donn&eacute;e d&eacute;sir&eacute;e dans le
+cache. Si la donn&eacute;e y est trouv&eacute;e, on suppose qu'elle est
+suffisamment fiable pour une exploitation "normale". Certains r&eacute;solveurs
+disposent d'une option configurable par l'utilisateur qui force &agrave;
+ignorer les donn&eacute;es du cache et &agrave; consulter directement un
+serveur "autoris&eacute;". Ce fonctionnement n'est pas recommand&eacute;
+par d&eacute;faut. Si le r&eacute;solveur dispose d'un acc&egrave;s direct
+&agrave; la d&eacute;finition de zone d'un serveur de nom local, il cherchera
+&agrave; &eacute;tablir si les donn&eacute;es demand&eacute;es n'y sont
+pas pr&eacute;sente sous une forme "autoris&eacute;e". Si oui, on utilisera
+de pr&eacute;f&eacute;rence les donn&eacute;es "autoris&eacute;es", plut&ocirc;t
+que les donn&eacute;es trouv&eacute;es dans le cache.
+<P>L'&eacute;tape 2 recherche aupr&egrave;s de quel serveur de nom l'on
+va requ&eacute;rir la donn&eacute;e recherch&eacute;e. La strat&eacute;gie
+usuelle est de chercher d'abord des RR de serveurs de noms disponibles
+en local, en partant du domaine SNAME, puis le p&egrave;re de SNAME, son
+grand-p&egrave;re, et ainsi de suite vers la racine. Ainsi, si SNAME &eacute;tait
+Mockapetris.ISI.EDU, cette &eacute;tape rechercherait des RR NS pour le
+domaine Mockapetris.ISI.EDU, puis ISI.EDU, puis EDU, et enfin . (la racine).
+Ces RR NS donnent la liste des noms des h&ocirc;tes de la zone concidant
+avec ou englobant SNAME. On copie ces noms dans SLIST, puis on d&eacute;termine
+leur adresse &agrave; l'aide des donn&eacute;es locales. Il peut se produire
+que certaines adresses ne puissent pas &ecirc;tre identifi&eacute;es en
+local. Le r&eacute;solveur peut alors adopter plusieurs attitudes ; la
+plus sage est de "forker" le r&eacute;solveur pour cr&eacute;er des processus
+"fils" dont la tche sera de r&eacute;cup&eacute;rer ces adresses, tandis
+que le p&egrave;re continuera la recherche sur les serveurs dont l'adresse
+est d'ores et d&eacute;j&agrave; disponible. De fa&ccedil;on &eacute;vidente,
+les choix et options de design sont assez complexes et largement fonction
+des possibilit&eacute;s de l'h&ocirc;te local. Les concepteurs de r&eacute;solveurs
+devront consid&eacute;r&eacute; les priorit&eacute;s dans l'ordre suivant
+:
+<OL>
+<LI>
+Brider la quantit&eacute; de traitement (nombre de paquets &eacute;mis,
+nombre de processus parall&egrave;les d&eacute;marr&eacute;s) de sorte
+qu'une requ&ecirc;te ne puisse partir en boucle infinie ou initier une
+r&eacute;action en cha&icirc;ne de cr&eacute;ation de processus et/ou d'&eacute;mission
+de requ&ecirc;tes MEME DANS LE CAS DE DONNEES MAL CONFIGUREES.</LI>
+
+<LI>
+Donner une r&eacute;ponse &agrave; chaque fois que possible.</LI>
+
+<LI>
+Eviter la consommation superflue de ressources de transmission.</LI>
+
+<LI>
+Donner les r&eacute;ponses aussi vite que possible.</LI>
+</OL>
+Si la recherche de RR NS &eacute;choue, alors le r&eacute;solveur initialisera
+la SLIST &agrave; partir de la structure SBELT. L'id&eacute;e de base est
+que, lorsque le r&eacute;solveur ne sait pas par o&ugrave; commencer pour
+rechercher une information, il utilisera une liste pr&eacute;d&eacute;finie
+dans un fichier de configuration de serveurs suppos&eacute;s pouvoir &ecirc;tre
+utiles. Bien qu'il puisse exister certaines situations particuli&egrave;res,
+on int&eacute;grera usuellement dans cette liste deux serveurs sur la racine
+et deux serveurs dans la zone o&ugrave; r&eacute;side l'h&ocirc;te. Le
+chiffre de deux (minimum) est donn&eacute; pour assurer la redondance des
+donn&eacute;es. Les serveurs de la racine pourront permettre un acc&egrave;s
+&eacute;ventuel &agrave; d'autres parties (en fait, toutes) de l'espace
+de domaines. Les deux serveurs locaux permettront au r&eacute;solveur de
+pouvoir &ecirc;tre capable de continuer la r&eacute;solution de noms locaux,
+m&ecirc;me si le r&eacute;seau local se retrouve isol&eacute; d'Internet
+suite &agrave; la d&eacute;faillance d'une liaison ou d'un routeur.
+<P>En plus de fournir les adresses et noms des serveurs, la structure de
+donn&eacute;es SLIST peut &ecirc;tre tri&eacute;e de fa&ccedil;on &agrave;
+donner une indication sur le "meilleur" serveur &agrave; utiliser, et s'assurer
+que toutes les adresses et noms de serveurs seront contact&eacute;s chacun
+son tour. Le tri peut &ecirc;tre une simple fonction de pr&eacute;s&eacute;ance
+des adresses locale sur les autres, ou peut &ecirc;tre une fonction complexe
+de statistiques sur les &eacute;v&eacute;nements pass&eacute;s, telle qu'une
+analyse des temps de r&eacute;ponse moyens et des taux de r&eacute;ussite.
+<P>L'&eacute;tape 3 &eacute;met des requ&ecirc;tes jusqu'&agrave; ce qu'une
+r&eacute;ponse soit donn&eacute;e. La strat&eacute;gie consiste &agrave;
+utiliser toutes les adresses &agrave; tour de r"le, avec une temporisation
+donn&eacute;e entre chaque &eacute;mission. En pratique, il est important
+d'utiliser toutes les adresses d'un h&ocirc;te "multiport", sachant qu'une
+politique de retransmission trop soutenue ralentit la r&eacute;ponse lorsque
+de multiples r&eacute;solveurs sont impliqu&eacute;s dans une recherche
+sur le m&ecirc;me serveur de nom (et m&ecirc;me parfois pour un seul r&eacute;solveur).
+La structure SLIST contient typiquement des donn&eacute;es pour contr"ler
+les temporisations et garder trace des pr&eacute;c&eacute;dentes transmissions.
+<P>L'&eacute;tape 4 s'occupe de l'analyse des r&eacute;ponses. Le r&eacute;solveur
+devra faire preuve d'une grande paranoa dans l'analyse de ces r&eacute;ponses.
+Il devra en outre que la r&eacute;ponse correspond bien &agrave; la requ&ecirc;te
+&eacute;mise grce &agrave; la lecture du champ ID dans la r&eacute;ponse.
+La r&eacute;ponse id&eacute;ale proviendrait d'un serveur "autoris&eacute;"
+donnant les informations (en g&eacute;n&eacute;ral l'adresse) attendues
+ou encore une erreur de nom. L'information est alors transmise au client
+et recopi&eacute;e dans le cache en pr&eacute;vision d'une requ&ecirc;te
+identique future si sa dur&eacute;e de vie (TTL) est sup&eacute;rieure
+&agrave; 0.
+<P>Si la r&eacute;ponse indique une redirection &agrave; effectuer, le
+r&eacute;solveur v&eacute;rifiera d'abord si le serveur mentionn&eacute;
+est plus "proche" de la r&eacute;ponse que les serveurs dont on dispose
+dans SLIST. Ceci sera fait en comparant le d&eacute;compte d'identifiants
+correspondants dans SLIST avec celui obtenu par calcul sur le SNAME dans
+le RR NS du message de redirection. Si tel n'est pas le cas, la r&eacute;ponse
+est consid&eacute;r&eacute;e comme d&eacute;nu&eacute;e d'int&eacute;r&ecirc;t
+et sera ignor&eacute;e. Si la redirection est utilisable, le RR NS de redirection
+et toute RR d'adresse obtenue pour les serveurs d&eacute;l&eacute;gu&eacute;s
+devront &ecirc;tre copi&eacute;s dans le cache. Les serveurs de noms sont
+ajout&eacute;s &agrave; la SLIST, et la recherche recommence.
+<P>Si la r&eacute;ponse contient un CNAME, la recherche doit &ecirc;tre
+r&eacute;it&eacute;r&eacute;e avec le nom canonique CNAME sauf si la r&eacute;ponse
+donn&eacute;e contient d&eacute;j&agrave; l'information pour ce m&ecirc;me
+nom canonique, o&ugrave; si la requ&ecirc;te originale portait effectivement
+sur un CNAME lui-m&ecirc;me.
+<P>Plus de d&eacute;tails et des astuces d'impl&eacute;mentation peuvent
+&ecirc;tre trouv&eacute;s dans la [RFC-1035].
+<CENTER>
+<P>
+<HR></CENTER>
+
+</BODY>
+</HTML>

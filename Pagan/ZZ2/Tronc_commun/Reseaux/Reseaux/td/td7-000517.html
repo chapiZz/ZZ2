@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+	<TITLE>NIS</TITLE>
+	<LINK HREF="../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+
+<H1>Partage d'informations par NIS</H1>
+<P ALIGN="RIGHT"><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>
+1999-2000</I></P>
+
+<HR>
+<H2>1 - Pr&eacute;parer le syst&egrave;me</H2>
+	<BLOCKQUOTE>
+	<P>Au d&eacute;but du TP, v&eacute;rifier dans <TT>/etc/nsswitch.conf</TT>que chaque syst&egrave;me utilise ses propres fichiers comme sources 
+		des informations d'administration.</P>
+	<P>Un PC (<B>PCM</B>) est d&eacute;sign&eacute; comme syst&egrave;me accueil du serveur-NIS ma&icirc;tre.<BR>
+	Un PC (<B>PCS</B>) est d&eacute;sign&eacute; comme syst&egrave;me accueil du serveur-NIS esclave.<BR>
+	Tous les PC, y compris PCM et PCS, sont clients-NIS. </P>
+	<P>Faire une copie de sauvegarde des fichiers <TT>/etc/hosts</TT>, <TT>/etc/passwd</TT> et <TT>/etc/shadow</TT></P>
+	</BLOCKQUOTE>
+<H2>2 - Configurer les serveur-NIS</H2>
+<H3>2.1 - Le serveur-NIS ma&icirc;tre</H3>
+	<OL>
+	<LI>Configurer la liste des syst&egrave;mes sur lesquels se trouve un client-NIS autoris&eacute; &agrave; interroger le serveur-NIS.
+		(<U>Documentation</U> : ypserv(8), hosts.allow(5), hosts.deny(5))</LI>
+	<LI>Donner le nom de domaine-NIS par <TT>domainname tp-isima2</TT> (<U>Documentation</U> : domainname(1))</LI>
+	<LI>Lancer le serveur-NIS ma&icirc;tre par <TT>/etc/rc.d/init.d/ypserv start</TT> (<U>Documentation</U> : ypserv(8))</LI>
+	<LI>V&eacute;rifier qu'il fonctionne par <TT>rpcinfo -p localhost</TT></LI>
+	<LI>Configurer les maps par <TT>/usr/lib/yp/ypinit -m</TT> (<U>Documentation</U> : ypinit(8))</LI>
+	</OL>
+
+<H3>2.2 - Les serveur-NIS esclaves</H3>
+	<OL>
+	<LI>Configurer la liste des syst&egrave;mes sur lesquels se trouve un client-NIS autoris&eacute; &agrave; interroger le serveur-NIS.
+		(<U>Documentation</U> : ypserv(8), hosts.allow(5), hosts.deny(5))</LI>
+	<LI>Donner un nom de domaine-NIS par <TT>domainname <I>nom</I></TT> (<U>Documentation</U> : domainname(1))</LI>
+	<LI>Lancer le serveur-NIS esclave par <TT>/etc/rc.d/init.d/ypserv start</TT> (<U>Documentation</U> : ypserv(8))</LI>
+	<LI>V&eacute;rifier qu'il fonctionne par <TT>rpcinfo -p localhost</TT></LI>
+	<LI>Configurer les maps par <TT>/usr/lib/yp/ypinit -s <I>syst&egrave;me-ma&icirc;tre</I></TT> (<U>Documentation</U> : ypinit(8))</LI>
+	</OL>
+
+<H2>3 - Configurer les clients-NIS</H2>
+	<OL>
+	<LI>Lancer le "binder" par <TT>/etc/rc.d/init.d/ypbind</TT>(<U>Documentation</U> : ypbind(8))</LI>
+	<LI>Utiliser <TT>ypwhich</TT> et <TT>ypcat</TT> pour v&eacute;rifier le fonctionnement du serveur et du client-NIS</LI>
+	</OL>
+
+<H2>4 - Utiliser le NIS pour la correspondance entre nom de syst&egrave;me et adresse-IP</H2>
+	<OL>
+	<LI>Examiner l'information donn&eacute;e par <TT>/etc/hosts</TT>, et celle donn&eacute;e par NIS (<TT>ypcat hosts</TT>)<P></P></LI>
+	<LI>Changer le nom d'un syst&egrave;me dans <TT>/etc/hosts</TT>, et v&eacute;rifier la correspondance par <TT>ping <I>nouveau-nom</I></TT></LI>
+	<LI>Modifier la source des correspondances dans <TT>/etc/nsswitch.conf</TT><BR>
+		Quel(s) nom(s) est(sont) valable(s) selon les param&egrave;tres de la ligne <TT>hosts</TT> ?<P></P></LI>
+	<LI>Enlever du fichier <TT>/etc/hosts</TT> toutes les lignes sauf les 2 qui concernent le syst&egrave;me lui-m&ecirc;me.<BR>
+		Peut-on encore atteindre les autres syst&egrave;mes ?<P></P></LI>
+	<LI>Changer le nom d'un syst&egrave;me dans le fichier <TT>/etc/hosts</TT> du syst&egrave;me PCM (o&ugrave; est le serveur-NIS ma&icirc;tre), et mettre 
+		&agrave; jour la map correspondante par <TT>(cd /yp/var; make hosts)</TT><BR>
+		V&eacute;rifier que les autres syst&egrave;mes obtiennent la correspondance.</LI>
+	</OL>
+
+<HR>
+
+<H1>Restaurer les fichiers modifi&eacute;s</H1>
+<HR>
+</BODY></HTML>

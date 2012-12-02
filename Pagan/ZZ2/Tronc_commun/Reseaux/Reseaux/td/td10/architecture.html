@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//AdvaSoft//DTD HTML 3.2 extended 961018//EN">
+<HTML>
+<HEAD>
+	<TITLE>PPP - Architecture</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+<H1>PPP - architecture</H1>
+
+<H3>PPP et les couches de la technologie TCP/IP</H3>
+
+
+	<BLOCKQUOTE>La couche PPP est une couche MAC, qui peut être utilisée en dessous
+		d'une couche IP.<BR>
+		<CENTER><IMG SRC="PPP-et-IP.gif" ALT="les couches MAC-PPP et IP" WIDTH="405" HEIGHT="437"></CENTER>
+	</BLOCKQUOTE>
+
+
+<H3>Les composants de PPP</H3>
+
+
+<BLOCKQUOTE>PPP contient plusieurs services qui utilisent PPP qui encapsule les diverses
+	PDU pour qu'elles puissent être transmises sur le ligne téléphonique.<BR>
+	PPP est spécifié dans les <A HREF="RFC1661/1661tm.htm"><U>RFC 1661</U></A>
+</BLOCKQUOTE>
+<CENTER><IMG SRC="../../images/PPP-protocole.gif" ALT="PPP" WIDTH="766" HEIGHT="328"></CENTER>
+<BR>
+<UL>
+<LI><H4>LCP (<I>Link Control Protocol</I>)</H4>
+
+	<DL>
+	<DT><B>rôles</B></DT>
+		<DD>- établir la connexion téléphonique en la paramétrant selon les consignes
+		de configuration et la qualité de la ligne</DD>
+		<DD>- contrôler périodiquement la qualité et adapter les paramètres de la
+		connexion si nécessaires</DD>
+	<DT><B>configuration</B></DT>
+		<DD>
+		<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0">
+		<TR><TH>Option</TH><TH>valeurs</TH></TR>
+		<TR><TD>MRU (Unité réception maximale)</TD>
+			<TD>128..1500, recommandé : 296 (40+256)</TD>
+		</TR>
+		<TR><TD>Protocole d'authentification</TD><TD>rien, PAP, CHAP</TD></TR>
+		<TR><TD>Protocole Qualité</TD><TD>rien, LQR (<I>Link Quality Report</I>)</TD></TR>
+		<TR><TD COLSPAN=2>Nombres magiques<BR>
+			<SMALL>(pour détecter des liaisons rebouclées et <BR>
+			d'autres anomalies au niveau Liaison de Données)</SMALL>
+			</TD>
+		</TR>
+		<TR><TD>Compression du champ protocole</TD>
+			<TD ROWSPAN=2>ces options concernent le format des PDU-LCP</TD>
+		</TR>
+		<TR><TD>Compression des champs adresse et contrôle</TD></TR>
+		</TABLE>
+		</DD>
+
+	</DL>
+	<BR><BR>
+</LI>
+<LI><H4>PAP (<I>PPP Authentification Protocol</I>)<BR><B>CHAP</B> (<I>Challenge Authentification Protocol</I>)</H4>
+
+
+	<DL>
+	<DT><B>rôle</B> : authentifier l'appelant</DT>
+	<DT><B>documentation</B> : <A HREF="RFC1334.txt"><U>RFC 1334</U></A></DT>
+	</DL>
+	<BR><BR>
+</LI>
+<LI><H4>NCP (<I>Network Control protocol</I>)</H4>
+
+	<DL>
+	<DT><B>rôles</B></DT>
+		<DD>- configurer la couche Réseau</DD>
+		<DD>- il existe plusieurs NCP parmi lesquels :
+		<CENTER><TABLE>
+		<TR><TD><B>IPCP</B></TD><TD>pour IP (le plus utilisé)</TD></TR>
+		<TR><TD><B>IPXCP</B></TD><TD>pour IPX </TD></TR>
+		<TR><TD><B>ATCP</B></TD><TD>pour Appletalk</TD></TR>
+		<TR><TD><B>OSINLCP</B></TD><TD>pour OSI</TD></TR>
+		</TABLE></CENTER>
+		</DD>
+		<DD>- Certains protocoles peuvent avoir des fonctions particulières.<BR>
+			Par exemple, IPCP compresse
+			les entêtes IP, TCP et UDP, ce qui permet de diminuer notablement la quantité
+			d'octets tranmis.<BR><BR>
+		</DD>
+
+	<DT><B>documentation sur IPCP</B> : <A HREF="RFC1332.txt">RFC1332</A> et <A HREF="RFC1877.txt">RFC1877</A></DT>
+	</DL>
+	<BR><BR>
+</LI>
+<LI><H4>encapsulation PPP</H4>
+
+	<DL>
+	<DT><B>rôle</B> : transmettre de manière fiable les PDU des protocoles CHAP, PAP, LCP et NCP,
+			en les multiplexant sur une liaison série</DT>
+		
+	</DL>
+
+</LI>
+</UL>
+
+<HR>
+
+</BODY>
+</HTML>

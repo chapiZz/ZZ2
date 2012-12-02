@@ -1,0 +1,296 @@
+<html>
+<head>
+<title> Homework # 3 for EE535 by Jennifer Stander </title>
+<Link ref = "February 21, 1996"  href="jstander@ee.wpi.edu">
+</head>
+
+<body>
+<p><img align=bottom src="line.colorbar.gif">
+<img align=bottom src="line.colorbar.gif"></p>
+Origine : <A HREF="http://www.ece.wpi.edu/courses/ee535/hwk96/hwk3cd96/jstander/jstander.html">http://www.ece.wpi.edu/courses/ee535/hwk96/hwk3cd96/jstander/jstander.html</A>
+<h2> Jennifer Stander </h2>
+<h1> Cyclic Redundancy Checking for Ethernet </h1>
+<p><img align=bottom src="line.colorbar.gif">
+<img align=bottom src="line.colorbar.gif">
+<img align=bottom src="line.colorbar.gif"></p>
+
+<p><img align=bottom src="line.colorbar.gif">
+
+<h1><img align = middle src = "icon.book.ques.gif">
+<a name = "table">Table of Contents</a></h1>
+<ol>
+<li><img src="ball.red.gif"><a href="#ch1.0"> Introduction to Topic</a>
+<li><img src="ball.red.gif"><a href="#ch2.0"> Error Detection in Ethernet</a>
+<li><img src="ball.red.gif"><a href="#ch3.0"> Generalized CRC Implementation</a>
+<ol>
+<li><img src="ball.blue.gif"><a href="#ch3.1"> CRC Algorithm</a>
+<li><img src="ball.blue.gif"><a href="#ch3.2"> Implementation of CRC Algorithm</a> 
+</ol>
+<li><img src="ball.red.gif"><a href="#ch4.0"> Coding Theory behind CRC</a>
+<ol>
+<li><img src="ball.blue.gif"><a href="#ch4.1"> Summary of Galois Field Arithmetic</a>
+<li><img src="ball.blue.gif"><a href="#ch4.2"> Hamming Distance</a> 
+<li><img src="ball.blue.gif"><a href="#ch4.3"> Binary Cyclic Codes</a> 
+<li><img src="ball.blue.gif"><a href="#ch4.4"> BCH Codes</a>
+</ol>
+<li><img src="ball.red.gif"><a href="#ch5.0"> Analysis of Error Detection Performance</a>
+<ol>
+<li><img src="ball.blue.gif"><a href="#ch5.1"> Multiple Single Bit Error Performance</a>
+<li><img src="ball.blue.gif"><a href="#ch5.2"> Burst Error Performance</a> 
+<li><img src="ball.blue.gif"><a href="#ch5.3"> Actual Performance for a Physical System</a> 
+
+</ol>
+<li><img src="ball.red.gif"><a href="#refs"> References and Links</a>
+</ol>
+<p><img align=bottom src="line.colorbar.gif"></p>
+
+<h1> List of Figures </h1>
+<ol> 
+<li><img src="ball.green.gif"><a href="#fig1"> Example of Modulo-2 Division</a>
+<li><img src="ball.green.gif"><a href="#fig2"> CRC Encoder</a>
+<li><img src="ball.green.gif"><a href="#fig3"> CRC Decoder</a>
+<li><img src="ball.green.gif"><a href="#fig4"> The Probability of undetectable error </a>
+
+
+</ol>
+<a href= "#ch2.0"><img align = middle src = "arrow.blue.down.gif"></a>
+<a href= "#table"><img align = middle src = "icon.book.ques.gif"></a>
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h1><a name = "ch1.0">1.0  Introduction to Topic </a></h1>
+<p><img align=bottom src="line.colorbar.gif"></p>
+<p> 
+Error Detection is a very important function of the Ethernet protocol.  Digital data is not like voice data were an error here or there will only effect the quality of transmission.  With voice data, if an error occurs you can still hear Grandma talk about her cat.  However, if errors occur in digital data the information is lost and the data transferred is useless.  If errors go undetected, it will cause havoc and disaster.  Why then is error detection dealt with so lightly?  In most literature little attention is paid to the error detection capabilities of checksum algorithms.  Ethernet for example, uses a 32-bit cyclic redundancy check (CRC).   In most books, some mention is made to the error detection capability by throwing out a few numbers that represent the probability of an undetected error.   But where did these numbers come from?  This is the question I hope to answer in this page. 
+</p>
+
+<a href= "#ch3.0"><img align = middle src = "arrow.blue.down.gif"></a>
+<a href= "#ch1.0"><img align = middle src = "arrow.blue.up.gif"></a>
+<a href= "#table"><img align = middle src = "icon.book.ques.gif"></a>
+
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h1><a name = "ch2.0">2.0  Error Detection in Ethernet</a></h1>
+<p><img align=bottom src="line.colorbar.gif"></p>
+<p>
+As mentioned previously, the Ethernet protocol includes error detection capabilities.  It does so using a 32-bit CRC code.  This code is stored in the Frame Check Sequence (FCS) which follows the data portion of the data packet.  At the transmitter, the preamble of the packet is passed.  The checksum is only taken on the remaining bits of the packet.  Before the CRC algorithm is applied the first 32 bits of the address are ones complemented.  Then the bits are modulo-2 divided by <img align = bottom src = eq0.gif>, which is referred to as the generating polynomial.  The remainder of this division is then appended to the original data bytes and the packet is sent out.
+</p>
+<p>
+At the receiver, the bits are read in and a new checksum is calculated from the received data.  If this checksum is identical to the one in the Frame Check Sequence then no error is detected.[<a href="#ref1">1</a>,<a href="#ref2">2</a>] 
+</p>
+
+<a href= "#ch4.0"><img align = middle src = "arrow.blue.down.gif"></a>
+<a href= "#ch2.0"><img align = middle src = "arrow.blue.up.gif"></a>
+<a href= "#table"><img align = middle src = "icon.book.ques.gif"></a>
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h1><a name = "ch3.0">3.0  Generalized CRC Implementation</a></h1>
+<p><img align=bottom src="line.colorbar.gif"></p>
+<p>
+The process described for the Ethernet protocol follows the same basic algorithm and implementation as any CRC code.  Therefore for simplicity this section will provide a generalized discussion of CRC codes, to clarify the process of using them in actual systems.  First, the basic theory of operation will be presented.  This will be followed by a quick example of how the algorithm is implemented in hardware.[<a href="#ref3">3</a>,<a href="#ref4">4</a>].
+</p>
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "ch3.1">3.1  CRC Algorithm</a></h2>
+
+<p>
+In general, a CRC encoded data packet consists of n bits.  The first k bits represent the original data.  The last n-k bits consists of the parity check bits.  In Ethernet, n can range from 512 to 12144 and n-k is 32.  The transmitted packet can be expressed using this equation <img align = bottom src = eq1.gif>, where <img align = bottom src = eq2.gif>. C(x) is the original data and G(x) is the generator polynomial.   The following example will use a generating polynomial of <img align = bottom src = eq3.gif> with four bit data.  Therefore n =7 and k=4.
+</p>
+<p>
+Let us say that the data to be encoded is 1001.  First, this data will be multiplied by X^n-k or X^3 resulting in 1001000.  This value will then be divided by G(x), which can be represented as the binary number 1011.  The following will be done using the modulo-2 addition and multiplication operations as shown in Figure 1.
+
+</p><a name = "fig1">
+<IMG SRC="fig1.gif"></a>
+<p><em>Figure 1 - Example of Modulo-2 Division </em></p>
+<p>
+The remainder of the division is 110, this is appended to the data creating a valid seven bit code word of 1001110.  This word is transmitted.  The receiver reads in the message and computes the checksum on the first four bits of the transmitted information.  If the checksum received is equal to the checksum calculated no error is detected.
+</p>
+<p>
+Another equivalent way to determine if an error occurred would be to read in the entire n-bit message and divide it by the generator polynomial.  Since the original transmission was a multiple of the generator polynomial, the result should equal zero.  If it does not then an error was detected.  The reasoning behind this method views the received packet R(x) as a sum of the original information sent T(x), and any error information E(x),<img align = bottom src = eq4.gif>.  Since T(x) is evenly divisible by G(x), <img align = bottom src = eq5.gif>.  Therefore, for an error to go undetected E(x)/G(x) = 0.  This will only happen when E(x) is equivalent to a valid non-zero code word.
+</p>
+
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "ch3.2">3.2  Implementation of CRC Algorithm </a></h2>
+<p>
+When examining the algorithm mathematically the process of modulo-2 division can seem quite complicated.  However, the implementation of this algorithm in hardware is beautifully simplistic.  In fact, several theorists studying coding theory turn to a hardware implementation to characterize the error performance of such codes because of its simplicity.[<a href="#ref3">3</a>]
+</p>
+<p>
+The encoder consists of linear feedback shift registers and modulo-2 adders.  Figure 2 taken from [<a href="#ref5">5</a>] shows the encoder for the generator polynomial.  The powers of the polynomial with coefficients of one have a tapped position, or feedback path.  The powers with coefficients of zeros do not have a feedback path.
+
+</p><a name = "fig2">
+<IMG SRC="fig2.gif"></a>
+<p><em>Figure 2 - CRC Encoder </em></p>
+<p>
+To begin the encoding process the switches are in position #1, such that the feedback loop is connected and the output is connected to the input.  The shift register is driven by a clock.  Every clock tick the input data is shifted into the register in addition to transmitting the data.  After all k data bits are shifted into the register, the switches are switched to position #2.  The shift register contains the modulo-2 remainder of the division.  This checksum is then shifted out onto the data line and transmitted immediately.
+</p>
+<p>
+At the receiver, there are two ways of determining the if an error occurs.  The first performs the opposite function of the encoder as shown in Figure 3.  The second is to perform the same operation and then compare the two checksum.  The later is done in Ethernet.
+</p>
+<a name = "fig3">
+<IMG SRC="fig3.gif"></a>
+<p><em>Figure 3 - CRC Decoder </em></p>
+
+<a href= "#ch5.0"><img align = middle src = "arrow.blue.down.gif"></a>
+<a href= "#ch3.0"><img align = middle src = "arrow.blue.up.gif"></a>
+<a href= "#table"><img align = middle src = "icon.book.ques.gif"></a>
+
+
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h1><a name = "ch4.0">4.0  Coding Theory behind CRC</a></h1>
+<p><img align=bottom src="line.colorbar.gif"></p>
+<p>
+The CRC code is a type of Bose-Chaudhuri-Hocquenghem code (BCH).  BCH codes are in turn a subset of Binary cyclic codes.  Many of the generator polynomial for the CRC codes are formed by multiply the generator polynomial of a hamming code by x+1.[<a href="#ref6">6</a>,<a href="#ref10">10</a>,<a href="#ref11">11</a>] such as the CRC-16 and CRC-CCITT codes.  Although, the Ethernet CRC code is contained in the same subclass its polynomial was found in a different manner.  Therefore, the key to comprehension may be found in understanding BCH and hamming codes and how they work.  Hopefully, the following sections will provide the tools we need to perform an accurate analysis of the CRC code error detection performance.
+</p>
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "ch4.1">4.1  Summary of Galois Field Arithmetic</a></h2>
+<p>
+Before starting to explore the heritage of the CRC code, it is important to understand the basic terminology and building blocks of the theory.  This section is meant to introduce these theoretical and mathematical building blocks.
+</p>
+<p>
+All of the theory of CRC codes depends on the assumption that the information being processed is contained in a field.  A field is defined as a group of elements, such that when elements of the field are added or multiplied together their result is also contained with in the field.  For example, integers would fall into a field.  However, we are interested in finite or galois fields were the number of elements is limited.  The simplest of such fields to understand is a binary field containing only two elements 0 and 1 and is denoted by GF(2).  Operations on this field are modulo-2 addition (logical XOR) and multiplication (logical AND).  Similar, fields of higher order exist containing p elements, where p is a prime number, and performing modulo-p operations.
+</p>
+<p>
+However, we are particularly interested in GF(2^m) fields.  These fields are referred to as extension fields.  Extension fields provide a simplified means of manipulating groups of bits instead of dealing with each individual bit in a transmission.  For example, to detect errors in 3-bit words, it will be much easier to deal with GF(2^3) fields than to try to deal with each bit individually.  A GF(2^3) field will contain all eight possible combinations of the three bits: 000, 001 ...... 110, 111.  These codes can be expressed as polynomials.  For example the code 101 is equivalent to <img align = bottom src = eq6.gif>, as discussed earlier in the CRC code algorithm.
+</p>
+<p>
+Since each code word in the GF(2^3) extension field can be thought of as a polynomial.  We must find a polynomial ,p(x), under which the additive and multiplication properties hold, i.e. modulo - p(x) operations.  This polynomial is referred to as the primitive polynomial and must satisfy several criteria for these operations to hold.  First, the polynomial must not have roots in the GF(2) field.  Secondly, its roots must be contained within the extension field.  For a GF(2^m), field there will be exactly m roots.  Third, it's first 2^m-1 powers equal the non-zero elements of GF(2^m).  For the GF(2^3) case, acceptable primitive polynomial is <img align = bottom src = eq7.gif>.[<a href="#ref6">6</a>]  Primitive polynomials are very important to error detection codes.  Their use will help minimize the number of undetectable errors that are possible.
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "ch4.2">4.2  Linear Block Codes</a></h2>
+<p>
+CRC codes are a subset of a subset of linear block codes.  Linear block codes are very well defined, every text on error-correction codes has dedicated at least one chapter to the subject.  [<a href="#ref6">6</a>,<a href="#ref7">7</a>]  As discussed early the basic format of the data packets being sent consists of an n-bit message.  The first k-bit of the message are the actual data and the last n-k bit represent the redundant checksum.  This is referred to as a (n,k) linear block code.  The operation of these codes can easily be explained in matrix notation were c represents a valid codeword: c = iG.  i is a 1 X k vector that represents the k-bit information bits and G is referred to as the generator matrix.  The generator matrix is simply a different way of representing the generator polynomial discussed earlier.  The first k columns of G form an identity matrix, which results in the first k bits of c equaling the original information.  The remaining n-k columns in G represent linear combinations of i, thus deserving the name systematic linear block code.
+</p>
+<p>
+Essentially, the generator matrix maps a field of length k vectors into a field of length n vectors.  Since there are only 2^k valid code words, not every code in the 2^n field will be used.  This means that if an illegal code is received at the decoder, an error has occurred during transmission.  Some of these errors can not only be detected but they can also be corrected.  The property of linear block codes that defines error detection capability of a code is the hamming distance.  The hamming distance refers to the number of bit positions that two valid codewords differ by.  The minimum distance, d, refers to the minimum number of bit position that any two valid codewords differ by.  If the minimum distance is two, all single bit errors can be detected because they will cause illegal codewords.  Similarly, a minimum distance of five can detect any four single bit errors.
+</p>
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "ch4.3">4.3  Binary Cyclic Codes </a></h2>
+<p>
+Binary cyclic codes are simply linear block codes with an added restrictions.  Cyclic codes must still meet the addition and multiplication restrictions describe before, while also meeting the shift function.  This means that any valid code word, can be shifted any number of times and remain a valid codeword.  This places special restrictions on the generator matrix, and brings it together with the generator polynomial.  In the previous example the generator polynomial was <img align = bottom src = eq8.gif>.   The equivalent generator matrix would consists of the following rows:
+</p>
+<p>
+<img align = bottom src = eq9.gif>
+</p>
+<p>
+where each row is simply the first row shifted.[<a href="#ref5">5</a>]
+</p>
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "ch4.4">4.4  BCH Codes </a></h2>
+<p>
+The Ethernet CRC code is contained in a subset of linear block codes called BCH codes.  These code follow certain basic characteristics.  First, they have a block length of n = 2^m - 1 digits.  For Ethernet we have seen that n can very between 512 to 12144.  Secondly, the number of parity bits, n-k in the previous discussion, must be less that or equal to mt, where t is the minimum number of bits that can be corrected.  Since Ethernet uses the CRC code as an error detection code as opposed to an error correction code,  the minimum t can be assumed to be 1.  Finally the minimum hamming distance, d, for this group of codes is greater than or equal to 2t-1.
+</p>
+<p>
+To meet these restrictions, special attention must be paid in picking the generator polynomial.  The generator polynomial must consist of the least common multiples of the primitive polynomials.  For Ethernet this results in  g(x) = alpha^7, where the alpha is the primitive element of GF(2^32).  From the table in [<a href="#ref9">9</a>], alpha was found to be <img align = bottom src = eq10.gif>.
+</p>
+
+<a href= "#refs"><img align = middle src = "arrow.blue.down.gif"></a>
+<a href= "#ch4.0"><img align = middle src = "arrow.blue.up.gif"></a>
+<a href= "#table"><img align = middle src = "icon.book.ques.gif"></a>
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h1><a name = "ch5.0">5.0  Analysis of Error Detection Performance</a></h1>
+<p><img align=bottom src="line.colorbar.gif"></p>
+<p>
+Now that we have explored the theory behind the CRC codes, how does this relate to the error detection capability of the code.  This  section will look at the development of the absolute performance of the code void of any physical or a priori data about the probability of error.[<a href="#ref4">4</a>]  As well as examining the reality of the codes performance including information about the probability and characteristics of error that actually occur.[<a href="#ref8">8-14</a>]
+</p>
+<p>
+Based on the characteristics of the linear block codes several statements can be made about the worse case error performance on CRC codes in general.  There are two categories of errors by which error detection codes can be analyzed.  The first is multiple single bit errors and the second is burst errors.  
+</p>
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "ch5.1">5.1  Multiple Single Bit Error Performance</a></h2>
+<p>
+Multiple single bit errors refer to errors that occur independently throughout the transmission.  These errors occur randomly with equal probability in any of the n-bits being transmitted.  The probability that these errors go undetected can be derived from the hamming distance of the code.  Unfortunately, the Ethernet protocol complicates matters with the introduction of variable length messages.  Therefore, the hamming distance must be calculated for each message length.  Luckily, this is a very computationally intensive task has been performed for the Ethernet protocol in reference [<a href="#ref12">12</a>].  A summary of their results is shown in Table 1 taken from their Table 2.
+</p>
+<p><em> Table 1 - Minimum Distances</em></p>
+<p>
+<img align = bottom src = "tab1.gif">
+</p>
+<p>
+For valid codes in the Ethernet protocol, the hamming distance is either 4 or 5.  This means that for longer messages three single bit errors can be detected while for shorter messages up to four single bit errors can be detected.  At first these figures seem a little low for all the extra effort.  Many have worked on determining the probability that an undetectable error occurs using specially algorithms[<a href="#ref12">12</a>,<a href="#ref13">13</a>,<a href="#ref14">14</a>] as well as special hardware [<a href="#ref3">3</a>] to simplify the calculation.  They have determined the worst case maximum bound to equal 2^-r, where r is the number of parity bits.  In our case this translates into the probability of an undetected error equals 2^-32.  This assumes that the channel is symmetric and that the worst case bit error rate is .5.  It can be derived from calculating the probability that exactly e errors occur in n-bit of data and summing over all possible e.
+</p>
+<p>
+This calculation is very computational intensive, since the Ethernet has varying sized packets as well as many possible bit error rates.  Therefore, alternate ways have been developed to perform this calculation.  One of the more popular ways is introduced in [<a href="#ref12">12</a>].  The probability of an undetected error, Pe, is dependent on the bit error rate, epsilon, and minimum distance of the code Cn.  It was found that
+</p>
+<p>
+<img align = bottom src = eq11.gif>, 
+</p>
+<p>
+where An,i is the number of codewords of weight i and n is the number of bits in the transmitted packet.  The result of the calculation is  shown in Figure 4, it was scanned from [<a href="#ref12">12</a>].
+</p>
+<a name = "fig4">
+<IMG SRC="fig4.gif"></a>
+<p><em>Figure 4 - The Probability of undetectable error </em></p>
+<p>
+From Figure 4, several trends are apparent.  First, the maximum bound for an undetected error seems to hold for most n.  Secondly, longer packets of data are more prone to undetected errors, the bit error rate needs to be smaller than 10-4 to deviate significantly from the worst case error condition for packets of 12144 bits, while packets of 512 show significant improvement at error rates of less than 10^-2.  This trend makes sense, with longer packets there are more possible undetectable errors than with smaller packets because they have a smaller hamming distance.
+
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "ch5.2">5.2  Burst Error Performance </a></h2>
+
+<p>
+In addition to multiple single bit errors, burst errors are also very important in evaluating the performance of error detection codes.  A burst error is defined by a group of errors all occurring within m bit positions.  Burst errors are important because they more accurately reflect the type of errors that are more likely to occur.
+</p>
+<p>
+As discussed before, the received signal can be thought of as the addition of the original message plus some error information.  If this incoming signal is divisible by the generator polynomial, G(x), no error is detected.  An undetected error occurs only if the error polynomial is divisible by G(x).  In our case G(x) has an order of 32, therefore all error polynomials with less than 32 bits are not divisible by the generator polynomial and will not create an undetectable error.  Therefore ALL burst errors of length less than 32 or n-k, where n is the number of bits in the message and k is the number of data bits, are detectable.  Similarly if the burst length is n-k+1, then probability of an undetected error is 2^-(n-k-1).  In addition if the burst length is greater than n-k+1 the probability of an undetected error is reduced to 2^-(n-k).  This is derived from the fact that there are 2^n possible received words, while only 2^k of those are valid code words.  If a burst error occurs with length greater than 32, then there is a chance that the error polynomial will be divisible by the generator polynomial.  This in turn yields an undetected error.
+</p>
+<p>
+There has also been work done on the error detection of double burst errors.[<a href="#ref12">12</a>].  In this case we have two single burst errors of less than b bits.  The double burst error can only be detected if the single burst error of b-bits can be corrected.  The length of the double burst errors detected is dependent on the size of the packet, the results are shown in Table 2 taken from Table 3[<a href="#ref12">12</a>].
+</p>
+</p>
+<p><em> Table 2 - Double Burst Detection Burst Length</em></p>
+<p>
+<img align = bottom src = "tab2.gif">
+</p>
+<p>
+For Ethernet packets double burst errors with lengths between 13 and 9 can be detected.
+</p>
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "ch5.3">5.3  Actual Performance for a Physical System </a></h2>
+
+<p>
+The previous discussion of error performance still does not provide the real picture of how an error code will really perform.  For example, they assume that all code words are equally likely and they can only make guestimates at the characteristics of the error encountered.  The only real way to find out how a code is going to behave in a real life system is to try it out.  One of the first applications that used the same CRC code as Ethernet was the Autovon channel.[<a href="#ref4">4</a>]  The channel was constructed using modems with a baud rate of 9600.  The network was meant for voice grade communication.  The article first calculates the probability of undetected errors using a bruit force method with a subset of the possible codes.  However, they then test these estimated probabilities using a simulation.  This simulation was developed with actual error data.  Therefore, a more accurate model of the channel error characteristics was defined.  The results obtained from this simulation show a fairly optimistic performance of the CRC code.  In fact, during their evaluation no undetected errors occurred with block lengths of 1024 and 2048.[<a href="#ref4">4</a>]  This provides some confidence that the purely theoretical calculations performed may be more pessimistic than the actual implementation of the CRC code.
+</p>
+<p>
+From the web page we have seen the various ways that error detection codes can be analyzed as well as presenting some of the basic coding theory behind there existence.  This gives meaning to the numbers so casually used in many texts and articles.
+</p>
+
+
+<a href= "#ch5.0"><img align = middle src = "arrow.blue.up.gif"></a>
+<a href= "#table"><img align = middle src = "icon.book.ques.gif"></a>
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<h2><a name = "refs">6.0  References and links</a></h2>
+<p><img align=bottom src="line.colorbar.gif"></p>
+
+<p><a name = "ref1">1.</a> ANSI/IEEE Std 802.3.  <u> Information Technology - Local and metropolitan area networks:  Part 3 Carrier sense multiple access w/ collision detection access method and physical layer specifications. </u> IEEE,1992. </p>
+<p><a name = "ref2">2.</a>  Prof. David Cyganski.  <u> EE535 Class notes 2-14-96</u>.</p>
+<p><a name = "ref3">3.</a>   Dexter Chun and Jack Keil Wolf.  "Special hardware for computing the probability of undetected error for certain binary CRC codes and test results."  IEEE Transactions on Communications, vol. 42, no 10, 1994, pp. 2769 - 2772.</p>
+<p><a name = "ref4">4.</a>  Kenneth Brayer and Joseph L. Hammond.  "Evaluation of error detection polynomial performance on the Autovon channel".  National Telecommunications Conference, 1975, pp. 8-21 - 8-25.</p>
+<p><a name = "ref5">5</a>  Joseph L. Hammond and Peter J.P. O'Reilly.  <u>Performance Analysis of Local Computer Networks</u>.  Addison-Wesley Publishing Company, Reading, Ma., 1988, pp. 42 - 65.</p>
+<p><a name = "ref6">6.</a>  Arnold M. Michelson and Allen H. Levesque.  <u>Error Control Techniques for Digital Communication</u>.  John Wiley & Sons, New York, 1985.</p>
+<p><a name = "ref7">7.</a>  Shu Lin.  <u> An Introduction to Error-Correcting Codes</u>.  Prentice-Hall, Inc., Englewood Cliffs, NJ, 1970.</p>
+<p><a name = "ref8">8.</a>  Guy Castagoli, Stefan Brauer, and Martin Herrmann.  "Optimization of cyclic redundancy-check codes with 24 and 32 parity bits".  IEEE Transactions on Communications, vol. 41, no. 6, 1993, pp. 883 - 892. </p>
+<p><a name = "ref9">9.</a>  W. W. Peterson and E. J. Weldon.  <u> Error Correcting Codes, 2nd ed</u>.  MIT Press, Cambridge, Ma., 1972.</p>
+<p><a name = "ref10">10.</a>  Jack Keil Wolf and Robert D. Blakeney, II.  "An exact evaluation of the probability of undetected error for certain shortened binary CRC codes".  MILCOM, 1988, pp. 15.2.1 - 15.2.6.</p>
+<p><a name = "ref11">11.</a>  Jack Keil Wolf and Dexter Chun.  "The single burst error detection performance of binary cyclic codes".  IEEE Transactions on Communications, vol. 42, no. 1, 1994, pp. 11 - 13.</p>
+<p><a name = "ref12">12.</a>  Toru Fujiwara, Tadao Kasami, and Shu Lin.  "Error detecting capabilities of the shortened hamming codes adapted for error detection in IEEE standard 802.3".  IEEE Transactions on Communications, vol. 37, no. 9, 1989, pp. 986 - 989.</p>
+<p><a name = "ref13">13.</a>  Tohru Fujiwara, Tadao Kasami, Atsushi Kitai, and Shu Lin.  "On the undetected error probability for shortened hamming codes".  IEEE Transactions on Communications, vol. 33, no. 6, 1985, pp. 570 - 573. </p>
+<p><a name = "ref14">14.</a>  Jack K. Wolf, Arnold M. Michelson, and Allen H. Levesque.  "On the probability of undetected error for linear block codes".  IEEE Transactions on Communications, vol. 30, no. 2, 1982, pp. 319 - 323.</p>
+
+<p><img align=bottom src="line.colorbar.gif"></p>
+<p><img align=bottom src="line.colorbar.gif"></p>
+<p><img align=bottom src="line.colorbar.gif"></p>
+
+<address> Send email to:
+<a href="mailto:jstander@ee.wpi.edu"> <em> Jennifer Stander</em></a>
+</address>
+<p><img align=bottom src="line.colorbar.gif"></p>
+
+<HR>
+<h3><img align=bottom src="connect.gif"> 
+<a href="http://ece.wpi.edu/courses/ee535"> Return to the WPI EE535 Telecommunications and Transmission Technologies Course Homepage </h3> </a>
+</body>
+</html>

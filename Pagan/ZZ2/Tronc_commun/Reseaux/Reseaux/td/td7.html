@@ -1,0 +1,206 @@
+<HTML>
+<HEAD>
+	<TITLE>NIS</TITLE>
+	<STYLE TYPE="text/css">
+		BODY { background-color: white }
+		H1, H2, H3, H4, OL, LI, P, TD, BLOCKQUOTE {font-family:sans-serif}
+		TT {font-family:monospace; font-weight:bold}
+		H2 {border: solid; text-align:center}
+		H3 {text-decoration:underline}
+        .blanc {font-family:monospace; font-weight:bold; 
+            background-color:silver; color:white}
+        .noir {font-family:monospace; font-weight:bold; 
+            background-color:silver; color:black}
+        .fc {font-family:monospace; font-weight:bold; 
+            background-color:black; color:white}
+        .patrice {background-color:red; color:white}
+	</STYLE>
+</HEAD>
+
+<BODY>
+<TABLE WIDTH="100%">
+<TR><TH><H1>NIS - <I>Network Information System</I><BR>
+		NFS - <I>Network File System</I></H1></TH>
+	<TD><P ALIGN=right STYLE="font-size:small"><I>
+		<A HREF="mailto:patrice.laurencot@isima.fr">Patrice Laurençot</A><BR>
+		<A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude 
+			Vialatte</A>
+		</I></P></TD></TR>
+</TABLE>
+<!--<p class="patrice"><b>Patrice</b> : ce qui est en rouge est à faire faire
+par Christophe ou par toi !</p>-->
+<DL>
+<DT>Notation :</DT>
+	<DD>- <span class="fc">&nbsp;fc&nbsp;</span> désigne le système principal,
+		dont l'adresse-IP est 192.168.100.60</DD>
+	<DD>- "vos" systèmes sont désignés par les noms 
+	    <span class="blanc">&nbsp;blanc&nbsp;</span> et 
+	    <span class="noir">&nbsp;noir&nbsp;</span></DD>
+</DL>
+
+<HR>
+
+<A NAME=NIS></a>
+<H2>1 - Le Service RPC</H2>
+	<OL>
+	<LI>Exécuter <TT>rpcinfo</TT>(8) avec différents paramètres, pour 
+		déterminer quels Services sont disponibles sur les systèmes 
+		de la salle (adresses-IP 192.168.100.2 à 192.168.100.58) et sur
+        <span class="fc">&nbsp;fc&nbsp;</span>.<BR>
+		Remarquer la mise en correspondance entre numéro de programme et
+		ports TCP/UDP.</LI>
+	<LI>Vérifier que les Services NIS et NFS sont bien désactivés sur
+		"votre" système.</LI>
+	</OL>
+<HR>
+
+<H2>2 - Le Service NIS</H2>
+
+<H3>2.1 - Examiner le serveur-NIS installé sur le système 
+<span class="fc">&nbsp;fc&nbsp;</span></H3>
+<!--    <span class="patrice">Il n'y a pas de serveur-NIS sur fc</span>-->
+	<OL>
+	<LI>Examiner les manuels des commandes <TT>ypserv</TT>(8), 
+		<TT>ypinit</TT>(8), ainsi que les fichiers de configuration du 
+		serveur-NIS maître installé sur 
+	    <span class="fc">&nbsp;fc&nbsp;</span> :
+		<BLOCKQUOTE><TABLE BORDER="1" CELLSPACING="0" CELLPADDING="2">
+		<TR><TD><TT>/var/yp</TT></TD><TD>le répertoire "de travail" du 
+			NIS</TD></TR>
+		<TR><TD><TT>/etc/sysconfig/network</TT></TD><TD>le nom du domaine 
+			(NISDOMAIN)</TD></TR>
+		<TR><TD><TT>/etc/ypserv.conf</TT></TD><TD>options avancées</TD></TR>
+		<TR><TD><TT>/var/yp/<I>domainname</I></TT></TD><TD>répertoire des 
+			<I>maps</I></TD></TR>
+		<TR><TD><TT>/var/yp/securenets</TT></TD>
+			<TD>droits d'interrogation sans <I>tcpwrappers</I></TD></TR>
+		<TR><TD><TT>/etc/hosts.allow</TT><BR><TT>/etc/hosts.deny</TT></TD>
+			<TD>droits d'interrogation avec les <I>tcpwrappers</I></TD></TR>
+		</TABLE></BLOCKQUOTE></LI>
+	<LI>Quel est le nom du domaine ?</LI>
+	<LI>Quelles sont les <I>maps</I> mises à disposition par le serveur-NIS ?</LI>
+	</OL>
+
+<H3>2.2 - Installer un client-NIS sur 
+<span class="blanc">&nbsp;blanc&nbsp;</span>
+</H3>
+
+	<OL>
+	<LI>Spécifier le domaine auquel doit appartenir le système 
+        <span class="blanc">&nbsp;blanc&nbsp;</span> 
+		(manuellement : <TT>domainname</TT>(1), 
+		au boot : <TT>/etc/sysconfig/network</TT>)</LI>
+	<LI>Vérifier que le <I>portmapper</I> fonctionne sur 
+        <span class="blanc">&nbsp;blanc&nbsp;</span> (par 
+		<TT>rpcinfo</TT>), le lancer par le script de lancement si ce n'est pas le cas.</LI>
+	<LI>Lancer le client <TT>ypbind</TT>(8).</LI>
+	<LI>A quel serveur-NIS s'est lié le client-NIS ? (commande 
+		<TT>ypwhich</TT>(1))</LI>
+	</OL>
+
+<H3>2.3 - Interrogations des bases d'informations d'administration</H3>
+<!--<span class="patrice">il faudrait mettre les étudiants dans la liste
+des comptes (passwd) de fc et mettre la base en map-NIS</span>-->
+	<OL>
+	<LI>Exécuter diverses commandes d'informations : <TT>ypcat</TT>(1),
+		 <TT>ypmatch</TT>(1)...</LI>
+	<LI>Comparer les résultats des commandes 
+		<UL>
+		<LI>"<TT>finger <I>compte</I></TT>" (qui interroge la base 
+			<B>passwd</B>),</LI>
+		<LI>"<TT>ping nom_système</TT>", qui interroge la base <B>hosts</B>)</LI>
+		</UL>  
+		selon la configuration des utilisateurs-NIS spécifiée dans le fichier 
+	    <TT>/etc/nsswitch.conf</TT>.<br><br></LI>
+	<LI><P>Arrêter le client-NIS de <span class="blanc">&nbsp;blanc&nbsp;</span>
+        avant de passer à la suite.</P></LI>
+	</OL>
+
+<H3>2.4 - Installer un serveur-NIS esclave sur 
+<span class="noir">&nbsp;noir&nbsp;</span></H3>
+	<OL>
+	<LI>Spécifier la liste des systèmes sur lesquels se trouve un client-NIS 
+		autorisé à interroger le serveur-NIS de 
+        <span class="noir">&nbsp;noir&nbsp;</span>. 
+		(voir <TT>ypserv</TT>(8)).</LI>
+	<LI>Spécifier le nom de domaine-NIS que servira le serveur-NIS esclave 
+		de <span class="noir">&nbsp;noir&nbsp;</span>.</LI>
+	<LI>Installer une copie des maps sur 
+        <span class="noir">&nbsp;noir&nbsp;</span> par <TT>ypinit</TT>(8)</LI>
+	<LI>Lancer le serveur-NIS esclave <TT>ypserv</TT>(8) sur 
+        <span class="noir">&nbsp;noir&nbsp;</span>, 
+		par le script de lancement au boot.</LI>
+	<LI>Vérifier qu'il fonctionne par <TT>rpcinfo</TT>.</LI>
+	<LI>Lancer les client-NIS de <span class="noir">&nbsp;noir&nbsp;</span> et de
+        <span class="blanc">&nbsp;blanc&nbsp;</span>, et examiner à quel 
+        serveur-NIS ils se lient.<BR><BR></LI>
+	<LI>Arrêter les clients-NIS de <span class="noir">&nbsp;noir&nbsp;</span> et de
+        <span class="blanc">&nbsp;blanc&nbsp;</span>, ainsi que le serveur-NIS de
+        <span class="noir">&nbsp;noir&nbsp;</span>.</LI>
+    <li>Relancer les clients-NIS de <span class="noir">&nbsp;noir&nbsp;</span> et de
+        <span class="blanc">&nbsp;blanc&nbsp;</span>.</li>
+	</OL>
+
+<HR>
+<A NAME=NFS></a>
+<H2>3 - Le Service NFS</H2>
+
+<H3>1 - <span class="noir">&nbsp;noir&nbsp;</span> en client-NFS du serveur-NFS 
+    de <span class="fc">&nbsp;fc&nbsp;</span></H3>
+	<BLOCKQUOTE>
+	Le système <span class="fc">&nbsp;fc&nbsp;</span> exporte divers répertoires.
+	</BLOCKQUOTE>
+	<OL>
+	<LI>Déterminer les répertoires qu'exporte le serveur-NFS de 
+        <span class="fc">&nbsp;fc&nbsp;</span>, 
+		ainsi que les options d'exportation.
+		(<TT>showmont</TT>(8), <TT>exports</TT>(5))</LI>
+	<LI>Créer un ou plusieurs points de montage dans <TT>/mnt</TT>.</LI>
+	<LI>Monter manuellement un ou plusieurs répertoires exportés par
+		 <span class="fc">&nbsp;fc&nbsp;</span> à ces points de montage.<BR>
+		 Que faudrait-il faire pour un montage systématique au démarrage du PC ?</LI>
+	<LI>Vérifier les droits d'accès aux répertoires et fichiers importés,
+		pour le super-utilisateur, et pour un utilisateur "normal".</LI>
+    <li>Comparer les inodes des répertoires concernés, sur 
+        <span class="fc">&nbsp;fc&nbsp;</span> et sur 
+        <span class="noir">&nbsp;noir&nbsp;</span>.</li>
+	</OL>
+
+<H3>2 - <span class="noir">&nbsp;noir&nbsp;</span> en serveur-NFS pour 
+<span class="blanc">&nbsp;blanc&nbsp;</span></H3>
+	<BLOCKQUOTE><TABLE BORDER="1" CELLSPACING="0" CELLPADDING="3">
+	<TR><TH>sur <span class="noir">&nbsp;noir&nbsp;</span></TH>
+        <TH>sur <span class="blanc">&nbsp;blanc&nbsp;</span></TH></TR>
+	<TR><TD>
+		<OL>
+		<LI>Spécifier les répertoires à exportés (<TT>exports</TT>(5)).</LI>
+		<LI>Lancer les serveurs-NFS, ou leur signaler que la liste
+			des répertoires exportés a été modifiée (<TT>mountd</TT>(8), <TT>exportfs</TT>(8)).</LI>
+		<LI>Vérifier que l'opération a réussi par <TT>showmount</TT>(8)</LI>
+		</OL></TD>
+		<TD>&nbsp;</TD></TR>
+	<TR><TD>Afficher les montages en cours (<TT>showmount</TT>(8))</TD>
+		<TD>Même procédure qu'en 1 pour monter les répertoires
+		exportés par <span class="noir">&nbsp;noir&nbsp;</span></TD></TR>
+	<TR><TD COLSPAN=2>Examiner ce qui se passe lorsqu'on modifie les autorisations 
+		dans <TT>exports</TT>(5) ou dans
+		<TT>hosts.allow</TT> et <TT>hosts.deny</TT> 
+        de <span class="noir">&nbsp;noir&nbsp;</span></TD>
+		</TR>
+	</TABLE></BLOCKQUOTE>
+
+<H3>3 - NIS et NFS</H3>
+	<OL>
+	<LI>Démonter tous les répertoires importés par 
+        <span class="blanc">&nbsp;blanc&nbsp;</span>.</LI>
+	<LI>Arrêter les client-NIS de <span class="blanc">&nbsp;blanc&nbsp;</span><BR><BR></LI>
+	<LI>Tenter de remonter sur <span class="blanc">&nbsp;blanc&nbsp;</span> 
+        les répertoires de <span class="fc">&nbsp;fc&nbsp;</span> ou de 
+        <span class="noir">&nbsp;noir&nbsp;</span>.</LI>
+	</OL>
+
+<HR>
+<H2 STYLE="text-align:center">Remettre les fichiers modifiés dans leur état initial</H2>
+<HR>
+</BODY></HTML>
+

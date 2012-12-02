@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+ <TITLE>Etude d'un protocole fiable : TCP</TITLE>
+  <LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+<H1>Etude d'un protocole fiable : TCP</H1>
+<P ALIGN=right><I><A HREF="mailto:mc.vialatte@cust.univ-bpclermont.fr">Marie-Claude Vialatte</A><BR>1999-2000</I></P>
+<HR>
+<H2>Connexion-TCP et identification de connexion-TCP</H2>
+	<BLOCKQUOTE>
+	<P>Une connexion-TCP est un canal bi-directionnel (2 tuyaux)
+	construit entre 2 utilisateurs </P>
+	<CENTER><IMG SRC="connexion-TCP.gif" ALT="les tuyaux" WIDTH="478" HEIGHT="231"></CENTER>
+    <P>Chaque connexion-TCP est entièrement identifiée par les adresses des TCP-SAP de ses deux extrémités.<BR>
+    L'adresse d'un TCP-SAP est composée de :</P>
+    <UL>
+    <LI><B>l'adresse-IP du système</B> qui le contient</LI>
+    <LI><B>"tcp"</B> implicite</LI>
+    <LI><B>un numéro de port</B>, qui peut être bien connu ou enregistré (<A HREF="../../doc/rfc1700/rfc1700-TCP-UDP_port_numbers.html">liste</A>), 
+        ou bien privé.
+    </UL>
+</BLOCKQUOTE>
+<HR>
+
+<H2>Etablissement de connexion-TCP <SPAN STYLE="font-size:smaller">(explication simplifiée)</SPAN></H2>
+<BR>
+
+	<BLOCKQUOTE>
+	<P>L'<B>établissement de connexion</B> est réalisé par l'échange de 3 PDU-TCP entre
+	les entités-TCP : </P>
+	<CENTER><IMG SRC="TCP-connect.gif" ALT="chronogramme connexion TCP" WIDTH="708" HEIGHT="258"></CENTER>
+	<!--<BLOCKQUOTE><TABLE WIDTH="100%">
+	<TR><TD><P>la 1<SUP>ère</SUP> est caractérisée par le flag <TT>SYN</TT>, </P>
+			<P>la 2<SUP>ème</SUP> par les flags <TT>SYN</TT> et <TT>ACK</TT>, </P>
+			<P>et la 3<SUP>ème</SUP> par le seul flag <TT>ACK</TT>.</P>
+		</TD>
+		<TD><IMG SRC="TCP-connect.gif" ALT="chronogramme connexion TCP" WIDTH="708" HEIGHT="258"></TD>
+	</TR>
+	</TABLE></BLOCKQUOTE>-->
+	
+	<P>la 1<SUP>ère</SUP> est caractérisée par le flag <TT>SYN</TT>, la 2<SUP>ème</SUP> par les flags <TT>SYN</TT> et <TT>ACK</TT>, 
+	et la 3<SUP>ème</SUP> par le seul flag <TT>ACK</TT>.</P>
+	<P>La 1<SUP>ère</SUP> PDU-TCP envoyée par chaque entité-TCP (flag <TT>SYN)</TT> contient dans son champ <TT>seq</TT> le numéro après duquel 
+	elle numérotera les PDU-TCP-données qu'elle émettra.<BR>
+	La 2<SUP>ème</SUP> PDU-TCP envoyée par chaque entité-TCP  (flag <TT>ACK</TT>) contient dans son champ <TT>ack</TT> le numéro que devra contenir 
+	la prochaine PDU-TCP-données qu'elle recevra.</P>
+	</BLOCKQUOTE>
+<HR>
+
+<H2>Terminaison de connexion-TCP <SPAN STYLE="font-size:smaller">(explication simplifiée)</SPAN></H2>
+
+	<BLOCKQUOTE>
+	<P>La <B>terminaison normale</B> de connexion se fait par l'échange de 2 PDU-TCP dans chaque sens; la 1<SUP>ère</SUP> PDU de 
+	chacune de ces 2 paires est caractérisée par le flag <TT>FIN</TT>.<BR>
+	Une <B>terminaison brutale</B> est possible, en envoyant une seule PDU avec le flag <TT>RST</TT>.</P>
+	<CENTER><IMG SRC="TCP-term.gif" ALT="chronogrammes terminaisons" WIDTH="644" HEIGHT="257"></CENTER>
+	</BLOCKQUOTE>
+
+<HR>
+</BODY>
+</HTML>

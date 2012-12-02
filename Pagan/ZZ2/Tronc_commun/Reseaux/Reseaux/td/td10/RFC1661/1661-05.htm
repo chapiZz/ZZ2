@@ -1,0 +1,289 @@
+<HTML>
+<TITLE>PPP - RFC 1661 - VF</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<P>RFC: 1661<BR>
+Statut : Standard<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm" TARGET="_top">INDEX FRANCAIS</A>
+<CENTER><H1>POINT TO POINT PROTOCOL - PPP</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER> W. Simpson / Juillet 1994<BR>
+Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry G. FREMAUX</A> Ing&eacute;nieur Professeur / <A HREF="http://www.eisti.fr">EISTI</A><BR>
+Edition originale : Mai 1996 / Version FR: Janvier 1998
+<HR>
+<CENTER>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-04.htm">Précédent</A> - <A HREF="1661-06.htm">Suivant</A><HR>
+</CENTER>
+<A NAME="5"></A>
+<H2>5.  Formats de paquets LCP</H2>
+<P>Il existe trois classes de paquets LCP :
+
+<OL><LI>Les paquets de Configuration de Liaison utilisés pour établir et configurer une communication (<I>Requête-Configuration</I>, <I>Configuration-Acquittée</I>, <I>Configuration-NonAcquittée</I> et <I>Configuration-Rejetée</I>).
+
+<LI>Les paquets de Fermeture de Liaison utilisés pour couper une communication (<I>Requête-Fermeture</I> et <I>Fermeture-Acquittée</I>).
+
+<LI> Les paquets de Maintenance de Liaison utilisés pour gérer et déverminer une liaison (<I>Code-Rejeté</I>, <I>Protocole-Rejeté</I>, <I>Requête-Echo</I>, <I>Réponse-Echo</I>, et <I>Requête-Elimination</I>).</OL>
+<P>Par souci de simplicité, il n'existe pas de champ de version dans les paquets LCP. Une implémentation LCP fonctionnelle correcte répondra toujours à des Protocoles et des Codes inconnus par un paquet LCP parfaitement univoque, ce qui procure un mécanisme automatique de reconnaissance de version non compatibles.
+<P>Quelles que soient les options de Configuration activées, tous les paquets LCP de Configuration, Fermeture et Rejet de Code (codes 1 à 7) seront systématiquement envoyés comme si aucune option de Configuration n'avait été négociée. En particulier, à chaque option de Configuration est attribuée une valeur par défaut. Ceci assure que tel paquet LCP restera toujours reconnaissable, même lorsqu'une extrémité de la ligne considère par erreur que la ligne est ouverte.
+<P>Un et un seul paquet LCP est encapsulé dans le champ d'information PPP, lorsque le champ Protocole du paquet PPP indique une valeur hexadécimale c021 (Link Control Protocol).
+<P>Un résumé des formats de paquets LCP est donné ci-après. Les champs sont transmis de la gauche vers la droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      | Identificateur|           Longueur            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |    Données ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+
+<A NAME="5.a"></A>
+<H4>Code</H4>
+<P>Le champ Code comporte un octet, et identifie le type de paquet LCP. Lorsqu'un paquet reçu affiche un code inconnu, un paquet <I>Code-Rejeté</I> est transmis en retour.
+
+Les valeurs de codes LCP reconnus les plus récents sont mentionnés dans la RFC "Assigned Numbers" [2]. Cette spécification donne les codes de base suivants :
+
+<CENTER><TABLE><TR><TD>1</TD><TD><I>Requête-Configuration</I></TD></TR>
+<TR><TD>2</TD><TD><I>Configuration-Acquittée</I></TD></TR>
+<TR><TD>3</TD><TD><I>Configuration-NonAcquittée</I></TD></TR>
+<TR><TD>4</TD><TD><I>Configuration-Rejetée</I></TD></TR>
+<TR><TD>5</TD><TD><I>Requête-Fermeture</I></TD></TR>
+<TR><TD>6</TD><TD><I>Fermeture-Acquittée</I></TD></TR>
+<TR><TD>7</TD><TD><I>Code-Rejeté</I></TD></TR>
+<TR><TD>8</TD><TD><I>Protocole-Rejeté</I></TD></TR>
+<TR><TD>9 </TD><TD><I>Requête-Echo</I></TD></TR>
+<TR><TD>10</TD><TD><I>Réponse-Echo</I></TD></TR>
+<TR><TD>11</TD><TD><I>Requête-Elimination</I></TD></TR></TABLE></CENTER>
+<A NAME="5.b"></A>
+<H4>Identificateur</H4>
+<P>Le champ Identificateur comporte un octet, et fournit un moyen d'associer requêtes et réponses. Lorsqu'un paquet présente un Identificateur invalide, il est ignoré sans affecter l'automate.
+<A NAME="5.c"></A>
+<H4>Longueur</H4>
+<P>Le champ Longueur comporte deux octets, et donne la longueur du paquet LCP, y compris l'octet de Code, d'Identificateur, le champ Longueur lui-même et le champ Données. La longueur NE DOIT PAS excéder l'URM de la liaison.
+<P>Les octets reçus en dehors de la plage définie par le champ Longueur sont traités comme des octets de bourrage et sont ignorés. Lorsqu'un paquet affiche une Longueur invalide, il est ignoré sans affecter le fonctionnement de l'automate.
+<A NAME="5.d"></A>
+<H4>Données</H4>
+<P>Le champ Données comporte zéro ou un nombre quelconque d'octets, selon l'indication du champ Longueur. Le format interne du champ Données dépend de la valeur présente dans le champ Code.
+<A NAME="5.1"></A>
+<H3>5.1. <I>Requête-Configuration</I></H3>
+<H4>Description</H4>
+<P>Une implémentation désireuse d'initialiser une communication DOIT transmettre une <I>Requête-Configuration</I>. Le champ d'Options est renseigné avec tous les changements à faire par rapport à la configuration par défaut. Les Options de Configuration NE DOIVENT PAS y apparaître lorsqu'elles ont leur valeur par défaut.
+<P>Sur réception d'une <I>Requête-Configuration</I>, une réponse appropriée DOIT être émise.
+<P>Le format de ce paquet est exprimé ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      |Identificateur |           Longueur            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Options ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+
+<H4>Code</H4>
+<P>1 pour signifier <I>Requête-Configuration</I>.
+<H4>Identificateur</H4>
+<P>Le champ Identificateur DOIT changer lorsque le contenu des Options change, et dans la mesure où une réponse valide a été reçu pour la requête précédente. Pour toute retransmission, l'Identificateur PEUT demeurer inchangé.
+<H4>Options</H4>
+<P>Le champ d'Options est de longueur variable, et contient une liste de zéro ou plus Options de Configuration que l'émetteur désire renégocier. Toutes les Options de Configuration sont négociables simultanément. Le format des Options de Configuration est décrit dans un des chapitres suivants.
+<A NAME="5.2"></A>
+<H3>5.2. <I>Configuration-Acquittée</I></H3>
+<H4>Description</H4>
+<P>Si toutes les Options de Configuration reçues dans une <I>Requête-Configuration</I> est reconnaissable et toutes les valeurs valides, alors l'implémentation DOIT transmettre un paquet <I>Configuration-Acquittée</I>. La confirmation des Options de Configuration NE DOIT PAS en changer l'ordre ni les valeurs.
+<P>Sur réception d'un paquet <I>Configuration-Acquittée</I>, le champ Identificateur DOIT correspondre en valeur à celui de la dernière <I>Requête-Configuration</I> reçue. De plus, la liste d'Options de Configuration d'un paquet <I>Configuration-Acquittée</I> DOIT correspondre en tous points à celle de la <I>Requête-Configuration</I> précédente. Des paquets invalides sont ignorés.
+<P>Le format de ce paquet est exprimé ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      |Identificateur |          Longueur             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Options ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Code</H4>
+<P>2 pour signifier <I>Configuration-Acquittée</I>.
+<H4>Identificateur</H4>
+<P>Le champ Identificateur contient une copie de l'identificateur de la <I>Requête-Configuration</I> motivant l'envoi de ce paquet.
+<H4>Options</H4>
+<P>Le champ d'Options varie en longueur, et contient une liste de zéro ou plus Options de Configuration à acquitter. Toutes les Options de Configuration sont toujours Acquittées collectivement.
+<A NAME="5.3"></A>
+<H3>5.3. <I>Configuration-NonAcquittée</I></H3>
+<H4>Description</H4>
+<P>Si toutes les instances d'Options de Configuration reçues peuvent être reconnues, mais avec pour certaines des valeurs non valides, alors l'implémentation DOIT transmettre un paquet <I>Configuration-NonAcquittée</I>. Le champ d'Options est renseigné avec les Options de Configuration non acceptables de la requête correspondante. Toutes les Options validées doivent être filtrées dans le paquet <I>Configuration-NonAcquittée</I>, celles qui restent dans la réponse ne DEVANT PAS être changées d'ordre.
+<P>Le rejet d'Options sans champ de valeur (options booléennes) DOIT s'effectuer à l'aide de paquets <I>Configuration-Rejetée</I>.
+<P>A toute Option de Configuration dont une seule instance peut être présente DOIT être attribuée une valeur acceptable pour l'émetteur de l'accusé de réception. La valeur par défaut PEUT être utilisée, lorsque celle-ci est différente de la valeur requise par l'initiateur.
+<P>Pour toute Option de Configuration pouvant apparaître plusieurs fois avec des valeurs différentes, le paquet <I>Configuration-NonAcquittée</I> DOIT fournir une liste de toutes les valeurs acceptable par l'émetteur de l'acquittement. Cette liste inclura les valeurs acceptées présentes dans la requête.
+<P>Finalement, une implémentation peut être configurée pour requérir la négociation d'une Option de Configuration spécifique. Si cette option n'apparaît pas dans la requête, elle PEUT être ajoutée à la liste d'Options de Configuration dans l'accusé de réception, de sorte à inciter l'initiateur à spécifier cette option lors de l'émission de la Requête corrective suivante. Cette option DEVRA figurer avec toutes les valeurs acceptées par l'émetteur de l'accusé de réception.
+<P>Sur réception d'un paquet <I>Configuration-NonAcquittée</I>, le champ Identificateur DOIT contenir la même valeur que celle présente dans la dernière <I>Requête-Configuration</I>. Des paquets non valides seront ignorés.
+<P>Un paquet <I>Configuration-NonAcquittée</I> valide indique à son récepteur qu'une nouvelle <I>Requête-Configuration</I> est demandée, en indiquant les valeurs attendues et permises. Lorsqu'une Option de Configuration apparaît en plusieurs exemplaires dans l'accusé de réception, listant ainsi les valeurs permises, l'initiateur DEVRA en choisir une pour la constitution de la requête corrective suivante.
+<P>Certaines Options de Configuration sont de longueur variable. Comme l'option retournée par l'accusé a été modifiée entre temps par le distant, l'implémentation DOIT pouvoir traiter un retour d'Option de longueur différente à celle émise initialement dans la <I>Requête-Configuration</I>. Le format de ce paquet est exprimé ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      |Identificateur |           Longueur            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Options ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Code</H4>
+<P>3 pour signifier <I>Configuration-NonAcquittée</I>.
+<H4>Identificateur</H4>
+<P>L'identificateur doit être la copie de celui présent dans le <I>Requête-Configuration</I> à l'origine de cet accusé de réception.
+Options</H4>
+<P>Le champ d'Options est de longueur variable, et contient une liste de zéro ou plus Options de Configuration dont l'émetteur accuse réception. Toutes les Options de Configuration sont traitées en une fois.
+<A NAME="5.4"></A>
+<H3>5.4.  <I>Configuration-Rejetée</I></H3>
+<H4>Description</H4>
+<P>Lorsque certaines Options de Configuration reçues dans une requête ne sont pas reconnaissables ou ne sont pas négociables (parce que par exemple configurées en fixe par un administrateur réseau), alors l'implémentation DOIT répondre par un paquet <I>Configuration-Rejetée</I>. Le champ d'Options est renseigné avec les seules Options de Configuration non conformes présentes dans la requête. Toutes les Options reconnues et négociables sont expurgées de la requête originale, celles qui restent ne devant en AUCUN CAS être réordonnées ni modifiées.
+<P>L'identificateur du paquet <I>Configuration-Rejetée</I>, DOIT nécessairement correspondre à celui de la requête initiale. De plus, l'ensemble des Options de Configuration figurant dans un rejet DOIT être exclusivement un sous ensemble de ceux transmis dans la requête originatrice. Les paquets non valides sont ignorés.
+<P>Un paquet <I>Configuration-Rejetée</I> indique à son récepteur que dans toute requête ultérieure corrective NE DEVRA figurer AUCUNE des Options stipulées dans le rejet.
+<P>Le format de ce paquet est exprimé ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      |Identificateur |           Longueur            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Options ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Code</H4>
+<P>4 pour signifier <I>Configuration-Rejetée</I>.
+<H4>Identificateur</H4>
+<P>L'identificateur doit être la copie de celui présent dans le <I>Requête-Configuration</I> à l'origine de cet accusé de rejet.
+<H4>Options</H4>
+<P>Le champ d'Options est de longueur variable, et contient une liste de zéro ou plus Options de Configuration que l'émetteur rejette. Toutes les Options de Configuration sont rejetées en une fois.
+<A NAME="5.5"></A>
+<H3>5.5.  <I>Requête-Fermeture</I> et <I>Fermeture-Acquittée</I></H3>
+<H4>Description</H4>
+<P>Le LCP inclue des codes particuliers de <I>Requête-Fermeture</I> et <I>Fermeture-Acquittée</I> afin d'inclure un mécanisme de clôture d'une connexion.
+<P>Une implémentation désireuse de suspendre une connexion DEVRAIT transmettre un paquet <I>Requête-Fermeture</I>. Ces paquets DEVRAIENT être émis continuellement jusqu'à réception d'un paquet <I>Fermeture-Acquittée</I>, ou jusqu'à ce que la couche inférieure ait signalé sa désactivation, ou encore jusqu'à ce que le nombre de requêtes soit suffisant pour que le distant puisse être raisonnablement considéré comme déconnecté.
+<P>Sur réception d'une <I>Requête-Fermeture</I>, un paquet <I>Fermeture-Acquittée</I> DOIT être renvoyé.
+<P>La réception d'un paquet <I>Fermeture-Acquittée</I> sans sollicitation indique que le distant est dans un des états Fermé ou Arrêté, ou réclame une renégociation de la liaison.
+<P>Le format de ce paquet est exprimé ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      |Identificateur |           Longueur            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |    Données ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Code</H4>
+<P>5 pour signifier <I>Requête-Fermeture</I>;
+<BR>6 pour signifier <I>Fermeture-Acquittée</I>.
+<H4>Identificateur</H4>
+<P>Lors de l'émission, la valeur d'identification DOIT être modifiée chaque fois que le contenu du champ de données change, et dès qu'une réponse valide a été reçue pour une requête antérieure. Lors de la retransmission d'une même requête, la valeur d'identification reste inchangée.
+<P>Sur réception, la valeur d'identification de la <I>Requête-Fermeture</I> est recopiée dans le champ d'identification du paquet <I>Fermeture-Acquittée</I> émis en réponse.
+<H4>Données</H4>
+<P>Le champ de Données est de longueur zéro ou plus d'octets, et contient les données non interprétées par l'émetteur. Les données peuvent être constituées de n'importe quelle séquence d'octets binaires. La fin de ce champ est donnée par calcul à l'aide du champ Longueur.
+<A NAME="5.6"></A>
+<H3>5.6.  <I>Code-Rejeté</I></H3>
+<H4>Description</H4>
+<P>La réception d'un paquet LCP affichant un code non reconnaissable indique que le distant dispose d'une autre version de protocole que celle utilisée par le récepteur. Ceci DOIT être reporté à l'émetteur du paquet litigieux par l'émission d'un paquet <I>Code-Rejeté</I>.
+<P>Sur réception d'un rejet d'un code émis et implémentant une fonction indispensable pour la version de protocole implémentée, l'implémentation DEVRAIT signaler le problème et avorter le processus de connexion, dans la mesure où il est fortement improbable que le problème puisse être corrigé automatiquement.
+<P>Le format de ce paquet est exprimé ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      |Identificateur |           Longueur            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Paquet-rejeté ...
+   +-+-+-+-+-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Code</H4>
+<P>7 pour signifier <I>Code-Rejeté</I>.
+
+<H4>Identificateur</H4>
+<P>La valeur d'identification DOIT changer à chaque émission d'un nouveau rejet.
+<H4>Paquet-Rejeté</H4>
+<P>Le champ Paquet-Rejeté contient une copie du paquet LCP ayant été refusé. Il commence par le champ d'Information, et ne contient aucune en-tête Data Link Layer ni de FCS. Le Paquet-Rejeté DOIT être tronqué si nécessaire pour se conformer à la valeur d'URM maximale du distant.
+<A NAME="5.7"></A>
+<H3>5.7.  <I>Protocole-Rejeté</I></H3>
+<H4>Description</H4>
+<P>La réception d'un paquet PPP dont le champ Protocole affiche une valeur inconnue indique que le distant essaie d'utiliser un protocole qui n'est pas supporté par le récepteur. Ceci peut arriver lorsque le distant essaie de configurer un nouveau protocole. Si l'automate LCP est dans l'état Ouvert, le caractère illicite de cette opération DOIT être signalé au distant par l'émission d'un paquet <I>Protocole-Rejeté</I>.
+<P>Sur réception d'un paquet <I>Protocole-Rejeté</I>, l'implémentation DOIT cesser toute émission de paquets de ce protocole aussi rapidement qu'il le peut.
+<P>Les paquets <I>Protocole-Rejeté</I> ne peuvent être émis que par un LCP en état Ouvert. Les paquets <I>Protocole-Rejeté</I> reçus lorsque le LCP est dans tout autre état que le précédent doivent être ignorés.
+<P>Le format de ce paquet est exprimé ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      |Identificateur |           Longueur            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |       <I>Protocole-Rejeté</I>        |    Information-Rejetée...
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Code</H4>
+<P>8 pour signifier <I>Protocole-Rejeté</I>.
+<H4>Identificateur</H4>
+<P>La valeur d'identification DOIT être modifiée à chaque nouveau rejet émis.
+<H4><I>Protocole-Rejeté</I></H4>
+<P>Le champ <I>Protocole-Rejeté</I> est de deux octets, et contient la copie du champ de protocole PPP du paquet refusé.
+<H4>Information-Rejetée</H4>
+<P>Le champ Information-Rejetée contient une copie du paquet ayant été refusé. Il commence par le champ d'Information, et ne contient aucune en-tête Data Link Layer ni de FCS. L'Information-Rejetée DOIT être tronqué si nécessaire pour se conformer à la valeur d'URM maximale du distant.
+<A NAME="5.8"></A>
+<H3>5.8.  <I>Requête-Echo</I> et <I>Réponse-Echo</I></H3>
+<H4>Description</H4>
+<P>Le LCP prévoit les paquets <I>Requête-Echo</I> et <I>Réponse-Echo</I> pour introduire un mécanisme de rebouclage du lien de données permettant d'implémenter des fonctions de test. Ce rebouclage permet notamment le déverminage d'un nouveau prototype d'implémentation, la mesure de la qualité de la ligne, la mesure de performances, ainsi que de nombreuses autres fonctions annexes.
+<P>Sur réception d'une <I>Requête-Echo</I> en état Ouvert, le LCP DOIT répondre par un paquet <I>Réponse-Echo</I>.
+<P>Les paquets <I>Requête-Echo</I> et <I>Réponse-Echo</I> ne DOIVENT être transmis que lorsque les LCP sont dans l'état Ouvert. Ces deux types de paquets, lorsqu'ils sont reçus dans tout autre état de l'automate, doivent être ignorés par celui-ci.
+<P>Le format de ces paquets est exprimé ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      |Identificateur |          Longueur             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                        Nombre-magique                         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |    Données ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+
+<H4>Code</H4>
+<P>9 pour signifier <I>Requête-Echo</I>;
+<P>10 pour signifier <I>Réponse-Echo</I>.
+<H4>Identificateur</H4>
+<P>En transmission, la valeur d'identification DOIT être changée dès que le contenu du champ de Données est modifié, ou qu'une réponse valide a été reçue pour une requête donnée. Lors des retransmissions, La valeur d'identification PEUT rester inchangée.
+<P>En réception, l'identificateur d'une <I>Requête-Echo</I> sera copié dans la <I>Réponse-Echo</I> émise en retour.
+<H4>Nombre-Magique</H4>
+<P>Le Nombre-Magique a une longueur de quatre octets, et permet de détecter des liaisons en condition de rebouclage. Tant que l'Option de Configuration relative aux Nombres-Magiques n'a pas été négociée avec sucés, Le Nombre-Magique DOIT être transmis à zéro. Voir le paragraphe concernant l'Option de Configuration Nombres-Magiques pour plus de détails.
+<H4>Données</H4>
+<P>Le champ de Données contient zéro ou plus d'octets, et contient des données non interprétées. Ces données peuvent constituer n'importe quelle séquence d'octets binaires. La fin de ce champ est obtenue par calcul grâce à l'indication de Longueur.
+<A NAME="5.9"></A>
+<H3>5.9.  <I>Requête-Elimination</I></H3>
+<H4>Description</H4>
+<P>Le LCP dispose d'un code de <I>Requête-Elimination</I> dans le but de fournir un mécanisme de test de la liaison de donnée dans le sens local vers distant. Ce mécanisme permet la mise en uvre de fonctions de déverminage de nouveaux prototypes, de fonctions de mesure de performances, et d'autres fonctions accessoires.
+<P>Les paquets <I>Requête-Elimination</I> NE DOIVENT ETRE émis que par un LCP en l'état Ouvert. Sur réception, ces paquets doivent être ignorés par le récepteur.
+<P>Le format de ce paquet est exprimé ci-dessous. Les champs sont transmis de gauche à droite.
+
+<P><CENTER><TABLE><TR><TD><CODE><PRE><FONT COLOR="#008800">
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     Code      |Identificateur |           Longueur            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                        Nombre-Magique                         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |    Données ...
+   +-+-+-+-+</FONT></PRE></CODE></TD></TR></TABLE></CENTER>
+<H4>Code</H4>
+<P>11 pour signifier <I>Requête-Elimination</I>.
+<H4>Identificateur</H4>
+<P>La valeur d'identification DOIT changer à chaque émission.
+<H4>Nombre-Magique</H4>
+<P>Le Nombre-Magique a une longueur de quatre octets, et permet de détecter des liaisons en condition de rebouclage. Tant que l'Option de Configuration relative aux Nombres-Magiques n'a pas été négociée avec sucés, Le Nombre-Magique DOIT être transmis à zéro. Voir le paragraphe concernant l'Option de Configuration Nombres-Magiques pour plus de détails.
+<H4>Données</H4>
+<P>Le champ de Données contient zéro ou plus d'octets, et contient des données non interprétées. Ces données peuvent constituer n'importe quelle séquence d'octets binaires. La fin de ce champ est obtenue par calcul grâce à l'indication de Longueur.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-04.htm">Précédent</A> - <A HREF="1661-06.htm">Suivant</A></BODY></HTML>
+

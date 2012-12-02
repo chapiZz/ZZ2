@@ -1,0 +1,122 @@
+<HTML>
+<HEAD>
+<TITLE>Preface
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<A NAME="preface"></A>
+<P>RFC: 1945<BR>
+Statut : Information<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm">INDEX FRANCAIS</A>
+<CENTER><H1>HYPERTEXT TRANSFER PROTOCOL - HTTP/1.0</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER>Cr&eacute;dits : T. Berners-Lee, MIT/LCS, R. Fielding, UC Irvine, H. Frystyk, MIT/LCS, <BR>
+Traduction : V.G. FREMAUX<BR>
+Edition originale : Mai 1996 / Version FR: Septembre 1997
+<HR>
+
+<H2><FONT COLOR="#000088">9. D&eacute;finition des codes d'&eacute;tat</FONT></H2>
+<P>Tous les codes d'&eacute;tat actuellement valides sont d&eacute;crits ci-dessous, en pr&eacute;cisant quelle m&eacute;thode peut en &ecirc;tre l'origine, ainsi que les m&eacute;tainformations &agrave; fournir dans la r&eacute;ponse.
+<A NAME="9-1"></A>
+<H3>9.1 Information 1xx</H3>
+<P>Cette classe de r&eacute;ponse est actuellement r&eacute;serv&eacute;e pour de futures applications, et consiste en des messages avec une ligne d'&eacute;tat, des champs d'en-t&ecirc;tes &eacute;ventuels, et termin&eacute;s par une ligne vide (CRLFCRLF).
+<P>HTTP/1.0 ne d&eacute;finit actuellement aucun de ces codes, lesquels ne constituent pas une r&eacute;ponse valide &agrave; des requ&ecirc;tes HTTP/1.0. Il restent cependant exploitables &agrave; titre exp&eacute;rimental, d&eacute;passant le contexte de la pr&eacute;sente sp&eacute;cification.
+<A NAME="9-2"></A>
+<H3>9.2 Succ&egrave;s 2xx</H3>
+<P>Cette classe pr&eacute;cise que la requ&ecirc;te du client a &eacute;t&eacute; correctement transmise, interpr&eacute;t&eacute;e, et ex&eacute;cut&eacute;e.
+<A NAME="200"></A>
+<H4>200 OK</H4>
+<P>La requ&ecirc;te a abouti. L'information retourn&eacute;e en r&eacute;ponse d&eacute;pend de la requ&ecirc;te &eacute;mise, comme suit:
+
+<P><I>GET</I>
+<P><UL>Une entit&eacute; correspondant &agrave; l'URI vis&eacute;e par la requ&ecirc;te est renvoy&eacute;e au client;</UL>
+
+<P><I>HEAD</I>
+<P><UL>La r&eacute;ponse au client ne doit contenir que les champs d'en-t&ecirc;te &agrave; l'xclusion de tout corps d'entit&eacute;;</UL>
+
+<P><I>POST</I>
+<P><UL>Une entit&eacute; d&eacute;crivant le r&eacute;sultat de l'action entreprise.</UL>
+<A NAME="201"></A>
+<H4>201 Cr&eacute;&eacute;</H4>
+<P>La requ&ecirc;te a abouti, et une nouvelle ressource r&eacute;seau en r&eacute;sulte.
+<P>La nouvelle ressource cr&eacute;&eacute;e est accessible par l'URI(s) renvoy&eacute;e dans l'entit&eacute; de la r&eacute;ponse. La ressource doit &ecirc;tre cr&eacute;&eacute;e avant que ce code ne soit envoy&eacute;. Si la cr&eacute;ation ne peut pas &ecirc;tre op&eacute;r&eacute;e imm&eacute;diatement, le serveur devra indiquer dans la r&eacute;ponse quand la ressource deviendra disponible ou retourner un message de type 202 (accept&eacute;e).
+<P>Actuellement, seule la m&eacute;thode POST peut conduire &agrave; la cr&eacute;ation d'une ressource.
+<A NAME="202"></A>
+<H4>202 Accept&eacute;e</H4>
+<P>La requ&ecirc;te a &eacute;t&eacute; re&ccedil;ue et interpr&eacute;t&eacute;e correctement, mais son traitement n'est pas termin&eacute;. La requ&ecirc;te peut ou ne peut &ecirc;tre r&eacute;&eacute;mise pendant le traitement, suivant que le serveur autorise ou n'autorise pas un arr&ecirc;t du processus en cours. Il n'est pas possible de r&eacute;&eacute;mettre un code d'&eacute;tat dans ce type d'op&eacute;ration asynchrone.
+<P>La r&eacute;ponse 202 est intentionnellement non bloquante. Son r&ocirc;le est de permettre au serveur d'accepter une requ&ecirc;te d'un autre processus (par exemple d'un automate se d&eacute;clenchant &agrave; dates fixes) sans que la connexion avec le client ne reste active pendant le d&eacute;roulement du traitement. L'entit&eacute; retourn&eacute;e par la r&eacute;ponse rendra compte de la requ&ecirc;te, et devra fournir un pointeur sur un composant d'information (&eacute;tat courant du traitement), ou donner une estimation de la date de conclusion probable d&eacute;finitive.
+<A NAME="204"></A>
+<H4>204 Pas de contenu</H4>
+<P>La requ&ecirc;te a abouti et le serveur n'a rien &agrave; envoyer en retour. 
+<P>Un utilisateur recevant ce message n'aura pas &agrave; rafra&icirc;chir son affichage, et maintiendra celui qui aura conduit &agrave; l'&eacute;mission de la requ&ecirc;te. Cette r&eacute;ponse a &eacute;t&eacute; instaur&eacute;e pour permettre &agrave; un utilisateur de d&eacute;rouler des scripts ou autres actions sans modifier l'affichage en cours. La r&eacute;ponse peut cependant contenir des m&eacute;tainformations dans des champs d'en-t&ecirc;te, concernant le document affich&eacute; dans la fen&ecirc;tre active de l'utilisateur.
+<A NAME="9-3"></A>
+<H3>9.3 Redirection 3xx</H3>
+<P>Cette classe de messages pr&eacute;cise que le client doit provoquer une action compl&eacute;mentaire pour que la requ&ecirc;te puisse &ecirc;tre conduite jusqu'&agrave; sa r&eacute;solution finale. L'action peut &ecirc;tre d&eacute;clench&eacute;e par l'utilisateur final si et seulement si la m&eacute;thode invoqu&eacute;e &eacute;tait GET ou HEAD. Un client ne peut automatiquement rediriger une requ&ecirc;te plus de 5 fois. Il est suppos&eacute;, si cela arrive, que la redirection s'effectue selon une boucle infinie.
+<A NAME="300"></A>
+<H4>300 Choix multiples</H4>
+<P>Ce code n'est pas utilis&eacute; directement par les applications HTTP/1.0 mais est d&eacute;fini pour servir de r&eacute;ponse par d&eacute;faut &agrave; des codes 3xx non reconnus.
+<P>Il signifie en principe que la ressource vis&eacute;e est disponible en un ou plusieurs autres points du r&eacute;seau. Sauf dans le cas d'une requ&ecirc;te de type HEAD, la r&eacute;ponse doit contenir une entit&eacute; dans laquelle sont list&eacute;es les caract&eacute;ristiques et localisations de la ressource demand&eacute;e, &agrave; charge de l'utilisateur de choisir laquelle est la plus appropri&eacute;e. Si le serveur affiche une pr&eacute;f&eacute;rence de choix, il doit en inscrire l'URL dans un champ Location; Certains clients utiliseront ce champ pour activer une redirection automatique.
+<A NAME="301"></A>
+<H4>301 Changement d'adresse d&eacute;finitive</H4>
+<P>La ressource demand&eacute;e est d&eacute;sormais accessible via une autre URL, toute nouvelle requ&ecirc;te lui &eacute;tant appliqu&eacute;e devant utiliser cette nouvelle URL. Les clients impl&eacute;mentant une fonction de redirection automatique l'activeront et r&eacute;&eacute;mettront une requ&ecirc;te avec l'URI correcte, lorsque c'est possible.
+<P>La nouvelle URL sera indiqu&eacute;e dans le champ d'en-t&ecirc;te Location de la r&eacute;ponse. Sauf dans le cas d'une requ&ecirc;te de type HEAD, le corps d'entit&eacute; de la r&eacute;ponse contiendra une note succincte avec un hyperlien vers la nouvelle URL.
+<P>Si le code d'&eacute;tat 301 est re&ccedil;u en r&eacute;ponse &agrave; une requ&ecirc;te POST, le client ne pourra rediriger automatiquement la requ&ecirc;te sans en avoir demand&eacute; confirmation &agrave; l'utilisateur. En effet, il n'est pas dit que les conditions ayant &eacute;t&eacute; &agrave; l'origine de la requ&ecirc;te n'aient pas chang&eacute;.
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: Certains clients, lorsqu'ils redirigent une requ&ecirc;te POST, transforment par erreur cette requ&ecirc;te en une requ&ecirc;te GET apr&egrave;s r&eacute;ception d'un code 301.</FONT></NOTE>
+
+<A NAME="302"></A>
+<H4>302 Changement d'adresse temporaire</H4>
+<P>La ressource demand&eacute;e est actuellement et temporairement accessible via une autre URL. La redirection n'&eacute;tant pas d&eacute;finitive, le client continuera d'utiliser l'URI-vis&eacute;e originale.
+<P>La nouvelle URL temporaire doit &ecirc;tre sp&eacute;cifi&eacute;e en r&eacute;ponse dans un champ Location. Sauf dans le cas d'une requ&ecirc;te de type HEAD, le corps d'entit&eacute; de la r&eacute;ponse contiendra une note succincte avec un hyperlien vers la nouvelle URI.
+<P>Si le code d'&eacute;tat 302 est re&ccedil;u en r&eacute;ponse &agrave; une requ&ecirc;te POST, le client ne pourra rediriger automatiquement la requ&ecirc;te sans en avoir demand&eacute; confirmation &agrave; l'utilisateur. En effet, il n'est pas dit que les conditions ayant &eacute;t&eacute; &agrave; l'origine de la requ&ecirc;te n'aient pas chang&eacute;.
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: Certains clients, lorsqu'ils redirigent une requ&ecirc;te POST, transforment par erreur cette requ&ecirc;te en une requ&ecirc;te GET apr&egrave;s r&eacute;ception d'un code 302.</FONT></NOTE>
+
+<A NAME="304"></A>
+<H4>304 Non modifi&eacute;</H4>
+<P>Ce message est &eacute;mis en retour d'une requ&ecirc;te GET conditionnelle, lorsque l'acc&egrave;s &agrave; la ressource est permis, mais que celle-ci n'a pas &eacute;t&eacute; modifi&eacute;e depuis la date et l'heure pr&eacute;cis&eacute;e dans le champ If-Modified-Since de la requ&ecirc;te. Le serveur n'&eacute;met aucune entit&eacute; li&eacute;e &agrave; ce message. L'en-t&ecirc;te contiendra des informations &agrave; destination du gestionnaire de cache, ou ayant &eacute;t&eacute; modifi&eacute;es sans que cela n'intervienne sur la date de derni&egrave;re modification de la ressource elle-m&ecirc;me. On y trouvera par exemple les champs: Date, Server, et Expires. Un syst&egrave;me de cache recevant ce message devra remettre &agrave; jour les entit&eacute;s qu'il g&egrave;re.
+<A NAME="9-4"></A>
+<H3>9.4 Erreur client 4xx</H3>
+<P>La classe 4xx de codes d'&eacute;tat est d&eacute;finie pour r&eacute;pondre au cas o&ugrave; il semble que le client ait commis une erreur. Si le client n'a pas encore achev&eacute; la transmission de sa requ&ecirc;te lorsqu'il re&ccedil;oit le code 4xx, alors il doit cesser toute transmission. Except&eacute;
+lorsque ce code r&eacute;pond &agrave; une requ&ecirc;te de type HEAD, le serveur pourra y inclure une entit&eacute; explicitant la nature de l'erreur, et indiquant s'il s'agit d'une condition d'erreur temporaire ou permanente. Ces codes sont valides pour tous les types de requ&ecirc;te.
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: Si le client &eacute;met des donn&eacute;es, les impl&eacute;mentations de TCP devront s'assurer que le client a bien &eacute;mis tous les accus&eacute;s de r&eacute;ception des paquets transportant la r&eacute;ponse avant de couper la connexion d'entr&eacute;e. Si le client continue d'envoyer des donn&eacute;es alors que le serveur a ferm&eacute; la liaison, le TCP serveur &eacute;mettra en retour un paquet RST (reset), qui risque de stimuler un effacement pr&eacute;matur&eacute; de toutes les donn&eacute;es re&ccedil;ues dans les tampons interne du TCP client (y compris les donn&eacute;es concernant la r&eacute;ponse) avant que celles-ci n'aient pu &ecirc;tre transmises &agrave; l'application HTTP.</FONT></NOTE>
+
+<A NAME="400"></A>
+<H4>400 Requ&ecirc;te incorrecte</H4>
+<P>La requ&ecirc;te n'a pu &ecirc;tre reconnue par le serveur pour cause d'une syntaxe incorrecte.
+<P>Le client n'est pas sens&eacute; &eacute;mettre de nouveau cette requ&ecirc;te sans l'avoir corrig&eacute;e au pr&eacute;alable.
+<A NAME="401"></A>
+<H4>401 Non autoris&eacute;</H4>
+<P>La requ&ecirc;te demand&eacute;e n&eacute;cessite une authentification de la part de l'utilisateur. La r&eacute;ponse doit inclure un champ d'en-t&ecirc;te WWW-Authenticate (<A HREF="1945-10.htm#10-16">Section 10.16</A>) indiquant la demande d'authentification de la ressource. Le client est sens&eacute; r&eacute;p&eacute;ter la demande en sp&eacute;cifiant un champ d'en-t&ecirc;te d'authentification correct (<A HREF="1945-10.htm#10-2">Section 10.2</A>). Si la requ&ecirc;te comportait d&eacute;j&agrave; des donn&eacute;es d'authentification, la r&eacute;ponse 401 indique les droits sont actuellement insuffisants pour cette authentification. Si la r&eacute;ponse 401 contient la m&ecirc;me demande que la r&eacute;ponse pr&eacute;c&eacute;dente, et l'utilisateur a d&eacute;j&agrave; suivi le processus d'identification au moins une fois, l'entit&eacute; pr&eacute;sent&eacute;e dans la r&eacute;ponse doit &ecirc;tre pr&eacute;sent&eacute;e &agrave; l'utilisateur, dans la mesure o&ugrave; les informations qu'elle contient peuvent &ecirc;tre de nature &agrave; expliquer la faute. L'authentification des acc&egrave;s HTTP est d&eacute;crite en d&eacute;tail en <A HREF="1945-11.htm">Section 11</A>.
+<A NAME="403"></A>
+<H4>403 Interdit</H4>
+<P>Le serveur a compris la requ&ecirc;te, mais refuse de la satisfaire.
+<P>Une d&eacute;marche d'authentification n'y fera rien et cette requ&ecirc;te ne doit pas &ecirc;tre renouvel&eacute;e. Si la m&eacute;thode invoqu&eacute;e est diff&eacute;rente de HEAD et le serveur souhaite rendre public la raison pour laquelle il refuse le traitement, il le fera dans l'entit&eacute; li&eacute;e &agrave; cette r&eacute;ponse. Ce code d'&eacute;tat est souvent utilis&eacute; lorsque le serveur ne souhaite pas s'&eacute;tendre sur les raisons pour lesquelles il refuse un acc&egrave;s, ou parce que c'est la seule r&eacute;ponse qui convienne.
+<A NAME="404"></A>
+<H4>404 Non trouv&eacute;</H4>
+<P>Le serveur n'a trouv&eacute; aucune ressource correspondant &agrave; l'URI-vis&eacute;e. Aucune indication n'est donn&eacute;e pour savoir si l'erreur est temporaire ou permanente. Si le serveur ne d&eacute;sire pas donner les raisons de l'&eacute;chec dans ce cas, il peut utiliser le message de code 403 &agrave; la place de celui-ci.
+<A NAME="9-5"></A>
+<H3>9.5 Erreur serveur 5xx</H3>
+<P>Les r&eacute;ponses de code d'&eacute;tat d&eacute;butant par un "5" indiquent une situation dans laquelle le serveur sait qu'il est la cause de l'erreur, ou est incapable de fournir le service demand&eacute;, bien que la requ&ecirc;te ait &eacute;t&eacute; correctement formul&eacute;e. Si le client re&ccedil;oit cette r&eacute;ponse alors qu'il n'a pas encore termin&eacute; d'envoyer des donn&eacute;es, il doit cesser imm&eacute;diatement toute &eacute;mission vers le serveur. Except&eacute; lorsque la requ&ecirc;te invoqu&eacute;e est de type HEAD, le serveur peut inclure une entit&eacute; d&eacute;crivant les causes de l'erreur, et s'il s'agit d'une condition permanente ou temporaire. Ces r&eacute;ponses s'appliquent quelque soit la requ&ecirc;te, et ne n&eacute;cessitent pas de champs d'en-t&ecirc;te particuliers.
+<A NAME="500"></A>
+<H4>500 Erreur serveur interne</H4>
+<P>Le serveur a &eacute;t&eacute; en pr&eacute;sence d'un &eacute;v&eacute;nement inattendu, qui l'a emp&ecirc;ch&eacute; de traiter la requ&ecirc;te correctement.
+<A NAME="501"></A>
+<H4>501 Non impl&eacute;ment&eacute;</H4>
+<P>Le serveur ne supporte pas les fonctionnalit&eacute;s requises pour satisfaire la requ&ecirc;te. Ceci est typique du cas o&ugrave; malgr&eacute; une syntaxe conforme, le serveur ne reconna&icirc;t pas la m&eacute;thode invoqu&eacute;e, et ne peut l'appliquer sur aucune ressource.
+<A NAME="502"></A>
+<H4>502 Erreur de routeur</H4>
+<P>Ce serveur, agissant en tant que proxy ou routeur, a re&ccedil;u une r&eacute;ponse invalide de la part du serveur amont contact&eacute; pour satisfaire la requ&ecirc;te.
+<A NAME="503"></A>
+<H4>503 Service indisponible</H4>
+<P>Les serveur ne peut momentan&eacute;ment traiter la requ&ecirc;te, pour cause de surcharge ou de maintenance. Ceci implique une condition de faute temporaire, qui peut dispara&icirc;tre apr&egrave;s un certain laps de temps .
+
+<P><NOTE><FONT SIZE=-1 COLOR="#666666">Note: L'existence de ce code d'&eacute;tat 503 n'implique pas que le serveur l'utilise d&egrave;s qu'il est surcharg&eacute;. Certains serveurs dans cette situation refuseront tout bonnement la connexion.</FONT></NOTE>
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1945-8.htm">Pr&eacute;c&eacute;dent</A> - <A HREF="1945-10.htm">Suivant</A> - <A HREF="1945tm.htm">Retour au sommaire</A></BODY></HTML>
+

@@ -1,0 +1,55 @@
+<HTML>
+<TITLE>PPP - RFC 1661 - VF</TITLE>
+</HEAD>
+<BODY BGCOLOR="#DDDDDD">
+<P>RFC: 1661<BR>
+Statut : Standard<BR>
+Retour &agrave; l'index des normes : <A HREF="../index.htm" TARGET="_top">INDEX FRANCAIS</A>
+<CENTER><H1>POINT TO POINT PROTOCOL - PPP</H1>
+<H2>SPECIFICATION</H2>
+<BR></CENTER>
+<HR>
+</CENTER> W. Simpson / Juillet 1994<BR>
+Traduction : <A HREF="mailto:Valery.Fremaux@eisti.fr">Val&eacute;ry G. FREMAUX</A> Ing&eacute;nieur Professeur / <A HREF="http://www.eisti.fr">EISTI</A><BR>
+Edition originale : Mai 1996 / Version FR: Janvier 1998
+<HR>
+<CENTER>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-01.htm">Précédent</A> - <A HREF="1661-03.htm">Suivant</A><HR>
+</CENTER>
+<A NAME="2"></A>
+<H2>2. Encapsulation PPP</H2>
+<P>L'encapsulation PPP est utilisée pour lever l'ambiguïté sur des datagrammes provenant de protocoles différents. Cette encapsulation nécessite l'usage d'un tramage dont le but principale est d'indiquer le début et la fin de l'encapsulation. Des méthodes pour réaliser ce tramage sont décrites dans des documents associés au présent.
+<P>Une explicitation sommaire de l'encapsulation PPP est donnée ci-dessous. Les champs sont toujours transmis de gauche à droite.
+
+<P><CENTER><CODE><PRE><FONT COLOR="#008800">
++-----------+-------------+----------+
+| Protocole | Information | Bourrage |
+| 8/16 bits |      *      |    *     |
++-----------+-------------+----------+
+</FONT></PRE></CODE></CENTER>
+<A NAME="2.b"></A>
+<H4>Champ protocole</H4>
+<P>Le Protocole comprend un ou deux octets, et sa valeur identifie le datagramme encapsulé dans le champ Information du paquet. Ce champ est transmis et reçu l'octet le plus significatif en tête.
+<P>La structure de ce champ est conforme aux mécanismes définis par l'ISO 3309 pour l'extension des champs d'adresse. Tous les Protocoles DOIVENT être impairs; le bit le moins significatif de l'octet le moins significatif DOIT être égal à "1". De plus, tous les Protocoles DOIVENT être codés de sorte que le bit le moins significatif de l'octet le plus significatif soit égal à "0". Les trames reçues qui ne se conforment pas à ces règles DOIVENT être considérées comme transportant un Protocole non identifié.
+<P>Les valeurs du champ Protocole comprises dans la plage "0***" à "3***" identifient un protocole de niveau réseau de paquets spécifiques, et des valeurs entre "8***" et "b***" identifient des paquets appartenant aux Network Control Protocols (NCPs) associés, le cas échéant.
+<P>Des valeurs de champ de protocole comprises entre  "4***" et "7***" sont utilisées pour des protocoles de faible trafic et ne disposant pas de NCP associé. Les valeurs entre "c***" et "f***" identifient des paquets appartenant aux Link Control Protocols (comme LCP).
+<P>Les valeurs les plus récentes établies pour ce champ Protocole sont listées dans le document "Assigned Numbers" [2]. La spécification suivante réserve les valeurs :
+
+<P><CENTER><TABLE><TR><TD>
+Valeur (en hexa)</TD><TD>Nom de protocole</TD></TR><TR><TD>0001</TD><TD>Protocole de bourrage</TD></TR><TR><TD>0003 à 001f</TD><TD>réservé (non transparents)</TD></TR><TR><TD>007d</TD><TD>réservé (Control Escape)</TD></TR><TR><TD>00cf </TD><TD>réservé (PPP NLPID)</TD></TR><TR><TD>00ff</TD><TD>réservé (non comprimables)</TD></TR>
+<TR><TD>8001 à 801f</TD><TD>non utilisé</TD></TR><TR><TD>807d</TD><TD>non utilisé</TD></TR>
+<TR><TD>80cf</TD><TD>non utilisé</TD></TR><TR><TD>80ff</TD><TD>non utilisé</TD></TR>
+<TR><TD>c021</TD><TD>Link Control Protocol</TD></TR>
+<TR><TD>c023</TD><TD>Password Authentication Protocol</TD></TR>
+<TR><TD>c025</TD><TD>Link Quality Report</TD></TR>
+<TR><TD>c223</TD><TD>Challenge Handshake Authentication Protocol</TD></TR></TABLE></CENTER>
+<P>Les développeurs de nouveaux protocoles DOIVENT obtenir un numéro de protocole de l'Internet Assigned Numbers Authority (IANA), à IANA@isi.edu.
+<A NAME="2.c"></A><H4>Champ Information</H4><P>Le champ Information contient zéro octets au minimum. Il contient le datagramme du protocole spécifié dans le champ Protocole.<P>La longueur maximum du champ Information, y compris le bourrage, mais hors champ Protocole, est limité à l'Unité de Réception Maximale (URM), par défaut 1500 octets. Par négociation, des implémentations de PPP plus "libérales" pourront utiliser d'autres valeurs d'URM.
+<A NAME="2.d"></A>
+<H4>Bourrage</H4>
+<P>En transmission, le champ Information PEUT être complété d'un nombre arbitraire d'octets de "bourrage" dans la limite de la règle de l'URM. C'est à chaque protocole que revient le travail de dissocier les octets de bourrage de l'information utile.
+
+<BR>
+<CENTER><HR>
+<P><A HREF="1661tm.htm">Retour au sommaire</A> - <A HREF="1661-01.htm">Précédent</A> - <A HREF="1661-03.htm">Suivant</A></BODY></HTML>
+

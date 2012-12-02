@@ -1,0 +1,303 @@
+<html><head><title>FTP</title></head>
+<body bgcolor="#dddddd">
+<p>RFC: 959<br>
+Statut : Standard<br>
+</p><p>Remplace RFC: 765 (IEN 149) 
+</p><center>
+<h1>File Transfer Protocol (FTP)</h1>
+<h2>Spécification</h2>
+<hr>
+</center>
+<p align="left">Crédits : J. Postel, J. Reynolds / ISI<br>
+Traduction : <a href="mailto:Valery.Fremaux@eisti.fr">Valéry G. FREMAUX</a> Ingénieur Professeur / <a href="http://www.eisti.fr/">EISTI</a><br>
+Edition originale : Octobre 1985 / Version FR: Février 1997
+</p><center>
+<p><a href="959-1.htm">Précédent</a> - <a href="959-3.htm">Suite</a> - <a href="959tm.htm">Retour au sommaire</a>
+</p></center>
+<hr>
+
+<h2><font color="#000088">2.  VUE D'ENSEMBLE</font></h2>
+<p> Dans cette section, l'historique, la terminologie, et le modèle FTP sont
+traités. Les termes définis dans cette section sont seulement ce qui ont
+une signification particulière pour FTP. Certaines terminologies sont très
+spécifiques au modèle FTP; certains lecteurs préféreront passer immédiatement
+à la définition du modèle FTP, quitte à revoir la terminologie par la suite. 
+</p><h3><a name="2.1">2.1.  HISTORIQUE</a></h3>
+<p> FTP a subi une grande évolution au fil des ans. L'appendice III est une
+compilation chronologique des RFC se rapportant à FTP. Elle inclue la première
+proposition de mécanisme de transfert de fichiers de 1971 qui avait été développée
+pour une application sur les hôtes du M.I.T. (RFC 114), plus des commentaires
+et discussions dans la RFC 141. La RFC 172 proposait un protocole de niveau
+utilisateur pour le transfert de fichiers entre ordinateurs (y compris des
+terminaux IMPs). Une révision de celui-ci (RFC 265), redonnait un état du
+FTP pour évolution ultérieure, tandis que la RFC 281 suggérait encore d'autres
+modifications. L'usage d'une transaction "Set Data Type" a été proposée dans
+la RFC 294 en Janvier 1982. La RFC 354 a rendu les RFC 264 et 265 obsolètes.
+Le File Transfer Protocol était désormais défini comme un protocole de transfert
+de fichiers entre des hôtes d'un ARPANET, et dont la fonction première était
+définie comme le transfert efficace et fiable entre des hôtes pour profiter
+de l'utilisation d'une capacité de stockage de données distante. La RFC 385
+apporte un correctif à certaines erreurs, développe certains points, et ajoute
+certaines notions au protocole, tandis que la RFC 414 définit le rapport
+d'état sur le serveur de travail et les "clients" FTP. La RFC 430 de 1973,
+(parmi d'autres trop nombreuses pour être mentionnées toutes) donnait des
+commentaires supplémentaires quant à FTP. Finalement, une documentation "officielle"
+FTP a été publiée sous la référence RFC 454.  </p><p> Depuis Juillet 1973, des changements considérables sont intervenus,
+mais la structure globale est restée la même. La RFC 542 a été publiée comme
+une nouvelle spécification "officielle" pour refléter certains changements.
+Cependant, de nombreuses implémentations basées sur l'ancienne spécification
+n'étaient pas remises à jour. En 1974, les RFC 607 et 614 apportent de nouveaux
+commentaires à propos de FTP. La RFC 624 propose des changements nouveaux
+et autres modifications mineures. En 1975, la RFC 686 intitulée, "Leaving
+Well Enough Alone" était une discussion sur les différences entre toutes
+les anciennes versions de FTP et la dernière en date. La RFC 691 est une
+révision mineure de la RFC 686, concernant les possibilités d'impression
+de fichiers.  </p><p> Motivée par le passage du NCP (Network Communication Protocol) à
+TCP comme protocole sous-jacent, un phoenix est rené à partir de tous les
+efforts ci-dessus par la RFC 765 comme une nouvelle spécification de FTP
+basée sur le protocole réseau TCP.  </p><p> Cette édition de la spécification FTP est écrite pour corriger quelques
+erreurs mineures de la RFC 765, tout en étendant les explications de certaines
+fonctionnalités du protocole, et enfin en ajoutant la définition de quelques
+commandes supplémentaires. En particulier, les nouvelles commandes optionnelle
+suivantes sont inclues dans cette édition de la spécification:  </p><p>         CDUP - Change to Parent Directory
+</p><p>         SMNT - Structure Mount
+</p><p>         STOU - Store Unique
+</p><p>         RMD - Remove Directory
+</p><p>         MKD - Make Directory
+</p><p>         PWD - Print Directory
+</p><p>         SYST - System
+
+</p><p> Cette spécification est compatible avec la version précédente. Un
+programme implémenté conformément à la précédente spécification devrait naturellement
+être conforme à la présente. </p><h3><a name="2.2">2.2.  TERMINOLOGIE</a></h3>
+
+<p><b>ASCII</b>
+
+</p><p>Le jeu de caractères ASCII est celui défini par l'ARPA-Internet  Protocol
+Handbook. Pour FTP, les caractères ASCII sont définis comme la moitié de
+l'ensemble donnée par un codage à huit bits (le bit de poids fort est toujours
+à 0).  </p><p><b>Canal de contrôle</b>
+
+</p><p>Le chemin de communication entre le USER-PI et le SERVER-PI pour l'échange
+de commandes et de réponses à commandes. Cette connexion utilise le protocole
+Telnet.  </p><p><b>Canal de données</b>
+
+</p><p>Une connexion bidirectionnelle (full duplex) sur laquelle les données
+sont transférées, dans un mode et sous un type particuliers. Les données
+transférées peuvent être une partie d'un fichier, un fichier entier, ou plusieurs
+fichiers. Cette connexion s'établit entre un SERVER-DTP et un USER-DTP, ou
+entre deux SERVER-DTPs.  </p><p><b>Chemin d'accès</b>
+
+</p><p>Le chemin d'accès est défini comme la chaîne de caractères qui doit
+être présentée par un utilisateur à un système de fichier pour localiser
+une ressource. Le chemin d'accès contient normalement une indication de l'unité
+logique et/ou des noms de répertoires, et enfin un nom de fichier. FTP ne
+spécifie aucune convention particulière pour le chemin d'accès. Chaque utilisateur
+devra se conformer aux conventions utilisées sur les systèmes de fichiers
+impliqués dans le transfert.  </p><p><b>Commandes FTP</b>
+
+</p><p>Un ensemble de commandes comprenant le contrôle des informations transitant entre le USER-FTP et le SERVER-FTP.
+
+</p><p><b>Contrôle d'accès</b>
+
+</p><p>Le contrôle d'accès définit les privilèges utilisateur nécessaires
+pour utiliser un système, et pour accéder à des fichiers dans ce système.
+Le contrôle d'accès est nécessaire pour éviter un usage accidentel ou non
+autorisé de ressources fichiers. Il est dans les prérogatives d'un processus
+serveur FTP d'invoquer ce contrôle d'accès.  </p><p><b>Correction d'erreur</b>
+
+</p><p>Une procédure qui permet à un utilisateur de se récupérer suite à
+certaines erreurs telles qu'une faute du système serveur ou du processus
+de transfert lui-même. Pour  FTP, la correction d'erreurs nécessitera un
+redémarrage de la transmission d'un fichier à partir d'un point de contrôle
+donné.  </p><p><b>DTP</b>
+
+</p><p>Le processus de transfert de données DTP (data transfer process) procède
+à l'établissement et à la gestion de la connexion. Un DTP peut être passif
+ou actif.  </p><p><b>End-of-Line</b>
+
+</p><p>La séquence de fin-de-ligne qui définit la séparation entre deux lignes
+d'impression. Cette séquence est en général composée d'un Retour Chariot
+(CR = Carriage Return), suivi d'un saut de ligne (LF = Line Feed).  </p><p><b>Enregistrement</b>
+
+</p><p>Un fichier à accès séquentiel peut être structuré comme un certain
+nombre de portions contiguës appelés enregistrements. Les structures en Enregistrements
+sont supportés par FTP  bien qu'un fichier n'ait nul besoin d'être organisé
+de cette façon.  </p><p><b>EOF</b>
+
+</p><p>La condition end-of-file détermine la fin du fichier en cours de transfert.
+
+</p><p><b>EOR</b>
+
+</p><p>La condition end-of-record marque la fin d'un enregistrement de données en cours de transfert.
+
+</p><p><b>Fichier</b>
+
+</p><p>Une suite ordonnée (séquentielle) de données informatiques (y compris
+des programmes), d'une longueur arbitraire, et définies parfaitement par
+un "chemin d'accès".  </p><p><b>Mode</b>
+
+</p><p>Le mode dans lequel les données doivent être transmises. Le mode définit
+le format des données pendant la transmission, y compris les conditions EOR
+et EOF. Les modes de transfert définis par FTP sont décrits dans la section
+traitant des Modes de Transmission.  </p><p><b>NVT</b>
+
+</p><p>Le Network Virtual Terminal défini par le protocole Telnet.
+
+</p><p><b>NVFS</b>
+
+</p><p>Le Network Virtual File System. Un concept qui définit un système
+de fichiers standard vu à travers le réseau utilisant des conventions standardisées
+de commandes et de syntaxe de noms de chemins d'accès.  </p><p><b>Port de données</b>
+
+</p><p>Un processus de transfert passif "écoute" sur le <b>port de données</b> un ordre de connexion de la part d'un processus de transfert actif émis dans le but d'ouvrir un canal de données.
+
+</p><p><b>Page</b>
+
+</p><p>Un fichier peut être structuré comme un ensemble de parties indépendantes
+appelées pages. FTP supporte la transmission de fichiers discontinus comme
+une suite de pages indexées  indépendantes.  </p><p><b>PI</b>
+
+</p><p>Le Protocol Interpreter (interpréteur de protocole). Les côtés serveur
+(SERVER) et utilisateur (USER)  d'un protocole ont des "rôles" distincts
+implémentés respectivement dans un SERVER-PI et un USER-PI.  </p><p><b>Processus SERVER-FTP</b>
+
+</p><p>Un processus ou ensemble de processus qui prennent en charge la fonction
+de transfert de fichiers en coopération avec un processus USER-FTP et, certainement
+un autre serveur. La fonction rassemble un interpréteur de protocole (PI)
+couplé à un processus de transfert de données (DTP).  </p><p><b>Processus USER-FTP</b>
+
+</p><p>Un ensemble de processus et de fonctions incluant un interpréteur
+de protocole, un processus de transfert de données et une interface utilisateur
+par laquelle la fonction de transfert de fichier peut être effectuée en coopération
+avec un ou plusieurs processus SERVER-FTP. L'interface utilisateur met à
+disposition de l'utilisateur un langage  local de commande-réponse.  </p><p><b>Réponse</b>
+
+</p><p>Une réponse est un acquittement ou une dénégation envoyée par un serveur
+à l'utilisateur via la connexion de contrôle en réponse à une commande FTP.
+La forme générale d'une réponse est un code de résultat  (pouvant être un
+code d'erreur) suivi d'une chaîne de caractères. Les codes sont à destination
+d'agents logiciels, le texte est plus naturellement destiné à des utilisateurs
+humains.  </p><p><b>SERVER-DTP</b>
+
+</p><p>Le processus qui transmet les données, dans son état "actif" normal,
+établit le canal de données sur le port "en écoute".  Il établit des paramètres
+pour le transfert et le stockage, et transfère les données sur commande de
+son PI. Le DTP peut entrer dans un état  "passif" pour attendre, plutôt qu'initier
+une communication.  </p><p><b>SERVER-PI</b>
+
+</p><p>L'interpréteur de protocole serveur "écoute" sur le Port L une communication
+arrivant d'un USER-PI et établit la connexion pour le canal de contrôle.
+Il reçoit par celui-ci les commandes FTP de l'USER-PI, y répond, et pilote
+le SERVER-DTP.  </p><p><b>Tailles de mots</b>
+
+</p><p>Deux tailles de mots intéressent FTP: la taille des mots logiques
+du fichier, et la taille utilisée pour la transmission des données. La taille
+d'un mot pour le transfert est toujours de 8  bits. Cette taille de transfert
+n'est pas nécessairement l'unité d'enregistrement logique du fichier dans
+le système, ni la taille des unités logiques permettant l'interprétation
+des structures de données.  </p><p><b>Type</b>
+
+</p><p>Le type de représentation de données utilisé pour la transmission
+et le stockage. Le type implique certaines différences entre le temps d'enregistrement
+et le temps de transfert. Les types de représentation de données  définis
+dans FTP sont décrits dans la Section traitant de l'établissement des canaux
+de données.  </p><p><b>Utilisateur (USER)</b>
+
+</p><p>Une personne ou un processus sous contrôle d'une personne désirant
+obtenir des fichiers distants par transfert. L'utilisateur "humain" peut
+directement agir en interactivité avec un processus SERVER-FTP, mais le passage
+par un processus USER-FTP est conseillé dans la mesure où le protocole FTP
+a été conçu sur un concept d'automate.  </p><p><b>USER-DTP</b>
+
+</p><p>Le processus de transfert de données "écoute" le port de données en
+attendant la connexion à un processus SERVER-FTP. Si deux serveurs transfèrent
+des données entre eux, le processus USER-DTP est inactif.  </p><p><b>USER-PI</b>
+
+</p><p>L'interpréteur de protocole utilisateur instaure le canal de contrôle
+via son port U avec le processus SERVER-FTP, émet des commandes FTP, et gouverne
+le USER-DTP si ce dernier est impliqué dans le processus de transfert.   </p><h3><a name="2.3">2.3.  LE MODELE FTP</a></h3>
+<p>Avec les définitions ci-dessus à l'esprit, le modèle suivant (montré en
+Figure 1 peut être explicité pour la mise en oeuvre d'un service FTP.  </p><p><font color="#008000"></font></p><pre><code>
+<font color="#008000">                                            -------------
+                                            |/---------\|
+                                            ||   User  ||    --------
+                                            ||Interface|&lt;---&gt;| User |
+                                            |\----^----/|    --------
+                  ----------                |     |     |
+                  |/------\|  Commandes FTP |/----V----\|
+                  ||Server|&lt;----------------&gt;|   User  ||
+                  ||  PI  ||   Réponses FTP ||    PI   ||
+                  |\--^---/|                |\----^----/|
+                  |   |    |                |     |     |
+      --------    |/--V---\|   Connexion    |/----V----\|     --------
+      | File |&lt;---&gt;|Server|&lt;---------------&gt;|   USER    |&lt;---&gt;| File |
+      |System|    || DTP  ||      Data      ||   DTP   ||    |System|
+      --------    |\------/|                |\---------/|    --------
+                  ----------                -------------</font></code></pre>
+<font color="#000080"><pre> 
+                   SERVER-FTP                  USER-FTP
+</pre></font>
+<p align="center"><i>NOTES: 1. La connexion de données peut être utilisée dans les deux directions.<br>
+2. Il n'est pas nécessaire que le canal de données soit maintenue en permanence.</i>
+</p><p align="center">Figure 1  Modèle d'usage de FTP
+
+</p><p>Dans le modèle décrit en Figure 1, l'interpréteur de protocole utilisateur
+(USER-PI) instaure le canal de contrôle. Ce circuit de communication utilise
+le protocole Telnet. A l'instauration de cette connexion, des commandes FTP
+standard sont générées par le USER-PI et transmises au processus serveur
+via le canal de contrôle. (L'utilisateur pourra néanmoins établir une liaison
+de contrôle directe avec le SERVER-FTP, à partir d'un terminal TAC par exemple,
+et générer les commandes standard indépendamment, en se substituant au processus
+USER-FTP). Des réponses standardisées sont émises en retour par le SERVER-PI
+au USER-PI via le canal de contrôle alors établie.   </p><p> Les commandes FTP spécifient les paramètres du canal de données
+(port de données, mode de transfert, type pour la représentation, et structure
+des données) ainsi que la nature du fonctionnement des systèmes de fichiers
+(enregistrement, lecture, ajout, suppression, etc.). Le USER-DTP ou son délégué
+se mettra en "écoute" sur le port de données spécifié, et le serveur instaurera
+le canal de données et effectuera le transfert de fichiers selon les paramètres
+spécifiés. Il doit être noté que le port de données n'est pas nécessairement
+sur le même hôte que celui qui a émis les premières commandes FTP par son
+canal de contrôle, bien que l'utilisateur ou le USER-FTP doive continuer
+à assurer "l'écoute" sur le port spécifié. Il doit être ici signalé en outre
+que le canal de données mis en place peut servir simultanément à la lecture
+et à l'écriture de données.   </p><p>Une autre situation peut consister en un utilisateur qui souhaite
+transférer des fichiers entre deux hôtes, les deux étant des hôtes distants
+différents de celui de l'utilisateur. L'utilisateur établit alors un canal
+de contrôle vers chacun des deux serveurs et utilise ces canaux pour créer
+un canal de données entre ces deux hôtes.   </p><p>De cette façon, les informations de contrôle passent par le USER-PI
+bien que les données soient transmis ente deux processus serveurs de transfert.
+Ce qui suit est un modèle de cette interaction entre serveurs.  </p><p><font color="#008000"><code><pre>                    Contrôle   ------------    Contrôle
+                    ----------&gt;| USER-FTP |&lt;-----------
+                    |          | USER-PI  |           |
+                    |          |   "C"    |           |
+
+                    V          ------------           V
+            --------------                        --------------
+            | SERVER-FTP |    canal de données    | SERVER-FTP |
+            |    "A"     |&lt;----------------------&gt;|    "B"     |
+            -------------- Port (A)      Port (B) --------------
+</pre></code></font>
+      
+</p><p align="center">Figure 2
+ 
+</p><p>Le protocole demande à ce que les canaux de contrôle soient ouvert
+tant que dure le transfert de données. Il est de la responsabilité de l'utilisateur
+de demander la fermeture des canaux de contrôle lorsque l'utilisation du
+service FTP est terminée. C'est néanmoins le processus serveur qui prend
+en charge la rupture. Le serveur peut arrêter un transfert de données si
+le canal de contrôle est coupé sans commande préalable.  <b><i></i></b></p><p><b><i>Relations entre FTP et Telnet:</i></b>
+
+</p><p>FTP s'appuie sur le protocole Telnet pour le dialogue du canal de
+contrôle. Ceci est effectif en deux sens: premièrement, le USER-PI ou le
+SERVER-PI devront suivre les règles du protocole Telnet directement dans
+leur propres procédures; ou bien, le USER-PI ou le SERVER-PI peuvent faire
+appel à un module Telnet existant et disponible dans le système d'exploitation. 
+ </p><p>La facilité d'implémentation, les principes de réutilisabilité, et
+la programmation modulaire font pencher en faveur de la deuxième solution.
+L'efficacité et l'indépendance vis à vis de la plate-forme sont des argument
+en faveur de la première. En pratique, FTP n'utilise qu'un tout petit sous
+ensemble du protocole Telnet, et de ce fait, la première approche n'induit
+pas un travail de programmation insurmontable.   <br>
+</p><center><hr>
+<p><a href="959-1.htm">Précédent</a> - <a href="959-3.htm">Suivant</a> - <a href="959tm.htm">Retour au sommaire</a></p></center></body></html>

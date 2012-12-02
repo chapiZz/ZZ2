@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+ <TITLE>RFC 1700 : INTERNET MULTICAST ADDRESSES</TITLE>
+	<LINK HREF="../../reseaux.css" REL="STYLESHEET" TYPE="text/css">
+</HEAD>
+
+<BODY BGCOLOR="#f0f0f0">
+<P><SPAN STYLE="font-family:sans-serif; font-size:x-large; font-weight:bold; color:navy">RFC 1700</SPAN><BR>
+October 1994<BR>
+<A HREF="rfc1700.html">version complète</A> (464 Ko)</P>
+
+<H1>INTERNET MULTICAST ADDRESSES</H1>
+
+<BLOCKQUOTE>
+<P>Host Extensions for IP Multicasting [RFC1112] specifies the
+extensions required of a host implementation of the Internet Protocol
+(IP) to support multicasting.  Current addresses are listed below.</P>
+
+<PRE>
+<B><U>
+Address    Description                                 References</U></B>
+224.0.0.0  Base Address (Reserved)                   [RFC1112,JBP]
+224.0.0.1  All Systems on this Subnet                [RFC1112,JBP]
+224.0.0.2  All Routers on this Subnet                        [JBP]
+224.0.0.3  Unassigned                                        [JBP]
+224.0.0.4  DVMRP    Routers                          [RFC1075,JBP]
+224.0.0.5  OSPFIGP  OSPFIGP All Routers             [RFC1583,JXM1]
+224.0.0.6  OSPFIGP  OSPFIGP Designated Routers      [RFC1583,JXM1]
+224.0.0.7  ST Routers                               [RFC1190,KS14]
+224.0.0.8  ST Hosts                                 [RFC1190,KS14]
+224.0.0.9  RIP2 Routers                                    [GSM11]
+224.0.0.10 IGRP Routers                           [Dino Farinacci]
+224.0.0.11 Mobile-Agents                            [Bill Simpson]
+224.0.0.12-224.0.0.255 Unassigned                            [JBP]
+
+224.0.1.0  VMTP Managers Group                      [RFC1045,DRC3]
+224.0.1.1  NTP      Network Time Protocol           [RFC1119,DLM1]
+224.0.1.2  SGI-Dogfight                                      [AXC]
+224.0.1.3  Rwhod                                             [SXD]
+224.0.1.4  VNP                                              [DRC3]
+224.0.1.5  Artificial Horizons - Aviator                     [BXF]
+224.0.1.6  NSS - Name Service Server                        [BXS2]
+224.0.1.7  AUDIONEWS - Audio News Multicast                 [MXF2]
+224.0.1.8  SUN NIS+ Information Service                     [CXM3]
+224.0.1.9  MTP Multicast Transport Protocol                  [SXA]
+224.0.1.10 IETF-1-LOW-AUDIO                                  [SC3]
+224.0.1.11 IETF-1-AUDIO                                      [SC3]
+224.0.1.12 IETF-1-VIDEO                                      [SC3]
+224.0.1.13 IETF-2-LOW-AUDIO                                  [SC3]
+224.0.1.14 IETF-2-AUDIO                                      [SC3]
+224.0.1.15 IETF-2-VIDEO                                      [SC3]
+224.0.1.16 MUSIC-SERVICE                        [Guido van Rossum]
+224.0.1.17 SEANET-TELEMETRY                        [Andrew Maffei]
+224.0.1.18 SEANET-IMAGE                            [Andrew Maffei]
+224.0.1.19 MLOADD                                         [Braden]
+224.0.1.20 any private experiment                            [JBP]
+224.0.1.21 DVMRP on MOSPF                               [John Moy]
+224.0.1.22 SVRLOC                               &lt;veizades@ftp.com&gt;
+224.0.1.23 XINGTV                                 &lt;hgxing@aol.com&gt;
+224.0.1.24 microsoft-ds                    &lt;arnoldm@microsoft.com&gt;
+224.0.1.25 nbc-pro                      &lt;bloomer@birch.crd.ge.com&gt;
+224.0.1.26 nbc-pfn                      &lt;bloomer@birch.crd.ge.com&gt;
+224.0.1.27-224.0.1.255  Unassigned                           [JBP]
+
+224.0.2.1  "rwho" Group (BSD) (unofficial)                   [JBP]
+224.0.2.2  SUN RPC PMAPPROC_CALLIT                          [BXE1]
+
+224.0.3.000-224.0.3.255 RFE Generic Service                 [DXS3]
+224.0.4.000-224.0.4.255 RFE Individual Conferences          [DXS3]
+224.0.5.000-224.0.5.127 CDPD Groups                  [Bob Brenner]
+224.0.5.128-224.0.5.255 Unassigned                          [IANA]
+224.0.6.000-224.0.6.127 Cornell ISIS Project           [Tim Clark]
+224.0.6.128-224.0.6.255 Unassigned                          [IANA]
+
+224.1.0.0-224.1.255.255  ST Multicast Groups        [RFC1190,KS14]
+224.2.0.0-224.2.255.255  Multimedia Conference Calls         [SC3]
+
+224.252.0.0-224.255.255.255 DIS transient groups     [Joel Snyder]
+
+232.0.0.0-232.255.255.255  VMTP transient groups    [RFC1045,DRC3]</PRE>
+
+<P>These addresses are listed in the Domain Name Service under MCAST.NET
+and 224.IN-ADDR.ARPA.</P>
+
+<P>Note that when used on an Ethernet or IEEE 802 network, the 23
+low-order bits of the IP Multicast address are placed in the low-order
+23 bits of the Ethernet or IEEE 802 net multicast address
+1.0.94.0.0.0.  See the next section on "IANA ETHERNET ADDRESS BLOCK".</P>
+</BLOCKQUOTE>
+
+<H2>References</H2>
+<BLOCKQUOTE>
+<P>[RFC1045] Cheriton, D., "VMTP: Versatile Message Transaction Protocol Specification", RFC 1045, Stanford University, February 1988.</P>
+<P>[RFC1075] Waitzman, D., C. Partridge, and S. Deering "Distance Vector Multicast Routing Protocol", RFC-1075, BBN STC, Stanford University, November 1988.</P>
+<P>[RFC1112] Deering, S., "Host Extensions for IP Multicasting", STD 5, RFC 1112, Stanford University, August 1989.</P>
+<P>[RFC1119] Mills, D., "Network Time Protocol (Version 1), Specification and Implementation", STD 12, RFC 1119, University of Delaware, July 1988.</P>
+<P>[RFC1190] Topolcic, C., Editor, "Experimental Internet Stream Protocol, Version 2 (ST-II)", RFC 1190, CIP Working Group, October 1990.</P>
+<P>[RFC1583] Moy, J., "The OSPF Specification", RFC 1583, Proteon, March 1994.</P>
+</BLOCKQUOTE>
+
+<H2>People</H2>
+<BLOCKQUOTE>
+&lt;arnoldm@microsoft.com&gt;<BR>
+[AXC] Andrew Cherenson &lt;arc@SGI.COM&gt;<BR>
+[Bob Brenner]<BR>
+&lt;bloomer@birch.crd.ge.com&gt;<BR>
+[Braden] Bob Braden &lt;braden@isi.edu<BR>
+[BXE1] Brendan Eic &lt;brendan@illyria.wpd.sgi.com&gt;<BR>
+[BXF] Bruce Factor &lt;ahi!bigapple!bruce@uunet.UU.NET&gt;<BR>
+[BXS2] Bill Schilit &lt;schilit@parc.xerox.com&gt;<BR>
+[CXM3] Chuck McManis &lt;cmcmanis@sun.com&gt;<BR>
+[Tim Clark]<BR>
+[DLM1] David Mills &lt;Mills@HUEY.UDEL.EDU&gt;<BR>
+[DRC3] Dave Cheriton &lt;cheriton@PESCADERO.STANFORD.EDU&gt;<BR>
+[DXS3] Daniel Steinber &lt;Daniel.Steinberg@Eng.Sun.COM&gt;<BR>
+[Dino Farinacci]<BR>
+[GSM11] Gary S. Malkin &lt;GMALKIN@XYLOGICS.COM&gt;<BR>
+&lt;hgxing@aol.com&gt;<BR>
+[IANA] IANA &lt;iana@isi.edu&gt;<BR>
+[JBP] Jon Postel &lt;postel@isi.edu&gt;<BR>
+[JXM1] Jim Miner &lt;miner@star.com&gt;<BR>
+[KS14] &lt;mystery contact&gt;<BR>
+[Andrew Maffei]<BR>
+[John Moy] John Moy &lt;jmoy@PROTEON.COM&gt;<BR>
+[MXF2] Martin Forssen &lt;maf@dtek.chalmers.se&gt;<BR>
+[Guido van Rossum]<BR>
+[SC3] Steve Casner &lt;casner@isi.edu&gt;<BR>
+[Joel Snyder]<BR>
+[SXA] Susie Armstrong &lt;Armstrong.wbst128@XEROX.COM&gt;<BR>
+[SXD] Steve Deering &lt;deering@PARC.XEROX.COM&gt;<BR>
+&lt;veizades@ftp.com&gt;
+</BLOCKQUOTE>
+
+<H2>[]</H2>
+<BLOCKQUOTE>
+URL = <A HREF="ftp://ftp.isi.edu/in-notes/iana/assignments/multicast-addresses">ftp://ftp.isi.edu/in-notes/iana/assignments/multicast-addresses</A>
+</BLOCKQUOTE>
+
+
+</BODY>
+</HTML>
